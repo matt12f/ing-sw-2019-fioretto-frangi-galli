@@ -27,7 +27,7 @@ public class CyberBlade extends GunCard {
      * @return
      */
     public int getNumberOfOptional() {
-        return 0;
+        return 0; 
     }
     /**
      * @return
