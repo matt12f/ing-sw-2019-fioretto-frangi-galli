@@ -1,6 +1,6 @@
 package it.polimi.se2019.game;
 
-public class AmmotilesDeck {
+public class AmmotilesDeck extends CardDeck{
     private int activeDeck [];
     private int discardedDeck [];
 
