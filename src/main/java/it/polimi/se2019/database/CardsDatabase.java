@@ -2,7 +2,7 @@ package it.polimi.se2019.database;
 
 public class CardsDatabase {
 
-    //Default constructor
+    // constructor
     public CardsDatabase() {
     }
     private GunCard gunDatabase;

@@ -2,16 +2,13 @@ package it.polimi.se2019.database;
 
 public class AmmoTileCard {
 
+    private int id;
+    private char[] content;
     /**
-     * Default constructor
+     *  constructor
      */
     public AmmoTileCard() {
     }
-    private int id;
-    private char[] content;
-    public void AmmoTileCard() {
-    }
-
     /**
      * @return
      */
