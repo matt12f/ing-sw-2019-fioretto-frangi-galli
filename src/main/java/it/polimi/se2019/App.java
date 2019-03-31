@@ -1,7 +1,7 @@
 package it.polimi.se2019;
 
 /**
- * Hello world!
+ * Hello world! prova commento
  *
  */
 public class App 
