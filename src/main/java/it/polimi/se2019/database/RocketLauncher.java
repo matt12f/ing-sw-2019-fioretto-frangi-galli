@@ -6,35 +6,52 @@ public class RocketLauncher extends GunCard {
     private boolean hasAlternativeEffect ;
     private String basicEffectDescription;
     private String secondaryEffectDescription;
-    private char secondaryEffectCost;
-    private char thirdEffectCost;
-    private String thirdEffectDescriprion;
+    private char[] secondaryEffectCost;
+    private char[] thirdEffectCost;
+    private String thirdEffectDescription;
 
 
     /**
      * constructor
      */
     public RocketLauncher() {
+        this.numberOfOptional = 2;
+        this.hasAlternativeEffect = false;
+        this.id = 14;
+        this.ammoCost = new char[2];
+        ammoCost[0]= 'r';
+        ammoCost[1]= 'r';
+        this.basicEffectDescription ="basic effect: Deal 2 damage to 1 target you can see that is not on your\n" +
+                "square. Then you may move the target 1 square";
+        this.secondaryEffectDescription ="with rocket jump: Move 1 or 2 squares. This effect can be used either\n" +
+                "before or after the basic effect.";
+        this.secondaryEffectCost = new char[1];
+        secondaryEffectCost[0] = 'b';
+        this.thirdEffectDescription ="with fragmenting warhead: During the basic effect, deal 1 damage to\n" +
+                "every player on your target's original square – including the target,\n" +
+                "even if you move it.";
+        this.thirdEffectCost = new char[1];
+        thirdEffectCost[0] = 'y';
     }
     /**
      * @return
      */
     public boolean getHasAlternativeEffect() {
 
-        return false;
+        return hasAlternativeEffect;
     }
     /**
      * @return
      */
     public int getNumberOfOptional() {
-        return 0;
+        return numberOfOptional;
     }
     /**
      * @return
      */
     public String getBasicEffectDescription() {
 
-        return "";
+        return basicEffectDescription;
     }
 
     public void doBasicEffect() {
@@ -44,14 +61,14 @@ public class RocketLauncher extends GunCard {
      */
     public String getSecondaryEffectDescription() {
 
-        return "";
+        return secondaryEffectDescription;
     }
     /**
      * @return
      */
-    public char getSecondaryEffectCost() {
+    public char[] getSecondaryEffectCost() {
 
-        return '0';
+        return secondaryEffectCost;
     }
     public void doSecondaryEffect() {
     }
@@ -60,13 +77,13 @@ public class RocketLauncher extends GunCard {
      */
     public String getThirdEffectDescription() {
 
-        return "";
+        return thirdEffectDescription;
     }
     /**
      * @return
      */
-    public char getThirdEffectCost() {
-        return '0';
+    public char[] getThirdEffectCost() {
+        return thirdEffectCost;
     }
 
     public void doThirdEffect() {

@@ -6,35 +6,50 @@ public class PlasmaGun extends GunCard {
     private boolean hasAlternativeEffect ;
     private String basicEffectDescription;
     private String secondaryEffectDescription;
-    private char secondaryEffectCost;
-    private char thirdEffectCost;
-    private String thirdEffectDescriprion;
+    private char[] secondaryEffectCost;
+    private char[] thirdEffectCost;
+    private String thirdEffectDescription;
 
 
     /**
      * constructor
      */
     public PlasmaGun() {
+        this.numberOfOptional = 2;
+        this.hasAlternativeEffect = false;
+        this.id = 4;
+        this.ammoCost = new char[2];
+        ammoCost[0] = 'b';
+        ammoCost[1]= 'y';
+        this.basicEffectDescription ="basic effect: Deal 2 damage to 1 target you can see.";
+        this.secondaryEffectDescription ="with phase glide: Move 1 or 2 squares. This effect can be\n" +
+                "used either before or after the basic effect.";
+        this.secondaryEffectCost = new char[1];
+        secondaryEffectCost[0] = 'n';
+        this.thirdEffectDescription ="with charged shot: Deal 1 additional damage to your\n" +
+                "target.";
+        this.thirdEffectCost = new char[1];
+        thirdEffectCost[0] = 'b';
     }
     /**
      * @return
      */
     public boolean getHasAlternativeEffect() {
 
-        return false;
+        return hasAlternativeEffect;
     }
     /**
      * @return
      */
     public int getNumberOfOptional() {
-        return 0;
+        return numberOfOptional;
     }
     /**
      * @return
      */
     public String getBasicEffectDescription() {
 
-        return "";
+        return basicEffectDescription;
     }
 
     public void doBasicEffect() {
@@ -44,14 +59,14 @@ public class PlasmaGun extends GunCard {
      */
     public String getSecondaryEffectDescription() {
 
-        return "";
+        return secondaryEffectDescription;
     }
     /**
      * @return
      */
-    public char getSecondaryEffectCost() {
+    public char[] getSecondaryEffectCost() {
 
-        return '0';
+        return secondaryEffectCost;
     }
     public void doSecondaryEffect() {
     }
@@ -60,13 +75,13 @@ public class PlasmaGun extends GunCard {
      */
     public String getThirdEffectDescription() {
 
-        return "";
+        return thirdEffectDescription;
     }
     /**
      * @return
      */
-    public char getThirdEffectCost() {
-        return '0';
+    public char[] getThirdEffectCost() {
+        return thirdEffectCost;
     }
 
     public void doThirdEffect() {

@@ -6,35 +6,51 @@ public class Tohr extends GunCard {
     private boolean hasAlternativeEffect ;
     private String basicEffectDescription;
     private String secondaryEffectDescription;
-    private char secondaryEffectCost;
-    private char thirdEffectCost;
-    private String thirdEffectDescriprion;
+    private char[] secondaryEffectCost;
+    private char[] thirdEffectCost;
+    private String thirdEffectDescription;
 
 
     /**
      * constructor
      */
     public Tohr() {
+        this.numberOfOptional = 2;
+        this.hasAlternativeEffect = false;
+        this.id = 3;
+        this.ammoCost = new char[2];
+        ammoCost[0]= 'b';
+        ammoCost[1]= 'r';
+        this.basicEffectDescription ="basic effect: Deal 2 damage to 1 target you can see.";
+        this.secondaryEffectDescription ="with chain reaction: Deal 1 damage to a second target that\n" +
+                "your first target can see.";
+        this.secondaryEffectCost = new char[1];
+        secondaryEffectCost[0] = 'b';
+        this.thirdEffectDescription ="with high voltage: Deal 2 damage to a third target that\n" +
+                "your second target can see. You cannot use this effect\n" +
+                "unless you first use the chain reaction.";
+        this.thirdEffectCost = new char[1];
+        thirdEffectCost[0] = 'b';
     }
     /**
      * @return
      */
     public boolean getHasAlternativeEffect() {
 
-        return false;
+        return hasAlternativeEffect;
     }
     /**
      * @return
      */
     public int getNumberOfOptional() {
-        return 0;
+        return numberOfOptional;
     }
     /**
      * @return
      */
     public String getBasicEffectDescription() {
 
-        return "";
+        return basicEffectDescription;
     }
 
     public void doBasicEffect() {
@@ -44,14 +60,14 @@ public class Tohr extends GunCard {
      */
     public String getSecondaryEffectDescription() {
 
-        return "";
+        return secondaryEffectDescription;
     }
     /**
      * @return
      */
-    public char getSecondaryEffectCost() {
+    public char[] getSecondaryEffectCost() {
 
-        return '0';
+        return secondaryEffectCost;
     }
     public void doSecondaryEffect() {
     }
@@ -60,13 +76,13 @@ public class Tohr extends GunCard {
      */
     public String getThirdEffectDescription() {
 
-        return "";
+        return thirdEffectDescription;
     }
     /**
      * @return
      */
-    public char getThirdEffectCost() {
-        return '0';
+    public char[] getThirdEffectCost() {
+        return thirdEffectCost;
     }
 
     public void doThirdEffect() {

@@ -4,7 +4,7 @@ public class Shotgun extends GunCard {
 
     private String basicEffectDescription;
     private boolean hasAlternativeEffect;
-    private char secondaryEffectCost;
+    private char[] secondaryEffectCost;
     private String secondaryEffectDescription;
 
 
@@ -12,19 +12,33 @@ public class Shotgun extends GunCard {
      * constructor
      */
     public Shotgun() {
+        this.hasAlternativeEffect = true;
+        this.id = 18;
+        this.ammoCost = new char[2];
+        ammoCost[0]= 'y';
+        ammoCost[1]= 'y';
+        this.basicEffectDescription ="basic mode: Deal 3 damage to 1 target on\n" +
+                "your square. If you want, you may then move\n" +
+                "the target 1 square.";
+        this.secondaryEffectDescription ="in long barrel mode: Deal 2 damage to\n" +
+                "1 target on any square exactly one move\n" +
+                "away.";
+        this.secondaryEffectCost = new char[1];
+        secondaryEffectCost[0] = 'n';
+
     }
     /**
      * @return
      */
     public boolean getHasAlternativeEffect() {
-        return false;
+        return hasAlternativeEffect;
     }
     /**
      * @return
      */
     public String getBasicEffectDescription() {
 
-        return "";
+        return basicEffectDescription;
     }
 
     public void doBasicEffect() {
@@ -33,15 +47,15 @@ public class Shotgun extends GunCard {
     /**
      * @return
      */
-    public char getSecondaryEfectCost() {
-        return '0';
+    public char[] getSecondaryEffectCost() {
+        return secondaryEffectCost;
     }
     /**
      * @return
      */
     public String getSecondaryEffectDescription() {
 
-        return "";
+        return secondaryEffectDescription;
     }
     public void doSecondaryEffect() {
 

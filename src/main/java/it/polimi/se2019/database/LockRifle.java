@@ -12,40 +12,53 @@ public class LockRifle extends GunCard {
      */
     public LockRifle() {
 
+        this.numberOfOptional = 1;
+        this.hasAlternativeEffect = false;
+        this.id = 1;
+        this.ammoCost = new char[2];
+        ammoCost[0]= 'b';
+        ammoCost[1]= 'b';
+        this.basicEffectDescription ="basic effect: Deal 2 damage and 1 mark to 1 target\n" +
+                "you can see.";
+        this.secondaryEffectDescription ="with second lock: Deal 1 mark to a different target\n" +
+                "you can see.";
+        this.secondaryEffectCost = new char[1];
+        secondaryEffectCost[0] = 'r';
     }
     /**
      * @return
      */
     public boolean getHasAlternativeEffect() {
-        return false;
+        return hasAlternativeEffect;
     }
     /**
      * @return
      */
     public int getNumberOfOptional() {
-        return 0;
+        return numberOfOptional;
     }
     /**
      * @return
      */
     public String getBasicEffectDescription() {
-        return "";
+        return basicEffectDescription;
     }
 
     public void doBasicEffect() {
+
     }
     /**
      * @return
      */
-    public char getSecondaryEffectCost() {
-        return '0';
+    public char[] getSecondaryEffectCost() {
+        return  secondaryEffectCost;
     }
 
     /**
      * @return
      */
     public String getSecondaryEffectDescription() {
-        return "";
+        return secondaryEffectDescription;
     }
     public void doSecondaryEffect() {
 
