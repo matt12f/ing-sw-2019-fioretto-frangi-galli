@@ -23,8 +23,13 @@ public class PowerupsDeck extends CardDeck{
      *
      * */
     public void setActiveDeck() {
+        //TODO setActiveDecks scrivere codice
     }
 
+    /**This method is used to update the deck of discarded cards
+     *
+     */
     public void setDiscardedDeck() { ;
+        //TODO setDiscardedDeck scrivere codice
     }
 }
