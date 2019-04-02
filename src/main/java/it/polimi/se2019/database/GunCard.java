@@ -1,8 +1,8 @@
 package it.polimi.se2019.database;
 
 public abstract class GunCard {
-    public  char [] ammoCost;
-    public int id;
+    protected   char [] ammoCost;
+    protected int id;
     public GunCard(){
 
     }
