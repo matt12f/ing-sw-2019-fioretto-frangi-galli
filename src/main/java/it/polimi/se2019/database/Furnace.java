@@ -16,7 +16,7 @@ public class Furnace extends GunCard {
         this.id = 9;
         this.ammoCost = new char[2];
         ammoCost[0]= 'r';
-        ammoCost[0]= 'b';
+        ammoCost[1]= 'b';
         this.basicEffectDescription ="basic mode: Choose a room you can see, but not the room\n" +
                 "you are in. Deal 1 damage to everyone in that room.";
         this.secondaryEffectDescription ="in cozy fire mode: Choose a square exactly one move\n" +

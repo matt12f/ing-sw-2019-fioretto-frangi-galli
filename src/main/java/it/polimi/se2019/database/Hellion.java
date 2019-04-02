@@ -16,7 +16,7 @@ public class Hellion extends GunCard {
         this.id = 11;
         this.ammoCost = new char[2];
         ammoCost[0]= 'r';
-        ammoCost[0]= 'y';
+        ammoCost[1]= 'y';
         this.basicEffectDescription ="basic mode: Deal 1 damage to 1 target you can see at least\n" +
                 "1 move away. Then give 1 mark to that target and everyone\n" +
                 "else on that square.";
