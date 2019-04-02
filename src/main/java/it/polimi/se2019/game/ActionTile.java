@@ -6,6 +6,7 @@ public abstract class ActionTile {
     /**This constructor is probably useless. It could be removed
      *
      */
+
     public ActionTile(){}
 
     /** The get method is useless here because the actionCounter will only be used inside the class itself.

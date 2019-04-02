@@ -41,6 +41,7 @@ public class ActionTileNormal extends ActionTile {
      */
     @Override
     public void doAction() {
+        //TODO scrivere codice gestione azioni
         super.doAction();
     }
 }

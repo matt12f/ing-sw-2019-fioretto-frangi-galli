@@ -21,7 +21,7 @@ public class Room {
         return players;
     }
 
-    public void setPlayers{
+    public void setPlayers(){
 
     }
 }
