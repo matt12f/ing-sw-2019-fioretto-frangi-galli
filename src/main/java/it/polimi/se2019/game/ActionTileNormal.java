@@ -6,9 +6,13 @@ public class ActionTileNormal extends ActionTile {
 
     /**
      * The constructor sets actionCounter = 2 for every tile
+     * the variables adrenalineMode 1 and 2 set the freedom to do the special attacks that the player can do after have 3 or 6 damage points,
+     * so setting to false at the beginning of the game
      */
     public ActionTileNormal() {
-        this.actionCounter=2;
+        this.actionCounter = 2;
+        this.adrenalineMode1 = false;
+        this.adrenalineMode2 = false;
 
     }
 
@@ -21,17 +25,26 @@ public class ActionTileNormal extends ActionTile {
     }
 
     /**
-     * This set method enables adrenaline mode 1
+     * This set method enables/disable adrenaline mode 1
+     *
      */
     public void setAdrenalineMode1() {
-        this.adrenalineMode1 = true;
+        if(this.adrenalineMode1 == false) {
+            this.adrenalineMode1 = true;
+        }else {
+            this.adrenalineMode1 = false;
+        }
     }
 
     /**
-     * This set method enables adrenaline mode 2
+     * This set method enables/disable adrenaline mode 2
      */
     public void setAdrenalineMode2() {
-        this.adrenalineMode2 = true;
+        if(this.adrenalineMode2 == false) {
+            this.adrenalineMode2 = true;
+        }else {
+            this.adrenalineMode2 = false;
+        }
     }
 
     /**
