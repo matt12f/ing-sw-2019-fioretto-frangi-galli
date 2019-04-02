@@ -36,7 +36,7 @@ public class Room {
     /**setPlayers is used to set and update the list of the player in the room
      *
      */
-    public void setPlayers{
+    public void setPlayers(){
         //TODO setPlayers scrivere codice
 
     }
