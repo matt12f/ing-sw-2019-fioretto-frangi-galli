@@ -1,13 +1,13 @@
 package it.polimi.se2019.game;
 
 public class Cell {
-    private int id;
-    private char color;
-    private int  players[];
-    private char top;
-    private char bottom;
-    private char left;
-    private char right;
+    protected int id;
+    protected char color;
+    protected int  players[];
+    protected char top;
+    protected char bottom;
+    protected char left;
+    protected char right;
     public Cell(){
 
     }

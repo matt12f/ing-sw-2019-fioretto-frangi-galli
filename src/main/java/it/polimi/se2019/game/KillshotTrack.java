@@ -2,9 +2,9 @@ package it.polimi.se2019.game;
 
 public class KillshotTrack {
 
-    private int skulls;
-    private String  kills [];
-    private char extraKills;
+    protected int skulls;
+    protected String  kills [];
+    protected char extraKills;
 
     /**
      * Default constructor

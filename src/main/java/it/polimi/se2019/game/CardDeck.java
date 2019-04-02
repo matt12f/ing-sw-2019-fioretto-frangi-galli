@@ -4,8 +4,8 @@ package it.polimi.se2019.game;
  * and a boolean vector of the used cards (could save computing time)
  * */
 public abstract class CardDeck {
-    private int activeDeck [];
-    private int discardedDeck [];
+    protected int activeDeck [];
+    protected int discardedDeck [];
 
     public CardDeck(){}
 
