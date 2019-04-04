@@ -1,20 +1,22 @@
 package it.polimi.se2019.game;
 
+import it.polimi.se2019.database.PowerupCard;
+
 public class PowerupsDeck extends CardDeck{
-    private int activeDeck [];
-    private int discardedDeck [];
+    private PowerupCard activeDeck [];
+    private PowerupCard discardedDeck [];
 
     public PowerupsDeck() {
-        this.activeDeck = new int[12];
-        this.discardedDeck = new int[12];
+        this.activeDeck = new PowerupCard[24];
+        this.discardedDeck = new PowerupCard[24];
         //TODO riempire il mazzo active
     }
 
-    public int[] getActiveDeck() {
+    public PowerupCard[] getActiveDeck() {
         return activeDeck;
     }
 
-    public int[] getDiscardedDeck() {
+    public PowerupCard[] getDiscardedDeck() {
         return discardedDeck;
     }
 

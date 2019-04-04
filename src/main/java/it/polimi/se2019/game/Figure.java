@@ -2,7 +2,7 @@ package it.polimi.se2019.game;
 
 public class Figure {
     private char color;
-    private int cellId;
+    private Cell currentCell;
 
     public Figure(){
 
@@ -12,12 +12,12 @@ public class Figure {
         return color;
     }
 
-    public int getCellId() {
-        return cellId;
+    public Cell getCellId() {
+        return currentCell;
     }
 
-    public void setCellId(int cellId) {
-        this.cellId = cellId;
+    public void setCellId(Cell currentCell) {
+        this.currentCell = currentCell;
     }
 
 }

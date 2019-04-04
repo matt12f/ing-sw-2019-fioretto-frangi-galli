@@ -3,7 +3,7 @@ package it.polimi.se2019.game;
 public class Room {
     private int cells[][];
     private char color;
-    private int players[];
+    private Player players[];
 
     public Room(){
 
@@ -29,7 +29,7 @@ public class Room {
      *
      * @return
      */
-    public int[] getPlayers(){
+    public Player[] getPlayers(){
         return players;
     }
 

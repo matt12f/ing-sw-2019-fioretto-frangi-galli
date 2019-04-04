@@ -1,16 +1,19 @@
 package it.polimi.se2019.game;
 
+import it.polimi.se2019.database.GunCard;
+
 public class SpawnCell extends Cell {
-    private int weaponCards[];
+    private GunCard weaponCards[];
 
     public SpawnCell(){
 
     }
 
-    /*public int[] getWeaponCards() {
+    public GunCard[] getWeaponCards() {
+
         return weaponCards;
 
-    } This class may be removed because redundant*/
+    }
 
     /** setWeaponCards fills the empty slots of the weapon cards when a card is picked up
      *

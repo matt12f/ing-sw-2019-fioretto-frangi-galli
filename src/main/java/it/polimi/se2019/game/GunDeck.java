@@ -1,21 +1,22 @@
 package it.polimi.se2019.game;
+import it.polimi.se2019.database.GunCard;
 
 
 public class GunDeck extends CardDeck{
-    private int activeDeck [];
-    private int discardedDeck [];
+    private GunCard activeDeck [];
+    private GunCard discardedDeck [];
 
     public GunDeck() {
-        this.activeDeck = new int[21];
-        this.discardedDeck = new int[21];
+        this.activeDeck = new GunCard[21];
+        this.discardedDeck = new GunCard[21];
         //TODO riempire il mazzo active
     }
 
-    public int[] getActiveDeck() {
+    public GunCard[] getActiveDeck() {
         return activeDeck;
     }
 
-    public int[] getDiscardedDeck() {
+    public GunCard[] getDiscardedDeck() {
         return discardedDeck;
     }
 

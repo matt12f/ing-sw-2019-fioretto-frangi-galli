@@ -1,24 +1,27 @@
 package it.polimi.se2019.game;
 
+import it.polimi.se2019.database.GunCard;
+import it.polimi.se2019.database.PowerupCard;
+
 public class Hand {
-    private int powerups [];
-    private int guns [];
+    private PowerupCard powerups [];
+    private GunCard guns [];
 
     public Hand(){
-        this.powerups=new int[3];
-        this.guns=new int[3];
+        this.powerups=new PowerupCard[3];
+        this.guns=new GunCard[3];
     }
 
     /**this method draws a weapon card from the player's hand
      * */
-    public int getGun() {
-        return 0;
+    public GunCard[] getGun() {
+        return guns;
     }
 
     /**this method draws a powerup from the player's hand
      * */
-    public int getPowerup() {
-        return 0;
+    public PowerupCard[] getPowerup() {
+        return powerups;
     }
     /**this method puts a gun in the player's hand
      * */

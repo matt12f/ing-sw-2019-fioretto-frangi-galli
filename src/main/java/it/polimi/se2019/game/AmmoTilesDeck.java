@@ -1,20 +1,22 @@
 package it.polimi.se2019.game;
 
-public class AmmotilesDeck extends CardDeck{
-    private int activeDeck [];
-    private int discardedDeck [];
+import it.polimi.se2019.database.AmmoTileCard;
 
-    public AmmotilesDeck() {
-        this.activeDeck = new int[21];
-        this.discardedDeck = new int[21];
+public class AmmoTilesDeck extends CardDeck{
+    private AmmoTileCard activeDeck [];
+    private AmmoTileCard discardedDeck [];
+
+    public AmmoTilesDeck() {
+        this.activeDeck = new AmmoTileCard[36];
+        this.discardedDeck = new AmmoTileCard[36];
         //TODO riempire il mazzo active
     }
 
-    public int[] getActiveDeck() {
+    public AmmoTileCard[] getActiveDeck() {
         return activeDeck;
     }
 
-    public int[] getDiscardedDeck() {
+    public AmmoTileCard[] getDiscardedDeck() {
         return discardedDeck;
     }
 
