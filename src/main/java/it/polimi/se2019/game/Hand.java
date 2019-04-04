@@ -8,8 +8,8 @@ public class Hand {
     private GunCard guns [];
 
     public Hand(){
-        this.powerups=new PowerupCard[3];
-        this.guns=new GunCard[3];
+        this.powerups = new PowerupCard[3];
+        this.guns = new GunCard[3];
     }
 
     /**this method draws a weapon card from the player's hand

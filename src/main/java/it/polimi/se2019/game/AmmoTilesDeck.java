@@ -2,7 +2,7 @@ package it.polimi.se2019.game;
 
 import it.polimi.se2019.database.AmmoTileCard;
 
-public class AmmoTilesDeck extends CardDeck{
+public class AmmoTilesDeck {
     private AmmoTileCard activeDeck [];
     private AmmoTileCard discardedDeck [];
 
@@ -25,8 +25,26 @@ public class AmmoTilesDeck extends CardDeck{
      *
      * */
     public void setActiveDeck() {
+        this.activeDeck = this.discardedDeck;
+        this.shuffle();
     }
 
-    public void setDiscardedDeck() { ;
+    public void setDiscardedDeck(AmmoTileCard card) {
+        boolean found = false;
+        int i = 0;
+        do{
+            if(discardedDeck[i] == null) {
+                discardedDeck[i] = card;
+            }else{
+                i ++;
+            }
+        }while (found == false);
+    }
+    public void shuffle(){
+
+    }
+    public AmmoTileCard draw(){
+
+        return this.activeDeck[0];
     }
 }

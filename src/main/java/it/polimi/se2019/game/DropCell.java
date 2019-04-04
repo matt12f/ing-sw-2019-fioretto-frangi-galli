@@ -7,17 +7,24 @@ public class DropCell extends Cell{
     private AmmoTileCard drop;
 
     public DropCell(int id, char color, char top, char bottom, char left, char right){
-
+        this.id = id;
+        this.color = color;
+        this.top = top;
+        this.bottom = bottom;
+        this.left = left;
+        this.right = right;
+        this.drop = new AmmoTileCard();
     }
 
     public AmmoTileCard getDrop(){
         return  drop;
     }
-    public void setDrop(){
+    public void setDrop(AmmoTileCard drop){
+        this.drop = drop;
 
     }
     public void pickDrop(){
-
+    //TODO pickDrop
     }
 
 }

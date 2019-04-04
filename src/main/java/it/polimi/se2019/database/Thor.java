@@ -1,6 +1,6 @@
 package it.polimi.se2019.database;
 
-public class Tohr extends GunCard {
+public class Thor extends GunCard {
 
     private int numberOfOptional;
     private boolean hasAlternativeEffect ;
@@ -14,7 +14,7 @@ public class Tohr extends GunCard {
     /**
      * constructor
      */
-    public Tohr() {
+    public Thor() {
         this.numberOfOptional = 2;
         this.hasAlternativeEffect = false;
         this.id = 3;

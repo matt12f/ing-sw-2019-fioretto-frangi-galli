@@ -5,7 +5,7 @@ public class DamageTracker {
     private char marks[];
 
     public DamageTracker(){
-        this.damage=new char[12];
+        this.damage = new char[12];
     }
 
     public void setDamage() {
