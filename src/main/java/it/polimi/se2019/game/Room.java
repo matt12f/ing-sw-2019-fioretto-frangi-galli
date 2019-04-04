@@ -5,7 +5,9 @@ public class Room {
     private char color;
     private Player players[];
 
-    public Room(){
+    public Room(char color){
+        this.color = color;
+        this.players = new Player[5];
 
     }
 
