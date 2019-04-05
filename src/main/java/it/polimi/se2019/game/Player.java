@@ -2,6 +2,9 @@ package it.polimi.se2019.game;
 
 public class Player {
     private String nickname;
+    /**
+     * The player's ID is used for turn rotation
+     */
     private int id;
     private int score;
     public Figure figure;
