@@ -1,25 +1,13 @@
 package it.polimi.se2019.database;
 
 public class PowerupCard {
-
+    private String powerupType;
+    private char cubeColor;
     /**
      * Default constructor
      */
     public PowerupCard() {
     }
-    private int id;
-    private String powerupType;
-    private char cubeColor;
-    public void PowerupCard() {
-    }
-
-    /**
-     * @return
-     */
-    public int getId() {
-        return 0;
-    }
-
     /**
      * @return
      */

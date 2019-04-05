@@ -3,7 +3,7 @@ package it.polimi.se2019.game;
 public class Game {
     private int gameNumberId;
 
-    public Player playerList [];
+    public Player [] playerList;
     public Map currentMap;
     private String gameMode;
     public Decks currentDecks;
@@ -11,14 +11,14 @@ public class Game {
     private boolean finalFrenzy;
 
     public Game(){
-
+    //TODO scrivere costruttore
     }
 
     public int getGameNumberId() {
         return gameNumberId;
     }
 
-    public Player[] getPlayerList() {
+    public Player [] getPlayerList() {
         return playerList;
     }
 

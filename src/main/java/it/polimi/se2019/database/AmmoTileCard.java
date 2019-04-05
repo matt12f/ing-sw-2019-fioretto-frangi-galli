@@ -1,25 +1,20 @@
  package it.polimi.se2019.database;
 
-public class AmmoTileCard {
 
-    private int id;
+ public class AmmoTileCard {
+
     private char[] content;
     /**
      *  constructor
      */
     public AmmoTileCard() {
     }
-    /**
-     * @return
-     */
-    public int getId() {
-        return 0;
-    }
 
     /**
-     * @return
+     *
+     *
      */
-    public char[] getContent() {
+    public char [] getContent() {
         return null;
     }
 

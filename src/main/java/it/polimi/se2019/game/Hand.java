@@ -4,8 +4,8 @@ import it.polimi.se2019.database.GunCard;
 import it.polimi.se2019.database.PowerupCard;
 
 public class Hand {
-    private PowerupCard powerups [];
-    private GunCard guns [];
+    private PowerupCard [] powerups;
+    private GunCard [] guns;
 
     public Hand(){
         this.powerups = new PowerupCard[3];
@@ -26,9 +26,12 @@ public class Hand {
     /**this method puts a gun in the player's hand
      * */
     public void setGun() {
+       // TODO scrivere metodo
     }
+
     /**this method puts a powerup in the player's hand
      * */
     public void setPowerup() {
+        // TODO scrivere metodo
     }
 }

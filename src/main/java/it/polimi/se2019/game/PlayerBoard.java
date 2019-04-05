@@ -20,7 +20,7 @@ public class PlayerBoard {
      *
      */
     public void setSkulls() {
-        //TODO setSkulls scrivere codice
+        //TODO scrivere codice
     }
 
     /**Return the player's number of death
@@ -32,6 +32,6 @@ public class PlayerBoard {
     /**This method "flips" the action board, creating a frenzy one and dumping the normal one
      * */
     public void activateFrenzy(){
-        //TODO activateFrenzy scrivere codice
+        //TODO scrivere codice
     }
 }

@@ -1,8 +1,8 @@
 package it.polimi.se2019.game;
 
 public class Map {
-    public Room rooms[];
-    public Cell boardMatrix[][];
+    public Room [] rooms;
+    public Cell [][]boardMatrix;
 
     public Map(int config){
         /**

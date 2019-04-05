@@ -5,7 +5,7 @@ public class Figure {
     private Cell currentCell;
 
     public Figure(){
-
+    //TODO scrivere costruttore
     }
 
     public char getColor() {

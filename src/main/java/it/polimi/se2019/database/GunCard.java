@@ -2,15 +2,12 @@ package it.polimi.se2019.database;
 
 public abstract class GunCard {
     protected   char [] ammoCost;
+    //TODO rimuovere i riferimenti agli ID nelle classi delle carte!!
     protected int id;
+
     public GunCard(){
 
     }
-
-    public int getId() {
-        return id;
-    }
-
     public char[] getAmmoCost() {
         return ammoCost;
     }

@@ -10,7 +10,9 @@ public class Player {
     public Figure figure;
     public PlayerBoard playerBoard;
 
-    public Player(){ }
+    public Player(){
+        //TODO scrivere costruttore
+    }
 
     public int getId() {
         return id;

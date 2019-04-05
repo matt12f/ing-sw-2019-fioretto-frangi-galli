@@ -12,9 +12,9 @@ public abstract class ActionTile {
     /** The get method is useless here because the actionCounter will only be used inside the class itself.
      * The set method is useless here because actionCounter will be set by the constructor only once.
      */
-    //public void setActionCounter() { }
+    public void setActionCounter() { }
 
-    //public int getActionCounter() { }
+    public void getActionCounter() { }
 
     /**
      * This method gets overridden by its heirs, which actually use it.

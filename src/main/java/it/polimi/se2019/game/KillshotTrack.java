@@ -3,7 +3,7 @@ package it.polimi.se2019.game;
 public class KillshotTrack {
 
     protected int skulls;
-    protected String  kills [];
+    protected String [] kills;
     protected char extraKills;
 
     /**
@@ -23,6 +23,7 @@ public class KillshotTrack {
     }
 
     public void setKills() {
+        // TODO scrivere metodo
     }
 
     public String[] getKills() {
@@ -30,6 +31,7 @@ public class KillshotTrack {
     }
 
     public void setExtraKills() {
+        // TODO scrivere metodo
     }
 
     public char getExtraKills() {
