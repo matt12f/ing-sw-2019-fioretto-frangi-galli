@@ -3,8 +3,8 @@ package it.polimi.se2019.game;
 import it.polimi.se2019.database.PowerupCard;
 
 public class PowerupsDeck {
-    private PowerupCard activeDeck [];
-    private PowerupCard discardedDeck [];
+    private PowerupCard [] activeDeck ;
+    private PowerupCard [] discardedDeck;
 
     public PowerupsDeck() {
         this.activeDeck = new PowerupCard[24];
@@ -33,7 +33,7 @@ public class PowerupsDeck {
     /**This method is used to update the deck of discarded cards
      *
      */
-    public void setDiscardedDeck(PowerupCard card) { ;
+    public void setDiscardedDeck(PowerupCard card) {
         //TODO setDiscardedDeck check code
         boolean found = false;
         int i = 0;
@@ -43,13 +43,13 @@ public class PowerupsDeck {
             }else{
                 i ++;
             }
-        }while (found == false);
+        }while (!found);
 
     }
     public void shuffle(){
         //TODO shuffle
-        //creare vettore di comodo e vettore nteger random,
-        //trasferire nell'ordine del random da acive al vettore di comodo
+        //creare vettore di comodo e vettore integer random,
+        //trasferire nell'ordine del random da active al vettore di comodo
         // ricaricare tutto nell'active deck
     }
     public PowerupCard draw(){

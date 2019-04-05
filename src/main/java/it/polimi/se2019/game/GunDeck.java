@@ -3,8 +3,8 @@ import it.polimi.se2019.database.*;
 
 
 public class GunDeck {
-    private GunCard activeDeck [];
-    private GunCard discardedDeck [];
+    private GunCard [] activeDeck;
+    private GunCard [] discardedDeck;
 
     public GunDeck() {
         this.activeDeck = new GunCard[21];
@@ -34,8 +34,6 @@ public class GunDeck {
         this.activeDeck[19] = new Shotgun();
         this.activeDeck[20] = new Sledgehammer();
         this.shuffle();
-
-
     }
 
     public GunCard[] getActiveDeck() {
@@ -54,6 +52,7 @@ public class GunDeck {
         this.activeDeck = this.discardedDeck;
         this.shuffle();
     }
+    //TODO check metodo
     public void setDiscardedDeck(GunCard card) {
         boolean found = false;
         int i = 0;
@@ -63,10 +62,10 @@ public class GunDeck {
             }else{
                 i ++;
             }
-        }while (found == false);
+        }while (!found);
     }
     public void shuffle(){
-
+    //TODO scrivere metodo che mischi le carte
     }
 
     public GunCard draw(){

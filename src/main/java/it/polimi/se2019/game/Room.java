@@ -1,9 +1,9 @@
 package it.polimi.se2019.game;
 
 public class Room {
-    private int cells[][];
+    private int [][] cells;
     private char color;
-    private Player players[];
+    private Player [] players;
 
     public Room(char color){
         this.color = color;

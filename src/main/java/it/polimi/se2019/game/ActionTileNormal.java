@@ -29,7 +29,7 @@ public class ActionTileNormal extends ActionTile {
      *
      */
     public void setAdrenalineMode1() {
-        if(this.adrenalineMode1 == false) {
+        if(!this.adrenalineMode1) {
             this.adrenalineMode1 = true;
         }else {
             this.adrenalineMode1 = false;
@@ -40,7 +40,7 @@ public class ActionTileNormal extends ActionTile {
      * This set method enables/disable adrenaline mode 2
      */
     public void setAdrenalineMode2() {
-        if(this.adrenalineMode2 == false) {
+        if(!this.adrenalineMode2) {
             this.adrenalineMode2 = true;
         }else {
             this.adrenalineMode2 = false;

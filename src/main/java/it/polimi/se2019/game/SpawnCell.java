@@ -3,7 +3,7 @@ package it.polimi.se2019.game;
 import it.polimi.se2019.database.GunCard;
 
 public class SpawnCell extends Cell {
-    private GunCard weaponCards[];
+    private GunCard [] weaponCards;
 
     public SpawnCell(int id, char color, char top, char bottom, char left, char right){
         this.id = id;

@@ -3,8 +3,8 @@ package it.polimi.se2019.game;
 import it.polimi.se2019.database.AmmoTileCard;
 
 public class AmmoTilesDeck {
-    private AmmoTileCard activeDeck [];
-    private AmmoTileCard discardedDeck [];
+    private AmmoTileCard [] activeDeck;
+    private AmmoTileCard [] discardedDeck;
 
     public AmmoTilesDeck() {
         this.activeDeck = new AmmoTileCard[36];
@@ -28,7 +28,7 @@ public class AmmoTilesDeck {
         this.activeDeck = this.discardedDeck;
         this.shuffle();
     }
-
+    //TODO Check metodo
     public void setDiscardedDeck(AmmoTileCard card) {
         boolean found = false;
         int i = 0;
@@ -38,10 +38,11 @@ public class AmmoTilesDeck {
             }else{
                 i ++;
             }
-        }while (found == false);
+        }while (!found);
     }
-    public void shuffle(){
 
+    public void shuffle(){
+    //TODO Scrivere codice che mischi le carte
     }
     public AmmoTileCard draw(){
 
