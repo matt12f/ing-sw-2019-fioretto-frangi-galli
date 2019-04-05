@@ -13,7 +13,7 @@ public class TractorBeam extends GunCard {
      */
     public TractorBeam() {
         this.hasAlternativeEffect = true;
-        this.id = 7;
+
         this.ammoCost = new char[1];
         ammoCost[0]= 'b';
         this.basicEffectDescription ="basic mode: Move a target 0, 1, or 2 squares to a square\n" +

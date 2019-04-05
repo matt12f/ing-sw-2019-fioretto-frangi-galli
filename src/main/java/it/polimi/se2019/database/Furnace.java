@@ -13,7 +13,7 @@ public class Furnace extends GunCard {
      */
     public Furnace() {
         this.hasAlternativeEffect = true;
-        this.id = 9;
+
         this.ammoCost = new char[2];
         ammoCost[0]= 'r';
         ammoCost[1]= 'b';

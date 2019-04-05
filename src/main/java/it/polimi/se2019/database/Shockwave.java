@@ -13,7 +13,7 @@ public class Shockwave extends GunCard {
      */
     public Shockwave() {
         this.hasAlternativeEffect = true;
-        this.id = 20;
+
         this.ammoCost = new char[1];
         ammoCost[0]= 'y';
         this.basicEffectDescription ="basic mode: Choose up to 3 targets on\n" +

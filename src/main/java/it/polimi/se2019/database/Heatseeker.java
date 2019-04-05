@@ -13,7 +13,7 @@ public class Heatseeker extends GunCard {
 
         this.numberOfOptional = 0;
         this.hasAlternativeEffect = false;
-        this.id = 10;
+
         this.ammoCost = new char[3];
         ammoCost[0] = 'r';
         ammoCost[1]= 'r';

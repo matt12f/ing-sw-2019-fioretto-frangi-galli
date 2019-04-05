@@ -17,7 +17,7 @@ public class RocketLauncher extends GunCard {
     public RocketLauncher() {
         this.numberOfOptional = 2;
         this.hasAlternativeEffect = false;
-        this.id = 14;
+
         this.ammoCost = new char[2];
         ammoCost[0]= 'r';
         ammoCost[1]= 'r';

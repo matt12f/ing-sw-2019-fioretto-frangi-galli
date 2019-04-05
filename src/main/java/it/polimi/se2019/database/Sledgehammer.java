@@ -13,7 +13,7 @@ public class Sledgehammer extends GunCard {
      */
     public Sledgehammer() {
         this.hasAlternativeEffect = true;
-        this.id = 21;
+
         this.ammoCost = new char[2];
         ammoCost[0]= 'y';
         this.basicEffectDescription ="basic mode: Deal 2 damage to 1 target on\n" +

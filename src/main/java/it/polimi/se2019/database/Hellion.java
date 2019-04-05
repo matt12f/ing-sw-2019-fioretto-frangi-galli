@@ -13,7 +13,7 @@ public class Hellion extends GunCard {
      */
     public Hellion() {
         this.hasAlternativeEffect = true;
-        this.id = 11;
+
         this.ammoCost = new char[2];
         ammoCost[0]= 'r';
         ammoCost[1]= 'y';

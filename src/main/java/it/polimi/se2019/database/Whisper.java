@@ -12,7 +12,7 @@ public class Whisper extends GunCard {
     public Whisper() {
         this.numberOfOptional = 0;
         this.hasAlternativeEffect = false;
-        this.id = 5;
+
         this.ammoCost = new char[3];
         ammoCost[0] = 'b';
         ammoCost[1]= 'b';

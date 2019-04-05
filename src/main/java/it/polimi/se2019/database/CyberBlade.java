@@ -17,7 +17,7 @@ public class CyberBlade extends GunCard {
     public CyberBlade() {
         this.numberOfOptional = 2;
         this.hasAlternativeEffect = false;
-        this.id = 16;
+
         this.ammoCost = new char[2];
         ammoCost[0]= 'y';
         ammoCost[1]= 'r';

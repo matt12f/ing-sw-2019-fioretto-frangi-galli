@@ -13,7 +13,7 @@ public class GrenadeLauncher extends GunCard {
     public GrenadeLauncher() {
         this.numberOfOptional = 1;
         this.hasAlternativeEffect = false;
-        this.id = 13;
+
         this.ammoCost = new char[1];
         ammoCost[0]= 'r';
         this.basicEffectDescription ="basic effect: Deal 1 damage to 1 target you can see. Then you may move\n" +

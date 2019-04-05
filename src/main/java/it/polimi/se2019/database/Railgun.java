@@ -13,7 +13,7 @@ public class Railgun extends GunCard {
      */
     public Railgun() {
         this.hasAlternativeEffect = true;
-        this.id = 15;
+
         this.ammoCost = new char[3];
         ammoCost[0]= 'y';
         ammoCost[1]= 'y';

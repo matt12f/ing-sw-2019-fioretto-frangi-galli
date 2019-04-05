@@ -13,7 +13,7 @@ public class PowerGlove extends GunCard {
      */
     public PowerGlove() {
         this.hasAlternativeEffect = true;
-        this.id = 19;
+
         this.ammoCost = new char[2];
         ammoCost[0]= 'y';
         ammoCost[1]= 'b';

@@ -13,7 +13,7 @@ public class FlameThrower extends GunCard {
      */
     public FlameThrower() {
         this.hasAlternativeEffect = true;
-        this.id = 12;
+
         this.ammoCost = new char[1];
         ammoCost[0]= 'r';
         this.basicEffectDescription ="basic mode: Choose a square 1 move away and possibly a second square\n" +

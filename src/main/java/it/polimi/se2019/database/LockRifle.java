@@ -14,7 +14,7 @@ public class LockRifle extends GunCard {
 
         this.numberOfOptional = 1;
         this.hasAlternativeEffect = false;
-        this.id = 1;
+
         this.ammoCost = new char[2];
         ammoCost[0]= 'b';
         ammoCost[1]= 'b';

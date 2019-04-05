@@ -13,7 +13,7 @@ public class Shotgun extends GunCard {
      */
     public Shotgun() {
         this.hasAlternativeEffect = true;
-        this.id = 18;
+
         this.ammoCost = new char[2];
         ammoCost[0]= 'y';
         ammoCost[1]= 'y';

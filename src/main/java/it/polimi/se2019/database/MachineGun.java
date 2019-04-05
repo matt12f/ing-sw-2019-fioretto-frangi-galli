@@ -17,7 +17,7 @@ public class MachineGun extends GunCard {
     public MachineGun() {
         this.numberOfOptional = 2;
         this.hasAlternativeEffect = false;
-        this.id = 2;
+
         this.ammoCost = new char[2];
         ammoCost[0]= 'b';
         ammoCost[1]= 'r';

@@ -14,7 +14,7 @@ public class Electroscythe extends GunCard {
     public Electroscythe() {
 
         this.hasAlternativeEffect = true;
-        this.id = 6;
+
         this.ammoCost = new char[1];
         ammoCost[0]= 'b';
         this.basicEffectDescription ="basic mode: Deal 1 damage to every other player\n" +

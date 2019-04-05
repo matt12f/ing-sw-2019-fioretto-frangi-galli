@@ -17,7 +17,7 @@ public class PlasmaGun extends GunCard {
     public PlasmaGun() {
         this.numberOfOptional = 2;
         this.hasAlternativeEffect = false;
-        this.id = 4;
+
         this.ammoCost = new char[2];
         ammoCost[0] = 'b';
         ammoCost[1]= 'y';
