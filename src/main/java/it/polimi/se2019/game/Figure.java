@@ -12,11 +12,11 @@ public class Figure {
         return color;
     }
 
-    public Cell getCellId() {
+    public Cell getCell() {
         return currentCell;
     }
 
-    public void setCellId(Cell currentCell) {
+    public void setCell(Cell currentCell) {
         this.currentCell = currentCell;
     }
 
