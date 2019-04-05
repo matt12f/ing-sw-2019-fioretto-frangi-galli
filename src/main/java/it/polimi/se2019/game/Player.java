@@ -7,7 +7,14 @@ public class Player {
     public Figure figure;
     public PlayerBoard playerBoard;
 
-    public Player(){ }
+    public Player(int id, String nickname, char color){
+        //TODO assegnazione figura e playerboard in base al colore di input
+        this.id = id;
+        this.nickname = nickname;
+        this.score = 0;
+        this.playerBoard = new PlayerBoard(color);
+        this.figure = new Figure(color);
+    }
 
     public int getId() {
         return id;

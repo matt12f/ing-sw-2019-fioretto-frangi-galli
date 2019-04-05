@@ -9,6 +9,16 @@ public class PlayerBoard {
     public ActionTileFrenzy actionTileFrenzy;
     public Hand hand;
 
+    public PlayerBoard(char color){
+        this.color = color;
+        this.ammo = new Ammo();
+        this.damage = new DamageTracker();
+        this.actionTile = new ActionTileNormal();
+        this.hand = new Hand();
+        this.skulls = 0;
+
+    }
+
     /**Return the avatar color
      *
      */

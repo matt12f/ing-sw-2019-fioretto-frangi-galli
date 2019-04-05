@@ -4,8 +4,8 @@ public class Figure {
     private char color;
     private Cell currentCell;
 
-    public Figure(){
-
+    public Figure(char color){
+        this.color = color;
     }
 
     public char getColor() {
