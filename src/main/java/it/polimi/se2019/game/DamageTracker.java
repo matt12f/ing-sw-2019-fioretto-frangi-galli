@@ -1,8 +1,8 @@
 package it.polimi.se2019.game;
 
 public class DamageTracker {
-    private char damage[];
-    private char marks[];
+    private char [] damage;
+    private char [] marks;
 
     public DamageTracker(){
         this.damage = new char[12];

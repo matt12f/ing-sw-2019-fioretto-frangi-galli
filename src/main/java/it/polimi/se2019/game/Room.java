@@ -1,7 +1,6 @@
 package it.polimi.se2019.game;
 
 public class Room {
-    private int [][] cells;
     private char color;
     private Player [] players;
 
@@ -9,14 +8,6 @@ public class Room {
         this.color = color;
         this.players = new Player[5];
 
-    }
-
-    /**This method return the cells that compose the room
-     *
-     * @return
-     */
-    public int[][] getcells(){
-        return cells;
     }
 
     /**getColors returns the color of the room
@@ -27,7 +18,7 @@ public class Room {
         return color;
     }
 
-    /**This method returns all the player in the room
+    /**This method returns all the players in the room
      *
      * @return
      */
@@ -35,7 +26,7 @@ public class Room {
         return players;
     }
 
-    /**setPlayers is used to set and update the list of the player in the room
+    /**setPlayers is used to set and update the list of the players in the room
      *
      */
     public void setPlayers(Player newPlayer){
