@@ -17,7 +17,7 @@ public abstract class Cell {
     public Player[] getPlayers(){
         return players;
     }
-    public void setPlayers(){
+    public void setPlayers(Player newPlayer){
 
     }
 }

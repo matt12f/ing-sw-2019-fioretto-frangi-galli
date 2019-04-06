@@ -25,13 +25,13 @@ public class Hand {
     }
     /**this method puts a gun in the player's hand
      * */
-    public void setGun() {
+    public void setGun(GunCard gun) {
        // TODO scrivere metodo
     }
 
     /**this method puts a powerup in the player's hand
      * */
-    public void setPowerup() {
+    public void setPowerup(PowerupCard powerup) {
         // TODO scrivere metodo
     }
 }

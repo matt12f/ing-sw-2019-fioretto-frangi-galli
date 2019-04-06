@@ -8,10 +8,10 @@ public class DamageTracker {
         this.damage = new char[12];
     }
 
-    public void setDamage() {
+    public void setDamage( char damage) {
     }
 
-    public void setMarks() {
+    public void setMarks(char mark) {
     }
 
     public char[] getMarks() {

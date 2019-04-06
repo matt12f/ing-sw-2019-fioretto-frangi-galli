@@ -24,14 +24,14 @@ public class SpawnCell extends Cell {
     /** setWeaponCards fills the empty slots of the weapon cards when a card is picked up
      *
      */
-    public void setWeaponCards(){
+    public void setWeaponCards(GunCard weapon){
         //TODO setWeaponCards
 
 
      }
      /**Method that displays the 3 cards that the player can pick in the spawn point and he can pick up one*
       **/
-    public void pickWeapon(){
+    public void pickWeapon(int pick){
         //TODO pickWeapon
 
      }
