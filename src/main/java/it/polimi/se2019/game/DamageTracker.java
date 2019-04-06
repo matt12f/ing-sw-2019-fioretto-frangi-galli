@@ -1,8 +1,10 @@
 package it.polimi.se2019.game;
 
+import java.util.ArrayList;
+
 public class DamageTracker {
     private char [] damage;
-    private char [] marks;
+    private ArrayList<String> marks;
 
     public DamageTracker(){
         this.damage = new char[12];
@@ -14,7 +16,7 @@ public class DamageTracker {
     public void setMarks(char mark) {
     }
 
-    public char[] getMarks() {
+    public ArrayList<String> getMarks() {
         return marks;
     }
 

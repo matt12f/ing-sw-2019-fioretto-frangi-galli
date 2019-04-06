@@ -6,8 +6,8 @@ public class DropCell extends Cell{
 
     private AmmoTileCard drop;
 
-    public DropCell(int id, char color, char top, char bottom, char left, char right){
-        this.id = id;
+    public DropCell(char color, char top, char bottom, char left, char right){
+
         this.color = color;
         this.top = top;
         this.bottom = bottom;
