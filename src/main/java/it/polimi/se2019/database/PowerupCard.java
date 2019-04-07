@@ -6,20 +6,27 @@ public class PowerupCard {
     /**
      * Default constructor
      */
-    public PowerupCard() {
+    public PowerupCard(String type, char color) {
+        this.cubeColor=color;
+        this.powerupType=type;
+    }
+
+    public PowerupCard( PowerupCard card){
+        this.powerupType = card.getPowerupType();
+        this.cubeColor = card.getCubeColor();
     }
     /**
      * @return
      */
     public String getPowerupType() {
-        return "";
+        return this.powerupType;
     }
 
     /**
      * @return
      */
     public char getCubeColor() {
-        return '0';
+        return this.cubeColor;
     }
 
     public void doAction() {
