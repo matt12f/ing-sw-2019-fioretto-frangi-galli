@@ -3,19 +3,20 @@
 
  public class AmmoTileCard {
 
-    private char[] content;
+    private String content;
     /**
      *  constructor
      */
-    public AmmoTileCard() {
+    public AmmoTileCard(String cont) {
+        this.content=cont;
     }
 
     /**
      *
      *
      */
-    public char [] getContent() {
-        return null;
+    public String getContent() {
+        return content;
     }
 
 }

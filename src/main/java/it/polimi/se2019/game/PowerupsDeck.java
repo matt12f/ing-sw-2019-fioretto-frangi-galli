@@ -70,21 +70,21 @@ public class PowerupsDeck {
         ArrayList<PowerupCard> Temp2 = new ArrayList<PowerupCard>();
         PowerupCard swipe;
         int random2 = (int)(Math.random()*(22))+1;
-        random= ((int)(Math.random()*(9))+1)*((int)(Math.random()*(14))+1);
+        random= ((int)(Math.random()*(9))+1)*((int)(Math.random()*(9))+1);
         //using Temp2 to copy active
         for(PowerupCard card: activeDeck){
             Temp2.add(card);
         }
         //Shuffles all the cards
         for(i=0; i<random; i++){
-            while (i<activeDeck.size()/2){
+            while (i<this.activeDeck.size()/2){
                 Temp1.add(Temp2.get(i));
                 Temp1.add(Temp2.get(Temp2.size()-i));
             }
             swipe=Temp1.get((int)random2);
             Temp1.set((int)random2, Temp1.get(0));
             Temp1.set(0, swipe);
-            while (i<activeDeck.size()/2){
+            while (i<this.activeDeck.size()/2){
                 Temp2.add(Temp1.get(i));
                 Temp2.add(Temp1.get(Temp1.size()-i));
             }
@@ -93,7 +93,7 @@ public class PowerupsDeck {
             Temp2.set(0, swipe);
         }
 
-        activeDeck=Temp2;
+        this.activeDeck=Temp2;
     }
 
     /**
