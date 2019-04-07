@@ -19,7 +19,7 @@ public class GunDeck {
         this.activeDeck = new ArrayList<GunCard>();
         this.discardedDeck = new ArrayList<GunCard>();
         used= new int[21];
-        Random random;
+        Random random = new Random();
         for(i=0; i<21; i++){
             used[i]=0;
         }
