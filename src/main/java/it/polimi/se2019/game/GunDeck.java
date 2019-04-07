@@ -1,74 +1,110 @@
 package it.polimi.se2019.game;
 import it.polimi.se2019.database.*;
 
+import java.util.*;
+
 
 public class GunDeck {
-    private GunCard [] activeDeck;
-    private GunCard [] discardedDeck;
+    private ArrayList<GunCard> activeDeck;
+    private ArrayList<GunCard> discardedDeck;
 
+    /**This method create a shuffled deck, the array "used" says if a card (1 slot per card) is already in the deck, then a random
+     * int is created with "random", and with a switch the integer is translated into a gunCard, then putted into the deck
+     *
+     */
     public GunDeck() {
-        this.activeDeck = new GunCard[21];
-        this.discardedDeck = new GunCard[21];
-        /**
-         * creation of the 21 guns
-         */
-        this.activeDeck[0] = new LockRifle();
-        this.activeDeck[1] = new MachineGun();
-        this.activeDeck[2] = new Thor();
-        this.activeDeck[3] = new PlasmaGun();
-        this.activeDeck[4] = new Whisper();
-        this.activeDeck[5] = new Electroscythe();
-        this.activeDeck[6] = new TractorBeam();
-        this.activeDeck[7] = new VortexCannon();
-        this.activeDeck[8] = new Furnace();
-        this.activeDeck[9] = new Heatseeker();
-        this.activeDeck[10] = new Hellion();
-        this.activeDeck[11] = new FlameThrower();
-        this.activeDeck[12] = new GrenadeLauncher();
-        this.activeDeck[13] = new RocketLauncher();
-        this.activeDeck[14] = new Railgun();
-        this.activeDeck[15] = new CyberBlade();
-        this.activeDeck[16] = new Zx2();
-        this.activeDeck[17] = new Shotgun();
-        this.activeDeck[18] = new PowerGlove();
-        this.activeDeck[19] = new Shotgun();
-        this.activeDeck[20] = new Sledgehammer();
-        this.shuffle();
+        int used[];
+        int i;
+        int temp;
+        this.activeDeck = new ArrayList<GunCard>();
+        this.discardedDeck = new ArrayList<GunCard>();
+        used= new int[21];
+        Random random = new Random();
+        for(i=0; i<21; i++){
+            used[i]=0;
+        }
+        while (this.activeDeck.size()<21){
+            temp=random.nextInt(21);
+            if (used[temp]==0) {
+                used[temp] = 1;
+                switch (temp) {
+                    case 0:
+                        activeDeck.add(new LockRifle());
+                        break;
+                    case 1:
+                        activeDeck.add(new Electroscythe());
+                        break;
+                    case 2:
+                        activeDeck.add(new MachineGun());
+                        break;
+                    case 3:
+                        activeDeck.add(new TractorBeam());
+                        break;
+                    case 4:
+                        activeDeck.add(new Thor());
+                        break;
+                    case 5:
+                        activeDeck.add(new VortexCannon());
+                        break;
+                    case 6:
+                        activeDeck.add(new Furnace());
+                        break;
+                    case 7:
+                        activeDeck.add(new PlasmaGun());
+                        break;
+                    case 8:
+                        activeDeck.add(new Heatseeker());
+                        break;
+                    case 9:
+                        activeDeck.add(new Whisper());
+                        break;
+                    case 10:
+                        activeDeck.add(new Hellion());
+                        break;
+                    case 11:
+                        activeDeck.add(new FlameThrower());
+                        break;
+                    case 12:
+                        activeDeck.add(new Zx2());
+                        break;
+                    case 13:
+                        activeDeck.add(new GrenadeLauncher());
+                        break;
+                    case 14:
+                        activeDeck.add(new Shotgun());
+                        break;
+                    case 15:
+                        activeDeck.add(new RocketLauncher());
+                        break;
+                    case 16:
+                        activeDeck.add(new PowerGlove());
+                        break;
+                    case 17:
+                        activeDeck.add(new Railgun());
+                        break;
+                    case 18:
+                        activeDeck.add(new Shockwave());
+                        break;
+                    case 19:
+                        activeDeck.add(new CyberBlade());
+                        break;
+                    case 20:
+                        activeDeck.add(new Sledgehammer());
+                        break;
+                }
+            }
+        }
     }
 
-    public GunCard[] getActiveDeck() {
+    public ArrayList<GunCard> getActiveDeck() {
         return activeDeck;
     }
 
-    public GunCard[] getDiscardedDeck() {
-        return discardedDeck;
-    }
-
-    /** This method is called when activeDeck gets emptied. It takes the discardedDeck and
-     * shuffles its content back to the activeDeck
-     *
-     * */
-    public void setActiveDeck() {
-        this.activeDeck = this.discardedDeck;
-        this.shuffle();
-    }
-    //TODO check metodo
-    public void setDiscardedDeck(GunCard card) {
-        boolean found = false;
-        int i = 0;
-        do{
-            if(discardedDeck[i] == null) {
-                discardedDeck[i] = card;
-            }else{
-                i ++;
-            }
-        }while (!found);
-    }
-    public void shuffle(){
-    //TODO scrivere metodo che mischi le carte
-    }
 
     public GunCard draw(){
-        return this.activeDeck[0];
+        GunCard drawn;
+        drawn =  activeDeck.get(0);
+        activeDeck.remove(0);
+        return drawn;
     }
 }

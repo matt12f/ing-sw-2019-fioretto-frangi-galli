@@ -6,11 +6,12 @@ import it.polimi.se2019.database.PowerupCard;
 import java.util.ArrayList;
 
 public class Hand {
-    private ArrayList<PowerupCard>  powerups;
+    private PowerupCard []  powerups;
     private GunCard [] guns;
 
     public Hand(){
         this.guns = new GunCard[3];
+        this.powerups = new PowerupCard[3];
     }
 
     /**this method draws a weapon card from the player's hand
@@ -21,7 +22,7 @@ public class Hand {
 
     /**this method draws a powerup from the player's hand
      * */
-    public ArrayList<PowerupCard> getPowerup() {
+    public PowerupCard[] getPowerup() {
         return powerups;
     }
     /**this method puts a gun in the player's hand
