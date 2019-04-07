@@ -1,22 +1,15 @@
 package it.polimi.se2019.game;
 
+import java.util.ArrayList;
+
 public class Room {
-    private int [][] cells;
     private char color;
-    private Player [] players;
+    private ArrayList<Player>  players;
 
     public Room(char color){
         this.color = color;
-        this.players = new Player[5];
 
-    }
 
-    /**This method return the cells that compose the room
-     *
-     * @return
-     */
-    public int[][] getcells(){
-        return cells;
     }
 
     /**getColors returns the color of the room
@@ -27,18 +20,22 @@ public class Room {
         return color;
     }
 
-    /**This method returns all the player in the room
+    /**This method returns all the players in the room
      *
      * @return
      */
-    public Player[] getPlayers(){
+    public ArrayList<Player> getPlayers(){
         return players;
     }
 
-    /**setPlayers is used to set and update the list of the player in the room
+    /**setPlayers is used to set and update the list of the players in the room
      *
      */
-    public void setPlayers(){
+    public void addPlayers(Player newPlayer){
+        //TODO setPlayers scrivere codice
+
+    }
+    public void removePlayers(Player player){
         //TODO setPlayers scrivere codice
 
     }

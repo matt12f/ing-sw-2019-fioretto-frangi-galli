@@ -10,7 +10,9 @@ public abstract class ActionTile {
     public ActionTile(){}
 
 
-    public void getActionCounter() { }
+    public int getActionCounter() {
+       return actionCounter;
+    }
 
     /**
      * This method gets overridden by its heirs, which actually use it.

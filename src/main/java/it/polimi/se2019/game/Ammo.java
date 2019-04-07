@@ -26,16 +26,16 @@ public class Ammo {
     }
 
     /**
-     * these set methods could be re-engineered as "adding" methods rather than set. Considering that
+     * these set methods could be re-engineered as "adding" or "subtract" methods rather than set. Considering that
      * we'll only be adding/removing cubes from the tile's Ammo space.
      */
     public void setBlue(int blue) {
-        this.blue = blue;
+
     }
     public void setRed(int red) {
-        this.red = red;
+
     }
     public void setYellow(int yellow) {
-        this.yellow = yellow;
+
     }
 }

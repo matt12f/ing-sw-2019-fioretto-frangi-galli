@@ -8,7 +8,7 @@ public class Player {
     public PlayerBoard playerBoard;
 
     public Player(int id, String nickname, char color){
-        //TODO assegnazione figura e playerboard in base al colore di input
+
         this.id = id;
         this.nickname = nickname;
         this.score = 0;

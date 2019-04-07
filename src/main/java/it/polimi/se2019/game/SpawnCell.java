@@ -5,8 +5,7 @@ import it.polimi.se2019.database.GunCard;
 public class SpawnCell extends Cell {
     private GunCard [] weaponCards;
 
-    public SpawnCell(int id, char color, char top, char bottom, char left, char right){
-        this.id = id;
+    public SpawnCell(char color, char top, char bottom, char left, char right){
         this.color = color;
         this.top = top;
         this.bottom = bottom;
@@ -24,14 +23,14 @@ public class SpawnCell extends Cell {
     /** setWeaponCards fills the empty slots of the weapon cards when a card is picked up
      *
      */
-    public void setWeaponCards(){
+    public void setWeaponCards(GunCard weapon){
         //TODO setWeaponCards
 
 
      }
      /**Method that displays the 3 cards that the player can pick in the spawn point and he can pick up one*
       **/
-    public void pickWeapon(){
+    public void pickWeapon(int pick){
         //TODO pickWeapon
 
      }

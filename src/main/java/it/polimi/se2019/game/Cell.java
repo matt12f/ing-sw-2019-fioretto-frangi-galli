@@ -1,9 +1,10 @@
 package it.polimi.se2019.game;
 
+import java.util.ArrayList;
+
 public abstract class Cell {
-    protected int id;
     protected char color;
-    protected Player [] players;
+    protected ArrayList <Player> players;
     protected char top;
     protected char bottom;
     protected char left;
@@ -11,13 +12,9 @@ public abstract class Cell {
     public Cell(){
 
     }
-    public int getId(){
-        return id;
-    }
-    public Player[] getPlayers(){
+    public ArrayList<Player> getPlayers(){
         return players;
     }
-    public void setPlayers(){
-
-    }
+    public void addPlayers(Player newPlayer){ }
+    public void removePlayers(Player Player){ }
 }

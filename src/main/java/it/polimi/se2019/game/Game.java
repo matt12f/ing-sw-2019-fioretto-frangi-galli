@@ -1,9 +1,11 @@
 package it.polimi.se2019.game;
 
+import java.util.ArrayList;
+
 public class Game {
     private int gameNumberId;
 
-    public Player [] playerList;
+    public ArrayList<Player> playerList;
     public Map currentMap;
     private String gameMode;
     public Decks currentDecks;
@@ -18,7 +20,7 @@ public class Game {
         return gameNumberId;
     }
 
-    public Player [] getPlayerList() {
+    public ArrayList<Player> getPlayerList() {
         return playerList;
     }
 
