@@ -8,8 +8,8 @@ public class Map {
         /**
          * room standard: 1-red 2-yellow 3-blue 4-white 5-green 6-violet
          */
-        //this.boardMatrix = new Cell[3][4];
-        //this.rooms = new Room[6];
+        this.boardMatrix = new Cell[3][4];
+        this.rooms = new Room[6];
         switch (config){
             case 1: //config with only 1 green cell
                 //room creation
