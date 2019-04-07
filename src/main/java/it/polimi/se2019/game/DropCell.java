@@ -13,7 +13,7 @@ public class DropCell extends Cell{
         this.bottom = bottom;
         this.left = left;
         this.right = right;
-        this.drop = new AmmoTileCard();
+        this.drop = null;
     }
 
     public AmmoTileCard getDrop(){
