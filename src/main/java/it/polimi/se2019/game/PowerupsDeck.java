@@ -3,15 +3,14 @@ package it.polimi.se2019.game;
 import it.polimi.se2019.database.PowerupCard;
 
 import java.util.*;
-import java.lang.Math;
 
 public class PowerupsDeck {
     private  ArrayList<PowerupCard> activeDeck ;
     private ArrayList<PowerupCard> discardedDeck;
     //12 POWER UP, IN UN MAZZO DUE PER TIPO
     public PowerupsDeck() {
-        this.activeDeck = new ArrayList<PowerupCard>();
-        this.discardedDeck = new ArrayList<PowerupCard>();
+        this.activeDeck = new ArrayList<>();
+        this.discardedDeck = new ArrayList<>();
         //INIZIALIZZO I POWER UP
         for (int i=0; i<2; i++){
             //Targeting scope
@@ -48,7 +47,7 @@ public class PowerupsDeck {
      * */
     public void setActiveDeck() {
         this.activeDeck = this.discardedDeck;
-        this.discardedDeck = new ArrayList<PowerupCard>();
+        this.discardedDeck = new ArrayList<>();
         this.shuffle();
     }
 
@@ -66,34 +65,34 @@ public class PowerupsDeck {
     public void shuffle(){
         int i= 0;
         int random = 0;
-        ArrayList<PowerupCard> Temp1 = new ArrayList<PowerupCard>();
-        ArrayList<PowerupCard> Temp2 = new ArrayList<PowerupCard>();
+        ArrayList<PowerupCard> temp1 = new ArrayList<>();
+        ArrayList<PowerupCard> temp2 = new ArrayList<>();
         PowerupCard swipe;
         int random2 = (int)(Math.random()*(22))+1;
         random= ((int)(Math.random()*(9))+1)*((int)(Math.random()*(9))+1);
-        //using Temp2 to copy active
+        //using temp2 to copy active
         for(PowerupCard card: activeDeck){
-            Temp2.add(card);
+            temp2.add(card);
         }
         //Shuffles all the cards
         for(i=0; i<random; i++){
             while (i<this.activeDeck.size()/2){
-                Temp1.add(Temp2.get(i));
-                Temp1.add(Temp2.get(Temp2.size()-i));
+                temp1.add(temp2.get(i));
+                temp1.add(temp2.get(temp2.size()-i));
             }
-            swipe=Temp1.get((int)random2);
-            Temp1.set((int)random2, Temp1.get(0));
-            Temp1.set(0, swipe);
+            swipe=temp1.get((int)random2);
+            temp1.set((int)random2, temp1.get(0));
+            temp1.set(0, swipe);
             while (i<this.activeDeck.size()/2){
-                Temp2.add(Temp1.get(i));
-                Temp2.add(Temp1.get(Temp1.size()-i));
+                temp2.add(temp1.get(i));
+                temp2.add(temp1.get(temp1.size()-i));
             }
-            swipe=Temp2.get((int)random2);
-            Temp2.set((int)random2, Temp2.get(0));
-            Temp2.set(0, swipe);
+            swipe=temp2.get((int)random2);
+            temp2.set((int)random2, temp2.get(0));
+            temp2.set(0, swipe);
         }
 
-        this.activeDeck=Temp2;
+        this.activeDeck=temp2;
     }
 
     /**
@@ -102,7 +101,7 @@ public class PowerupsDeck {
      */
     public PowerupCard draw(){
         PowerupCard drawn;
-        if (this.activeDeck.size() == 0)
+        if (this.activeDeck.isEmpty())
             this.setActiveDeck();
         drawn= this.activeDeck.get(0);
         this.activeDeck.remove(0);

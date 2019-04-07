@@ -8,8 +8,8 @@ public class AmmoTilesDeck {
     private ArrayList<AmmoTileCard> discardedDeck;
 
     public AmmoTilesDeck() {
-        this.activeDeck = new ArrayList<AmmoTileCard>();
-        this.discardedDeck = new ArrayList<AmmoTileCard>();
+        this.activeDeck = new ArrayList<>();
+        this.discardedDeck = new ArrayList<>();
         activeDeck.add(new AmmoTileCard("ybb")); //PRIMA VOLTA
         activeDeck.add(new AmmoTileCard("yrr"));
         activeDeck.add(new AmmoTileCard("rbb"));
@@ -73,35 +73,35 @@ public class AmmoTilesDeck {
     public void shuffle(){
         int i= 0;
         int random = 0;
-        ArrayList<AmmoTileCard> Temp1 = new ArrayList<AmmoTileCard>();
-        ArrayList<AmmoTileCard> Temp2 = new ArrayList<AmmoTileCard>();
+        ArrayList<AmmoTileCard> temp1 = new ArrayList<>();
+        ArrayList<AmmoTileCard> temp2 = new ArrayList<>();
         AmmoTileCard swipe;
         int random2 = (int)(Math.random()*(10))+1;
         random= ((int)(Math.random()*(4))+1)*((int)(Math.random()*(10))+1);
         for(AmmoTileCard card: this.activeDeck)
-            Temp2.add(card);
+            temp2.add(card);
         for(i=0; i<random; i++){
             while (i<this.activeDeck.size()/2){
-                Temp1.add(Temp2.get(i));
-                Temp1.add(Temp2.get(Temp2.size()-i));
+                temp1.add(temp2.get(i));
+                temp1.add(temp2.get(temp2.size()-i));
             }
-            swipe=Temp1.get(random2);
-            Temp1.set(random2, Temp1.get(0));
-            Temp1.set(0, swipe);
+            swipe=temp1.get(random2);
+            temp1.set(random2, temp1.get(0));
+            temp1.set(0, swipe);
             while (i<this.activeDeck.size()/2){
-                Temp2.add(Temp1.get(i));
-                Temp2.add(Temp1.get(Temp1.size()-i));
+                temp2.add(temp1.get(i));
+                temp2.add(temp1.get(temp1.size()-i));
             }
-            swipe=Temp2.get(random2);
-            Temp2.set(random2, Temp2.get(0));
-            Temp2.set(0, swipe);
+            swipe=temp2.get(random2);
+            temp2.set(random2, temp2.get(0));
+            temp2.set(0, swipe);
         }
-        this.activeDeck=Temp2; //FORSE QUESTO NON BASTA
+        this.activeDeck=temp2; //FORSE QUESTO NON BASTA
     }
 
     public AmmoTileCard draw(){
         AmmoTileCard drawn;
-        if(activeDeck.size()==0)
+        if(activeDeck.isEmpty())
            this.setActiveDeck();
         drawn=activeDeck.get(0);
         activeDeck.remove(0);
