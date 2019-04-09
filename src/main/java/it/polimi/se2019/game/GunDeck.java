@@ -6,18 +6,16 @@ import java.util.*;
 
 public class GunDeck {
     private ArrayList<GunCard> activeDeck;
-    private ArrayList<GunCard> discardedDeck;
 
     /**This method create a shuffled deck, the array "used" says if a card (1 slot per card) is already in the deck, then a random
      * int is created with "random", and with a switch the integer is translated into a gunCard, then putted into the deck
      *
      */
     public GunDeck() {
-        int used[];
+        int [] used;
         int i;
         int temp;
-        this.activeDeck = new ArrayList<GunCard>();
-        this.discardedDeck = new ArrayList<GunCard>();
+        this.activeDeck = new ArrayList<>();
         used= new int[21];
         Random random = new Random();
         for(i=0; i<21; i++){
