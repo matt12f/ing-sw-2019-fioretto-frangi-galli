@@ -2,7 +2,7 @@ package it.polimi.se2019.game;
 
 import java.util.ArrayList;
 
-public class Game {
+public class GameModel {
     private int gameNumberId;
 
     public ArrayList<Player> playerList;
@@ -12,7 +12,7 @@ public class Game {
     public KillshotTrack killshotTrack;
     private boolean finalFrenzy;
 
-    public Game(){
+    public GameModel(){
     //TODO scrivere costruttore
     }
 

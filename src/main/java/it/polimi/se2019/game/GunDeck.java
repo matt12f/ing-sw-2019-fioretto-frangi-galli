@@ -24,7 +24,7 @@ public class GunDeck {
             used[i]=0;
         }
         while (this.activeDeck.size()<21){
-            temp=random.nextInt(21);
+            temp = random.nextInt(21);
             if (used[temp]==0) {
                 used[temp] = 1;
                 switch (temp) {

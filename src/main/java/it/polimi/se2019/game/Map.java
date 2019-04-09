@@ -19,7 +19,7 @@ public class Map {
                 this.rooms[3] = new Room('w');
                 this.rooms[4] = new Room('g');
                 this.rooms[5] = new Room('n');
-                /**cells creation pattern id color top-bottom-left-right
+                /**cells creation pattern  color top-bottom-left-right
                  * w=wall, d= door, r= room
                  */
                 this.boardMatrix[0][0]= new DropCell(  'b',  'w', 'd',  'w',  'r');
