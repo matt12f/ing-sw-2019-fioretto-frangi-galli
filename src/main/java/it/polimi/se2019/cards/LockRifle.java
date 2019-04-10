@@ -1,30 +1,27 @@
-package it.polimi.se2019.database;
+package it.polimi.se2019.cards;
 
-public class VortexCannon extends GunCard {
+public class LockRifle extends GunCard {
 
     private int numberOfOptional;
     private boolean hasAlternativeEffect;
     private String basicEffectDescription;
     private char [] secondaryEffectCost ;
     private String secondaryEffectDescription;
-
-    /**
+   /**
      * constructor
      */
-    public VortexCannon() {
+    public LockRifle() {
+
         this.numberOfOptional = 1;
         this.hasAlternativeEffect = false;
 
         this.ammoCost = new char[2];
         ammoCost[0]= 'b';
         ammoCost[1]= 'b';
-        this.basicEffectDescription ="basic effect: Choose a square you can see, but not your\n" +
-                "square. Call it \"the vortex\". Choose a target on the vortex\n" +
-                "or 1 move away from it. Move it onto the vortex and give it\n" +
-                "2 damage.";
-        this.secondaryEffectDescription ="with black hole: Choose up to 2 other targets on the\n" +
-                "vortex or 1 move away from it. Move them onto the vortex\n" +
-                "and give them each 1 damage.";
+        this.basicEffectDescription ="basic effect: Deal 2 damage and 1 mark to 1 target\n" +
+                "you can see.";
+        this.secondaryEffectDescription ="with second lock: Deal 1 mark to a different target\n" +
+                "you can see.";
         this.secondaryEffectCost = new char[1];
         secondaryEffectCost[0] = 'r';
     }
@@ -66,5 +63,6 @@ public class VortexCannon extends GunCard {
     public void doSecondaryEffect() {
 
     }
+
 
 }

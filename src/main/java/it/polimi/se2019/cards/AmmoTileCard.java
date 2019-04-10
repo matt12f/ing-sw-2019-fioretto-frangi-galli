@@ -1,4 +1,4 @@
- package it.polimi.se2019.database;
+ package it.polimi.se2019.cards;
 
 
  public class AmmoTileCard {

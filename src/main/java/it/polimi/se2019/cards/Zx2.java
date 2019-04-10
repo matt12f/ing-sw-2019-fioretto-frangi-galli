@@ -1,6 +1,6 @@
-package it.polimi.se2019.database;
+package it.polimi.se2019.cards;
 
-public class Shotgun extends GunCard {
+public class Zx2 extends GunCard {
 
     private String basicEffectDescription;
     private boolean hasAlternativeEffect;
@@ -11,18 +11,16 @@ public class Shotgun extends GunCard {
     /**
      * constructor
      */
-    public Shotgun() {
+    public Zx2() {
         this.hasAlternativeEffect = true;
 
         this.ammoCost = new char[2];
         ammoCost[0]= 'y';
-        ammoCost[1]= 'y';
-        this.basicEffectDescription ="basic mode: Deal 3 damage to 1 target on\n" +
-                "your square. If you want, you may then move\n" +
-                "the target 1 square.";
-        this.secondaryEffectDescription ="in long barrel mode: Deal 2 damage to\n" +
-                "1 target on any square exactly one move\n" +
-                "away.";
+        ammoCost[1]= 'r';
+        this.basicEffectDescription ="basic mode: Deal 1 damage and 2 marks to\n" +
+                "1 target you can see.";
+        this.secondaryEffectDescription ="in scanner mode: Choose up to 3 targets you\n" +
+                "can see and deal 1 mark to each.";
         this.secondaryEffectCost = new char[1];
         secondaryEffectCost[0] = 'n';
 

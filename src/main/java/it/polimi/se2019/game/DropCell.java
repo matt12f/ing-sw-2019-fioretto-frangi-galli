@@ -1,6 +1,6 @@
 package it.polimi.se2019.game;
 
-import it.polimi.se2019.database.AmmoTileCard;
+import it.polimi.se2019.cards.AmmoTileCard;
 
 public class DropCell extends Cell{
 

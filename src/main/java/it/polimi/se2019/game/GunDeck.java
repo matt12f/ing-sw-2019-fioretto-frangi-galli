@@ -1,5 +1,5 @@
 package it.polimi.se2019.game;
-import it.polimi.se2019.database.*;
+import it.polimi.se2019.cards.*;
 
 import java.util.*;
 

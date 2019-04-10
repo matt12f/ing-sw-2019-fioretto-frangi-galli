@@ -1,6 +1,6 @@
 package it.polimi.se2019.game;
 
-import it.polimi.se2019.database.PowerupCard;
+import it.polimi.se2019.cards.PowerupCard;
 
 import java.util.*;
 

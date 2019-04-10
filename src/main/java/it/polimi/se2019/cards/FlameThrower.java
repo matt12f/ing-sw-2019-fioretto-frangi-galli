@@ -1,6 +1,6 @@
-package it.polimi.se2019.database;
+package it.polimi.se2019.cards;
 
-public class Sledgehammer extends GunCard {
+public class FlameThrower extends GunCard {
 
     private String basicEffectDescription;
     private boolean hasAlternativeEffect;
@@ -11,18 +11,21 @@ public class Sledgehammer extends GunCard {
     /**
      * constructor
      */
-    public Sledgehammer() {
+    public FlameThrower() {
         this.hasAlternativeEffect = true;
 
-        this.ammoCost = new char[2];
-        ammoCost[0]= 'y';
-        this.basicEffectDescription ="basic mode: Deal 2 damage to 1 target on\n" +
-                "your square.";
-        this.secondaryEffectDescription ="in pulverize mode: Deal 3 damage to 1 target\n" +
-                "on your square, then move that target 0, 1,\n" +
-                "or 2 squares in one direction.";
-        this.secondaryEffectCost = new char[1];
-        secondaryEffectCost[0] = 'r';
+        this.ammoCost = new char[1];
+        ammoCost[0]= 'r';
+        this.basicEffectDescription ="basic mode: Choose a square 1 move away and possibly a second square\n" +
+                "1 more move away in the same direction. On each square, you may\n" +
+                "choose 1 target and give it 1 damage";
+        this.secondaryEffectDescription ="in barbecue mode: Choose 2 squares as above. Deal 2 damage to\n" +
+                "everyone on the first square and 1 damage to everyone on the second\n" +
+                "square.";
+        this.secondaryEffectCost = new char[2];
+        secondaryEffectCost[0] = 'y';
+        secondaryEffectCost[1] = 'y';
+
 
     }
     /**
@@ -58,4 +61,5 @@ public class Sledgehammer extends GunCard {
     public void doSecondaryEffect() {
 
     }
+
 }

@@ -1,6 +1,6 @@
-package it.polimi.se2019.database;
+package it.polimi.se2019.cards;
 
-public class Electroscythe extends GunCard {
+public class Sledgehammer extends GunCard {
 
     private String basicEffectDescription;
     private boolean hasAlternativeEffect;
@@ -11,19 +11,19 @@ public class Electroscythe extends GunCard {
     /**
      * constructor
      */
-    public Electroscythe() {
-
+    public Sledgehammer() {
         this.hasAlternativeEffect = true;
 
-        this.ammoCost = new char[1];
-        ammoCost[0]= 'b';
-        this.basicEffectDescription ="basic mode: Deal 1 damage to every other player\n" +
-                "on your square.";
-        this.secondaryEffectDescription ="in reaper mode: Deal 2 damage to every other player\n" +
-                "on your square.";
-        this.secondaryEffectCost = new char[2];
-        secondaryEffectCost[0] = 'b';
-        secondaryEffectCost[1] = 'r';
+        this.ammoCost = new char[2];
+        ammoCost[0]= 'y';
+        this.basicEffectDescription ="basic mode: Deal 2 damage to 1 target on\n" +
+                "your square.";
+        this.secondaryEffectDescription ="in pulverize mode: Deal 3 damage to 1 target\n" +
+                "on your square, then move that target 0, 1,\n" +
+                "or 2 squares in one direction.";
+        this.secondaryEffectCost = new char[1];
+        secondaryEffectCost[0] = 'r';
+
     }
     /**
      * @return

@@ -1,6 +1,6 @@
-package it.polimi.se2019.database;
+package it.polimi.se2019.cards;
 
-public class FlameThrower extends GunCard {
+public class Railgun extends GunCard {
 
     private String basicEffectDescription;
     private boolean hasAlternativeEffect;
@@ -11,21 +11,19 @@ public class FlameThrower extends GunCard {
     /**
      * constructor
      */
-    public FlameThrower() {
+    public Railgun() {
         this.hasAlternativeEffect = true;
 
-        this.ammoCost = new char[1];
-        ammoCost[0]= 'r';
-        this.basicEffectDescription ="basic mode: Choose a square 1 move away and possibly a second square\n" +
-                "1 more move away in the same direction. On each square, you may\n" +
-                "choose 1 target and give it 1 damage";
-        this.secondaryEffectDescription ="in barbecue mode: Choose 2 squares as above. Deal 2 damage to\n" +
-                "everyone on the first square and 1 damage to everyone on the second\n" +
-                "square.";
-        this.secondaryEffectCost = new char[2];
-        secondaryEffectCost[0] = 'y';
-        secondaryEffectCost[1] = 'y';
-
+        this.ammoCost = new char[3];
+        ammoCost[0]= 'y';
+        ammoCost[1]= 'y';
+        ammoCost[2]= 'b';
+        this.basicEffectDescription ="basic mode: Choose a cardinal direction and 1 target in that direction.\n" +
+                "Deal 3 damage to it.";
+        this.secondaryEffectDescription ="in piercing mode: Choose a cardinal direction and 1 or 2 targets in that\n" +
+                "direction. Deal 2 damage to each.";
+        this.secondaryEffectCost = new char[1];
+        secondaryEffectCost[0] = 'n';
 
     }
     /**

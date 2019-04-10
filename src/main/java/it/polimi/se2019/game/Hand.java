@@ -1,9 +1,7 @@
 package it.polimi.se2019.game;
 
-import it.polimi.se2019.database.GunCard;
-import it.polimi.se2019.database.PowerupCard;
-
-import java.util.ArrayList;
+import it.polimi.se2019.cards.GunCard;
+import it.polimi.se2019.cards.PowerupCard;
 
 public class Hand {
     private PowerupCard []  powerups;

@@ -1,6 +1,6 @@
-package it.polimi.se2019.database;
+package it.polimi.se2019.cards;
 
-public class MachineGun extends GunCard {
+public class RocketLauncher extends GunCard {
 
     private int numberOfOptional;
     private boolean hasAlternativeEffect ;
@@ -14,24 +14,24 @@ public class MachineGun extends GunCard {
     /**
      * constructor
      */
-    public MachineGun() {
+    public RocketLauncher() {
         this.numberOfOptional = 2;
         this.hasAlternativeEffect = false;
 
         this.ammoCost = new char[2];
-        ammoCost[0]= 'b';
+        ammoCost[0]= 'r';
         ammoCost[1]= 'r';
-        this.basicEffectDescription ="basic effect: Choose 1 or 2 targets you can see and deal\n" +
-                "1 damage to each.";
-        this.secondaryEffectDescription ="with focus shot: Deal 1 additional damage to one of those\n" +
-                "targets.";
+        this.basicEffectDescription ="basic effect: Deal 2 damage to 1 target you can see that is not on your\n" +
+                "square. Then you may move the target 1 square";
+        this.secondaryEffectDescription ="with rocket jump: Move 1 or 2 squares. This effect can be used either\n" +
+                "before or after the basic effect.";
         this.secondaryEffectCost = new char[1];
-        secondaryEffectCost[0] = 'y';
-        this.thirdEffectDescription ="with turret tripod: Deal 1 additional damage to the other\n" +
-                "of those targets and/or deal 1 damage to a different target\n" +
-                "you can see.";
+        secondaryEffectCost[0] = 'b';
+        this.thirdEffectDescription ="with fragmenting warhead: During the basic effect, deal 1 damage to\n" +
+                "every player on your target's original square – including the target,\n" +
+                "even if you move it.";
         this.thirdEffectCost = new char[1];
-        thirdEffectCost[0] = 'b';
+        thirdEffectCost[0] = 'y';
     }
     /**
      * @return
@@ -55,7 +55,6 @@ public class MachineGun extends GunCard {
     }
 
     public void doBasicEffect() {
-
     }
     /**
      * @return

@@ -1,6 +1,6 @@
-package it.polimi.se2019.database;
+package it.polimi.se2019.cards;
 
-public class Railgun extends GunCard {
+public class TractorBeam extends GunCard {
 
     private String basicEffectDescription;
     private boolean hasAlternativeEffect;
@@ -11,20 +11,19 @@ public class Railgun extends GunCard {
     /**
      * constructor
      */
-    public Railgun() {
+    public TractorBeam() {
         this.hasAlternativeEffect = true;
 
-        this.ammoCost = new char[3];
-        ammoCost[0]= 'y';
-        ammoCost[1]= 'y';
-        ammoCost[2]= 'b';
-        this.basicEffectDescription ="basic mode: Choose a cardinal direction and 1 target in that direction.\n" +
-                "Deal 3 damage to it.";
-        this.secondaryEffectDescription ="in piercing mode: Choose a cardinal direction and 1 or 2 targets in that\n" +
-                "direction. Deal 2 damage to each.";
-        this.secondaryEffectCost = new char[1];
-        secondaryEffectCost[0] = 'n';
-
+        this.ammoCost = new char[1];
+        ammoCost[0]= 'b';
+        this.basicEffectDescription ="basic mode: Move a target 0, 1, or 2 squares to a square\n" +
+                "you can see, and give it 1 damage.";
+        this.secondaryEffectDescription ="in punisher mode: Choose a target 0, 1, or 2 moves away\n" +
+                "from you. Move the target to your square\n" +
+                "and deal 3 damage to it.\n";
+        this.secondaryEffectCost = new char[2];
+        secondaryEffectCost[0] = 'r';
+        secondaryEffectCost[1] = 'y';
     }
     /**
      * @return
@@ -59,5 +58,4 @@ public class Railgun extends GunCard {
     public void doSecondaryEffect() {
 
     }
-
 }

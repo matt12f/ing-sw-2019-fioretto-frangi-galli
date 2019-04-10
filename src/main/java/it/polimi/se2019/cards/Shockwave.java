@@ -1,6 +1,6 @@
-package it.polimi.se2019.database;
+package it.polimi.se2019.cards;
 
-public class Hellion extends GunCard {
+public class Shockwave extends GunCard {
 
     private String basicEffectDescription;
     private boolean hasAlternativeEffect;
@@ -11,20 +11,18 @@ public class Hellion extends GunCard {
     /**
      * constructor
      */
-    public Hellion() {
+    public Shockwave() {
         this.hasAlternativeEffect = true;
 
-        this.ammoCost = new char[2];
-        ammoCost[0]= 'r';
-        ammoCost[1]= 'y';
-        this.basicEffectDescription ="basic mode: Deal 1 damage to 1 target you can see at least\n" +
-                "1 move away. Then give 1 mark to that target and everyone\n" +
-                "else on that square.";
-        this.secondaryEffectDescription ="in nano-tracer mode: Deal 1 damage to 1 target you can\n" +
-                "see at least 1 move away. Then give 2 marks to that target\n" +
-                "and everyone else on that square.";
+        this.ammoCost = new char[1];
+        ammoCost[0]= 'y';
+        this.basicEffectDescription ="basic mode: Choose up to 3 targets on\n" +
+                "different squares, each exactly 1 move away.\n" +
+                "Deal 1 damage to each target.";
+        this.secondaryEffectDescription ="in tsunami mode: Deal 1 damage to all\n" +
+                "targets that are exactly 1 move away";
         this.secondaryEffectCost = new char[1];
-        secondaryEffectCost[0] = 'r';
+        secondaryEffectCost[0] = 'y';
 
     }
     /**
@@ -60,5 +58,4 @@ public class Hellion extends GunCard {
     public void doSecondaryEffect() {
 
     }
-
 }

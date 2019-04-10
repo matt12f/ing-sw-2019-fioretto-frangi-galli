@@ -1,6 +1,6 @@
-package it.polimi.se2019.database;
+package it.polimi.se2019.cards;
 
-public class Heatseeker extends GunCard {
+public class Whisper extends GunCard {
 
     private int numberOfOptional;
     private boolean hasAlternativeEffect;
@@ -9,17 +9,16 @@ public class Heatseeker extends GunCard {
    /**
      * constructor
      */
-    public Heatseeker() {
-
+    public Whisper() {
         this.numberOfOptional = 0;
         this.hasAlternativeEffect = false;
 
         this.ammoCost = new char[3];
-        ammoCost[0] = 'r';
-        ammoCost[1]= 'r';
+        ammoCost[0] = 'b';
+        ammoCost[1]= 'b';
         ammoCost[2]= 'y';
-        this.basicEffectDescription ="effect: Choose 1 target you cannot see and deal 3 damage\n" +
-                "to it.";
+        this.basicEffectDescription ="effect: Deal 3 damage and 1 mark to 1 target you can see.\n" +
+                "Your target must be at least 2 moves away from you.";
     }
     /**
      * @return
@@ -44,7 +43,6 @@ public class Heatseeker extends GunCard {
     public void doBasicEffect() {
 
     }
-
 
 
 

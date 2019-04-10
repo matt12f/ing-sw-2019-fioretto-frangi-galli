@@ -1,6 +1,6 @@
-package it.polimi.se2019.database;
+package it.polimi.se2019.cards;
 
-public class TractorBeam extends GunCard {
+public class Hellion extends GunCard {
 
     private String basicEffectDescription;
     private boolean hasAlternativeEffect;
@@ -11,19 +11,21 @@ public class TractorBeam extends GunCard {
     /**
      * constructor
      */
-    public TractorBeam() {
+    public Hellion() {
         this.hasAlternativeEffect = true;
 
-        this.ammoCost = new char[1];
-        ammoCost[0]= 'b';
-        this.basicEffectDescription ="basic mode: Move a target 0, 1, or 2 squares to a square\n" +
-                "you can see, and give it 1 damage.";
-        this.secondaryEffectDescription ="in punisher mode: Choose a target 0, 1, or 2 moves away\n" +
-                "from you. Move the target to your square\n" +
-                "and deal 3 damage to it.\n";
-        this.secondaryEffectCost = new char[2];
+        this.ammoCost = new char[2];
+        ammoCost[0]= 'r';
+        ammoCost[1]= 'y';
+        this.basicEffectDescription ="basic mode: Deal 1 damage to 1 target you can see at least\n" +
+                "1 move away. Then give 1 mark to that target and everyone\n" +
+                "else on that square.";
+        this.secondaryEffectDescription ="in nano-tracer mode: Deal 1 damage to 1 target you can\n" +
+                "see at least 1 move away. Then give 2 marks to that target\n" +
+                "and everyone else on that square.";
+        this.secondaryEffectCost = new char[1];
         secondaryEffectCost[0] = 'r';
-        secondaryEffectCost[1] = 'y';
+
     }
     /**
      * @return
@@ -58,4 +60,5 @@ public class TractorBeam extends GunCard {
     public void doSecondaryEffect() {
 
     }
+
 }

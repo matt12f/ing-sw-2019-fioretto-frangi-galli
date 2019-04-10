@@ -1,29 +1,30 @@
-package it.polimi.se2019.database;
+package it.polimi.se2019.cards;
 
-public class LockRifle extends GunCard {
+public class Furnace extends GunCard {
 
-    private int numberOfOptional;
-    private boolean hasAlternativeEffect;
     private String basicEffectDescription;
-    private char [] secondaryEffectCost ;
+    private boolean hasAlternativeEffect;
+    private char[] secondaryEffectCost;
     private String secondaryEffectDescription;
-   /**
+
+
+    /**
      * constructor
      */
-    public LockRifle() {
-
-        this.numberOfOptional = 1;
-        this.hasAlternativeEffect = false;
+    public Furnace() {
+        this.hasAlternativeEffect = true;
 
         this.ammoCost = new char[2];
-        ammoCost[0]= 'b';
+        ammoCost[0]= 'r';
         ammoCost[1]= 'b';
-        this.basicEffectDescription ="basic effect: Deal 2 damage and 1 mark to 1 target\n" +
-                "you can see.";
-        this.secondaryEffectDescription ="with second lock: Deal 1 mark to a different target\n" +
-                "you can see.";
+        this.basicEffectDescription ="basic mode: Choose a room you can see, but not the room\n" +
+                "you are in. Deal 1 damage to everyone in that room.";
+        this.secondaryEffectDescription ="in cozy fire mode: Choose a square exactly one move\n" +
+                "away. Deal 1 damage and 1 mark to everyone on that\n" +
+                "square.";
         this.secondaryEffectCost = new char[1];
-        secondaryEffectCost[0] = 'r';
+        secondaryEffectCost[0] = 'n';
+
     }
     /**
      * @return
@@ -34,13 +35,8 @@ public class LockRifle extends GunCard {
     /**
      * @return
      */
-    public int getNumberOfOptional() {
-        return numberOfOptional;
-    }
-    /**
-     * @return
-     */
     public String getBasicEffectDescription() {
+
         return basicEffectDescription;
     }
 
@@ -51,18 +47,17 @@ public class LockRifle extends GunCard {
      * @return
      */
     public char[] getSecondaryEffectCost() {
-        return  secondaryEffectCost;
+        return secondaryEffectCost;
     }
-
     /**
      * @return
      */
     public String getSecondaryEffectDescription() {
+
         return secondaryEffectDescription;
     }
     public void doSecondaryEffect() {
 
     }
-
 
 }
