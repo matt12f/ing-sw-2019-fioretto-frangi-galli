@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Controller {
     private ArrayList<GameModel> game;
-    private ArrayList<MainView> view;
+    private ArrayList<it.polimi.se2019.view.MainView> view;
     private TurnManager activeturn;
 
 
