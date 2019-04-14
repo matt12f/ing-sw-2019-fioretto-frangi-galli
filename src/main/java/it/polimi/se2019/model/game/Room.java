@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Room {
     private char color;
-    private ArrayList<Player>  players;
+    private ArrayList<Player> players;
 
     public Room(char color){
         this.color = color;
