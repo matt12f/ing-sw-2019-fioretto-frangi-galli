@@ -1,4 +1,4 @@
-package it.polimi.se2019.Controller.WeaponManagers;
+package it.polimi.se2019.controller.weaponmanagers;
 
 public class RocketLauncherManager {
 
