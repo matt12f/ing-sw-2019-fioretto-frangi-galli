@@ -4,7 +4,7 @@ public class Heatseeker extends GunCard {
 
     private int numberOfOptional;
     private boolean hasAlternativeEffect;
-    private String basicEffectDescription;
+
 
    /**
      * constructor
@@ -18,7 +18,7 @@ public class Heatseeker extends GunCard {
         ammoCost[0] = 'r';
         ammoCost[1]= 'r';
         ammoCost[2]= 'y';
-        this.basicEffectDescription ="effect: Choose 1 target you cannot see and deal 3 damage\n" +
+        this.description ="effect: Choose 1 target you cannot see and deal 3 damage\n" +
                 "to it.";
     }
     /**
@@ -34,18 +34,5 @@ public class Heatseeker extends GunCard {
 
         return numberOfOptional;
     }
-    /**
-     * @return
-     */
-    public String getBasicEffectDescription() {
-        return basicEffectDescription;
-    }
-
-    public void doBasicEffect() {
-
-    }
-
-
-
 
 }

@@ -4,9 +4,8 @@ public class LockRifle extends GunCard {
 
     private int numberOfOptional;
     private boolean hasAlternativeEffect;
-    private String basicEffectDescription;
     private char [] secondaryEffectCost ;
-    private String secondaryEffectDescription;
+
    /**
      * constructor
      */
@@ -18,10 +17,10 @@ public class LockRifle extends GunCard {
         this.ammoCost = new char[2];
         ammoCost[0]= 'b';
         ammoCost[1]= 'b';
-        this.basicEffectDescription ="basic effect: Deal 2 damage and 1 mark to 1 target\n" +
+        this.description ="basic effect: Deal 2 damage and 1 mark to 1 target\n" +
+                "you can see.\n" + "with second lock: Deal 1 mark to a different target\n" +
                 "you can see.";
-        this.secondaryEffectDescription ="with second lock: Deal 1 mark to a different target\n" +
-                "you can see.";
+
         this.secondaryEffectCost = new char[1];
         secondaryEffectCost[0] = 'r';
     }
@@ -37,16 +36,9 @@ public class LockRifle extends GunCard {
     public int getNumberOfOptional() {
         return numberOfOptional;
     }
-    /**
-     * @return
-     */
-    public String getBasicEffectDescription() {
-        return basicEffectDescription;
-    }
 
-    public void doBasicEffect() {
 
-    }
+
     /**
      * @return
      */
@@ -54,15 +46,7 @@ public class LockRifle extends GunCard {
         return  secondaryEffectCost;
     }
 
-    /**
-     * @return
-     */
-    public String getSecondaryEffectDescription() {
-        return secondaryEffectDescription;
-    }
-    public void doSecondaryEffect() {
 
-    }
 
 
 }
