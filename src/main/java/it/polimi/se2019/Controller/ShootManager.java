@@ -1,4 +1,14 @@
-package it.polimi.se2019.Controller;
+package it.polimi.se2019.controller;
 
 public class ShootManager {
+
+    public ShootManager(){
+
+    }
+    public boolean inflictDamage(){
+        return (PlayerManager.isAlive(TurnManager.getActivePlayer()));
+    }
+    public void appointMarker(){}
+    public void moveOpponent(){}
+
 }

@@ -4,15 +4,15 @@ import java.util.ArrayList;
 
 public class GameModel {
     private int gameNumberId;
-
-    public ArrayList<Player> playerList;
-    public Map currentMap;
+    private ArrayList<Player> playerList;
     private String gameMode;
+    public Map currentMap;
     public Decks currentDecks;
-    public KillshotTrack killshotTrack;
+    public KillShotTrack killshotTrack;
     private boolean finalFrenzy;
+    private int turn;
 
-    public GameModel(){
+    public GameModel(ArrayList<Player> playerList, String gameMode){
     //TODO scrivere costruttore
     }
 
@@ -33,5 +33,13 @@ public class GameModel {
 
     public void setFinalFrenzy() {
         this.finalFrenzy = true;
+    }
+
+    public int getTurn() {
+        return turn;
+    }
+
+    public void setTurn(int turn) {
+        this.turn = turn;
     }
 }

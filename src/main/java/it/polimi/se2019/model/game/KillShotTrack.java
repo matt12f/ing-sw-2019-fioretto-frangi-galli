@@ -1,6 +1,6 @@
 package it.polimi.se2019.model.game;
 
-public class KillshotTrack {
+public class KillShotTrack {
 
     protected int skulls;
     protected String [] kills;
@@ -10,7 +10,7 @@ public class KillshotTrack {
      * Default constructor
      *
      */
-    public KillshotTrack(){
+    public KillShotTrack(){
         this.kills=new String[8];
     }
 
