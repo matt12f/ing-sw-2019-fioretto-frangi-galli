@@ -1,7 +1,6 @@
-package it.polimi.se2019.View;
+package it.polimi.se2019.view;
 
-
-public class MainView {
+public class MainView  extends View {
     private PlayerBoardView playerBoardView;
     private MapView mapView;
     private PlayerHandView playerHand;
