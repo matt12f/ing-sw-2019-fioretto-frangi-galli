@@ -1,4 +1,4 @@
-package it.polimi.se2019.controller.weaponmanagers;
+package it.polimi.se2019.Controller.WeaponManagers;
 
 public class FurnaceManager {
 
@@ -6,10 +6,17 @@ public class FurnaceManager {
 
     }
     private void baseEffect(){
-
+        /** target: room (choose a room you can see, but not yours, inflict damage to all pg inside)
+         *  damage: 1
+         *
+         */
     }
     private void secondaryEffect(){
-
+        /** alternative attack
+         *  target: cell (choose a square 1 move from you)
+         *  damage: 1
+         *  marker: 1
+         */
     }
    
 }

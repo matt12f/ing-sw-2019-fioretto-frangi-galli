@@ -1,4 +1,4 @@
-package it.polimi.se2019.controller.weaponmanagers;
+package it.polimi.se2019.Controller.WeaponManagers;
 
 public class RailgunManager {
 
@@ -6,10 +6,16 @@ public class RailgunManager {
 
     }
     private void baseEffect(){
-
+        /** target: 1 (in a cardinal direction) i could be in your square, ignore walls
+         *  damage: 3
+         *
+         */
     }
     private void secondaryEffect(){
-
+        /** target: 1,2 (in a cardinal direction, they could be in different cells)same as before
+         *  damage: 2
+         *
+         */
     }
 
 }

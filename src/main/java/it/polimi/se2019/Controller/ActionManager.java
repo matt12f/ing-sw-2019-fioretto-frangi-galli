@@ -1,4 +1,4 @@
-package it.polimi.se2019.controller;
+package it.polimi.se2019.Controller;
 
 import it.polimi.se2019.model.cards.GunCard;
 

@@ -1,4 +1,4 @@
-package it.polimi.se2019.controller.weaponmanagers;
+package it.polimi.se2019.Controller.WeaponManagers;
 
 public class ShotgunManager {
 
@@ -6,10 +6,17 @@ public class ShotgunManager {
 
     }
     private void baseEffect(){
-
+        /** target: 1 (in your square)
+         *  damage: 3
+         *  move: 1 (if you want)
+         */
     }
     private void secondaryEffect(){
-
+        /** alternative effect
+         *  target: 1 (1 move away)
+         *  damage: 2
+         *
+         */
     }
 
 }

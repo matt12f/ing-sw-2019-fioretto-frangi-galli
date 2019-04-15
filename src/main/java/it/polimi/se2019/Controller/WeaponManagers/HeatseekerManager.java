@@ -1,4 +1,4 @@
-package it.polimi.se2019.controller.weaponmanagers;
+package it.polimi.se2019.Controller.WeaponManagers;
 
 public class HeatseekerManager {
 
@@ -6,7 +6,10 @@ public class HeatseekerManager {
 
     }
     private void baseEffect(){
-
+        /** target: 1 (that you cannnot see)
+         *  damage: 3
+         *
+         */
     }
 
    

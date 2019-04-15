@@ -1,4 +1,4 @@
-package it.polimi.se2019.controller.weaponmanagers;
+package it.polimi.se2019.Controller.WeaponManagers;
 
 public class ShockwaveManager {
 
@@ -6,10 +6,17 @@ public class ShockwaveManager {
 
     }
     private void baseEffect(){
-
+        /** target: 3 (1 move away, every target in a different cell)
+         *  damage: 1
+         *
+         */
     }
     private void secondaryEffect(){
-
+        /** alternative attack
+         * target: cell (every cell 1 move away)
+         *  damage: 1
+         *
+         */
     }
     
 }
