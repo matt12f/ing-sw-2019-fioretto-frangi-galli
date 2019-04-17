@@ -1,4 +1,4 @@
-package it.polimi.se2019.Controller;
+package it.polimi.se2019.controller;
 
 import it.polimi.se2019.model.game.GameModel;
 import java.util.ArrayList;
