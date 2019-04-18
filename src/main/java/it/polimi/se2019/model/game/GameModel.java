@@ -1,8 +1,9 @@
 package it.polimi.se2019.model.game;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
-public class GameModel {
+public class GameModel extends Observable{
     private int gameNumberId;
     private ArrayList<Player> playerList;
     private String gameMode;
