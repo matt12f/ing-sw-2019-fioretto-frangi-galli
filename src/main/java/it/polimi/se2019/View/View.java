@@ -1,6 +1,9 @@
 package it.polimi.se2019.view;
 
-public abstract class View {
+import java.util.Observable;
+import java.util.Observer;
+
+public abstract class View extends Observable implements Observer {
 
 
     public void joinGame(){

@@ -19,14 +19,14 @@ public class PlayerBoard {
 
     }
 
-    /**Return the avatar color
+    /**Return the figure color
      *
      */
     public char getColor() {
         return color;
     }
 
-    /**Is used to update the player's death counter
+    /**Is used to update the killShotTrack
      *
      */
     public void setSkulls() {
@@ -39,6 +39,7 @@ public class PlayerBoard {
     public int getSkulls() {
         return skulls;
     }
+
     /**This method "flips" the action board, creating a frenzy one and dumping the normal one
      * */
     public void activateFrenzy(){

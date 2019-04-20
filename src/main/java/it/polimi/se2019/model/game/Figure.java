@@ -16,6 +16,11 @@ public class Figure {
         return currentCell;
     }
 
+    /**
+     * The currentCell must be set when the player chooses where to first spawn
+     * and when it respawns after a player's death
+     * @param currentCell
+     */
     public void setCell(Cell currentCell) {
         this.currentCell = currentCell;
     }
