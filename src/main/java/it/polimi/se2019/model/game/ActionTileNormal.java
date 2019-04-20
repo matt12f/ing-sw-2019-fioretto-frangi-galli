@@ -47,14 +47,5 @@ public class ActionTileNormal extends ActionTile {
         }
     }
 
-    /**
-     * This method:
-     * asks the player what moves he wants to perform (twice) depending on how many actions it's allowed to.
-     * then launches the code that elaborates the action
-     */
-    @Override
-    public void doAction() {
-        //TODO scrivere codice gestione azioni
-        super.doAction();
-    }
+
 }
