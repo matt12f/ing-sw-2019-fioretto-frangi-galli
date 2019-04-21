@@ -17,9 +17,9 @@ public class GameModel extends Observable{
         this.currentDecks=new Decks();
         this.playerList=playerList;
         this.gameMode=gameMode;
-        if(gameMode=="Normal")
+        if(gameMode.equals("Normal"))
             this.killshotTrack=new KillShotTrack();
-        else if(gameMode=="Turret")
+        else if(gameMode.equals("Turret"))
             this.killshotTrack=new KillShotTrackTurret();
         else
             this.killshotTrack=new KillShotTrackDomination();

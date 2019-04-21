@@ -57,7 +57,7 @@ public class Hand {
         }
     }
 
-    public void substitutionPowerUp (PowerupCard discarded,PowerupCard newPowerup) throws NotFound {
+    public void substitutionPowerup (PowerupCard discarded,PowerupCard newPowerup) throws NotFound {
         int i, index= -1;
         for (i=0; i<3; i++){
             if(this.powerups[i] == discarded){

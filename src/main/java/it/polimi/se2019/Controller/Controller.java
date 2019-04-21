@@ -2,7 +2,7 @@ package it.polimi.se2019.controller;
 
 import it.polimi.se2019.model.game.GameModel;
 import it.polimi.se2019.model.game.Player;
-import it.polimi.se2019.view.MainView;
+import it.polimi.se2019.view.RemoteView;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -10,7 +10,7 @@ import java.util.Observer;
 
 public class Controller implements Observer {
     private GameModel mainGameModel;
-    private MainView localView;
+    private ArrayList<RemoteView> remoteViews;
     private TurnManager activeturn;
 
     /**
@@ -26,7 +26,9 @@ public class Controller implements Observer {
         //TODO chiedere la modalità di gioco
         String gameMode="normal";
         this.mainGameModel=new GameModel(players,gameMode);
-        this.localView=new MainView();
+        //TODO capire come usare le remoteviews
+        this.remoteViews=new ArrayList<>();
+        this.remoteViews.add(new RemoteView());
         this.activeturn = new TurnManager();
     }
 
@@ -34,8 +36,8 @@ public class Controller implements Observer {
         return mainGameModel;
     }
 
-    public MainView getLocalView() {
-        return localView;
+    public ArrayList<RemoteView> getLocalView() {
+        return remoteViews;
     }
 
     public TurnManager getActiveturn() {
