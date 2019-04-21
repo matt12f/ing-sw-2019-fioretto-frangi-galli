@@ -11,10 +11,6 @@
         this.content=cont;
     }
 
-    /**
-     *
-     *
-     */
     public String getContent() {
         return content;
     }

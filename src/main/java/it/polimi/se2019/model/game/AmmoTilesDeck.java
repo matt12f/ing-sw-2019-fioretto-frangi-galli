@@ -1,7 +1,8 @@
 package it.polimi.se2019.model.game;
 
 import it.polimi.se2019.model.cards.AmmoTileCard;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class AmmoTilesDeck {
     private ArrayList<AmmoTileCard> activeDeck;
@@ -57,12 +58,13 @@ public class AmmoTilesDeck {
         return discardedDeck;
     }
 
-    /** This method is called when activeDeck gets emptied. It takes the discardedDeck and
+    /** This method is called when activeDeck becomes empty. It takes the discardedDeck and
      * shuffles its content back to the activeDeck
      *
      * */
     public void setActiveDeck() {
         this.activeDeck = this.discardedDeck;
+        this.discardedDeck.clear();
         this.shuffle();
     }
     //TODO Check metodo
@@ -70,33 +72,9 @@ public class AmmoTilesDeck {
         this.discardedDeck.add(card);
     }
 
+
     public void shuffle(){
-        int i= 0;
-        int random = 0;
-        ArrayList<AmmoTileCard> temp1 = new ArrayList<>();
-        ArrayList<AmmoTileCard> temp2 = new ArrayList<>();
-        AmmoTileCard swipe;
-        int random2 = (int)(Math.random()*(10))+1;
-        random= ((int)(Math.random()*(4))+1)*((int)(Math.random()*(10))+1);
-        for(AmmoTileCard card: this.activeDeck)
-            temp2.add(card);
-        for(i=0; i<random; i++){
-            while (i<this.activeDeck.size()/2){
-                temp1.add(temp2.get(i));
-                temp1.add(temp2.get(temp2.size()-i));
-            }
-            swipe=temp1.get(random2);
-            temp1.set(random2, temp1.get(0));
-            temp1.set(0, swipe);
-            while (i<this.activeDeck.size()/2){
-                temp2.add(temp1.get(i));
-                temp2.add(temp1.get(temp1.size()-i));
-            }
-            swipe=temp2.get(random2);
-            temp2.set(random2, temp2.get(0));
-            temp2.set(0, swipe);
-        }
-        this.activeDeck=temp2; //FORSE QUESTO NON BASTA
+        Collections.shuffle(activeDeck);
     }
 
     public AmmoTileCard draw(){

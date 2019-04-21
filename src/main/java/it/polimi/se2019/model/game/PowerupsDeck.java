@@ -2,16 +2,17 @@ package it.polimi.se2019.model.game;
 
 import it.polimi.se2019.model.cards.PowerupCard;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class PowerupsDeck {
-    private  ArrayList<PowerupCard> activeDeck ;
+    private ArrayList<PowerupCard> activeDeck;
     private ArrayList<PowerupCard> discardedDeck;
-    //12 POWER UP, IN UN MAZZO DUE PER TIPO
+    //12 Powerups, one deck has two for each type
     public PowerupsDeck() {
         this.activeDeck = new ArrayList<>();
         this.discardedDeck = new ArrayList<>();
-        //INIZIALIZZO I POWER UP
+        //powerup creation
         for (int i=0; i<2; i++){
             //Targeting scope
             this.activeDeck.add(new PowerupCard("TargettingScope", 'r'));
@@ -41,17 +42,17 @@ public class PowerupsDeck {
         return discardedDeck;
     }
 
-    /** This method is called when activeDeck gets emptied. It takes the discardedDeck and
+    /** This method is called when activeDeck becomes empty. It takes the discardedDeck and
      * shuffles its content back to the activeDeck
      *
      * */
     public void setActiveDeck() {
         this.activeDeck = this.discardedDeck;
-        this.discardedDeck = new ArrayList<>();
+        this.discardedDeck.clear();
         this.shuffle();
     }
 
-    /**This method is used to update the deck of discarded cards
+    /**This method is used to add a card to the discarded pile
      *
      */
     public void setDiscardedDeck(PowerupCard card) {
@@ -59,46 +60,11 @@ public class PowerupsDeck {
         this.discardedDeck.add(card);
     }
 
-    /**
-     *
-     */
-    public void shuffle(){
-        int i= 0;
-        int random = 0;
-        ArrayList<PowerupCard> temp1 = new ArrayList<>();
-        ArrayList<PowerupCard> temp2 = new ArrayList<>();
-        PowerupCard swipe;
-        int random2 = (int)(Math.random()*(22))+1;
-        random= ((int)(Math.random()*(9))+1)*((int)(Math.random()*(9))+1);
-        //using temp2 to copy active
-        for(PowerupCard card: activeDeck){
-            temp2.add(card);
-        }
-        //Shuffles all the cards
-        for(i=0; i<random; i++){
-            while (i<this.activeDeck.size()/2){
-                temp1.add(temp2.get(i));
-                temp1.add(temp2.get(temp2.size()-i));
-            }
-            swipe=temp1.get((int)random2);
-            temp1.set((int)random2, temp1.get(0));
-            temp1.set(0, swipe);
-            while (i<this.activeDeck.size()/2){
-                temp2.add(temp1.get(i));
-                temp2.add(temp1.get(temp1.size()-i));
-            }
-            swipe=temp2.get((int)random2);
-            temp2.set((int)random2, temp2.get(0));
-            temp2.set(0, swipe);
-        }
 
-        this.activeDeck=temp2;
+    public void shuffle(){
+        Collections.shuffle(activeDeck);
     }
 
-    /**
-     *
-     * @return
-     */
     public PowerupCard draw(){
         PowerupCard drawn;
         if (this.activeDeck.isEmpty())

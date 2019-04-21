@@ -1,14 +1,25 @@
 package it.polimi.se2019.model.game;
 
 public class Decks {
-    public GunDeck gunDeck;
-    public PowerupsDeck powerupsDeck;
-    public AmmoTilesDeck ammotilesDeck;
+    private GunDeck gunDeck;
+    private PowerupsDeck powerupsDeck;
+    private AmmoTilesDeck ammotilesDeck;
 
     public Decks() {
         this.gunDeck= new GunDeck();
         this.powerupsDeck = new PowerupsDeck();
         this.ammotilesDeck = new AmmoTilesDeck();
     }
-    //TODO siamo sicuri di volere i mazzi pubblici? da valutare un approccio con metodi accessori
+
+    public GunDeck getGunDeck() {
+        return gunDeck;
+    }
+
+    public PowerupsDeck getPowerupsDeck() {
+        return powerupsDeck;
+    }
+
+    public AmmoTilesDeck getAmmotilesDeck() {
+        return ammotilesDeck;
+    }
 }

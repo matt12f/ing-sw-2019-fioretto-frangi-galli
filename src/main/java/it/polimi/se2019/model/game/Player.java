@@ -1,5 +1,7 @@
 package it.polimi.se2019.model.game;
 
+import java.util.ArrayList;
+
 public class Player {
     private String nickname;
     private int id;
@@ -12,11 +14,12 @@ public class Player {
      * @param id
      * @param availableColors is a char vector built based upon the existing player's colors
      */
-    public Player(int id,char [] availableColors){
+    public Player(int id, ArrayList<Character> availableColors){
         String nickname="frank",colorString="Scelta Utente";
         char color='y';
         //TODO Chiedere il nickname
-        //TODO chiedereil colore al giocatore (scegliendo da colori disponibili)
+        if(availableColors==null)//può scegliere tra tutti
+            //TODO chiedere il colore al giocatore (scegliendo da colori disponibili)
         switch (colorString){
             case ("Yellow"): color='y'; break;
             case ("Blue"): color='b'; break;

@@ -2,29 +2,31 @@ package it.polimi.se2019.model.game;
 
 import it.polimi.se2019.model.cards.AmmoTileCard;
 
+import static it.polimi.se2019.App.getMainController;
+
+
 public class DropCell extends Cell{
 
     private AmmoTileCard drop;
 
     public DropCell(char color, char top, char bottom, char left, char right){
-
-        this.color = color;
-        this.top = top;
-        this.bottom = bottom;
-        this.left = left;
-        this.right = right;
-        this.drop = null;
+        super(color,top,bottom,left,right);
+        this.drop = getMainController().getLocalGameModel().currentDecks.getAmmotilesDeck().draw();
     }
 
     public AmmoTileCard getDrop(){
         return  drop;
     }
-    public void setDrop(AmmoTileCard drop){
-        this.drop = drop;
+
+    public void setDrop(){
+
+        this.drop = getMainController().getLocalGameModel().currentDecks.getAmmotilesDeck().draw();;
 
     }
-    public void pickDrop(){
-    //TODO pickDrop
+    public AmmoTileCard pickDrop(){
+        AmmoTileCard temp=this.drop;
+        this.drop = getMainController().getLocalGameModel().currentDecks.getAmmotilesDeck().draw();
+        return temp;
     }
 
 }

@@ -12,7 +12,6 @@ public class Ammo {
         this.blue=1;
         this.red=1;
         this.yellow=1;
-
     }
 
     /**
@@ -30,8 +29,8 @@ public class Ammo {
     }
 
     /**
-     * these set methods could be re-engineered as "adding" or "subtract" methods rather than set. Considering that
-     * we'll only be adding/removing cubes from the tile's Ammo space.
+     * these set methods add or subtract whether the value passed is positive or negative.
+     * They do not prevent the value to become negative because it is prevented at the method calling.
      */
     public void setBlue(int blue) {
         this.blue += blue;
