@@ -2,8 +2,6 @@ package it.polimi.se2019.model.game;
 
 import it.polimi.se2019.model.cards.AmmoTileCard;
 
-import static it.polimi.se2019.App.getMainController;
-
 
 public class DropCell extends Cell{
 
@@ -11,21 +9,29 @@ public class DropCell extends Cell{
 
     public DropCell(char color, char top, char bottom, char left, char right){
         super(color,top,bottom,left,right);
-        //this.drop = getMainController().getLocalGameModel().currentDecks.getAmmotilesDeck().draw();
+        this.drop = null;
     }
 
+    /**
+     * This method will be useb by the view to see what drop is in the cell
+     * @return
+     */
     public AmmoTileCard getDrop(){
         return  drop;
     }
 
-    public void setDrop(){
-
-        //this.drop = getMainController().getLocalGameModel().currentDecks.getAmmotilesDeck().draw();;
-
+    public void setDrop(AmmoTileCard drop){
+        this.drop = drop;
     }
-    public AmmoTileCard pickDrop(){
+
+    /**
+     *
+     * @param drop this is the AmmoTileCard to place where the one you picked must go
+     * @return this is the AmmoTileCard to discard
+     */
+    public AmmoTileCard pickDrop(AmmoTileCard drop){
         AmmoTileCard temp=this.drop;
-        //this.drop = getMainController().getLocalGameModel().currentDecks.getAmmotilesDeck().draw();
+        this.drop = drop;
         return temp;
     }
 

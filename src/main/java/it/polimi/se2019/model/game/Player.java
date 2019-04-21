@@ -1,7 +1,5 @@
 package it.polimi.se2019.model.game;
 
-import java.util.ArrayList;
-
 public class Player {
     private String nickname;
     private int id;
@@ -16,8 +14,6 @@ public class Player {
      * @param color
      */
     public Player(int id,String nickname,char color ){
-
-
         this.id = id;
         this.nickname = nickname;
         this.score = 0;
@@ -32,7 +28,7 @@ public class Player {
     public int getScore() {
         return score;
     }
-    /**This method adds point to a player
+    /**This method adds points to a player
      *
      * */
     public void setScore(int points) {

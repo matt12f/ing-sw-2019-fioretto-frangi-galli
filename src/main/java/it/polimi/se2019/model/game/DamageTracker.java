@@ -14,7 +14,7 @@ public class DamageTracker {
     }
 
     /**
-     * this method find the last empty cell in damage, the control about kill and overkill will be done in the controller
+     * this method finds the last empty cell in damage, the control about kill and overkill will be done in the controller
      *
      *
      * @param damage
@@ -28,12 +28,12 @@ public class DamageTracker {
                 found = true;
             }
             i++;
-        }while(found == false);
+        }while(!found);
 
     }
 
     /**
-     * this method add a new mark
+     * this method adds a new mark
      * @param mark
      */
     public void addMarks(char mark) {
@@ -49,7 +49,7 @@ public class DamageTracker {
     }
 
     /**
-     * this method allows to reset the vector damage
+     * this method resets the vector damage
      */
     public void setKill(){
         for (int i=0; i < 12; i++) {

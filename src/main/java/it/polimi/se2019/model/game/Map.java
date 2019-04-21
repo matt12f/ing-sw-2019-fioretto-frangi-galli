@@ -2,7 +2,7 @@ package it.polimi.se2019.model.game;
 
 public class Map {
     public Room [] rooms;
-    public Cell [][]boardMatrix;
+    private Cell [][]boardMatrix;
 
     public Map(int config){
         /**

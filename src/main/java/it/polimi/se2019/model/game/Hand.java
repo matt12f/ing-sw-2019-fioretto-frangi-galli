@@ -1,5 +1,5 @@
 package it.polimi.se2019.model.game;
-// TODO sostituire il 3 con una constante, più elegante, tranquilli fo io successivamemememente, sono Frangi obv
+// TODO sostituire il 3 con una constante, più elegante, tranquilli fo io successivamente, sono Frangi obv
 import it.polimi.se2019.model.cards.GunCard;
 import it.polimi.se2019.model.cards.PowerupCard;
 public class Hand {

@@ -15,9 +15,18 @@ public class GameModel extends Observable{
 
     public GameModel(ArrayList<Player> playerList, String gameMode){
         this.currentDecks=new Decks();
-        this.gameMode = gameMode;
-        this.playerList = playerList;
-    //TODO scrivere costruttore
+        this.playerList=playerList;
+        this.gameMode=gameMode;
+        if(gameMode=="Normal")
+            this.killshotTrack=new KillShotTrack();
+        else if(gameMode=="Turret")
+            this.killshotTrack=new KillShotTrackTurret();
+        else
+            this.killshotTrack=new KillShotTrackDomination();
+        //TODO scelta della mappa
+        int mapNumber=0;
+        this.currentMap=new Map(mapNumber);
+        this.turn=1;
     }
 
     public int getGameNumberId() {

@@ -7,36 +7,30 @@ public class Room {
     private ArrayList<Player> players;
 
     public Room(char color){
+        this.players=new ArrayList<>();
         this.color = color;
-
-
     }
 
-    /**getColors returns the color of the room
-     *
-     * @return
+    /**
+     * @return the color of the room
      */
     public char getColors(){
         return color;
     }
 
-    /**This method returns all the players in the room
-     *
-     * @return
+    /**
+     * @return all of the players in the room
      */
     public ArrayList<Player> getPlayers(){
         return players;
     }
 
-    /**setPlayers is used to set and update the list of the players in the room
-     *
-     */
+
     public void addPlayers(Player newPlayer){
-        //TODO setPlayers scrivere codice
-
+        this.players.add(newPlayer);
     }
-    public void removePlayers(Player player){
-        //TODO setPlayers scrivere codice
 
+    public void removePlayers(Player player){
+        this.players.remove(player);
     }
 }
