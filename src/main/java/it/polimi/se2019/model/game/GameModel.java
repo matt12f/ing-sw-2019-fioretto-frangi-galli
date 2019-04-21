@@ -15,6 +15,8 @@ public class GameModel extends Observable{
 
     public GameModel(ArrayList<Player> playerList, String gameMode){
         this.currentDecks=new Decks();
+        this.gameMode = gameMode;
+        this.playerList = playerList;
     //TODO scrivere costruttore
     }
 

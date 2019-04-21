@@ -13,8 +13,9 @@ public class ActionTileFrenzy extends ActionTile{
      *      move up to 2 square, reload if you want, then shoot;
      *      move up to 3 square and grab something.
      */
-    public ActionTileFrenzy(){
+    public ActionTileFrenzy(int actions){
         //TODO scrivere costruttore (simile alla ActionTileNormal)
+        this.actionCounter = actions;
     }
 
 }
