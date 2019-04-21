@@ -11,7 +11,7 @@ public class DropCell extends Cell{
 
     public DropCell(char color, char top, char bottom, char left, char right){
         super(color,top,bottom,left,right);
-        this.drop = getMainController().getLocalGameModel().currentDecks.getAmmotilesDeck().draw();
+        //this.drop = getMainController().getLocalGameModel().currentDecks.getAmmotilesDeck().draw();
     }
 
     public AmmoTileCard getDrop(){
@@ -20,12 +20,12 @@ public class DropCell extends Cell{
 
     public void setDrop(){
 
-        this.drop = getMainController().getLocalGameModel().currentDecks.getAmmotilesDeck().draw();;
+        //this.drop = getMainController().getLocalGameModel().currentDecks.getAmmotilesDeck().draw();;
 
     }
     public AmmoTileCard pickDrop(){
         AmmoTileCard temp=this.drop;
-        this.drop = getMainController().getLocalGameModel().currentDecks.getAmmotilesDeck().draw();
+        //this.drop = getMainController().getLocalGameModel().currentDecks.getAmmotilesDeck().draw();
         return temp;
     }
 

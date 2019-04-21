@@ -12,21 +12,12 @@ public class Player {
     /**
      *
      * @param id
-     * @param availableColors is a char vector built based upon the existing player's colors
+     * @param nickname
+     * @param color
      */
-    public Player(int id, ArrayList<Character> availableColors){
-        String nickname="frank",colorString="Scelta Utente";
-        char color='y';
-        //TODO Chiedere il nickname
-        if(availableColors==null)//può scegliere tra tutti
-            //TODO chiedere il colore al giocatore (scegliendo da colori disponibili)
-        switch (colorString){
-            case ("Yellow"): color='y'; break;
-            case ("Blue"): color='b'; break;
-            case ("Violet"): color='v'; break;
-            case ("Green"): color='g'; break;
-            case ("White"): color='w'; break;
-        }
+    public Player(int id,String nickname,char color ){
+
+
         this.id = id;
         this.nickname = nickname;
         this.score = 0;
