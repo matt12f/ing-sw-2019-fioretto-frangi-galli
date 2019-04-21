@@ -1,8 +1,7 @@
 package it.polimi.se2019.model.game;
-
+// TODO sostituire il 3 con una constante, più elegante, tranquilli fo io successivamemememente, sono Frangi obv
 import it.polimi.se2019.model.cards.GunCard;
 import it.polimi.se2019.model.cards.PowerupCard;
-
 public class Hand {
     private PowerupCard []  powerups;
     private GunCard [] guns;
@@ -23,15 +22,36 @@ public class Hand {
     public PowerupCard[] getPowerup() {
         return powerups;
     }
+
     /**this method puts a gun in the player's hand
      * */
-    public void setGun(GunCard gun) {
-       // TODO scrivere metodo
+    public void setGun(GunCard gun) throws ArrayIndexOutOfBoundsException {
+        int i, index= -1;
+        for (i=0; i<3; i++){
+            if(this.guns[i] == null){
+                index = i;
+            }
+        }
+        if(index != -1){
+            this.guns[index]=gun;
+        }else{
+            throw new ArrayIndexOutOfBoundsException();
+        }
     }
 
     /**this method puts a powerup in the player's hand
      * */
-    public void setPowerup(PowerupCard powerup) {
-        // TODO scrivere metodo
+    public void setPowerup(PowerupCard powerup) throws ArrayIndexOutOfBoundsException {
+        int i, index= -1;
+        for (i=0; i<3; i++){
+            if(this.powerups[i] == null){
+                index = i;
+            }
+        }
+        if(index != -1){
+            this.powerups[index]=powerup;
+        }else{
+            throw new ArrayIndexOutOfBoundsException();
+        }
     }
 }
