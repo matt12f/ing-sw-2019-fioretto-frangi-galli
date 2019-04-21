@@ -2,6 +2,8 @@ package it.polimi.se2019.model.game;
 // TODO sostituire il 3 con una constante, più elegante, tranquilli fo io successivamente, sono Frangi obv
 import it.polimi.se2019.model.cards.GunCard;
 import it.polimi.se2019.model.cards.PowerupCard;
+import org.omg.CosNaming.NamingContextPackage.NotFound;
+
 public class Hand {
     private PowerupCard []  powerups;
     private GunCard [] guns;
@@ -54,4 +56,34 @@ public class Hand {
             throw new ArrayIndexOutOfBoundsException();
         }
     }
+
+    public void substitutionPowerUp (PowerupCard discarded,PowerupCard newPowerup) throws NotFound {
+        int i, index= -1;
+        for (i=0; i<3; i++){
+            if(this.powerups[i] == discarded){
+                index = i;
+            }
+        }
+        if(index != -1){
+            this.powerups[index]=newPowerup;
+        }else{
+            throw new NotFound();
+        }
+    }
+
+    public void substitutionGunCard (GunCard discarded, GunCard newGunCard) throws NotFound{
+        int i, index= -1;
+        for (i=0; i<3; i++){
+            if(this.guns[i] == discarded){
+                index = i;
+            }
+        }
+        if(index != -1){
+            this.guns[index]=newGunCard;
+        }else{
+            throw new NotFound();
+        }
+    }
 }
+
+
