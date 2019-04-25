@@ -67,7 +67,7 @@ public class AmmoTilesDeck {
         this.discardedDeck.clear();
         this.shuffle();
     }
-    //TODO Check metodo
+
     public void setDiscardedDeck(AmmoTileCard card) {
         this.discardedDeck.add(card);
     }

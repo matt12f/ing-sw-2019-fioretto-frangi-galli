@@ -21,18 +21,22 @@ public class SpawnCell extends Cell {
 
     /** It fills the empty slots of the weapon cards when a card is picked up
      */
-    public void setWeaponCards(){
+    public void setWeaponCards(int pick){
         try {
-            weaponCards[0] = getMainController().getLocalGameModel().currentDecks.getGunDeck().draw();
+            weaponCards[pick] = getMainController().getLocalGameModel().currentDecks.getGunDeck().draw();
         }catch (Exception cardsFinished){ //TODO rename the exception
             //No more cards for the rest of the game to be added
         }
 
         //TODO setWeaponCards
      }
-     /**Method that displays the 3 cards that the player can pick in the spawn point and he can pick one up
+     /**Method that allow the player to take a weapon from the 3 slots
       **/
-    public void pickWeapon(int pick){
-        //TODO pickWeapon
+    public GunCard pickWeapon(int pick){
+        //TODO controllare questo metodo nel caso in cui ci sia uno switch
+        GunCard picked ;
+        picked = weaponCards[pick];
+        setWeaponCards(pick);
+        return picked;
      }
 }

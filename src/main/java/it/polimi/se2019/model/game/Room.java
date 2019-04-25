@@ -32,11 +32,12 @@ public class Room {
      *
      */
     public void addPlayers(Player newPlayer){
-        //TODO setPlayers scrivere codice
+
+        players.add(newPlayer);
 
     }
     public void removePlayers(Player player){
-        //TODO setPlayers scrivere codice
-
+        //TODO check codice
+        players.remove(player);
     }
 }

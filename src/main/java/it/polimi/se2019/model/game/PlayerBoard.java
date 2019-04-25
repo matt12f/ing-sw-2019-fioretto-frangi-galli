@@ -42,7 +42,7 @@ public class PlayerBoard {
 
     /**This method "flips" the action board, creating a frenzy one and dumping the normal one
      * */
-    public void activateFrenzy(){
-        //TODO scrivere codice
+    public void activateFrenzy(int actions){
+       this.actionTileFrenzy = new ActionTileFrenzy(actions);
     }
 }

@@ -4,10 +4,11 @@ import java.util.ArrayList;
 
 public class DamageTracker {
     private char [] damage;
-    private ArrayList<Character> marks;
+    private ArrayList<String> marks;
 
     public DamageTracker(){
         this.damage = new char[12];
+        this.marks = new ArrayList<>();
         for (int i=0; i<12; i++) {
             this.damage[i]= ' ';
         }
@@ -36,11 +37,11 @@ public class DamageTracker {
      * this method add a new mark
      * @param mark
      */
-    public void addMarks(char mark) {
+    public void addMarks(String mark) {
         this.marks.add(mark);
     }
 
-    public ArrayList<Character> getMarks() {
+    public ArrayList<String> getMarks() {
         return marks;
     }
 

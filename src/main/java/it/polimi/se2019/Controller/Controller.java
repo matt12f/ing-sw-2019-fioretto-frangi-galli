@@ -19,8 +19,8 @@ public class Controller implements Observer {
      */
     public Controller() {
         ArrayList<Player> players = new ArrayList<>();
-        char [] availableColors ={'y','b','v','g','w'};
-        players.add(new Player(1,availableColors));
+
+        //players.add(new Player(1,));
         //TODO chiedere la modalità di gioco
         String gameMode="normal";
 
@@ -40,7 +40,12 @@ public class Controller implements Observer {
     public GameStats playGame(GameModel activeGame) {
         return new GameStats(activeGame.getPlayerList(),activeGame.getTurn());
     }
-
+    public GameModel getLocalGameModel(){
+        //TODO è una toppa, meglio adattarla dinamicamente o lasciarla così se non viene implementato il multipartita
+        GameModel game;
+        game = this.game.get(0);
+        return game;
+    }
     private void startTurn(GameModel activeGame){
 
     }

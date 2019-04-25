@@ -5,7 +5,7 @@ import java.util.Observable;
 
 public class GameModel extends Observable{
     public Decks currentDecks;
-    private int gameNumberId; //TODO a cosa serve questo?
+    private int gameNumberId; // Serve per il multiGame
     private ArrayList<Player> playerList;
     private String gameMode;
     public Map currentMap;
@@ -17,7 +17,7 @@ public class GameModel extends Observable{
         this.currentDecks=new Decks();
         this.gameMode = gameMode;
         this.playerList = playerList;
-    //TODO scrivere costruttore
+
     }
 
     public int getGameNumberId() {
@@ -35,9 +35,33 @@ public class GameModel extends Observable{
         return finalFrenzy;
     }
 
-    public void setFinalFrenzy() {
+
+    /**
+     * this method allow to build the actiontile Frenzy objects for each player
+     * the controller send the player that has to play the first frenzy turn, and the method control
+     * and send the right amount of frenzy actions to the builder.
+     * @param activePlayer
+     */
+    public void setFinalFrenzy(int activePlayer) {
         this.finalFrenzy = true;
+        int actions, i = activePlayer;
+        for (Player player : this.playerList){
+            if(activePlayer != 1 && i >= activePlayer){
+                actions = 2;
+            }else{
+                actions = 1;
+            }
+            if(i == this.playerList.size() ){
+                i= 1;
+            }else{
+                i++;
+            }
+            player.playerBoard.activateFrenzy(actions);
+        }
     }
+
+
+
 
     public int getTurn() {
         return turn;
