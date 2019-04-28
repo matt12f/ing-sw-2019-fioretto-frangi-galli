@@ -1,7 +1,7 @@
 package it.polimi.se2019;
 
 import it.polimi.se2019.controller.Controller;
-import it.polimi.se2019.view.MainView;
+import it.polimi.se2019.view.LocalView;
 
 
 public class Adrenaline
@@ -9,7 +9,7 @@ public class Adrenaline
     //This controller contains and manages the  game logic for all players (it's initialized only
     // if a player creates a new game
     private static Controller mainController;
-    private static MainView localView=new MainView();
+    private static LocalView localView=new LocalView();
     public static void main( String[] args)
     {
 

@@ -10,7 +10,7 @@ import java.util.Observer;
 
 public class Controller implements Observer {
     private GameModel mainGameModel;
-    private ArrayList<RemoteView> remoteViews;
+    private RemoteView remoteView;
     private TurnManager activeturn;
 
     /**
@@ -27,8 +27,7 @@ public class Controller implements Observer {
         String gameMode="normal";
         this.mainGameModel=new GameModel(players,gameMode);
         //TODO capire come usare le remoteviews
-        this.remoteViews=new ArrayList<>();
-        this.remoteViews.add(new RemoteView());
+        this.remoteView=new RemoteView();
         this.activeturn = new TurnManager();
     }
 
@@ -36,8 +35,8 @@ public class Controller implements Observer {
         return mainGameModel;
     }
 
-    public ArrayList<RemoteView> getLocalView() {
-        return remoteViews;
+    public RemoteView getLocalView() {
+        return remoteView;
     }
 
     public TurnManager getActiveturn() {
