@@ -1,53 +1,62 @@
-
 package it.polimi.se2019.controller;
 
 import it.polimi.se2019.model.game.GameModel;
 import it.polimi.se2019.model.game.Player;
-import it.polimi.se2019.view.MainView;
+import it.polimi.se2019.view.RemoteView;
 
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
 public class Controller implements Observer {
-    private ArrayList<GameModel> game;
-    private ArrayList<MainView> view;
+    private GameModel mainGameModel;
+    private ArrayList<RemoteView> remoteViews;
     private TurnManager activeturn;
 
     /**
-     * This constructor is supposed to generate only one Controller object for one Game
-     * infact the controller is built around the first (starter) player
+     * This constructor generates one local Controller object for one Player
      */
     public Controller() {
         ArrayList<Player> players = new ArrayList<>();
-
-        //players.add(new Player(1,));
+        String nickname="Da fare";
+        char color='b';
+        //TODO chiedere nickname passando da VIEW
+        //TODO scelta del colore passando da VIEW
+        players.add(new Player(1,nickname,color));
         //TODO chiedere la modalità di gioco
         String gameMode="normal";
-
-        //This is the list for each player's GameModel
-        this.game = new ArrayList<>();
-        //The GameModel for the first player is added to the list
-        this.game.add(new GameModel(players,gameMode));
-
-        //This is the list for each player's MainView
-        this.view= new ArrayList<>();
-        //The MainView for the first player is added to the list
-        this.view.add(new MainView());
-
+        this.mainGameModel=new GameModel(players,gameMode);
+        //TODO capire come usare le remoteviews
+        this.remoteViews=new ArrayList<>();
+        this.remoteViews.add(new RemoteView());
         this.activeturn = new TurnManager();
     }
 
-    public GameStats playGame(GameModel activeGame) {
-        return new GameStats(activeGame.getPlayerList(),activeGame.getTurn());
+    public GameModel getMainGameModel() {
+        return mainGameModel;
     }
-    public GameModel getLocalGameModel(){
-        //TODO è una toppa, meglio adattarla dinamicamente o lasciarla così se non viene implementato il multipartita
-        GameModel game;
-        game = this.game.get(0);
-        return game;
+
+    public ArrayList<RemoteView> getLocalView() {
+        return remoteViews;
     }
-    private void startTurn(GameModel activeGame){
+
+    public TurnManager getActiveturn() {
+        return activeturn;
+    }
+
+    public GameStats playGame() {
+        setupGame();
+        //TODO ciclo che fa partire startTurn()
+        return new GameStats(mainGameModel.getPlayerList(),mainGameModel.getTurn());
+    }
+
+    private void setupGame(){
+        //TODO riempire spawnCell con carte
+        //TODO riempire dropCell con carte
+
+    }
+
+    private void startTurn(){
 
     }
 

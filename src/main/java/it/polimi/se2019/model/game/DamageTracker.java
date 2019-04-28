@@ -16,8 +16,6 @@ public class DamageTracker {
 
     /**
      * this method finds the last empty cell in damage, the control about kill and overkill will be done in the controller
-     *
-     *
      * @param damage
      */
     public void addDamage( char damage) {

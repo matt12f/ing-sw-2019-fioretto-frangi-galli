@@ -5,7 +5,7 @@ import java.util.Observable;
 
 public class GameModel extends Observable{
     public Decks currentDecks;
-    private int gameNumberId; // Serve per il multiGame
+    private int gameNumberId; // Potrebbe servire per il multiGame
     private ArrayList<Player> playerList;
     private String gameMode;
     public Map currentMap;
