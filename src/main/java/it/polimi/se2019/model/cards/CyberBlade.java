@@ -8,11 +8,6 @@ public class CyberBlade extends GunCard {
     private char[] secondaryEffectCost;
     private char[] thirdEffectCost;
 
-
-
-    /**
-     * constructor
-     */
     public CyberBlade() {
         this.numberOfOptional = 2;
         this.hasAlternativeEffect = false;

@@ -64,7 +64,7 @@ public class AmmoTilesDeck {
      * */
     public void setActiveDeck() {
         this.activeDeck = this.discardedDeck;
-        this.discardedDeck.clear();
+        this.discardedDeck=new ArrayList<>();
         this.shuffle();
     }
 

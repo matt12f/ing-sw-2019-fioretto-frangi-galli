@@ -48,7 +48,7 @@ public class PowerupsDeck {
      * */
     public void setActiveDeck() {
         this.activeDeck = this.discardedDeck;
-        this.discardedDeck.clear();
+        this.discardedDeck=new ArrayList<>();
         this.shuffle();
     }
 
@@ -56,7 +56,6 @@ public class PowerupsDeck {
      *
      */
     public void setDiscardedDeck(PowerupCard card) {
-        //TODO setDiscardedDeck check code
         this.discardedDeck.add(card);
     }
 

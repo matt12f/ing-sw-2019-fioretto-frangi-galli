@@ -35,19 +35,19 @@ public class Ammo {
     public void setBlue(int blue) {
         this.blue += blue;
         if (this.blue > 3){
-            this.blue = 3 ;
+            this.blue = 3;
         }
     }
     public void setRed(int red) {
         this.red += red;
         if (this.red > 3){
-            this.red = 3 ;
+            this.red = 3;
         }
     }
     public void setYellow(int yellow) {
         this.yellow += yellow;
         if (this.yellow > 3){
-            this.yellow = 3 ;
+            this.yellow = 3;
         }
     }
 }
