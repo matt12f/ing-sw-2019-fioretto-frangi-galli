@@ -4,7 +4,7 @@ public class PowerupCard {
     private String powerupType;
     private char cubeColor;
     /**
-     * Default constructor
+     * Available Types: TargettingScope, Newton, TagbackGrenade, Teleporter
      */
     public PowerupCard(String type, char color) {
         this.cubeColor=color;
