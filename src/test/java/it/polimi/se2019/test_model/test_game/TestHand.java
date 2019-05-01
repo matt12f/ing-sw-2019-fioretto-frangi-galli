@@ -5,7 +5,8 @@ import it.polimi.se2019.model.game.Hand;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.omg.CosNaming.NamingContextPackage.NotFound;
+
+import java.util.NoSuchElementException;
 
 import static org.junit.Assert.*;
 
@@ -78,9 +79,6 @@ public class TestHand {
     @Rule
     public ExpectedException notFoundException = ExpectedException.none();
 
-
-    /*LO STO RIVEDENDO. L'HO OSCURATO PER LA PUSH
-
     @Test
     public void testSubstitutionGunCard(){
         Hand testHand=new Hand();
@@ -98,8 +96,55 @@ public class TestHand {
 
         GunCard testGun4;
         testGun4= new Shockwave();
-        notFoundException.expect(NotFound.class);
         testHand.substitutionGunCard(testGun2,testGun4); //case in which the card to substitute is present
-    }*/
-    //TODO finire
+        boolean present=false;
+        for(GunCard gunCard:testHand.getGuns()){ //It verifies that testGun2 has been removed and testGun4 has been added
+            assertNotEquals(gunCard,testGun2);
+            if (gunCard.equals(testGun4))
+                present=true;
+        }
+        assertTrue(present);
+
+        notFoundException.expect(NoSuchElementException.class);
+        GunCard previousGuns[]=testHand.getGuns();
+        testHand.substitutionGunCard(testGun2,testGun4); //case in which the card to substitute is not present
+        assertTrue(previousGuns.equals(testHand.getGuns())); //it verifies that no changes occured
+    }
+
+    @Rule
+    public ExpectedException notFoundException2 = ExpectedException.none();
+
+    @Test
+    public void testSubstitutionPowerupCard(){
+        Hand testHand=new Hand();
+        PowerupCard testPwup1, testPwup2,testPwup3;
+        testPwup1=new PowerupCard("Newton",'r');
+        testPwup2=new PowerupCard("TagbackGrenade",'y');
+        testPwup3=new PowerupCard("Teleporter",'b');
+
+        for(int i=0;i<3;i++){
+            assertNull(testHand.getPowerups()[i]);
+        }
+        testHand.setPowerup(testPwup1);
+        testHand.setPowerup(testPwup2);
+        testHand.setPowerup(testPwup3);
+
+        PowerupCard testPwup4;
+        testPwup4=new PowerupCard("TargettingScope",'r');
+
+        testHand.substitutionPowerup(testPwup3,testPwup4); //case in which the card to substitute is present
+        boolean present=false;
+        for(PowerupCard powerupCard:testHand.getPowerups()){ //It verifies that testGun2 has been removed and testGun4 has been added
+            assertNotEquals(powerupCard,testPwup3);
+            if (powerupCard.equals(testPwup4))
+                present=true;
+        }
+        assertTrue(present);
+
+        notFoundException2.expect(NoSuchElementException.class);
+        PowerupCard previousPwUps[]=testHand.getPowerups();
+        testHand.substitutionPowerup(testPwup3,testPwup4); //case in which the card to substitute is not present
+        assertTrue(previousPwUps.equals(testHand.getGuns())); //it verifies that no changes occured
+    }
+
 }

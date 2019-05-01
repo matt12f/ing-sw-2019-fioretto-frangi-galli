@@ -1,7 +1,8 @@
 package it.polimi.se2019.model.game;
 import it.polimi.se2019.model.cards.GunCard;
 import it.polimi.se2019.model.cards.PowerupCard;
-import org.omg.CosNaming.NamingContextPackage.NotFound;
+
+import java.util.NoSuchElementException;
 
 public class Hand {
     private PowerupCard [] powerups;
@@ -58,7 +59,7 @@ public class Hand {
         }
     }
 
-    public void substitutionPowerup (PowerupCard discarded,PowerupCard newPowerup) throws NotFound {
+    public void substitutionPowerup (PowerupCard discarded,PowerupCard newPowerup) throws NoSuchElementException {
         int index= -1;
         for (int i=0; i<maxCards; i++){
             if(this.powerups[i] == discarded){
@@ -68,11 +69,11 @@ public class Hand {
         if(index != -1){
             this.powerups[index]=newPowerup;
         }else{
-            throw new NotFound();
+            throw new NoSuchElementException();
         }
     }
 
-    public void substitutionGunCard (GunCard discarded, GunCard newGunCard) throws NotFound{
+    public void substitutionGunCard (GunCard discarded, GunCard newGunCard) throws NoSuchElementException{
         int index= -1;
         for (int i=0; i<maxCards; i++){
             if(this.guns[i] == discarded){
@@ -82,7 +83,7 @@ public class Hand {
         if(index != -1){
             this.guns[index]=newGunCard;
         }else{
-            throw new NotFound();
+            throw new NoSuchElementException();
         }
     }
 }
