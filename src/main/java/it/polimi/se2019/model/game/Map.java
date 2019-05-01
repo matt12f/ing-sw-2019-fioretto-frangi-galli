@@ -1,7 +1,7 @@
 package it.polimi.se2019.model.game;
 
 public class Map {
-    public Room [] rooms;
+    private Room [] rooms;
     private Cell [][]boardMatrix;
 
     public Map(int config){
@@ -32,7 +32,7 @@ public class Map {
                 this.boardMatrix[1][3]= new DropCell(  'y',  'd', 'r',  'r',  'w');
                 this.boardMatrix[2][1]= new DropCell(  'w',  'd', 'w',  'w',  'd');
                 this.boardMatrix[2][2]= new DropCell(  'y',  'r', 'w',  'd',  'r');
-                this.boardMatrix[2][2]= new SpawnCell(  'y',  'r', 'w',  'r',  'w');
+                this.boardMatrix[2][3]= new SpawnCell(  'y',  'r', 'w',  'r',  'w');
                 break;
             case 2: //config with  no special rooms
                 //room creation
@@ -74,7 +74,7 @@ public class Map {
                 this.boardMatrix[2][0]= new DropCell(  'w',  'd', 'w',  'w',  'r');
                 this.boardMatrix[2][1]= new DropCell(  'w',  'd', 'w',  'r',  'd');
                 this.boardMatrix[2][2]= new DropCell(  'y',  'r', 'w',  'd',  'r');
-                this.boardMatrix[2][2]= new SpawnCell( 'y',  'r', 'w',  'r',  'w');
+                this.boardMatrix[2][3]= new SpawnCell( 'y',  'r', 'w',  'r',  'w');
 
                 break;
             case 4: //config with 2 violet cells
@@ -96,12 +96,14 @@ public class Map {
                 this.boardMatrix[2][0]= new DropCell(  'w',  'd', 'w',  'w',  'r');
                 this.boardMatrix[2][1]= new DropCell(  'w',  'd', 'w',  'r',  'r');
                 this.boardMatrix[2][2]= new DropCell(  'w',  'w', 'w',  'r',  'd');
-                this.boardMatrix[2][2]= new SpawnCell(  'y',  'r', 'w',  'd',  'w');
+                this.boardMatrix[2][3]= new SpawnCell(  'y',  'r', 'w',  'd',  'w');
                 break;
-            default:
+            default: this.boardMatrix=null; this.rooms=null;
                 break;
         }
     }
+
+    public Room[] getRooms() { return rooms; }
 
     public Cell[][] getBoardMatrix(){
             return boardMatrix;

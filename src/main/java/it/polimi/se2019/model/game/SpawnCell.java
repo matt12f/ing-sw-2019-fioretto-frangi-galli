@@ -11,19 +11,15 @@ public class SpawnCell extends Cell {
     public SpawnCell(char color, char top, char bottom, char left, char right){
         super(color,top,bottom,left,right);
         this.weaponCards = new GunCard[3];
-        weaponCards[0]=getMainController().getMainGameModel().currentDecks.getGunDeck().draw();
-        weaponCards[1]=getMainController().getMainGameModel().currentDecks.getGunDeck().draw();
-        weaponCards[2]=getMainController().getMainGameModel().currentDecks.getGunDeck().draw();
     }
 
     public GunCard[] getWeaponCards() {
         return weaponCards;
     }
 
-    /** It fills the empty slots of the weapon cards when a card is picked up
+    /** It fills the first empty slot in weaponCards with the card it receives
      */
-
-    public void setWeaponCards(GunCard gunCard){
+    public void setWeaponCard(GunCard gunCard){
             boolean filled=false;
             int i=0;
             while (!filled){
@@ -34,13 +30,13 @@ public class SpawnCell extends Cell {
                 else i++;
             }
      }
-     /**Method that allow the player to take a weapon from the 3 slots
+
+     /**Method that returns the weapon from the pick-numbered slot
       **/
     public GunCard pickWeapon(int pick){
         //TODO controllare questo metodo nel caso in cui ci sia uno switch
-        GunCard picked ;
-        picked = weaponCards[pick];
-        setWeaponCards(picked);
+        GunCard picked= weaponCards[pick];
+        //TODO aggiungere svuotamento di this.drop
         return picked;
      }
 }

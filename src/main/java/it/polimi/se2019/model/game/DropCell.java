@@ -2,30 +2,33 @@ package it.polimi.se2019.model.game;
 
 import it.polimi.se2019.model.cards.AmmoTileCard;
 
-import static it.polimi.se2019.Adrenaline.getMainController;
-
-
 public class DropCell extends Cell{
 
     private AmmoTileCard drop;
 
     public DropCell(char color, char top, char bottom, char left, char right){
         super(color,top,bottom,left,right);
-        this.drop = getMainController().getMainGameModel().currentDecks.getAmmotilesDeck().draw();
     }
 
     public AmmoTileCard getDrop(){
         return  drop;
     }
 
-    public void setDrop(){
-
-        this.drop = getMainController().getMainGameModel().currentDecks.getAmmotilesDeck().draw();;
-
+    /**
+     * This method puts the card it receives in the slot without checking if it's already occupied
+     */
+    public void setDrop(AmmoTileCard ammoTileCard){
+        this.drop =ammoTileCard;
     }
+
+    /**
+     * This method picks a drop card and fills it back up with a new one.
+     * The slot will be refilled at the end of the turn, otherwise a player could use the move+grab
+     * move twice in his turn and pick twice from the same DropCell (non compliant to game rules).
+     */
     public AmmoTileCard pickDrop(){
-        AmmoTileCard temp=this.drop;
-        this.drop = getMainController().getMainGameModel().currentDecks.getAmmotilesDeck().draw();
+        AmmoTileCard temp = this.drop;
+        //TODO aggiungere svuotamento di this.drop
         return temp;
     }
 
