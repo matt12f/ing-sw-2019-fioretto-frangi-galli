@@ -4,7 +4,7 @@ import it.polimi.se2019.model.cards.PowerupCard;
 import it.polimi.se2019.model.game.PowerupsDeck;
 import org.junit.Test;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class TestPowerupsDeck {
 
@@ -12,10 +12,10 @@ public class TestPowerupsDeck {
     public void testPowerupsDeck(){
         PowerupsDeck testDeck=new PowerupsDeck();
         assertTrue(testDeck.getDiscardedDeck().isEmpty());
-        assertTrue(testDeck.getActiveDeck().size()==24);
+        assertEquals(24,testDeck.getActiveDeck().size());
 
         PowerupsDeck testDeck2=new PowerupsDeck();
-        assertTrue(!testDeck2.getActiveDeck().equals(testDeck.getActiveDeck()));
+        assertNotEquals(testDeck2.getActiveDeck(),testDeck.getActiveDeck());
     }
 
     @Test
@@ -23,7 +23,7 @@ public class TestPowerupsDeck {
         PowerupsDeck testDeck=new PowerupsDeck();
         int size=emptyActiveDeck(testDeck);
         testDeck.setActiveDeck();
-        assertTrue(testDeck.getActiveDeck().size()==size);
+        assertEquals(size,testDeck.getActiveDeck().size());
         assertTrue(testDeck.getDiscardedDeck().isEmpty());
     }
 
@@ -34,7 +34,7 @@ public class TestPowerupsDeck {
             testDeck.getActiveDeck().remove(testDeck.getActiveDeck().get(size-i));
         }
         assertTrue(testDeck.getActiveDeck().isEmpty());
-        assertTrue(testDeck.getDiscardedDeck().size()==size);
+        assertEquals(size,testDeck.getDiscardedDeck().size());
         return size;
     }
 
@@ -42,10 +42,10 @@ public class TestPowerupsDeck {
     public void testDraw(){
         PowerupsDeck testDeck=new PowerupsDeck();
         PowerupCard testCard=testDeck.draw();
-        assertTrue(!testDeck.draw().equals(testCard));
+        assertNotEquals(testDeck.draw(),testCard);
         int size=emptyActiveDeck(testDeck);
-        assertTrue(size==testDeck.getDiscardedDeck().size()); //not useful but since the method returns an int... (that here doesn't serve a purpose)
+        assertEquals(size,testDeck.getDiscardedDeck().size()); //not useful but since the method returns an int... (that here doesn't serve a purpose)
         testCard=testDeck.draw();
-        assertTrue(!testDeck.draw().equals(testCard));
+        assertNotEquals(testDeck.draw(),testCard);
     }
 }

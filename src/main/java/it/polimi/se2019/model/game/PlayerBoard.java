@@ -2,35 +2,32 @@ package it.polimi.se2019.model.game;
 
 public class PlayerBoard {
     private char color;
-    private int skulls;
+    private int skulls; //the amount of skulls reduces the value of the scored card
+    private ActionTile activeActionTile;
     public Ammo ammo;
     public DamageTracker damage;
-    public ActionTileNormal actionTile;
-    public ActionTileFrenzy actionTileFrenzy;
     public Hand hand;
 
     public PlayerBoard(char color){
         this.color = color;
         this.ammo = new Ammo();
         this.damage = new DamageTracker();
-        this.actionTile = new ActionTileNormal();
+        this.activeActionTile = new ActionTileNormal();
         this.hand = new Hand();
         this.skulls = 0;
-
     }
 
-    /**Return the figure color
+    /**Return the board's color
      *
      */
     public char getColor() {
         return color;
     }
 
-    /**Is used to update the killShotTrack
-     *
+    /**It's used to update the value of the board
      */
-    public void setSkulls() {
-        //TODO scrivere codice
+    public void addSkull() {
+        this.skulls++;
     }
 
     /**Return the player's number of death
@@ -43,6 +40,12 @@ public class PlayerBoard {
     /**This method "flips" the action board, creating a frenzy one and dumping the normal one
      * */
     public void activateFrenzy(int actions){
-       this.actionTileFrenzy = new ActionTileFrenzy(actions);
+        this.skulls=0;//when final frenzy is turned on skulls don't count anymore, so they must
+        // be reset to 0. (they could impede the calculation of a board's value otherwise)
+        this.activeActionTile= new ActionTileFrenzy(actions);
+    }
+
+    public ActionTile getActionTile(){
+        return activeActionTile;
     }
 }

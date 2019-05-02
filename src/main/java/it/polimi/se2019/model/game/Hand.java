@@ -28,7 +28,7 @@ public class Hand {
 
     /**this method puts a gun in the player's hand
      * */
-    public void setGun(GunCard gun) throws ArrayIndexOutOfBoundsException {
+    public void setGun(GunCard gun) throws ArrayIndexOutOfBoundsException{
         int index= -1;
         for (int i=0; i<maxCards; i++){
             if(this.guns[i] == null){
@@ -49,6 +49,7 @@ public class Hand {
         int  index= -1;
         for (int i=0; i<maxCards; i++){
             if(this.powerups[i] == null){
+                //TODO correggere, così mette la carta in fondo (togli for e metti while con boolean found)
                 index = i;
             }
         }

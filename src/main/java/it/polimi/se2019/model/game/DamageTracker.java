@@ -15,8 +15,8 @@ public class DamageTracker {
     }
 
     /**
-     * this method finds the last empty cell in damage, the control about kill and overkill will be done in the controller
-     * @param damage
+     * this method finds the last empty cell in damage and adds the damage to the damage track.
+     * The checking about kill and overkill will be done in the controller
      */
     public void addDamage( char damage) {
         boolean found = false;
@@ -27,12 +27,12 @@ public class DamageTracker {
                 found = true;
             }
             i++;
-        }while(!found);
-
+        }while(!found && i<12);
     }
 
+    //TODO perché sono string e non character?
     /**
-     * this method adds a new mark
+     * this method adds the mark it receives
      * @param mark
      */
     public void addMarks(String mark) {
@@ -54,7 +54,6 @@ public class DamageTracker {
         for (int i=0; i < 12; i++) {
             this.damage[i]= ' ';
         }
-
     }
 
 }

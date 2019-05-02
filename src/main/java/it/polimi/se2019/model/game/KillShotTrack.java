@@ -2,9 +2,9 @@ package it.polimi.se2019.model.game;
 
 public class KillShotTrack {
 
-    protected int skulls;
-    protected String [] kills;
-    protected char extraKills;
+    private int skulls;
+    private String [] kills;
+    private char extraKills;
 
     /**
      * Default constructor
@@ -18,8 +18,8 @@ public class KillShotTrack {
         return skulls;
     }
 
-    public void setSkulls() {
-        this.skulls --;
+    public void subtractSkulls() {
+        this.skulls--;
     }
 
     public void setKills() {

@@ -14,7 +14,7 @@ public class PowerupsDeck {
         this.discardedDeck = new ArrayList<>();
         //powerup creation
         for (int i=0; i<2; i++){
-            //Targeting scope
+            //Targetting scope
             this.activeDeck.add(new PowerupCard("TargettingScope", 'r'));
             this.activeDeck.add(new PowerupCard("TargettingScope", 'b'));
             this.activeDeck.add(new PowerupCard("TargettingScope", 'y'));

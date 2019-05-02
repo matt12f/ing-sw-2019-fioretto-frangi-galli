@@ -22,13 +22,13 @@ public class DropCell extends Cell{
     }
 
     /**
-     * This method picks a drop card and fills it back up with a new one.
+     * This method picks a drop card and returns it.
      * The slot will be refilled at the end of the turn, otherwise a player could use the move+grab
      * move twice in his turn and pick twice from the same DropCell (non compliant to game rules).
      */
     public AmmoTileCard pickDrop(){
         AmmoTileCard temp = this.drop;
-        //TODO aggiungere svuotamento di this.drop
+        this.drop=null;
         return temp;
     }
 

@@ -11,9 +11,6 @@ import java.util.NoSuchElementException;
 import static org.junit.Assert.*;
 
 public class TestHand {
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
-
     @Test
     public void testHand(){
         Hand testHand =new Hand();
@@ -24,6 +21,9 @@ public class TestHand {
             assertNull(testHand.getPowerups()[i]);
         }
     }
+
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
 
     @Test
     public void testSetGun(){
@@ -106,7 +106,9 @@ public class TestHand {
         assertTrue(present);
 
         notFoundException.expect(NoSuchElementException.class);
-        GunCard previousGuns[]=testHand.getGuns();
+        GunCard [] previousGuns=new GunCard[3];
+        for(int i=0;i<3;i++)
+            previousGuns[i]=testHand.getGuns()[i];
         testHand.substitutionGunCard(testGun2,testGun4); //case in which the card to substitute is not present
         assertTrue(previousGuns.equals(testHand.getGuns())); //it verifies that no changes occured
     }
@@ -142,9 +144,11 @@ public class TestHand {
         assertTrue(present);
 
         notFoundException2.expect(NoSuchElementException.class);
-        PowerupCard previousPwUps[]=testHand.getPowerups();
+        PowerupCard [] previousPwUps=new PowerupCard[3];
+        for(int i=0;i<3;i++)
+            previousPwUps[i]=testHand.getPowerups()[i];
         testHand.substitutionPowerup(testPwup3,testPwup4); //case in which the card to substitute is not present
-        assertTrue(previousPwUps.equals(testHand.getGuns())); //it verifies that no changes occured
+        assertTrue(previousPwUps.equals(testHand.getPowerups())); //it verifies that no changes occured
     }
 
 }
