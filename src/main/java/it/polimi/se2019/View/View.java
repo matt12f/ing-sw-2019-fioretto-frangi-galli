@@ -7,11 +7,11 @@ public abstract class View extends Observable implements Observer {
 
 
     public void joinGame(){
-
+        //TODO scrivere metodo
     }
 
     public void createGame() {
-
+        //TODO scrivere metodo
     }
 
 }

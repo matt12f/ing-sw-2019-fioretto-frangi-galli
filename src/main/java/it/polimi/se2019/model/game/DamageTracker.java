@@ -30,12 +30,11 @@ public class DamageTracker {
         }while(!found && i<12);
     }
 
-    //TODO perché sono string e non character?
     /**
      * this method adds the mark it receives
      * @param mark
      */
-    public void addMarks(Character mark) {
+    public void addMarks(char mark) {
         this.marks.add(mark);
     }
 

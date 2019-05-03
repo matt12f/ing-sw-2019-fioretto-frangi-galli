@@ -54,7 +54,7 @@ public class GameModel extends Observable{
      * and the method checks and sends the right amount of frenzy actions to the constructor.
      * @param activePlayer is the player that has to play the first frenzy turn (sent by the controller)
      */
-    public void setFinalFrenzy(int activePlayer) {
+    public void activateFinalFrenzy(int activePlayer) {
         this.finalFrenzy = true;
         int actions, i = activePlayer;
         for (Player player : this.playerList){

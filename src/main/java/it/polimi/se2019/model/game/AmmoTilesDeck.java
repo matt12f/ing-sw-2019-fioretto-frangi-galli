@@ -72,7 +72,6 @@ public class AmmoTilesDeck {
         this.discardedDeck.add(card);
     }
 
-
     public void shuffle(){
         Collections.shuffle(activeDeck);
     }

@@ -2,5 +2,5 @@ package it.polimi.se2019.view;
 
 
 public class PlayerHandView {
-    public CardTileView[] weapons;
+    private CardTileView[] weapons;
 }
