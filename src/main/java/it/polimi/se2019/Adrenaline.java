@@ -26,6 +26,10 @@ public class Adrenaline
     public static Controller getMainController() {
         return mainController;
     }
-    private void guiStarter(){}
-    private void networkStarter(){}
+    private void guiStarter(){
+        //TODO scrivere metodo
+    }
+    private void networkStarter(){
+        //TODO scrivere metodo
+    }
 }

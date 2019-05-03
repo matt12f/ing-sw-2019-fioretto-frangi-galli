@@ -4,14 +4,14 @@ public class PlayerBoard {
     private char color;
     private int skulls; //the amount of skulls reduces the value of the scored card
     private ActionTile activeActionTile;
-    public Ammo ammo;
-    public DamageTracker damage;
-    public Hand hand;
+    private Ammo ammo;
+    private DamageTracker damageTrack;
+    private Hand hand;
 
     public PlayerBoard(char color){
         this.color = color;
         this.ammo = new Ammo();
-        this.damage = new DamageTracker();
+        this.damageTrack = new DamageTracker();
         this.activeActionTile = new ActionTileNormal();
         this.hand = new Hand();
         this.skulls = 0;
@@ -47,5 +47,17 @@ public class PlayerBoard {
 
     public ActionTile getActionTile(){
         return activeActionTile;
+    }
+
+    public Ammo getAmmo() {
+        return ammo;
+    }
+
+    public DamageTracker getDamageTrack() {
+        return damageTrack;
+    }
+
+    public Hand getHand() {
+        return hand;
     }
 }

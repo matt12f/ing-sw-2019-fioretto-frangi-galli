@@ -56,11 +56,11 @@ public class Controller implements Observer {
     }
 
     private void startTurn(){
-
+        //TODO scrivere metodo
     }
 
     @Override
     public void update(Observable o, Object arg) {
-
+        //TODO scrivere metodo
     }
 }

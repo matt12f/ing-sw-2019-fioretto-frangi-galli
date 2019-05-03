@@ -4,8 +4,8 @@ public class Player {
     private String nickname;
     private int id;
     private int score;
-    public Figure figure;
-    public PlayerBoard playerBoard;
+    private Figure figure;
+    private PlayerBoard playerBoard;
 
     /**
      *
@@ -20,6 +20,9 @@ public class Player {
         this.playerBoard = new PlayerBoard(color);
         this.figure = new Figure(color);
     }
+    public String getNickname() {
+        return nickname;
+    }
 
     public int getId() {
         return id;
@@ -33,5 +36,13 @@ public class Player {
      * */
     public void setScore(int points) {
        this.score += points;
+    }
+
+    public Figure getFigure() {
+        return figure;
+    }
+
+    public PlayerBoard getPlayerBoard() {
+        return playerBoard;
     }
 }

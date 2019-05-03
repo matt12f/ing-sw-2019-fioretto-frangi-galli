@@ -12,9 +12,9 @@ public class TestPlayerBoard {
     @Test
     public void testPlayerBoard(){
         PlayerBoard testPlayerBoard=new PlayerBoard('b');
-        assertNotNull(testPlayerBoard.ammo);
-        assertNotNull(testPlayerBoard.damage);
-        assertNotNull(testPlayerBoard.hand);
+        assertNotNull(testPlayerBoard.getAmmo());
+        assertNotNull(testPlayerBoard.getDamageTrack());
+        assertNotNull(testPlayerBoard.getHand());
         assertNotNull(testPlayerBoard.getActionTile());
         assertEquals(testPlayerBoard.getActionTile().getClass(),ActionTileNormal.class);
         assertEquals(0,testPlayerBoard.getSkulls());

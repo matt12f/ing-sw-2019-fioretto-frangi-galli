@@ -4,14 +4,16 @@ import it.polimi.se2019.model.cards.PowerupCard;
 
 import java.util.NoSuchElementException;
 
+//TODO fare eccezioni custom o cambiarle, così danno code smell
+
 public class Hand {
     private PowerupCard [] powerups;
     private GunCard [] guns;
-    private final int maxCards=3;
+    private static final int MAXCARDS=3;
 
     public Hand(){
-        this.guns = new GunCard[maxCards];
-        this.powerups = new PowerupCard[maxCards];
+        this.guns = new GunCard[MAXCARDS];
+        this.powerups = new PowerupCard[MAXCARDS];
     }
 
     /**this method returns the guns array from the player's hand
@@ -26,11 +28,12 @@ public class Hand {
         return powerups;
     }
 
+
     /**this method puts a gun in the player's hand
      * */
     public void setGun(GunCard gun) throws ArrayIndexOutOfBoundsException{
         int index= -1;
-        for (int i=0; i<maxCards; i++){
+        for (int i=0; i<MAXCARDS; i++){
             if(this.guns[i] == null){
                 //TODO correggere, così mette la carta in fondo (togli for e metti while con boolean found)
                 index = i;
@@ -47,7 +50,7 @@ public class Hand {
      * */
     public void setPowerup(PowerupCard powerup) throws ArrayIndexOutOfBoundsException {
         int  index= -1;
-        for (int i=0; i<maxCards; i++){
+        for (int i=0; i<MAXCARDS; i++){
             if(this.powerups[i] == null){
                 //TODO correggere, così mette la carta in fondo (togli for e metti while con boolean found)
                 index = i;
@@ -62,7 +65,7 @@ public class Hand {
 
     public void substitutionPowerup (PowerupCard discarded,PowerupCard newPowerup) throws NoSuchElementException {
         int index= -1;
-        for (int i=0; i<maxCards; i++){
+        for (int i=0; i<MAXCARDS; i++){
             if(this.powerups[i] == discarded){
                 index = i;
             }
@@ -76,7 +79,7 @@ public class Hand {
 
     public void substitutionGunCard (GunCard discarded, GunCard newGunCard) throws NoSuchElementException{
         int index= -1;
-        for (int i=0; i<maxCards; i++){
+        for (int i=0; i<MAXCARDS; i++){
             if(this.guns[i] == discarded){
                 index = i;
             }

@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 public class GameModel extends Observable{
-    public Decks currentDecks;
+    private Decks currentDecks;
     private int gameNumberId; // Potrebbe servire per il multiGame
     private ArrayList<Player> playerList;
     private String gameMode;
-    public Map currentMap;
-    public KillShotTrack killshotTrack;
+    private Map currentMap;
+    private KillShotTrack killshotTrack;
     private boolean finalFrenzy;
     private int turn;
 
@@ -18,6 +18,10 @@ public class GameModel extends Observable{
         this.gameMode = gameMode;
         this.playerList = playerList;
 
+    }
+
+    public Decks getCurrentDecks() {
+        return currentDecks;
     }
 
     public int getGameNumberId() {
@@ -31,16 +35,24 @@ public class GameModel extends Observable{
     public String getGameMode() {
         return gameMode;
     }
+
+    public Map getCurrentMap() {
+        return currentMap;
+    }
+
+    public KillShotTrack getKillshotTrack() {
+        return killshotTrack;
+    }
+
     public boolean getfinalFrenzy(){
         return finalFrenzy;
     }
 
 
     /**
-     * this method allow to build the actiontile Frenzy objects for each player
-     * the controller send the player that has to play the first frenzy turn, and the method control
-     * and send the right amount of frenzy actions to the builder.
-     * @param activePlayer
+     * this method builds the actiontile Frenzy objects for each player
+     * and the method checks and sends the right amount of frenzy actions to the constructor.
+     * @param activePlayer is the player that has to play the first frenzy turn (sent by the controller)
      */
     public void setFinalFrenzy(int activePlayer) {
         this.finalFrenzy = true;
@@ -56,18 +68,15 @@ public class GameModel extends Observable{
             }else{
                 i++;
             }
-            player.playerBoard.activateFrenzy(actions);
+            player.getPlayerBoard().activateFrenzy(actions);
         }
     }
-
-
-
 
     public int getTurn() {
         return turn;
     }
 
-    public void setTurn(int turn) {
-        this.turn = turn;
+    public void incrementTurn() {
+        this.turn++;
     }
 }

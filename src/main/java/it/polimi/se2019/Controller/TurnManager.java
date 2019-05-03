@@ -10,7 +10,7 @@ public class TurnManager {
     private ActionManager actionManager;
 
     public TurnManager(){
-
+        //TODO scrivere metodo
     }
 
     public static Player getActivePlayer() {
@@ -25,6 +25,6 @@ public class TurnManager {
         // rimessa una nuova (non lo fa in automatico perché il model non si occupa di queste cose)
     }
     private void gameStatsUpdate(){
-
+        //TODO scrivere metodo
     }
 }

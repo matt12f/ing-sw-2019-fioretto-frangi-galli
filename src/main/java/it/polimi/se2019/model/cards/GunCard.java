@@ -1,14 +1,14 @@
 package it.polimi.se2019.model.cards;
 
 public abstract class GunCard {
-    protected   char [] ammoCost;
+    protected char [] ammoCost;
     protected String description;
-    protected boolean loaded;
+    private boolean loaded;
 
 
     public GunCard(){
-
     }
+
     public char[] getAmmoCost() {
         return ammoCost;
     }

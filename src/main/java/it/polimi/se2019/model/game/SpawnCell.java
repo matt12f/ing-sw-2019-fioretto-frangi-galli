@@ -3,6 +3,7 @@ package it.polimi.se2019.model.game;
 import it.polimi.se2019.model.cards.GunCard;
 import java.util.ArrayList;
 
+//TODO cambiare il tipo di eccezione lanciata
 public class SpawnCell extends Cell {
     private ArrayList<GunCard> weaponCards;
 
