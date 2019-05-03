@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class DamageTracker {
     private char [] damage;
-    private ArrayList<String> marks;
+    private ArrayList<Character> marks;
 
     public DamageTracker(){
         this.damage = new char[12];
@@ -35,11 +35,11 @@ public class DamageTracker {
      * this method adds the mark it receives
      * @param mark
      */
-    public void addMarks(String mark) {
+    public void addMarks(Character mark) {
         this.marks.add(mark);
     }
 
-    public ArrayList<String> getMarks() {
+    public ArrayList<Character> getMarks() {
         return marks;
     }
 
