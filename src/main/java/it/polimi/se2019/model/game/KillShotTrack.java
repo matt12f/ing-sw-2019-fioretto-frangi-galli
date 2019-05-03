@@ -22,16 +22,24 @@ public class KillShotTrack {
         this.skulls--;
     }
 
-    public void setKills() {
-        // TODO scrivere metodo
+    public void setKills( String kill) {
+        boolean found = false;
+        int i = 0;
+        do{
+            if(this.kills[i].isEmpty()){
+                this.kills[i] = kill;
+                found = true;
+            }
+            i++;
+        }while(!found);
     }
 
     public String[] getKills() {
-        return kills;
+        return this.kills;
     }
 
-    public void setExtraKills() {
-        // TODO scrivere metodo
+    public void setExtraKills(char kill) {
+        this.extraKills = kill;
     }
 
     public char getExtraKills() {
