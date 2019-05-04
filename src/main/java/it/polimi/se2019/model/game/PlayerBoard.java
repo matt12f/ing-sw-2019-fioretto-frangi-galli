@@ -3,10 +3,11 @@ package it.polimi.se2019.model.game;
 public class PlayerBoard {
     private char color;
     private int skulls; //the amount of skulls reduces the value of the scored card
-    private ActionTile activeActionTile;
+    private ActionTileNormal activeActionTile;
     private Ammo ammo;
     private DamageTracker damageTrack;
     private Hand hand;
+    ActionTileFrenzy frenzyActionTile;
 
     public PlayerBoard(char color){
         this.color = color;
@@ -37,17 +38,19 @@ public class PlayerBoard {
         return skulls;
     }
 
+    public ActionTileNormal getActionTile(){
+        return activeActionTile;
+    }
+
     /**This method "flips" the action board, creating a frenzy one and dumping the normal one
      * */
     public void activateFrenzy(int actions){
         this.skulls=0;//when final frenzy is turned on skulls don't count anymore, so they must
         // be reset to 0. (they could impede the calculation of a board's value otherwise)
-        this.activeActionTile= new ActionTileFrenzy(actions);
+        this.frenzyActionTile= new ActionTileFrenzy(actions);
     }
 
-    public ActionTile getActionTile(){
-        return activeActionTile;
-    }
+
 
     public Ammo getAmmo() {
         return ammo;

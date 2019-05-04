@@ -38,6 +38,17 @@ public class DamageTracker {
         this.marks.add(mark);
     }
 
+    public int checkMarks(char color){
+        int n = 0;
+        for (int i=0; i < this.marks.size() ; i++ ){
+            if (this.marks.get(i) == color){
+                n++;
+                this.marks.remove(i);
+            }
+        }
+        return n;
+    }
+
     public ArrayList<Character> getMarks() {
         return marks;
     }
