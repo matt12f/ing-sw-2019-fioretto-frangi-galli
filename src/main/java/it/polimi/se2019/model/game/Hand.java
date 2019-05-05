@@ -33,11 +33,12 @@ public class Hand {
      * */
     public void setGun(GunCard gun) throws ArrayIndexOutOfBoundsException{
         int index= -1;
-        for (int i=0; i<MAXCARDS; i++){
+        int i=0;
+        while((i < 3) && (index == -1)){
             if(this.guns[i] == null){
-                //TODO correggere, così mette la carta in fondo (togli for e metti while con boolean found)
                 index = i;
             }
+            i++;
         }
         if(index != -1){
             this.guns[index]=gun;
@@ -50,9 +51,9 @@ public class Hand {
      * */
     public void setPowerup(PowerupCard powerup) throws ArrayIndexOutOfBoundsException {
         int  index= -1;
-        for (int i=0; i<MAXCARDS; i++){
+        int i=0;
+        while((i < 3) && (index == -1)){
             if(this.powerups[i] == null){
-                //TODO correggere, così mette la carta in fondo (togli for e metti while con boolean found)
                 index = i;
             }
         }

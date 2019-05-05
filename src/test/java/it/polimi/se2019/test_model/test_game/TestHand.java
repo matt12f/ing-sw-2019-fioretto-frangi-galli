@@ -41,9 +41,9 @@ public class TestHand {
         testHand.setGun(testGun3);
 
         //TODO Invertire ordine carte
-        assertEquals(testHand.getGuns()[2],testGun1);
+        assertEquals(testHand.getGuns()[0],testGun1);
         assertEquals(testHand.getGuns()[1],testGun2);
-        assertEquals(testHand.getGuns()[0],testGun3);
+        assertEquals(testHand.getGuns()[2],testGun3);
 
         GunCard testGun4;
         testGun4= new Shockwave();
@@ -65,10 +65,9 @@ public class TestHand {
         testHand.setPowerup(testPwup2);
         testHand.setPowerup(testPwup3);
 
-        //TODO Invertire ordine carte
-        assertEquals(testHand.getPowerups()[2],testPwup1);
+        assertEquals(testHand.getPowerups()[0],testPwup1);
         assertEquals(testHand.getPowerups()[1],testPwup2);
-        assertEquals(testHand.getPowerups()[0],testPwup3);
+        assertEquals(testHand.getPowerups()[2],testPwup3);
 
         PowerupCard testPwup4;
         testPwup4=new PowerupCard("TargettingScope",'r');
