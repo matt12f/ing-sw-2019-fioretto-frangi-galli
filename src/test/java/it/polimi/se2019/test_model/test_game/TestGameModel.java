@@ -38,10 +38,10 @@ public class TestGameModel {
         GameModel testModel=new GameModel(1,players,"normal",1);
 
         int turn=testModel.getTurn();
-        assertEquals(turn,0);
+        assertEquals(0,turn);
 
         testModel.incrementTurn();
-        assertEquals(turn+1,1);
+        assertEquals(1,turn+1);
     }
 
     @Test

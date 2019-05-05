@@ -3,16 +3,14 @@ package it.polimi.se2019.network;
 import java.net.*;
 import java.io.*;
 
-public class socketServer {
+public class SocketClient {
     private Socket socket;
-    private ServerSocket server;
     private ObjectInputStream input;
     private ObjectOutputStream output;
 
-    public socketServer(){
+    public SocketClient(){
 
     }
-
 
     public void send(ObjectOutputStream obj){
 
