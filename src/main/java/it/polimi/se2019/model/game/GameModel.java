@@ -13,11 +13,21 @@ public class GameModel extends Observable{
     private boolean finalFrenzy;
     private int turn;
 
-    public GameModel(ArrayList<Player> playerList, String gameMode){
-        this.currentDecks=new Decks();
-        this.gameMode = gameMode;
-        this.playerList = playerList;
 
+    public GameModel(int gameNumberId,ArrayList<Player> playerList, String gameMode,int mapNumber){
+        this.currentDecks=new Decks();
+        this.gameNumberId=gameNumberId;
+        this.playerList = playerList;
+        this.gameMode = gameMode;
+        this.currentMap=new Map(mapNumber);
+        if(gameMode.equals("normal"))
+            this.killshotTrack=new KillShotTrack();
+        else if(gameMode.equals("turret"))
+            this.killshotTrack=new KillShotTrackTurret();
+        else if(gameMode.equals("domination"))
+            this.killshotTrack=new KillShotTrackDomination();
+        this.finalFrenzy=false;
+        this.turn=0;
     }
 
     public Decks getCurrentDecks() {
@@ -44,10 +54,9 @@ public class GameModel extends Observable{
         return killshotTrack;
     }
 
-    public boolean getfinalFrenzy(){
+    public boolean getFinalFrenzy(){
         return finalFrenzy;
     }
-
 
     /**
      * this method builds the actiontile Frenzy objects for each player

@@ -44,7 +44,7 @@ public class DamageTracker {
     public int checkMarks(char color){
         sort(this.marks); //this orders the marks in alphabetical order
         int firstOccurence=this.marks.indexOf(color);
-        if (firstOccurence==-1)
+        if (firstOccurence==-1) //there are no marks of the given color
             return 0;
         int i=firstOccurence;
         while (i<this.marks.size() && this.marks.get(i)==color)

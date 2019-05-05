@@ -18,15 +18,19 @@ public class Controller implements Observer {
      */
     public Controller() {
         ArrayList<Player> players = new ArrayList<>();
+
+        //This part is about the first player
         String nickname="Da fare";
         char color='b';
         //TODO chiedere nickname passando da VIEW
         //TODO scelta del colore passando da VIEW
         players.add(new Player(1,nickname,color));
+
+        //This part is about the game
         //TODO chiedere la modalità di gioco
         String gameMode="normal";
-        this.mainGameModel=new GameModel(players,gameMode);
-        //TODO capire come usare le remoteviews
+        int mapNumber=1; //TODO fare scegliere il numero di mappa
+        this.mainGameModel=new GameModel(0,players,gameMode,mapNumber);
         this.remoteView=new RemoteView();
         this.activeturn = new TurnManager();
     }

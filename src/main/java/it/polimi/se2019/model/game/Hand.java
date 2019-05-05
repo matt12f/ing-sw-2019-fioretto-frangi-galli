@@ -27,7 +27,6 @@ public class Hand {
         return powerups;
     }
 
-
     /**this method puts a gun in the player's hand
      * */
     public void setGun(GunCard gun) throws HandFullException{
