@@ -2,11 +2,10 @@ package it.polimi.se2019.test_model.test_game;
 
 import it.polimi.se2019.model.cards.*;
 import it.polimi.se2019.model.game.SpawnCell;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestSpawnCell {
 
@@ -16,9 +15,6 @@ public class TestSpawnCell {
         for (int i=0;i<3;i++)
             assertTrue(testSpawnCell.getWeaponCards().isEmpty());
     }
-
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
 
     @Test
     public void testSetWeapon(){
@@ -36,8 +32,7 @@ public class TestSpawnCell {
         assertEquals(testGun3,testSpawnCell.getWeaponCards().get(2));
 
         GunCard testGun4=new FlameThrower();
-        exception.expect(IndexOutOfBoundsException.class);
-        testSpawnCell.setWeaponCard(testGun4);
+        assertThrows(IndexOutOfBoundsException.class,()-> testSpawnCell.setWeaponCard(testGun4));
     }
 
     @Test

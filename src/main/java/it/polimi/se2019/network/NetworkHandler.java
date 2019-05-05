@@ -4,8 +4,8 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 public class NetworkHandler extends UnicastRemoteObject implements NetworkHandlerInterface{
-    public String name;
-    public NetworkHandlerInterface client=null;
+    private String name;
+    private NetworkHandlerInterface client=null;
 
     public NetworkHandler(String n)  throws RemoteException {
             this.name=n;

@@ -2,9 +2,8 @@ package it.polimi.se2019.model.game;
 import it.polimi.se2019.model.cards.GunCard;
 import it.polimi.se2019.model.cards.PowerupCard;
 
-import java.util.NoSuchElementException;
-
-//TODO fare eccezioni custom o cambiarle, così danno code smell
+import it.polimi.se2019.exceptions.CardNotFoundException;
+import it.polimi.se2019.exceptions.HandFullException;
 
 public class Hand {
     private PowerupCard [] powerups;
@@ -31,65 +30,58 @@ public class Hand {
 
     /**this method puts a gun in the player's hand
      * */
-    public void setGun(GunCard gun) throws ArrayIndexOutOfBoundsException{
-        int index= -1;
+    public void setGun(GunCard gun) throws HandFullException{
         int i=0;
-        while((i < 3) && (index == -1)){
-            if(this.guns[i] == null){
-                index = i;
+        boolean set=false;
+        while(!set && i<MAXCARDS){
+            if(this.guns[i]==null) {
+                this.guns[i]=gun;
+                set = true;
             }
-            i++;
+            else i++;
         }
-        if(index != -1){
-            this.guns[index]=gun;
-        }else{
-            throw new ArrayIndexOutOfBoundsException();
-        }
+        if(!set) throw new HandFullException("guns");
     }
 
     /**this method puts a powerup in the player's hand
      * */
-    public void setPowerup(PowerupCard powerup) throws ArrayIndexOutOfBoundsException {
-        int  index= -1;
+    public void setPowerup(PowerupCard powerup) throws HandFullException {
         int i=0;
-        while((i < 3) && (index == -1)){
-            if(this.powerups[i] == null){
-                index = i;
+        boolean set=false;
+        while(!set && i<MAXCARDS){
+            if(this.powerups[i]==null) {
+                this.powerups[i]=powerup;
+                set = true;
             }
+            else i++;
         }
-        if(index != -1){
-            this.powerups[index]=powerup;
-        }else{
-            throw new ArrayIndexOutOfBoundsException();
-        }
+        if(!set) throw new HandFullException("powerups");
     }
 
-    public void substitutionPowerup (PowerupCard discarded,PowerupCard newPowerup) throws NoSuchElementException {
-        int index= -1;
-        for (int i=0; i<MAXCARDS; i++){
-            if(this.powerups[i] == discarded){
-                index = i;
+    public void substitutionPowerup (PowerupCard discarded,PowerupCard newPowerup) throws CardNotFoundException {
+        int i=0;
+        boolean substituted=false;
+        while(!substituted && i<MAXCARDS){
+            if(this.powerups[i]==discarded) {
+                this.powerups[i]=newPowerup;
+                substituted = true;
             }
+            else i++;
         }
-        if(index != -1){
-            this.powerups[index]=newPowerup;
-        }else{
-            throw new NoSuchElementException();
-        }
+        if(!substituted) throw new CardNotFoundException("powerups");
     }
 
-    public void substitutionGunCard (GunCard discarded, GunCard newGunCard) throws NoSuchElementException{
-        int index= -1;
-        for (int i=0; i<MAXCARDS; i++){
-            if(this.guns[i] == discarded){
-                index = i;
+    public void substitutionGunCard (GunCard discarded, GunCard newGunCard) throws CardNotFoundException{
+        int i=0;
+        boolean substituted=false;
+        while(!substituted && i<MAXCARDS){
+            if(this.guns[i]==discarded) {
+                this.guns[i]=newGunCard;
+                substituted = true;
             }
+            else i++;
         }
-        if(index != -1){
-            this.guns[index]=newGunCard;
-        }else{
-            throw new NoSuchElementException();
-        }
+        if(!substituted) throw new CardNotFoundException("guns");
     }
 }
 

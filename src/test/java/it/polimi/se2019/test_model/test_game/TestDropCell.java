@@ -2,9 +2,11 @@ package it.polimi.se2019.test_model.test_game;
 
 import it.polimi.se2019.model.cards.AmmoTileCard;
 import it.polimi.se2019.model.game.DropCell;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 
 public class TestDropCell {
 

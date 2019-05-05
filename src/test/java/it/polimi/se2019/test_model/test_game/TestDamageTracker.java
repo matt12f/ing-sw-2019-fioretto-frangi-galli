@@ -1,9 +1,9 @@
 package it.polimi.se2019.test_model.test_game;
 
 import it.polimi.se2019.model.game.DamageTracker;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestDamageTracker {
 
@@ -59,8 +59,13 @@ public class TestDamageTracker {
     @Test
     public void testAddMarks(){
         DamageTracker testDmgTracker=new DamageTracker();
-        testDmgTracker.addMarks("bby");
-        assertTrue(testDmgTracker.getMarks().contains("bby"));
+        testDmgTracker.addMark('w');
+        testDmgTracker.addMark('b');
+        testDmgTracker.addMark('y');
+        assertTrue(testDmgTracker.getMarks().contains('w'));
+        assertTrue(testDmgTracker.getMarks().contains('b'));
+        assertTrue(testDmgTracker.getMarks().contains('y'));
+
     }
 
     @Test

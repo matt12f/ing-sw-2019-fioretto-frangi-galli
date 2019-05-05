@@ -31,7 +31,7 @@ public class KillShotTrack {
                 found = true;
             }
             i++;
-        }while(!found);
+        }while(!found &&i<8);
     }
 
     public String[] getKills() {

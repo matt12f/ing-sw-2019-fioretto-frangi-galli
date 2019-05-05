@@ -3,9 +3,10 @@ package it.polimi.se2019.test_model.test_game;
 import it.polimi.se2019.model.game.Cell;
 import it.polimi.se2019.model.game.Map;
 import it.polimi.se2019.model.game.Room;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 public class TestMap {
 

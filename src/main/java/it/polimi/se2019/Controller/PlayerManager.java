@@ -25,33 +25,25 @@ public class PlayerManager {
         }
     }
 
-
-
     public static boolean isAlive(Player player){
         return (player.getPlayerBoard().getDamageTrack().getDamage().length<12);
     }
 
-
-
-    private void markerManager(Player player, char[] add){
-
-        for(int i=0; i<add.length; i++ ){
-            player.getPlayerBoard().getDamageTrack().addMarks(add[i]);
+    private void markerManager(Player player, char[] add) {
+        for (int i = 0; i < add.length; i++) {
+            player.getPlayerBoard().getDamageTrack().addMark(add[i]);
         }
-
     }
-
 
 
     private void adrenalineManager(Player player){
         //TODO scrivere metodo
         if(player.getPlayerBoard().getDamageTrack().getDamage().length >= 3){
-            player.getPlayerBoard().getActionTile().setAdrenalineMode1(true);
+            player.getPlayerBoard().getActionTileNormal().setAdrenalineMode1(true);
         }else if(player.getPlayerBoard().getDamageTrack().getDamage().length >= 6){
-            player.getPlayerBoard().getActionTile().setAdrenalineMode1(false);
+            player.getPlayerBoard().getActionTileNormal().setAdrenalineMode1(false);
         }
     }
-
 
 
     public void gunHandManager(){

@@ -2,9 +2,10 @@ package it.polimi.se2019.test_model.test_game;
 
 import it.polimi.se2019.model.cards.AmmoTileCard;
 import it.polimi.se2019.model.game.AmmoTilesDeck;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 public class TestAmmoTilesDeck {
 

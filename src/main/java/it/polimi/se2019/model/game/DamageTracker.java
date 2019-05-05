@@ -34,7 +34,7 @@ public class DamageTracker {
      * this method adds the mark it receives
      * @param mark
      */
-    public void addMarks(char mark) {
+    public void addMark(char mark) {
         this.marks.add(mark);
     }
 

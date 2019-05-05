@@ -1,29 +1,25 @@
 package it.polimi.se2019.test_model.test_game;
 
+import it.polimi.se2019.exceptions.CardNotFoundException;
+import it.polimi.se2019.exceptions.HandFullException;
 import it.polimi.se2019.model.cards.*;
 import it.polimi.se2019.model.game.Hand;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
-import java.util.NoSuchElementException;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestHand {
     @Test
     public void testHand(){
         Hand testHand =new Hand();
-        assertTrue(testHand.getGuns().length==3);
-        assertTrue(testHand.getPowerups().length==3);
+        assertEquals(3,testHand.getGuns().length);
+        assertEquals(3,testHand.getPowerups().length);
         for(int i=0;i<3;i++){
             assertNull(testHand.getGuns()[i]);
             assertNull(testHand.getPowerups()[i]);
         }
     }
-
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
 
     @Test
     public void testSetGun(){
@@ -36,19 +32,17 @@ public class TestHand {
         for(int i=0;i<3;i++){
             assertNull(testHand.getGuns()[i]);
         }
-        testHand.setGun(testGun1);
-        testHand.setGun(testGun2);
-        testHand.setGun(testGun3);
+        assertDoesNotThrow(()->testHand.setGun(testGun1));
+        assertDoesNotThrow(()->testHand.setGun(testGun2));
+        assertDoesNotThrow(()->testHand.setGun(testGun3));
 
-        //TODO Invertire ordine carte
         assertEquals(testHand.getGuns()[0],testGun1);
         assertEquals(testHand.getGuns()[1],testGun2);
         assertEquals(testHand.getGuns()[2],testGun3);
 
         GunCard testGun4;
         testGun4= new Shockwave();
-        exception.expect(ArrayIndexOutOfBoundsException.class);
-        testHand.setGun(testGun4);
+        assertThrows(HandFullException.class, () -> testHand.setGun(testGun4),"guns");
     }
     @Test
     public void testSetPowerUp(){
@@ -61,9 +55,9 @@ public class TestHand {
         for(int i=0;i<3;i++){
             assertNull(testHand.getPowerups()[i]);
         }
-        testHand.setPowerup(testPwup1);
-        testHand.setPowerup(testPwup2);
-        testHand.setPowerup(testPwup3);
+        assertDoesNotThrow(()->testHand.setPowerup(testPwup1));
+        assertDoesNotThrow(()->testHand.setPowerup(testPwup2));
+        assertDoesNotThrow(()->testHand.setPowerup(testPwup3));
 
         assertEquals(testHand.getPowerups()[0],testPwup1);
         assertEquals(testHand.getPowerups()[1],testPwup2);
@@ -71,12 +65,9 @@ public class TestHand {
 
         PowerupCard testPwup4;
         testPwup4=new PowerupCard("TargettingScope",'r');
-        exception.expect(ArrayIndexOutOfBoundsException.class);
-        testHand.setPowerup(testPwup4);
-    }
+        assertThrows(HandFullException.class, () -> testHand.setPowerup(testPwup4),"powerups");
 
-    @Rule
-    public ExpectedException notFoundException = ExpectedException.none();
+    }
 
     @Test
     public void testSubstitutionGunCard(){
@@ -89,13 +80,13 @@ public class TestHand {
         for(int i=0;i<3;i++){
             assertNull(testHand.getGuns()[i]);
         }
-        testHand.setGun(testGun1);
-        testHand.setGun(testGun2);
-        testHand.setGun(testGun3);
+        assertDoesNotThrow(()->testHand.setGun(testGun1));
+        assertDoesNotThrow(()->testHand.setGun(testGun2));
+        assertDoesNotThrow(()->testHand.setGun(testGun3));
 
         GunCard testGun4;
         testGun4= new Shockwave();
-        testHand.substitutionGunCard(testGun2,testGun4); //case in which the card to substitute is present
+        assertDoesNotThrow(()->testHand.substitutionGunCard(testGun2,testGun4)); //case in which the card to substitute is present
         boolean present=false;
         for(GunCard gunCard:testHand.getGuns()){ //It verifies that testGun2 has been removed and testGun4 has been added
             assertNotEquals(gunCard,testGun2);
@@ -104,16 +95,14 @@ public class TestHand {
         }
         assertTrue(present);
 
-        notFoundException.expect(NoSuchElementException.class);
         GunCard [] previousGuns=new GunCard[3];
         for(int i=0;i<3;i++)
             previousGuns[i]=testHand.getGuns()[i];
-        testHand.substitutionGunCard(testGun2,testGun4); //case in which the card to substitute is not present
-        assertTrue(previousGuns.equals(testHand.getGuns())); //it verifies that no changes occured
-    }
+        assertThrows(CardNotFoundException.class,()->testHand.substitutionGunCard(testGun2,testGun4),"guns"); //case in which the card to substitute is not present
 
-    @Rule
-    public ExpectedException notFoundException2 = ExpectedException.none();
+        for(int i=0;i<3;i++) //it verifies that no changes occurred
+            assertEquals(previousGuns[i],testHand.getGuns()[i]);
+    }
 
     @Test
     public void testSubstitutionPowerupCard(){
@@ -126,14 +115,14 @@ public class TestHand {
         for(int i=0;i<3;i++){
             assertNull(testHand.getPowerups()[i]);
         }
-        testHand.setPowerup(testPwup1);
-        testHand.setPowerup(testPwup2);
-        testHand.setPowerup(testPwup3);
+        assertDoesNotThrow(()->testHand.setPowerup(testPwup1));
+        assertDoesNotThrow(()->testHand.setPowerup(testPwup2));
+        assertDoesNotThrow(()->testHand.setPowerup(testPwup3));
 
         PowerupCard testPwup4;
         testPwup4=new PowerupCard("TargettingScope",'r');
 
-        testHand.substitutionPowerup(testPwup3,testPwup4); //case in which the card to substitute is present
+        assertDoesNotThrow(()->testHand.substitutionPowerup(testPwup3,testPwup4)); //case in which the card to substitute is present
         boolean present=false;
         for(PowerupCard powerupCard:testHand.getPowerups()){ //It verifies that testGun2 has been removed and testGun4 has been added
             assertNotEquals(powerupCard,testPwup3);
@@ -142,12 +131,13 @@ public class TestHand {
         }
         assertTrue(present);
 
-        notFoundException2.expect(NoSuchElementException.class);
         PowerupCard [] previousPwUps=new PowerupCard[3];
         for(int i=0;i<3;i++)
             previousPwUps[i]=testHand.getPowerups()[i];
-        testHand.substitutionPowerup(testPwup3,testPwup4); //case in which the card to substitute is not present
-        assertTrue(previousPwUps.equals(testHand.getPowerups())); //it verifies that no changes occured
+        assertThrows(CardNotFoundException.class,()-> testHand.substitutionPowerup(testPwup3,testPwup4),"powerups"); //case in which the card to substitute is not present
+
+        for(int i=0;i<3;i++)  //it verifies that no changes occured
+            assertEquals(previousPwUps[i],testHand.getPowerups()[i]);
     }
 
 }
