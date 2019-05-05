@@ -1,6 +1,9 @@
 package it.polimi.se2019.model.game;
 
 import java.util.ArrayList;
+import java.util.Collections;
+
+import static java.util.Collections.sort;
 
 public class DamageTracker {
     private char [] damage;
@@ -39,14 +42,15 @@ public class DamageTracker {
     }
 
     public int checkMarks(char color){
-        int n = 0;
-        for (int i=0; i < this.marks.size() ; i++ ){
-            if (this.marks.get(i) == color){
-                n++;
-                this.marks.remove(i);
-            }
-        }
-        return n;
+        sort(this.marks); //this orders the marks in alphabetical order
+        int firstOccurence=this.marks.indexOf(color);
+        if (firstOccurence==-1)
+            return 0;
+        int i=firstOccurence;
+        while (i<this.marks.size() && this.marks.get(i)==color)
+            i++;
+        this.marks.removeAll(Collections.singleton(color));
+        return i-firstOccurence;
     }
 
     public ArrayList<Character> getMarks() {

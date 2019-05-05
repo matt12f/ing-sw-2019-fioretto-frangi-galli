@@ -8,8 +8,7 @@
   <artifactId>adrenaline</artifactId>
   <version>1.0-SNAPSHOT</version>
 
-  <name>adrenalina</name>
-  <url>http://www.example.com</url>
+  <name>adrenaline</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -54,7 +53,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>it.polimi.se2019.App</mainClass>
+              <mainClass>it.polimi.se2019.Adrenaline</mainClass>
             </manifest>
           </archive>
         </configuration>
