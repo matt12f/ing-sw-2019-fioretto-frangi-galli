@@ -9,7 +9,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class Controller implements Observer {
-    private GameModel mainGameModel;
+    private static GameModel mainGameModel;
     private RemoteView remoteView;
     private TurnManager activeturn;
 
@@ -35,7 +35,7 @@ public class Controller implements Observer {
         this.activeturn = new TurnManager();
     }
 
-    public GameModel getMainGameModel() {
+    public static GameModel getMainGameModel() {
         return mainGameModel;
     }
 
