@@ -15,23 +15,23 @@ public class TestPlayerBoard {
         assertNotNull(testPlayerBoard.getDamageTrack());
         assertNotNull(testPlayerBoard.getHand());
         assertNotNull(testPlayerBoard.getActionTileNormal());
-        assertEquals(0,testPlayerBoard.getSkulls());
+        assertEquals(8,testPlayerBoard.getCurrentBoardValue());
         assertEquals('b',testPlayerBoard.getColor());
     }
 
     @Test
-    public void testAddSkull(){
+    public void testDecreaseBoardValue(){
         PlayerBoard testPlayerBoard=new PlayerBoard('b');
-        int prevSkulls=testPlayerBoard.getSkulls();
-        testPlayerBoard.addSkull();
-        assertEquals(prevSkulls+1,testPlayerBoard.getSkulls());
+        int prevBoardValue=testPlayerBoard.getCurrentBoardValue();
+        testPlayerBoard.decreaseBoardValue();
+        assertEquals(prevBoardValue-2,testPlayerBoard.getCurrentBoardValue());
     }
 
     @Test
     public void testActivateFrenzy(){
         PlayerBoard testPlayerBoard=new PlayerBoard('b');
         testPlayerBoard.activateFrenzy(2);
-        assertEquals(0,testPlayerBoard.getSkulls());
+        assertEquals(8,testPlayerBoard.getCurrentBoardValue());
         assertNotNull(testPlayerBoard.getActionTileFrenzy());
         assertEquals(2,testPlayerBoard.getActionTileFrenzy().getActionCounter());
     }

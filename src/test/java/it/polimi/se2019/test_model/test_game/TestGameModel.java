@@ -25,8 +25,13 @@ public class TestGameModel {
 
         testModel=new GameModel(1,players,"turret",1);
         assertEquals("turret",testModel.getGameMode());
+        assertEquals(KillShotTrackTurret.class,testModel.getKillshotTrack().getClass());
         testModel=new GameModel(1,players,"domination",1);
         assertEquals("domination",testModel.getGameMode());
+        assertEquals(KillShotTrackDomination.class,testModel.getKillshotTrack().getClass());
+        testModel=new GameModel(1,players,"x",1);
+        assertEquals("x",testModel.getGameMode());
+        assertNull(testModel.getKillshotTrack());
 
     }
 
@@ -55,7 +60,15 @@ public class TestGameModel {
         testModel.activateFinalFrenzy(1);
         assertTrue(testModel.getFinalFrenzy());
 
-        //TODO estendere test che verifichi l'effettiva attivazione del final frenzy
+        //TODO verificare numero di mosse assegnate ai giocatori
+
+        testModel=new GameModel(1,players,"normal",1);
+        assertFalse(testModel.getFinalFrenzy());
+        testModel.activateFinalFrenzy(3);
+        assertTrue(testModel.getFinalFrenzy());
+
+        //TODO verificare numero di mosse assegnate ai giocatori
+
     }
 
 }
