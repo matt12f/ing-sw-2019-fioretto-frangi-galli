@@ -26,6 +26,8 @@ public class GameModel extends Observable{
             this.killshotTrack=new KillShotTrackTurret();
         else if(gameMode.equals("domination"))
             this.killshotTrack=new KillShotTrackDomination();
+        else
+            this.killshotTrack=null;
         this.finalFrenzy=false;
         this.turn=0;
     }
@@ -72,11 +74,13 @@ public class GameModel extends Observable{
             }else{
                 actions = 1;
             }
-            if(i == this.playerList.size() ){
-                i= 1;
+            if(i == this.playerList.size()){
+                i=1;
             }else{
                 i++;
             }
+            if(player.getPlayerBoard().getDamageTrack().hasNoDamage()) //All players with no damage switch to final frenzy tiles
+                player.getPlayerBoard().flipPlayerBoard();
             player.getPlayerBoard().activateFrenzy(actions);
         }
     }

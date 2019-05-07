@@ -1,9 +1,9 @@
 package it.polimi.se2019.model.game;
 
+import it.polimi.se2019.exceptions.HandFullException;
 import it.polimi.se2019.model.cards.GunCard;
 import java.util.ArrayList;
 
-//TODO cambiare il tipo di eccezione lanciata
 public class SpawnCell extends Cell {
     private ArrayList<GunCard> weaponCards;
 
@@ -18,11 +18,11 @@ public class SpawnCell extends Cell {
 
     /** It fills the first empty slot in weaponCards with the card it receives
      */
-    public void setWeaponCard(GunCard gunCard)throws IndexOutOfBoundsException{
+    public void setWeaponCard(GunCard gunCard)throws HandFullException{
         if(this.weaponCards.size()<3)
             this.weaponCards.add(gunCard);
         else
-            throw new IndexOutOfBoundsException();
+            throw new HandFullException("guns");
      }
 
      /** Method that returns the weapon from the pick-numbered slot

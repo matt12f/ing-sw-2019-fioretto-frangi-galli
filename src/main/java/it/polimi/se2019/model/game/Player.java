@@ -7,12 +7,6 @@ public class Player {
     private Figure figure;
     private PlayerBoard playerBoard;
 
-    /**
-     *
-     * @param id
-     * @param nickname
-     * @param color
-     */
     public Player(int id,String nickname,char color ){
         this.id = id;
         this.nickname = nickname;

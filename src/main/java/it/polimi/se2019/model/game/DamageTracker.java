@@ -61,6 +61,12 @@ public class DamageTracker {
         return damage;
     }
 
+    public boolean hasNoDamage(){
+        for (int i=0; i<12; i++)
+            if(this.damage[i]!=' ')
+                return false;
+        return true;
+    }
     /**
      * this method resets the vector damage
      */

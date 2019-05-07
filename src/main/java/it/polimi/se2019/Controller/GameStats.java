@@ -9,19 +9,24 @@ public class GameStats {
     private int numberOfTurns;
 
     public GameStats(ArrayList<Player> ranking, int numberOfTurns) {
-        this.ranking = ranking;
         this.numberOfTurns = numberOfTurns;
-        Collections.sort(ranking, new CustomComparator());
+        Collections.sort(ranking, new IntegerComparator());
+        this.ranking = ranking;
+
+    }
+
+    public ArrayList<Player> getRanking() {
+        return ranking;
+    }
+
+    public int getNumberOfTurns() {
+        return numberOfTurns;
     }
 }
 
-class CustomComparator implements Comparator<Player> {
+class IntegerComparator implements Comparator<Player> {
     @Override
     public int compare(Player o1, Player o2) {
-        if(o1.getScore()>=o2.getScore()){
-            return -1;
-        }else{
-            return 1;
-        }
+        return Integer.compare(o1.getScore(),o2.getScore());
     }
 }

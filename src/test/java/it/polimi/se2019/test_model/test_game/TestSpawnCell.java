@@ -1,5 +1,6 @@
 package it.polimi.se2019.test_model.test_game;
 
+import it.polimi.se2019.exceptions.HandFullException;
 import it.polimi.se2019.model.cards.*;
 import it.polimi.se2019.model.game.SpawnCell;
 
@@ -22,9 +23,10 @@ public class TestSpawnCell {
         GunCard testGun1=new Heatseeker();
         GunCard testGun2=new Hellion();
         GunCard testGun3=new LockRifle();
-        testSpawnCell.setWeaponCard(testGun1);
-        testSpawnCell.setWeaponCard(testGun2);
-        testSpawnCell.setWeaponCard(testGun3);
+
+        assertDoesNotThrow(()->testSpawnCell.setWeaponCard(testGun1));
+        assertDoesNotThrow(()->testSpawnCell.setWeaponCard(testGun2));
+        assertDoesNotThrow(()->testSpawnCell.setWeaponCard(testGun3));
 
         //here it fills up the cards slots
         assertEquals(testGun1,testSpawnCell.getWeaponCards().get(0));
@@ -32,7 +34,7 @@ public class TestSpawnCell {
         assertEquals(testGun3,testSpawnCell.getWeaponCards().get(2));
 
         GunCard testGun4=new FlameThrower();
-        assertThrows(IndexOutOfBoundsException.class,()-> testSpawnCell.setWeaponCard(testGun4));
+        assertThrows(HandFullException.class,()-> testSpawnCell.setWeaponCard(testGun4),"guns");
     }
 
     @Test
@@ -42,9 +44,9 @@ public class TestSpawnCell {
         GunCard testGun1=new Heatseeker();
         GunCard testGun2=new Hellion();
         GunCard testGun3=new LockRifle();
-        testSpawnCell.setWeaponCard(testGun1);
-        testSpawnCell.setWeaponCard(testGun2);
-        testSpawnCell.setWeaponCard(testGun3);
+        assertDoesNotThrow(()->testSpawnCell.setWeaponCard(testGun1));
+        assertDoesNotThrow(()->testSpawnCell.setWeaponCard(testGun2));
+        assertDoesNotThrow(()->testSpawnCell.setWeaponCard(testGun3));
 
         GunCard firstPick=testSpawnCell.pickWeapon(1);
         GunCard secondPick=testSpawnCell.pickWeapon(1);
