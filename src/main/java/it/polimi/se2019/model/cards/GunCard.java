@@ -5,7 +5,6 @@ public abstract class GunCard {
     protected String description;
     private boolean loaded;
 
-
     public GunCard(){
     }
 

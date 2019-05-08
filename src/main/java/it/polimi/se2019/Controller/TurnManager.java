@@ -9,8 +9,10 @@ public class TurnManager {
     private MapManager mapManager;
     private ActionManager actionManager;
 
-    public TurnManager(){
-        //TODO scrivere metodo
+    public TurnManager() {
+        this.killshotTrackerManager = new KillShotTrackerManager();
+        this.mapManager = new MapManager();
+        this.actionManager = new ActionManager();
     }
 
     public static Player getActivePlayer() {

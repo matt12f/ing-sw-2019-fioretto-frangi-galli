@@ -6,9 +6,9 @@ import it.polimi.se2019.view.LocalView;
 public class Adrenaline
 {
     //This controller contains and manages the  game logic for all players (it's initialized only
-    // if a player creates a new game
+    // if a player creates a new game)
     private static Controller mainController;
-    private static LocalView localView=new LocalView();
+    private static LocalView localView=mainController.getPlayerLocalView(1);
     public static void main( String[] args)
     {
 
@@ -25,6 +25,7 @@ public class Adrenaline
     public static Controller getMainController() {
         return mainController;
     }
+
     private void guiStarter(){
         //TODO scrivere metodo
     }

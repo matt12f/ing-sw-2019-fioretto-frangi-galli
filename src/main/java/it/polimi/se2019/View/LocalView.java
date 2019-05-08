@@ -8,8 +8,10 @@ public class LocalView  extends View {
     private MapView mapView;
     private PlayerHandView playerHand;
 
-    public LocalView (){
-
+    public LocalView(ArrayList<PlayerBoardView> playerBoardViews, MapView mapView, PlayerHandView playerHand) {
+        this.playerBoardViews = playerBoardViews;
+        this.mapView = mapView;
+        this.playerHand = playerHand;
     }
 
     @Override

@@ -6,7 +6,7 @@ public class ActionManager {
     private ShootManager shootManager;
 
     public ActionManager(){
-        //TODO scrivere costruttore
+        this.shootManager=new ShootManager();
     }
     public void actionStream(char[] actions){
         //TODO scrivere metodo

@@ -65,7 +65,6 @@ public class PlayerBoard {
     /**
      * A fresh front playerboard is worth 8,6,4,2,1,1 points
      * A fresh back playerboard is worth 4,2,1,1,1 points
-     *
      */
     public void decreaseBoardValue(){
         if(this.front)
@@ -75,12 +74,14 @@ public class PlayerBoard {
                 case 4: this.currentBoardValue=2;break;
                 case 2:this.currentBoardValue=1;break;
                 case 1:break; //TODO check cosa fare in qesto caso
+                default:break;
             }
         else
             switch (this.currentBoardValue){
                 case 4: this.currentBoardValue=2;break;
                 case 2: this.currentBoardValue=1;break;
                 case 1:break; //TODO check cosa fare in qesto caso
+                default:break;
             }
 
     }

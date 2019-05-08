@@ -2,6 +2,7 @@ package it.polimi.se2019.controller;
 
 import it.polimi.se2019.model.game.GameModel;
 import it.polimi.se2019.model.game.Player;
+import it.polimi.se2019.view.LocalView;
 import it.polimi.se2019.view.RemoteView;
 
 import java.util.ArrayList;
@@ -39,8 +40,12 @@ public class Controller implements Observer {
         return mainGameModel;
     }
 
-    public RemoteView getLocalView() {
+    public RemoteView getRemoteView() {
         return remoteView;
+    }
+
+    public LocalView getPlayerLocalView(int playerId){
+        return new LocalView(remoteView.getPlayerBoardViews(),remoteView.getMapView(),remoteView.getPlayerHands().get(playerId));
     }
 
     public TurnManager getActiveturn() {
