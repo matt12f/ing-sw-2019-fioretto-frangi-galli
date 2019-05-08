@@ -7,16 +7,23 @@ public class TurnManager {
     private static Player activePlayer;
     private KillShotTrackerManager killshotTrackerManager;
     private MapManager mapManager;
-    private ActionManager actionManager;
+    private static ActionManager actionManager;
+    private static PlayerManager playerManager;
 
     public TurnManager() {
         this.killshotTrackerManager = new KillShotTrackerManager();
         this.mapManager = new MapManager();
         this.actionManager = new ActionManager();
+        this.playerManager = new PlayerManager();
     }
 
     public static Player getActivePlayer() {
         return activePlayer;
+    }
+
+    public static PlayerManager getPlayerManager (){return playerManager;}
+    public static ActionManager getActionManager(){
+        return actionManager;
     }
 
     public void playTurn(){
@@ -29,4 +36,6 @@ public class TurnManager {
     private void gameStatsUpdate(){
         //TODO scrivere metodo
     }
+
+
 }
