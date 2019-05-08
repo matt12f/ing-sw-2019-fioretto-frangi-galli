@@ -38,7 +38,9 @@ public class RemoteView  extends View implements RMIInterface{
     }
 
     @Override
-    public int askAction(int codedAction, int playerID) throws RemoteException {
-        return 0;
+    public int [] askAction(int codedAction, int playerID) throws RemoteException {
+        int [] availableActions={0,1,2};
+        //TODO implementazione calcolo azioni fattibili chiamando il controller
+        return availableActions;
     }
 }

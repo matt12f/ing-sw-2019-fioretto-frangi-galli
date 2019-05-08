@@ -7,7 +7,7 @@ import java.rmi.RemoteException;
 
 public interface RMIInterface extends Remote{
     LocalView getLocalView(int playerID) throws RemoteException; //this method returns the local view given a player's id
-    int askAction(int codedAction,int playerID) throws RemoteException; //this method returns the possible actions
+    int [] askAction(int codedAction,int playerID) throws RemoteException; //this method returns the possible actions
 
 }
 
