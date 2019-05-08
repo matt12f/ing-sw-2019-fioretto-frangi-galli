@@ -5,6 +5,9 @@ import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.LocalView;
 import it.polimi.se2019.view.RemoteView;
 
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -32,8 +35,26 @@ public class Controller implements Observer {
         String gameMode="normal";
         int mapNumber=1; //TODO fare scegliere il numero di mappa
         this.mainGameModel=new GameModel(0,players,gameMode,mapNumber);
-        this.remoteView=new RemoteView();
+        this.remoteView=setupRemoteObjExport();
         this.activeturn = new TurnManager();
+    }
+
+    /**
+     * This method offers the object on the LAN
+     * @return
+     */
+    private RemoteView setupRemoteObjExport(){
+        RemoteView virtualView = new RemoteView();
+
+        //bind the object
+        try {
+            Naming.rebind("rmi://localhost/adrenaline", virtualView);
+        } catch (RemoteException e){
+            e.printStackTrace();
+        } catch (MalformedURLException e){
+            e.printStackTrace();
+        }
+        return virtualView;
     }
 
     public static GameModel getMainGameModel() {
