@@ -16,7 +16,8 @@ public class MapManager {
                 //fill lo spazio mancante
         }
     }
-    public void movePlayer(Player player){
+    public void movePlayer(Player player, Cell cellStart, Cell cellFinish){
         //TODO scrivere metodo
+
     }
 }
