@@ -14,7 +14,7 @@ public class ShootManager {
        // Controller.getActiveturn().getPlayerManager().damageDealer(targets, damage);
         return (PlayerManager.isAlive(TurnManager.getActivePlayer()));
     }
-    public void appointMarker(){
+    public void appointMarker(ArrayList<Player> targets, char [] markers){
         //TODO scrivere metodo
     }
     public void moveOpponent(ArrayList<Player> targets){

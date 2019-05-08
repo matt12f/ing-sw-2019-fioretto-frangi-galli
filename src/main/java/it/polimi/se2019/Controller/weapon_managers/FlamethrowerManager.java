@@ -8,7 +8,9 @@ import java.util.ArrayList;
 public class FlamethrowerManager {
 
     public void action(){
-
+        //determinare scelta
+        baseEffect();
+        secondaryEffect();
     }
     private void baseEffect(){
         /** target: 1, 2(first target 1 move away, second has to be in in a second square 1 move from the first in same direction)
@@ -28,6 +30,18 @@ public class FlamethrowerManager {
          *  damage: 2 n first square, 1 in second square
          *
          */
+        char damage[] = new char[2];
+        damage [0] = Controller.getActiveturn().getActivePlayer().getFigure().getColor();
+        damage [1] = Controller.getActiveturn().getActivePlayer().getFigure().getColor();
+        //TODO è una toppa momentanea in attesa dell'input, check alla fine
+        ArrayList<Player> targetList = new ArrayList<>();
+        targetList.add(Controller.getActiveturn().getActivePlayer()) ;
+        Controller.getActiveturn().getActionManager().getShootManager().inflictDamage(targetList, damage);
+        targetList.remove(0);
+        //input 2 target
+        targetList.add(Controller.getActiveturn().getActivePlayer()) ;
+        damage [1] = ' ';
+        Controller.getActiveturn().getActionManager().getShootManager().inflictDamage(targetList, damage);
     }
    
 }

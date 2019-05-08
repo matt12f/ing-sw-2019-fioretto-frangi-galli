@@ -19,9 +19,9 @@ public class ElectroscytheManager {
          */
         char damage[] = new char[1];
         damage [0] = Controller.getActiveturn().getActivePlayer().getFigure().getColor();
-        //TODO è una toppa momentanea in attesa dell'input
+        //TODO check, togliere il player
         ArrayList<Player> targetList = new ArrayList<>();
-        targetList.add(Controller.getActiveturn().getActivePlayer()) ;
+        targetList = Controller.getActiveturn().getActivePlayer().getFigure().getCell().getPlayers();
         Controller.getActiveturn().getActionManager().getShootManager().inflictDamage(targetList, damage);
     }
     private void secondaryEffect(){
