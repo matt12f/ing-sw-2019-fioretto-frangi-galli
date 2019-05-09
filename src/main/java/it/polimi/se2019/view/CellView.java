@@ -11,6 +11,11 @@ public class CellView {
     public void setPlayers(ArrayList<Player> toSet){
         this.Players = toSet;
     }
+
+    public ArrayList<Player> getPlayers(){
+        return this.Players;
+    }
+
 }
 
 
