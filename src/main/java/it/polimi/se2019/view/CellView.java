@@ -16,6 +16,13 @@ public class CellView {
         return this.Players;
     }
 
+    public Square[][] getSquare() {
+        return matrix;
+    }
+
+    public void setSquare(Square[][] matrix) {
+        this.matrix = matrix;
+    }
 }
 
 
