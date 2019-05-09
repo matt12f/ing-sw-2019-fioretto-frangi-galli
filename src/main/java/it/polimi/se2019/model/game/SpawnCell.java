@@ -1,5 +1,6 @@
 package it.polimi.se2019.model.game;
 
+import it.polimi.se2019.Adrenaline;
 import it.polimi.se2019.exceptions.FullException;
 import it.polimi.se2019.model.cards.GunCard;
 import java.util.ArrayList;
@@ -28,7 +29,14 @@ public class SpawnCell extends Cell{
             throw new FullException("gun hand already full");
      }
 
-     /** Method that returns the weapon from the pick-numbered slot
+    @Override
+    public boolean needsRefill(boolean deckOk) {
+        if (this.weaponCards.size()<3&&deckOk)
+            return true;
+        return false;
+    }
+
+    /** Method that returns the weapon from the pick-numbered slot
       **/
      @Override
     public GunCard pickItem(int pick){

@@ -10,8 +10,9 @@ import java.awt.event.WindowEvent;	//for CloseListener()
 import java.awt.event.WindowAdapter;	//for CloseListener()
 import java.lang.Integer;		//int from Model is passed as an Integer
 import java.util.Observable;		//for update();
+import java.util.Observer;
 
-public class GameBoardGui implements java.util.Observer{
+public class GameBoardGui implements Observer {
     MapView map;
     PlayerBoardView board;
     PlayerHandView hand;

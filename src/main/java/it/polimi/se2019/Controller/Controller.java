@@ -89,18 +89,21 @@ public class Controller implements Observer {
                     if (mapMatrixToFill[i][j] instanceof DropCell)
                     {
                         mapMatrixToFill[i][j].setItem(mainGameModel.getCurrentDecks().getAmmotilesDeck().draw());
-                    } else if (mapMatrixToFill[i][j] instanceof SpawnCell) {
+                    }else if (mapMatrixToFill[i][j] instanceof SpawnCell)
+                    {
                         for (int k = 0; k < 3; k++)
                             mapMatrixToFill[i][j].setItem(mainGameModel.getCurrentDecks().getGunDeck().draw());
-                    }else
+                    }else{
                         mapMatrixToFill[i][j]=null;
+                    }
         }catch(FullException e){
             LOGGER.log(Level.FINE,"Setup game in Controller",e);
         }
     }
 
     private void startTurn(){
-        //TODO scrivere metodo
+        //TODO scrivere preparazione (cos'altro serve?)
+        activeturn.playTurn();
     }
 
     @Override

@@ -4,6 +4,7 @@ import it.polimi.se2019.controller.Controller;
 import it.polimi.se2019.network.NetworkHandler;
 import it.polimi.se2019.network.NetworkHandlerRMI;
 import it.polimi.se2019.view.LocalView;
+import it.polimi.se2019.view.MainLogGui;
 
 public class Adrenaline
 {

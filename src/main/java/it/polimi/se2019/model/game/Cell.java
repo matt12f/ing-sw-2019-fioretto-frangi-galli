@@ -40,5 +40,6 @@ public abstract class Cell {
     public abstract Object pickItem(int pick);
     public abstract Object getItem();
     public abstract void setItem(Object card)throws FullException;
+    public abstract boolean needsRefill(boolean deckOk);
 
 }

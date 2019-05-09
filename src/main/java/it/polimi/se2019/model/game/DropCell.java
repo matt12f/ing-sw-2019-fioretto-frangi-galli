@@ -28,6 +28,13 @@ public class DropCell extends Cell{
         else throw new FullException("Ammotile slot already full");
     }
 
+    @Override
+    public boolean needsRefill(boolean deckOk) {
+        if (this.drop==null && deckOk)
+            return true;
+        return false;
+    }
+
     /**
      * This method picks a drop card and returns it.
      * The slot will be refilled at the end of the turn, otherwise a player could use the move+grab

@@ -1,8 +1,12 @@
 package it.polimi.se2019.controller;
 
+import it.polimi.se2019.Adrenaline;
+import it.polimi.se2019.model.game.Cell;
+import it.polimi.se2019.model.game.DropCell;
 import it.polimi.se2019.model.game.Player;
+import it.polimi.se2019.model.game.SpawnCell;
 
- public class TurnManager {
+public class TurnManager {
 
     private Player activePlayer;
     private KillShotTrackerManager killshotTrackerManager;
@@ -26,12 +30,9 @@ import it.polimi.se2019.model.game.Player;
         return actionManager;
     }
 
-    public void playTurn(){
-        //TODO qui va considerato che alla fine del turno del singolo giocatore si devono riempire
-        // eventuali dropCells dove è stata pescata la carta
-
-        //TODO va inoltre considerato che quando viene pescata una gunCard da una spawnCell ne va
-        // rimessa una nuova (non lo fa in automatico perché il model non si occupa di queste cose)
+    public void playTurn() {
+        //TODO richiesta interazione con la GUI
+        mapManager.refillEmptiedCells();
     }
     private void gameStatsUpdate(){
         //TODO scrivere metodo

@@ -10,6 +10,7 @@ import java.awt.event.WindowEvent;	//for CloseListener()
 import java.awt.event.WindowAdapter;	//for CloseListener()
 import java.lang.Integer;		//int from Model is passed as an Integer
 import java.util.Observable;		//for update();
+
 public class weaponMenuGUI {
     private TextField weaponName;
     private TextField weaponInfo;
