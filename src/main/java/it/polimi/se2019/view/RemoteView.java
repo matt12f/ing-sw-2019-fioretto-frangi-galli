@@ -3,10 +3,10 @@ package it.polimi.se2019.view;
 import it.polimi.se2019.model.game.*;
 import it.polimi.se2019.model.game.Map;
 import it.polimi.se2019.network.RMIInterface;
-
+import it.polimi.se2019.controller.AvailableActions;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.*;
+import java.util.Observer;
 import java.util.Observable;
 
 

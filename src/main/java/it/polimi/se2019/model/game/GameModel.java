@@ -15,7 +15,7 @@ public class GameModel extends Observable{
     private KillShotTrack killshotTrack;
     private boolean finalFrenzy;
     private int turn;
-    private List<modelChanged> viewObserver = new ArrayList<modelChanged>();
+    private List<modelChanged> viewObserver = new ArrayList<>();
 
     public void addObserver(modelChanged toAdd){
         viewObserver.add(toAdd);
