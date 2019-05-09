@@ -1,5 +1,6 @@
 package it.polimi.se2019.controller;
 
+import it.polimi.se2019.Adrenaline;
 import it.polimi.se2019.model.game.Cell;
 import it.polimi.se2019.model.game.DropCell;
 import it.polimi.se2019.model.game.Player;
@@ -10,7 +11,7 @@ public class MapManager {
         //TODO scrivere metodo
         if (cell instanceof DropCell){
                 //fill il drop
-            ((DropCell) cell).setDrop(Controller.getMainGameModel().getCurrentDecks().getAmmotilesDeck().draw());
+            ((DropCell) cell).setDrop(Adrenaline.getMainController().getMainGameModel().getCurrentDecks().getAmmotilesDeck().draw());
 
         }else if(cell instanceof SpawnCell){
                 //fill lo spazio mancante

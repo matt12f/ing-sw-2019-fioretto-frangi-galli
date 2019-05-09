@@ -1,5 +1,6 @@
 package it.polimi.se2019.network;
 
+import it.polimi.se2019.controller.AvailableActions;
 import it.polimi.se2019.view.LocalView;
 
 public class NetworkHandlerSocket extends NetworkHandler {
@@ -10,7 +11,7 @@ public class NetworkHandlerSocket extends NetworkHandler {
     }
 
     @Override
-    public int[] buildAndSendActionRequest(int playerId) {
-        return new int[0];
+    public AvailableActions buildAndSendActionRequest(int playerId) {
+        return new AvailableActions();
     }
 }

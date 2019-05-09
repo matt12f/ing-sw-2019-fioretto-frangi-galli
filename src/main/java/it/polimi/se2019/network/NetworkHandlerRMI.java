@@ -1,5 +1,7 @@
 package it.polimi.se2019.network;
 
+import it.polimi.se2019.controller.AvailableActions;
+import it.polimi.se2019.view.ActionRequestView;
 import it.polimi.se2019.view.LocalView;
 
 import java.rmi.Naming;
@@ -43,11 +45,10 @@ public class NetworkHandlerRMI extends NetworkHandler{
      * @return
      */
     @Override
-    public int [] buildAndSendActionRequest(int playerId) {
-        int codedAction=1;
-        //TODO costruire la richiesta
+    public AvailableActions buildAndSendActionRequest(int playerId){
+        ActionRequestView request=new ActionRequestView();
         try {
-            return server.askAction(codedAction,playerId);
+            return server.askAction(request,playerId);
         } catch (RemoteException e) {
             return null;
         }

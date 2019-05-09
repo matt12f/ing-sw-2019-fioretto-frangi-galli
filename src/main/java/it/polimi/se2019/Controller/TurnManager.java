@@ -2,13 +2,13 @@ package it.polimi.se2019.controller;
 
 import it.polimi.se2019.model.game.Player;
 
-public class TurnManager {
+ public class TurnManager {
 
-    private static Player activePlayer;
+    private Player activePlayer;
     private KillShotTrackerManager killshotTrackerManager;
     private MapManager mapManager;
-    private static ActionManager actionManager;
-    private static PlayerManager playerManager;
+    private ActionManager actionManager;
+    private PlayerManager playerManager;
 
     public TurnManager() {
         this.killshotTrackerManager = new KillShotTrackerManager();
@@ -17,12 +17,12 @@ public class TurnManager {
         this.playerManager = new PlayerManager();
     }
 
-    public static Player getActivePlayer() {
+    public Player getActivePlayer() {
         return activePlayer;
     }
 
-    public static PlayerManager getPlayerManager (){return playerManager;}
-    public static ActionManager getActionManager(){
+    public PlayerManager getPlayerManager (){return playerManager;}
+    public ActionManager getActionManager(){
         return actionManager;
     }
 

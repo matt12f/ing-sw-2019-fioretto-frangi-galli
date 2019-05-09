@@ -13,9 +13,9 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class Controller implements Observer {
-    private static GameModel mainGameModel;
+    private GameModel mainGameModel;
     private RemoteView remoteView;
-    private static TurnManager activeturn;
+    private TurnManager activeturn;
 
     /**
      * This constructor generates one local Controller object for one Player
@@ -57,7 +57,7 @@ public class Controller implements Observer {
         return virtualView;
     }
 
-    public static GameModel getMainGameModel() {
+    public GameModel getMainGameModel() {
         return mainGameModel;
     }
 
@@ -69,7 +69,7 @@ public class Controller implements Observer {
         return new LocalView(remoteView.getPlayerBoardViews(),remoteView.getMapView(),remoteView.getPlayerHands().get(playerId));
     }
 
-    public static TurnManager getActiveturn() {
+    public TurnManager getActiveturn() {
         return activeturn;
     }
 

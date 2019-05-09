@@ -1,5 +1,6 @@
 package it.polimi.se2019.view;
 
+import it.polimi.se2019.controller.AvailableActions;
 import it.polimi.se2019.network.RMIInterface;
 
 import java.rmi.RemoteException;
@@ -38,8 +39,9 @@ public class RemoteView  extends View implements RMIInterface{
     }
 
     @Override
-    public int [] askAction(int codedAction, int playerID) throws RemoteException {
-        int [] availableActions={0,1,2};
+    public AvailableActions askAction(ActionRequestView codedAction, int playerID) throws RemoteException {
+        AvailableActions availableActions=new AvailableActions();
+
         //TODO implementazione calcolo azioni fattibili chiamando il controller
         return availableActions;
     }
