@@ -6,6 +6,8 @@ import it.polimi.se2019.view.LocalView;
 
 import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This class represents the RMI network handler, that enables communication between the Remote View obj in the server
@@ -15,15 +17,16 @@ import java.rmi.RemoteException;
  */
 
 public class NetworkHandlerRMI extends NetworkHandler{
+    private static final Logger LOGGER = Logger.getLogger(NetworkHandler.class.getName());
 
     private RMIInterface server;
 
     public NetworkHandlerRMI(){
         try {
             //get the server remote object
-            RMIInterface server = (RMIInterface) Naming.lookup("rmi://localhost/adrenaline");
+            server = (RMIInterface) Naming.lookup("rmi://localhost/adrenaline");
         }catch (Exception e){
-            e.printStackTrace();
+            LOGGER.log(Level.FINE,"NetworkHandlerRMI constructor",e);
         }
     }
 
@@ -33,6 +36,7 @@ public class NetworkHandlerRMI extends NetworkHandler{
         try {
             temp= server.getLocalView(playerId);
         } catch (RemoteException e) {
+            LOGGER.log(Level.FINE,"NetworkHandlerRMI getLocalView",e);
             return null;
         }
         return temp;

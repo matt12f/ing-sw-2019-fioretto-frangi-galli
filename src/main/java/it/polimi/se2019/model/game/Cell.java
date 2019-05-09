@@ -1,5 +1,7 @@
 package it.polimi.se2019.model.game;
 
+import it.polimi.se2019.exceptions.FullException;
+
 import java.util.ArrayList;
 
 public abstract class Cell {
@@ -11,7 +13,7 @@ public abstract class Cell {
     protected char right;
 
     /**
-     * THis constructor will serve as a super for its two sub classes
+     * This constructor will serve as a super for its two sub classes
      */
     public Cell(char color, char top, char bottom, char left, char right) {
         this.color = color;
@@ -31,4 +33,12 @@ public abstract class Cell {
     public void removePlayers(Player player){
         this.players.remove(player);
     }
+
+    /**
+     * abstract methods for DropCell to be called on Cell objects (the boardMatrix in Map mainly)
+     */
+    public abstract Object pickItem(int pick);
+    public abstract Object getItem();
+    public abstract void setItem(Object card)throws FullException;
+
 }

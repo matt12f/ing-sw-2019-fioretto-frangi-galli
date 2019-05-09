@@ -10,8 +10,7 @@ public class AvailableActions {
 
     public AvailableActions() {
         DestinationCell arrivalCell=new DestinationCell();
-        ArrayList<Player> targetList =new ArrayList<>();
-        //TODO riempire vettore
+        ArrayList<Player> targetList =new ArrayList<>(); //TODO va chiesta l'arma per capire i bersagli
         this.arrivalCell = arrivalCell;
         this.targetList = targetList;
     }

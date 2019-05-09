@@ -39,10 +39,6 @@ public class CyberbladeManager {
         ArrayList<Player> targetList = new ArrayList<>();
         targetList.add(Adrenaline.getMainController().getActiveturn().getActivePlayer()) ;
         Adrenaline.getMainController().getActiveturn().getActionManager().getShootManager().moveOpponent(targetList);
-
-        Controller controller=Adrenaline.getMainController();
-        TurnManager prova = controller.getActiveturn();
-        Player prova1 = prova.getActivePlayer();
     }
     private void thirdEffect(){
         /** optional attack
