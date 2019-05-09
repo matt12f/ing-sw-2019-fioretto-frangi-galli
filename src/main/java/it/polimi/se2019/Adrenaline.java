@@ -26,7 +26,7 @@ public class Adrenaline
 
         //TODO caso "crea nuova partita" si creerà un oggetto Controller e si aprirà una connessione
 
-        //TODO caso "unisciti a partita" ci si connetterà a una partita in attesa di partire e si creerà solo la View
+        //TODO caso "unisciti a partita" ci si connetterà a una partita in attesa di partire e si creerà solo la view
 
     }
 

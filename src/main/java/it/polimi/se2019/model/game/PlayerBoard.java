@@ -1,6 +1,8 @@
 package it.polimi.se2019.model.game;
 
-public class PlayerBoard {
+import java.util.Observable;
+
+public class PlayerBoard extends Observable {
     private char color;
     private int currentBoardValue; //equivalent to the amount of skulls, that reduce the value of the scored card
     private boolean front;
@@ -40,6 +42,7 @@ public class PlayerBoard {
     public void flipPlayerBoard(){
         this.front=false;
         this.currentBoardValue=4; //this is the board's worth when flipped
+
     }
     /**This method "flips" only the action board, creating a frenzy one and dumping the normal one
      * */
@@ -83,6 +86,9 @@ public class PlayerBoard {
                 case 1:break; //TODO check cosa fare in qesto caso
                 default:break;
             }
+
+        this.setChanged();
+        this.notifyObservers();
 
     }
 }

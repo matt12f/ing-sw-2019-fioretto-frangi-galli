@@ -1,6 +1,9 @@
 package it.polimi.se2019.model.game;
 
+import it.polimi.se2019.view.modelChanged;
+
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 
 public class GameModel extends Observable{
@@ -12,8 +15,12 @@ public class GameModel extends Observable{
     private KillShotTrack killshotTrack;
     private boolean finalFrenzy;
     private int turn;
+    private List<modelChanged> viewObserver = new ArrayList<modelChanged>();
 
-
+    public void addObserver(modelChanged toAdd){
+        viewObserver.add(toAdd);
+    }
+    
     public GameModel(int gameNumberId,ArrayList<Player> playerList, String gameMode,int mapNumber){
         this.currentDecks=new Decks();
         this.gameNumberId=gameNumberId;
