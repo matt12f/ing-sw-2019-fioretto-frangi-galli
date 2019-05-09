@@ -3,7 +3,7 @@ package it.polimi.se2019.controller;
 import it.polimi.se2019.model.cards.GunCard;
 
 public class ActionManager {
-    private static ShootManager shootManager;
+    private ShootManager shootManager;
 
     public ActionManager(){
         this.shootManager=new ShootManager();
@@ -28,7 +28,7 @@ public class ActionManager {
         //TODO scrivere metodo
 
     }
-    public static ShootManager getShootManager(){
+    public ShootManager getShootManager(){
             return shootManager;
     }
 }

@@ -3,7 +3,7 @@ import it.polimi.se2019.model.cards.GunCard;
 import it.polimi.se2019.model.cards.PowerupCard;
 
 import it.polimi.se2019.exceptions.CardNotFoundException;
-import it.polimi.se2019.exceptions.HandFullException;
+import it.polimi.se2019.exceptions.FullException;
 
 public class Hand {
     private PowerupCard [] powerups;
@@ -29,7 +29,7 @@ public class Hand {
 
     /**this method puts a gun in the player's hand
      * */
-    public void setGun(GunCard gun) throws HandFullException{
+    public void setGun(GunCard gun) throws FullException {
         int i=0;
         boolean set=false;
         while(!set && i<MAXCARDS){
@@ -39,12 +39,12 @@ public class Hand {
             }
             else i++;
         }
-        if(!set) throw new HandFullException("guns");
+        if(!set) throw new FullException("guns");
     }
 
     /**this method puts a powerup in the player's hand
      * */
-    public void setPowerup(PowerupCard powerup) throws HandFullException {
+    public void setPowerup(PowerupCard powerup) throws FullException {
         int i=0;
         boolean set=false;
         while(!set && i<MAXCARDS){
@@ -54,7 +54,7 @@ public class Hand {
             }
             else i++;
         }
-        if(!set) throw new HandFullException("powerups");
+        if(!set) throw new FullException("powerups");
     }
 
     public void substitutionPowerup (PowerupCard discarded,PowerupCard newPowerup) throws CardNotFoundException {

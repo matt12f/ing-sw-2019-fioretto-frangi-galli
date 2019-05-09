@@ -1,6 +1,6 @@
 package it.polimi.se2019.test_model.test_game;
 
-import it.polimi.se2019.exceptions.HandFullException;
+import it.polimi.se2019.exceptions.FullException;
 import it.polimi.se2019.model.cards.*;
 import it.polimi.se2019.model.game.SpawnCell;
 
@@ -14,7 +14,7 @@ public class TestSpawnCell {
     public void testSpawncell(){
         SpawnCell testSpawnCell=new SpawnCell('b','w','d','w','r');
         for (int i=0;i<3;i++)
-            assertTrue(testSpawnCell.getWeaponCards().isEmpty());
+            assertTrue(testSpawnCell.getItem().isEmpty());
     }
 
     @Test
@@ -24,17 +24,17 @@ public class TestSpawnCell {
         GunCard testGun2=new Hellion();
         GunCard testGun3=new LockRifle();
 
-        assertDoesNotThrow(()->testSpawnCell.setWeaponCard(testGun1));
-        assertDoesNotThrow(()->testSpawnCell.setWeaponCard(testGun2));
-        assertDoesNotThrow(()->testSpawnCell.setWeaponCard(testGun3));
+        assertDoesNotThrow(()->testSpawnCell.setItem(testGun1));
+        assertDoesNotThrow(()->testSpawnCell.setItem(testGun2));
+        assertDoesNotThrow(()->testSpawnCell.setItem(testGun3));
 
         //here it fills up the cards slots
-        assertEquals(testGun1,testSpawnCell.getWeaponCards().get(0));
-        assertEquals(testGun2,testSpawnCell.getWeaponCards().get(1));
-        assertEquals(testGun3,testSpawnCell.getWeaponCards().get(2));
+        assertEquals(testGun1,testSpawnCell.getItem().get(0));
+        assertEquals(testGun2,testSpawnCell.getItem().get(1));
+        assertEquals(testGun3,testSpawnCell.getItem().get(2));
 
         GunCard testGun4=new FlameThrower();
-        assertThrows(HandFullException.class,()-> testSpawnCell.setWeaponCard(testGun4),"guns");
+        assertThrows(FullException.class,()-> testSpawnCell.setItem(testGun4),"guns");
     }
 
     @Test
@@ -44,14 +44,14 @@ public class TestSpawnCell {
         GunCard testGun1=new Heatseeker();
         GunCard testGun2=new Hellion();
         GunCard testGun3=new LockRifle();
-        assertDoesNotThrow(()->testSpawnCell.setWeaponCard(testGun1));
-        assertDoesNotThrow(()->testSpawnCell.setWeaponCard(testGun2));
-        assertDoesNotThrow(()->testSpawnCell.setWeaponCard(testGun3));
+        assertDoesNotThrow(()->testSpawnCell.setItem(testGun1));
+        assertDoesNotThrow(()->testSpawnCell.setItem(testGun2));
+        assertDoesNotThrow(()->testSpawnCell.setItem(testGun3));
 
-        GunCard firstPick=testSpawnCell.pickWeapon(1);
-        GunCard secondPick=testSpawnCell.pickWeapon(1);
+        GunCard firstPick=testSpawnCell.pickItem(1);
+        GunCard secondPick=testSpawnCell.pickItem(1);
         assertNotEquals(firstPick,secondPick);
 
-        assertEquals(1,testSpawnCell.getWeaponCards().size());
+        assertEquals(1,testSpawnCell.getItem().size());
     }
 }

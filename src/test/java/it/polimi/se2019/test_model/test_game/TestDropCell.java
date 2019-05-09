@@ -4,8 +4,7 @@ import it.polimi.se2019.model.cards.AmmoTileCard;
 import it.polimi.se2019.model.game.DropCell;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class TestDropCell {
@@ -13,25 +12,25 @@ public class TestDropCell {
     @Test
     public void testDropCell(){
         DropCell testDropCell=new DropCell('b','w','d','w','r');
-        assertNull(testDropCell.getDrop());
+        assertNull(testDropCell.getItem());
     }
 
     @Test
-    public void testSetGetDrop(){
+    public void testSetGetItem(){
         DropCell testDropCell=new DropCell('b','w','d','w','r');
         AmmoTileCard ammoTileCard=new AmmoTileCard("pbb");
-        testDropCell.setDrop(ammoTileCard);
-        assertEquals(ammoTileCard,testDropCell.getDrop());
+        assertDoesNotThrow(()->testDropCell.setItem(ammoTileCard));
+        assertEquals(ammoTileCard,testDropCell.getItem());
     }
 
     @Test
-    public void testPickDrop(){
+    public void testPickItem(){
         DropCell testDropCell=new DropCell('b','w','d','w','r');
         AmmoTileCard ammoTileCard=new AmmoTileCard("pbb");
-        testDropCell.setDrop(ammoTileCard);
-        AmmoTileCard picked=testDropCell.pickDrop();
+        assertDoesNotThrow(()->testDropCell.setItem(ammoTileCard));
+        AmmoTileCard picked=testDropCell.pickItem(0);
         assertEquals(picked,ammoTileCard);
-        assertNull(testDropCell.getDrop());
+        assertNull(testDropCell.getItem());
     }
 
 }

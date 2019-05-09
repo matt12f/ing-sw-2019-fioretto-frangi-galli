@@ -1,5 +1,6 @@
 package it.polimi.se2019.model.game;
 
+import it.polimi.se2019.exceptions.FullException;
 import it.polimi.se2019.model.cards.AmmoTileCard;
 
 public class DropCell extends Cell{
@@ -10,15 +11,21 @@ public class DropCell extends Cell{
         super(color,top,bottom,left,right);
     }
 
-    public AmmoTileCard getDrop(){
+    @Override
+    public AmmoTileCard getItem(){
         return  drop;
     }
 
     /**
-     * This method puts the card it receives in the slot without checking if it's already occupied
+     * This method puts the card it receives in the slot
      */
-    public void setDrop(AmmoTileCard ammoTileCard){
-        this.drop =ammoTileCard;
+    @Override
+    public void setItem(Object card) throws FullException{
+        if(this.drop==null)
+        {
+            this.drop =(AmmoTileCard) card;
+        }
+        else throw new FullException("Ammotile slot already full");
     }
 
     /**
@@ -26,7 +33,8 @@ public class DropCell extends Cell{
      * The slot will be refilled at the end of the turn, otherwise a player could use the move+grab
      * move twice in his turn and pick twice from the same DropCell (non compliant to game rules).
      */
-    public AmmoTileCard pickDrop(){
+    @Override
+    public AmmoTileCard pickItem(int pick){
         AmmoTileCard temp = this.drop;
         this.drop=null;
         return temp;

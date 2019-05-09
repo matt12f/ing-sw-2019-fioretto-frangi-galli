@@ -1,7 +1,7 @@
 package it.polimi.se2019.test_model.test_game;
 
 import it.polimi.se2019.exceptions.CardNotFoundException;
-import it.polimi.se2019.exceptions.HandFullException;
+import it.polimi.se2019.exceptions.FullException;
 import it.polimi.se2019.model.cards.*;
 import it.polimi.se2019.model.game.Hand;
 
@@ -42,7 +42,7 @@ public class TestHand {
 
         GunCard testGun4;
         testGun4= new Shockwave();
-        assertThrows(HandFullException.class, () -> testHand.setGun(testGun4),"guns");
+        assertThrows(FullException.class, () -> testHand.setGun(testGun4),"guns");
     }
     @Test
     public void testSetPowerUp(){
@@ -65,7 +65,7 @@ public class TestHand {
 
         PowerupCard testPwup4;
         testPwup4=new PowerupCard("TargettingScope",'r');
-        assertThrows(HandFullException.class, () -> testHand.setPowerup(testPwup4),"powerups");
+        assertThrows(FullException.class, () -> testHand.setPowerup(testPwup4),"powerups");
 
     }
 

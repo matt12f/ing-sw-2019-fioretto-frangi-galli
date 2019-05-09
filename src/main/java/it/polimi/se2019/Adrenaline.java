@@ -33,6 +33,10 @@ public class Adrenaline
         return mainController;
     }
 
+    public static LocalView getLocalView() {
+        return localView;
+    }
+
     private void guiStarter(){
         //TODO scrivere metodo
     }
