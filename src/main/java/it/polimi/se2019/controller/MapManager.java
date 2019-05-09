@@ -7,6 +7,7 @@ import it.polimi.se2019.model.game.DropCell;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.model.game.SpawnCell;
 
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -40,7 +41,12 @@ public class MapManager {
         }
     }
     public void movePlayer(Player player, Cell cellStart, Cell cellFinish){
-        //TODO scrivere metodo
-
+        //TODO fare caso di test
+        for (Player temp : cellStart.getPlayers()) {
+            if (temp.getNickname().equals(player.getNickname())){
+                cellStart.removePlayers(temp);
+            }
+        }
+        cellFinish.addPlayers(player);
     }
 }
