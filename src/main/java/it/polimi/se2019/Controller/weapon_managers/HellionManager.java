@@ -25,6 +25,7 @@ public class HellionManager {
         targetList.add(Controller.getActiveturn().getActivePlayer()) ;
         Controller.getActiveturn().getActionManager().getShootManager().inflictDamage(targetList, damage);
         //toppa
+        targetList.remove(0);
         targetList = Controller.getActiveturn().getActivePlayer().getFigure().getCell().getPlayers();
         Controller.getActiveturn().getActionManager().getShootManager().appointMarker(targetList, damage);
     }
