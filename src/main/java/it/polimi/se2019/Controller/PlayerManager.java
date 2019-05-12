@@ -30,7 +30,7 @@ public class PlayerManager {
         return (player.getPlayerBoard().getDamageTrack().getDamage().length<12);
     }
 
-    private void markerManager(Player player, char[] add) {
+   public void markerManager(Player player, char[] add) {
         for (int i = 0; i < add.length; i++) {
             player.getPlayerBoard().getDamageTrack().addMark(add[i]);
         }

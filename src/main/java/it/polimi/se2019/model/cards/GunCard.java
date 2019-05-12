@@ -17,4 +17,7 @@ public abstract class GunCard {
     public boolean getLoaded() {
         return loaded;
     }
+    public void setLoaded(boolean load){
+        this.loaded = load;
+    }
 }
