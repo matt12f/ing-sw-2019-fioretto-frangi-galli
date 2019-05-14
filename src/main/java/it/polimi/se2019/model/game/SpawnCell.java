@@ -1,6 +1,5 @@
 package it.polimi.se2019.model.game;
 
-import it.polimi.se2019.Adrenaline;
 import it.polimi.se2019.exceptions.FullException;
 import it.polimi.se2019.model.cards.GunCard;
 import java.util.ArrayList;

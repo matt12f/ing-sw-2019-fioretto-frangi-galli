@@ -76,14 +76,12 @@ public class PlayerBoard extends Observable {
                 case 6: this.currentBoardValue=4;break;
                 case 4: this.currentBoardValue=2;break;
                 case 2:this.currentBoardValue=1;break;
-                case 1:break; //TODO check cosa fare in qesto caso
                 default:break;
             }
         else
             switch (this.currentBoardValue){
                 case 4: this.currentBoardValue=2;break;
                 case 2: this.currentBoardValue=1;break;
-                case 1:break; //TODO check cosa fare in qesto caso
                 default:break;
             }
 

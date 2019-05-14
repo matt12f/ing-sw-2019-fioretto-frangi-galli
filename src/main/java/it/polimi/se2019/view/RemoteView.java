@@ -59,14 +59,13 @@ public class RemoteView  extends View implements RMIInterface {
 
     @Override
     public LocalView getLocalView(int playerID) throws RemoteException {
-
         return null;
     }
 
     @Override
     public AvailableActions askAction(ActionRequestView codedAction, int playerID) throws RemoteException {
         AvailableActions availableActions=new AvailableActions();
-
+        //TODO richiama ActionManager
         //TODO implementazione calcolo azioni fattibili chiamando il controller
         return availableActions;
     }

@@ -1,6 +1,5 @@
 package it.polimi.se2019.controller;
 
-import it.polimi.se2019.Adrenaline;
 import it.polimi.se2019.model.cards.AmmoTileCard;
 import it.polimi.se2019.model.cards.GunCard;
 import it.polimi.se2019.model.game.Cell;

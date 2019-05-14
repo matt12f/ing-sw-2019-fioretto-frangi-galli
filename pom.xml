@@ -53,7 +53,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>it.polimi.se2019.Adrenaline</mainClass>
+              <mainClass>it.polimi.se2019.AdrenalineServer</mainClass>
             </manifest>
           </archive>
         </configuration>

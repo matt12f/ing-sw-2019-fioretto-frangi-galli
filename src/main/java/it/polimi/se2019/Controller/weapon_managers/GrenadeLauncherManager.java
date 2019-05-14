@@ -1,7 +1,6 @@
 package it.polimi.se2019.controller.weapon_managers;
 
-import it.polimi.se2019.Adrenaline;
-import it.polimi.se2019.controller.Controller;
+import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.model.game.Player;
 
 import java.util.ArrayList;
@@ -19,12 +18,12 @@ public class GrenadeLauncherManager {
          *  move: 1
          */
         char damage[] = new char[1];
-        damage [0] = Adrenaline.getMainController().getActiveturn().getActivePlayer().getFigure().getColor();
+        damage [0] = AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getFigure().getColor();
         ArrayList<Player> targetList = new ArrayList<>();
         //TODO è una toppa, in attesa di input
-        targetList.add(Adrenaline.getMainController().getActiveturn().getActivePlayer()) ;
-        Adrenaline.getMainController().getActiveturn().getActionManager().getShootManager().inflictDamage(targetList, damage);
-        Adrenaline.getMainController().getActiveturn().getActionManager().getShootManager().moveOpponent(targetList);
+        targetList.add(AdrenalineServer.getMainController().getActiveturn().getActivePlayer()) ;
+        AdrenalineServer.getMainController().getActiveturn().getActionManager().getShootManager().inflictDamage(targetList, damage);
+        AdrenalineServer.getMainController().getActiveturn().getActionManager().getShootManager().moveOpponent(targetList);
     }
     private void secondaryEffect(){
         /** optional attack (before or after basic attack)
@@ -33,11 +32,11 @@ public class GrenadeLauncherManager {
          *
          */
         char damage[] = new char[1];
-        damage [0] = Adrenaline.getMainController().getActiveturn().getActivePlayer().getFigure().getColor();
+        damage [0] = AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getFigure().getColor();
         ArrayList<Player> targetList = new ArrayList<>();
         //TODO è una toppa, in attesa di input
-        targetList = Adrenaline.getMainController().getActiveturn().getActivePlayer().getFigure().getCell().getPlayers();
-        Adrenaline.getMainController().getActiveturn().getActionManager().getShootManager().inflictDamage(targetList, damage);
+        targetList = AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getFigure().getCell().getPlayers();
+        AdrenalineServer.getMainController().getActiveturn().getActionManager().getShootManager().inflictDamage(targetList, damage);
     }
    
 }
