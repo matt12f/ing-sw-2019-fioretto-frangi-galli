@@ -1,5 +1,7 @@
 package it.polimi.se2019.controller;
 
+import it.polimi.se2019.AdrenalineServer;
+import it.polimi.se2019.enums.ActionType;
 import it.polimi.se2019.model.cards.AmmoTileCard;
 import it.polimi.se2019.model.cards.GunCard;
 import it.polimi.se2019.model.game.Cell;
@@ -13,8 +15,15 @@ public class ActionManager {
     public ActionManager(){
         this.shootManager=new ShootManager();
     }
-    public void actionStream(char[] actions){
+    public void actionStream(ActionType actions){
         //TODO scrivere metodo
+        switch(actions){
+            case NORMAL1: normal1Manager();
+            case NORMAL2: normal2Manager();
+            case NORMAL3: normal3Manager();
+            case FRENZY1: frenzy1Manager();
+            case FRENZY2: frenzy2Manager();
+        }
 
     }
     private void move(Player player){
@@ -79,6 +88,30 @@ public class ActionManager {
      * including the controlling cycle about the weapon player's hand
      */
     public void spawnDropManager(GunCard weapon){
+
+    }
+    private void normal1Manager(){
+
+    }
+    private void normal2Manager(){
+        if(AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getPlayerBoard().getActionTileNormal().getAdrenalineMode1()==false){
+
+        }else {
+
+        }
+
+    }
+    private void normal3Manager(){
+        if(AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getPlayerBoard().getActionTileNormal().getAdrenalineMode2()==false){
+
+        }else {
+
+        }
+    }
+    private void frenzy1Manager(){
+
+    }
+    private void frenzy2Manager(){
 
     }
 }
