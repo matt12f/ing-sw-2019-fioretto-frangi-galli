@@ -7,12 +7,12 @@ import java.util.ArrayList;
 
 public class SledgehammerManager {
 
-    public void action(){
+    public static void action(){
         //choose
         baseEffect();
         secondaryEffect();
     }
-    private void baseEffect(){
+    private static void baseEffect(){
         /**
          *  target: 1 (in your cell)
          *  damage: 2
@@ -27,7 +27,7 @@ public class SledgehammerManager {
         targetList.add(AdrenalineServer.getMainController().getActiveturn().getActivePlayer()) ;
         AdrenalineServer.getMainController().getActiveturn().getActionManager().getShootManager().inflictDamage(targetList, damage);
     }
-    private void secondaryEffect(){
+    private static void secondaryEffect(){
         /** alternative attack
          *  target: 1 (same as basic attack)
          *  damage: 3

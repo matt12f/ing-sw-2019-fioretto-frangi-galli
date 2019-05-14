@@ -7,12 +7,12 @@ import java.util.ArrayList;
 
 public class PlasmaGunManager {
 
-    public void action(){
+    public static void action(){
         //choose
         baseEffect();
         secondaryEffect();
     }
-    private void baseEffect(){
+    private static void baseEffect(){
         /** target: 1 (that you can see)
          *  damage: 2
          *
@@ -29,7 +29,7 @@ public class PlasmaGunManager {
 
         thirdEffect(targetList);
     }
-    private void secondaryEffect(){
+    private static void secondaryEffect(){
         /** optional attack (could be used before o after basic attack)
          *  target: yourself
          *  move: 1 or 2
@@ -39,7 +39,7 @@ public class PlasmaGunManager {
         AdrenalineServer.getMainController().getActiveturn().getActionManager().getShootManager().moveOpponent(targetList);
         //controllo se vuoi muoverti di una o 2 da fare in move?
     }
-    private void thirdEffect(ArrayList<Player> target){
+    private static void thirdEffect(ArrayList<Player> target){
         /** optional attack
          *  target: 1 (same as basic attack)
          *  damage: 1

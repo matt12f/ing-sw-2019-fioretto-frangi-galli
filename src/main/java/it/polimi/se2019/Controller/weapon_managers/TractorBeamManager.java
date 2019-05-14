@@ -7,12 +7,12 @@ import java.util.ArrayList;
 
 public class TractorBeamManager {
 
-    public void action(){
+    public static void action(){
         //choose
         baseEffect();
         secondaryEffect();
     }
-    private void baseEffect(){
+    private static void baseEffect(){
         /** target: 1 (you could not see him too)
          *  damage: 1
          *  move: 0,1,2 to a square you can see
@@ -27,7 +27,7 @@ public class TractorBeamManager {
 
         AdrenalineServer.getMainController().getActiveturn().getActionManager().getShootManager().moveOpponent(targetList);
     }
-    private void secondaryEffect(){
+    private static void secondaryEffect(){
         /** alternative attack
          * target: 1 (you could not see him too)
          *  damage: 3

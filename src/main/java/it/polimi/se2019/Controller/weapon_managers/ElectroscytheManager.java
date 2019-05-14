@@ -7,12 +7,12 @@ import java.util.ArrayList;
 
 public class ElectroscytheManager {
 
-    public void action(){
+    public static void action(){
         //determinare scelta
         baseEffect();
         secondaryEffect();
     }
-    private void baseEffect(){
+    private static void baseEffect(){
         /** target: every target in your square/cell
          *  damage: 1
          *
@@ -24,7 +24,7 @@ public class ElectroscytheManager {
         targetList = AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getFigure().getCell().getPlayers();
         AdrenalineServer.getMainController().getActiveturn().getActionManager().getShootManager().inflictDamage(targetList, damage);
     }
-    private void secondaryEffect(){
+    private static void secondaryEffect(){
         /** alternative attack
          * target: every target in your cell
          *  damage: 2

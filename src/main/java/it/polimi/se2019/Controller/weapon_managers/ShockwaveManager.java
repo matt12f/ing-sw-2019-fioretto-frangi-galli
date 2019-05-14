@@ -7,12 +7,12 @@ import java.util.ArrayList;
 
 public class ShockwaveManager {
 
-    public void action(){
+    public static void action(){
         //choose
         baseEffect();
         secondaryEffect();
     }
-    private void baseEffect(){
+    private static void baseEffect(){
         /** target: 3 (1 move away, every target in a different cell)
          *  damage: 1
          *
@@ -26,7 +26,7 @@ public class ShockwaveManager {
         targetList.add(AdrenalineServer.getMainController().getActiveturn().getActivePlayer()) ;
         AdrenalineServer.getMainController().getActiveturn().getActionManager().getShootManager().inflictDamage(targetList, damage);
     }
-    private void secondaryEffect(){
+    private static void secondaryEffect(){
         /** alternative attack
          * target: cell (every cell 1 move away)
          *  damage: 1

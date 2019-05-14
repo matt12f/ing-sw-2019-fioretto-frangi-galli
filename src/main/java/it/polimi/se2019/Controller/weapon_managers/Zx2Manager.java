@@ -7,11 +7,11 @@ import java.util.ArrayList;
 
 public class Zx2Manager {
 
-    public void action(){
+    public static void action(){
         baseEffect();
         secondaryEffect();
     }
-    private void baseEffect(){
+    private static void baseEffect(){
         /** target: 1 (that you can see)
          *  damage: 1
          *  marker: 2
@@ -28,7 +28,7 @@ public class Zx2Manager {
         mark [1] = AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getFigure().getColor();
         AdrenalineServer.getMainController().getActiveturn().getActionManager().getShootManager().appointMarker(targetList, mark);
     }
-    private void secondaryEffect(){
+    private static void secondaryEffect(){
         /** target: 3 (that you can see)
          *  marker: 1
          */

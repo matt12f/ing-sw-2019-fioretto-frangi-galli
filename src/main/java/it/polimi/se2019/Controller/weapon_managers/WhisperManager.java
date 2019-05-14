@@ -7,10 +7,10 @@ import java.util.ArrayList;
 
 public class WhisperManager {
 
-    public void action(){
+    public static void action(){
         baseEffect();
     }
-    private void baseEffect(){
+    private static void baseEffect(){
         /** target: 1 (thet you can see, but at LEAST 2 moves away from you)
          *  damage: 3
          *  marker: 1

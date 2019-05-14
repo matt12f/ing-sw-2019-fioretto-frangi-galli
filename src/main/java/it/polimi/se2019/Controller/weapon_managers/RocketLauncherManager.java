@@ -7,13 +7,13 @@ import java.util.ArrayList;
 
 public class RocketLauncherManager {
 
-    public void action(){
+    public static void action(){
         //choose
         baseEffect();
         secondaryEffect();
 
     }
-    private void baseEffect(){
+    private static void baseEffect(){
         /** target: 1 (that you can see but NOT in your square)
          *  damage: 2
          *  move: 1 (if you want)
@@ -33,7 +33,7 @@ public class RocketLauncherManager {
         //controllo
         thirdEffect(targetList);
     }
-    private void secondaryEffect(){
+    private static void secondaryEffect(){
         /** optional attack , after o before basic attack
          * target: yourself
          *
@@ -44,7 +44,7 @@ public class RocketLauncherManager {
         targetList.add(AdrenalineServer.getMainController().getActiveturn().getActivePlayer()) ;
         AdrenalineServer.getMainController().getActiveturn().getActionManager().getShootManager().moveOpponent(targetList);
     }
-    private void thirdEffect(ArrayList<Player> targetFirst){
+    private static void thirdEffect(ArrayList<Player> targetFirst){
         /** target: cell (in the cell of target, including the target)
          *  damage: 1
          *

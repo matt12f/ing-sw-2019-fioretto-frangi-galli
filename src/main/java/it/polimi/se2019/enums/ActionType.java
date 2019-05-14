@@ -5,5 +5,8 @@ public enum ActionType {
     NORMAL2,
     NORMAL3,
     FRENZY1,
-    FRENZY2
+    FRENZY2,
+    FRENZY3,
+    FRENZY4,
+    FRENZY5
 }

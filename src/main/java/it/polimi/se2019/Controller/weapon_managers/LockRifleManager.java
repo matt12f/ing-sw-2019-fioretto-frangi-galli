@@ -7,12 +7,12 @@ import java.util.ArrayList;
 
 public class LockRifleManager {
 
-    public void action(){
+    public static void action(){
         //choose
         baseEffect();
         secondaryEffect();
     }
-    private void baseEffect(){
+    private static void baseEffect(){
         /** target: 1 (that you can see)
          *  damage: 1
          *  marker: 1
@@ -27,7 +27,7 @@ public class LockRifleManager {
         targetList = AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getFigure().getCell().getPlayers();
         AdrenalineServer.getMainController().getActiveturn().getActionManager().getShootManager().appointMarker(targetList, damage);
     }
-    private void secondaryEffect(){
+    private static void secondaryEffect(){
         /** optional attack
          *  target: 1 (different from the one of base effect)
          *

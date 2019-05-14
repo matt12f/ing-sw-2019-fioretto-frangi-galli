@@ -7,13 +7,13 @@ import java.util.ArrayList;
 
 public class PowergloveManager {
 
-    public void action(){
+    public static void action(){
 
         //choose
         baseEffect();
         secondaryEffect();
     }
-    private void baseEffect(){
+    private static void baseEffect(){
         /** target: 1 (1 move away)
          *  damage: 1
          *  move: 1 (yourself)
@@ -34,7 +34,7 @@ public class PowergloveManager {
         targetList.add(AdrenalineServer.getMainController().getActiveturn().getActivePlayer()) ;
         AdrenalineServer.getMainController().getActiveturn().getActionManager().getShootManager().moveOpponent(targetList);
     }
-    private void secondaryEffect(){
+    private static void secondaryEffect(){
         /** alternative attack
          *  target: 2 (1 target 1 move away from you, 2 target 1 move away from the first and in the same line, but the second is optional)
          *  damage: 2

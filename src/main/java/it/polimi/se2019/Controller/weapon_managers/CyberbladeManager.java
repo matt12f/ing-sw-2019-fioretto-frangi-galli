@@ -7,13 +7,13 @@ import java.util.ArrayList;
 
 public class CyberbladeManager {
 
-    public void action(){
+    public static void action(){
 
         baseEffect();
         secondaryEffect();
         thirdEffect();
     }
-    private void baseEffect(){
+    private static void baseEffect(){
         /**
          *  target: 1 (in your cell)
          *  damage: 2
@@ -28,7 +28,7 @@ public class CyberbladeManager {
         targetList.add(AdrenalineServer.getMainController().getActiveturn().getActivePlayer());
         AdrenalineServer.getMainController().getActiveturn().getActionManager().getShootManager().inflictDamage(targetList, damage);
     }
-    private void secondaryEffect(){
+    private static void secondaryEffect(){
         /** optional attack before or after any attack
          *  target: you
          *  move: 1
@@ -38,7 +38,7 @@ public class CyberbladeManager {
         targetList.add(AdrenalineServer.getMainController().getActiveturn().getActivePlayer()) ;
         AdrenalineServer.getMainController().getActiveturn().getActionManager().getShootManager().moveOpponent(targetList);
     }
-    private void thirdEffect(){
+    private static void thirdEffect(){
         /** optional attack
          *  target: 1 (another one, but in your cell)
          *  damage: 2

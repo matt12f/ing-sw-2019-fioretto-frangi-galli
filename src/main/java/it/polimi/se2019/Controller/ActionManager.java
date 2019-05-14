@@ -1,9 +1,9 @@
 package it.polimi.se2019.controller;
 
 import it.polimi.se2019.AdrenalineServer;
+import it.polimi.se2019.controller.weapon_managers.*;
 import it.polimi.se2019.enums.ActionType;
-import it.polimi.se2019.model.cards.AmmoTileCard;
-import it.polimi.se2019.model.cards.GunCard;
+import it.polimi.se2019.model.cards.*;
 import it.polimi.se2019.model.game.Cell;
 import it.polimi.se2019.model.game.DropCell;
 import it.polimi.se2019.model.game.Player;
@@ -23,6 +23,9 @@ public class ActionManager {
             case NORMAL3: normal3Manager();
             case FRENZY1: frenzy1Manager();
             case FRENZY2: frenzy2Manager();
+            case FRENZY3: frenzy3Manager();
+            case FRENZY4: frenzy4Manager();
+            case FRENZY5: frenzy5Manager();
         }
 
     }
@@ -42,7 +45,54 @@ public class ActionManager {
     private void shoot(GunCard weapon){
         //TODO Risolvere la questione associazione arma model - arma controller
         if(weapon.getLoaded()){
+            String weaponclass = weapon.getClass().toString();
             //far partire la action flow dell'arma
+            switch (weaponclass){
+                case "Cyberblade":
+                    CyberbladeManager.action();
+                case "Electroscytthe":
+                    ElectroscytheManager.action();
+                case "FlameThrower":
+                    FlamethrowerManager.action();
+                case "Furnace":
+                    FurnaceManager.action();
+                case "GrenadeLauncher":
+                    GrenadeLauncherManager.action();
+                case "Heatseeker":
+                    HeatseekerManager.action();
+                case "Hellion":
+                    HellionManager.action();
+                case "LockRifle":
+                    LockRifleManager.action();
+                case "MachineGun":
+                    MachinegunManager.action();
+                case "PlasmaGun":
+                    PlasmaGunManager.action();
+                case "PowerGlove":
+                    PowergloveManager.action();
+                case "Railgun":
+                    RailgunManager.action();
+                case "RocketLauncher":
+                    RocketLauncherManager.action();
+                case "Shockwave":
+                    ShockwaveManager.action();
+                case "Shotgun":
+                    ShotgunManager.action();
+                case "Sledgehammer":
+                    SledgehammerManager.action();
+                case "Thor":
+                    ThorManager.action();
+                case "TractorBeam":
+                    TractorBeamManager.action();
+                case "VortexCannon":
+                    VortexCannonManager.action();
+                case "Whisper":
+                    WhisperManager.action();
+                case "Zx2":
+                    Zx2Manager.action();
+
+            }
+
         }
 
     }
@@ -91,27 +141,47 @@ public class ActionManager {
 
     }
     private void normal1Manager(){
-
+        //mmm
+        boolean stop =false;
+        do{
+            move(AdrenalineServer.getMainController().getActiveturn().getActivePlayer());
+        }while(!stop);
     }
     private void normal2Manager(){
+        boolean stop =false;
         if(AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getPlayerBoard().getActionTileNormal().getAdrenalineMode1()==false){
-
+            //mg
+            move(AdrenalineServer.getMainController().getActiveturn().getActivePlayer());
+            grab(AdrenalineServer.getMainController().getActiveturn().getActivePlayer(), AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getFigure().getCell());
         }else {
-
+            //mmg
+            do{
+                move(AdrenalineServer.getMainController().getActiveturn().getActivePlayer());
+            }while(!stop);
         }
 
     }
     private void normal3Manager(){
         if(AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getPlayerBoard().getActionTileNormal().getAdrenalineMode2()==false){
-
+            //s
         }else {
-
+            //ms
+            move(AdrenalineServer.getMainController().getActiveturn().getActivePlayer());
         }
     }
     private void frenzy1Manager(){
 
     }
     private void frenzy2Manager(){
+
+    }
+    private void frenzy3Manager(){
+
+    }
+    private void frenzy4Manager(){
+
+    }
+    private void frenzy5Manager(){
 
     }
 }
