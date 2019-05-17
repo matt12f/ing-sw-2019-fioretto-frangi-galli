@@ -1,0 +1,135 @@
+{
+  "rooms": [
+    {
+      "color": "RED",
+      "players": []
+    },
+    {
+      "color": "YELLOW",
+      "players": []
+    },
+    {
+      "color": "BLUE",
+      "players": []
+    },
+    {
+      "color": "WHITE",
+      "players": []
+    },
+    {
+      "color": "GREEN",
+      "players": []
+    },
+    {
+      "color": "VIOLET",
+      "players": []
+    }
+  ],
+  "boardMatrix": [
+    [
+      {
+        "color": "RED",
+        "players": [],
+        "top": "WALL",
+        "bottom": "ROOM",
+        "left": "WALL",
+        "right": "DOOR"
+      },
+      {
+        "color": "BLUE",
+        "players": [],
+        "top": "WALL",
+        "bottom": "WALL",
+        "left": "DOOR",
+        "right": "ROOM"
+      },
+      {
+        "weaponCards": [],
+        "color": "BLUE",
+        "players": [],
+        "top": "WALL",
+        "bottom": "DOOR",
+        "left": "ROOM",
+        "right": "DOOR"
+      },
+      {
+        "color": "GREEN",
+        "players": [],
+        "top": "WALL",
+        "bottom": "DOOR",
+        "left": "DOOR",
+        "right": "WALL"
+      }
+    ],
+    [
+      {
+        "weaponCards": [],
+        "color": "RED",
+        "players": [],
+        "top": "ROOM",
+        "bottom": "DOOR",
+        "left": "WALL",
+        "right": "WALL"
+      },
+      {
+        "color": "VIOLET",
+        "players": [],
+        "top": "DOOR",
+        "bottom": "DOOR",
+        "left": "WALL",
+        "right": "WALL"
+      },
+      {
+        "color": "YELLOW",
+        "players": [],
+        "top": "DOOR",
+        "bottom": "ROOM",
+        "left": "WALL",
+        "right": "ROOM"
+      },
+      {
+        "color": "YELLOW",
+        "players": [],
+        "top": "DOOR",
+        "bottom": "ROOM",
+        "left": "ROOM",
+        "right": "WALL"
+      }
+    ],
+    [
+      {
+        "color": "WHITE",
+        "players": [],
+        "top": "DOOR",
+        "bottom": "WALL",
+        "left": "WALL",
+        "right": "ROOM"
+      },
+      {
+        "color": "WHITE",
+        "players": [],
+        "top": "DOOR",
+        "bottom": "WALL",
+        "left": "ROOM",
+        "right": "DOOR"
+      },
+      {
+        "color": "YELLOW",
+        "players": [],
+        "top": "ROOM",
+        "bottom": "WALL",
+        "left": "DOOR",
+        "right": "ROOM"
+      },
+      {
+        "weaponCards": [],
+        "color": "YELLOW",
+        "players": [],
+        "top": "ROOM",
+        "bottom": "WALL",
+        "left": "ROOM",
+        "right": "WALL"
+      }
+    ]
+  ]
+}

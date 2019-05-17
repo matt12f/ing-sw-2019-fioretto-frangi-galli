@@ -1,9 +1,13 @@
 package it.polimi.se2019.test_model.test_game;
 
-import it.polimi.se2019.model.game.Cell;
-import it.polimi.se2019.model.game.Map;
-import it.polimi.se2019.model.game.Room;
+
+import com.google.gson.Gson;
+import it.polimi.se2019.enums.Color;
+import it.polimi.se2019.model.game.*;
 import org.junit.jupiter.api.Test;
+
+import java.io.FileWriter;
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,7 +17,7 @@ public class TestMap {
     @Test
     public void testGetBoardMatrix(){
         Map testMap=new Map(1);
-        Cell[][] testCellMatrix=testMap.getBoardMatrix();
+        NewCell[][] testCellMatrix=testMap.getBoardMatrix();
         assertNotNull(testCellMatrix);
     }
 
@@ -46,12 +50,35 @@ public class TestMap {
         assertNull(testMap.getRooms());
     }
 
-    private int countCells(Cell [][] boardMatrix){
+    private int countCells(NewCell [][] boardMatrix){
         int count=0;
         for(int i=0; i<boardMatrix.length;i++)
             for(int j=0;j<boardMatrix[i].length;j++)
                 if(boardMatrix[i][j]!=null)
                     count++;
         return count;
+    }
+
+    //TODO questo non è un test junit, è servito per tradurre gli oggetti map in json
+    @Test
+    public void testJson(){
+        NewCell [][] boardMatrix = new NewCell[3][4];
+        Room[] rooms = new Room[6];
+                rooms[0] = new Room(Color.RED);
+                rooms[1] = new Room(Color.YELLOW);
+                rooms[2] = new Room(Color.BLUE);
+                rooms[3] = new Room(Color.WHITE);
+                rooms[4] = new Room(Color.GREEN);
+                rooms[5] = new Room(null);
+                /**cells creation pattern  color top-bottom-left-right
+                 */
+
+                Map test=new Map(boardMatrix, rooms);
+        Gson gson = new Gson();
+        try {
+            gson.toJson(test, new FileWriter("src/main/JSONfiles/map1.json"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

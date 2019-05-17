@@ -1,131 +1,122 @@
 package it.polimi.se2019.model.game;
 
+import it.polimi.se2019.enums.CellEdge;
+import it.polimi.se2019.enums.CellType;
+import it.polimi.se2019.enums.Color;
+
 public class Map {
     private Room [] rooms;
-    private Cell [][]boardMatrix;
+    private NewCell [][]boardMatrix;
 
-    public Map(int config){
-        /**
-         * room standard: 1-red 2-yellow 3-blue 4-white 5-green 6-violet
-         */
-        this.boardMatrix = new Cell[3][4];
+    @Deprecated
+   public Map(int config){
+        //room standard: 1-red 2-yellow 3-blue 4-white 5-green 6-violet
+
+        this.boardMatrix = new NewCell[3][4];
         this.rooms = new Room[6];
         switch (config){
             case 1: //config with only 1 green cell
                 //room creation
-                this.rooms[0] = new Room('r');
-                this.rooms[1] = new Room('y');
-                this.rooms[2] = new Room('b');
-                this.rooms[3] = new Room('w');
-                this.rooms[4] = new Room('g');
-                this.rooms[5] = new Room('n');
-                /**cells creation pattern  color top-bottom-left-right
-                 * w=wall, d= door, r= room
-                 */
-                this.boardMatrix[0][0]= new DropCell(  'b',  'w', 'd',  'w',  'r');
-                this.boardMatrix[0][1]= new DropCell(  'b',  'w', 'w',  'r',  'r');
-                this.boardMatrix[0][2]= new SpawnCell(  'b',  'w', 'd',  'r',  'd');
-                this.boardMatrix[0][3]= new DropCell(  'g',  'w', 'd',  'd',  'w');
-                this.boardMatrix[1][0]= new SpawnCell(  'r',  'd', 'w',  'w',  'r');
-                this.boardMatrix[1][1]= new DropCell(  'r',  'w', 'd',  'r',  'w');
-                this.boardMatrix[1][2]= new DropCell(  'y',  'd', 'r',  'w',  'r');
-                this.boardMatrix[1][3]= new DropCell(  'y',  'd', 'r',  'r',  'w');
-                this.boardMatrix[2][1]= new DropCell(  'w',  'd', 'w',  'w',  'd');
-                this.boardMatrix[2][2]= new DropCell(  'y',  'r', 'w',  'd',  'r');
-                this.boardMatrix[2][3]= new SpawnCell(  'y',  'r', 'w',  'r',  'w');
+                this.rooms[0] = new Room(Color.RED);
+                this.rooms[1] = new Room(Color.YELLOW);
+                this.rooms[2] = new Room(Color.BLUE);
+                this.rooms[3] = new Room(Color.WHITE);
+                this.rooms[4] = new Room(Color.GREEN);
+                this.rooms[5] = new Room(null);
+                //cells creation pattern  color top-bottom-left-right
+
+                this.boardMatrix[0][0]= new NewCell(Color.BLUE,  CellEdge.WALL, CellEdge.DOOR,  CellEdge.WALL,  CellEdge.ROOM,CellType.DROP);
+                this.boardMatrix[0][1]= new NewCell(Color.BLUE,  CellEdge.WALL, CellEdge.WALL,  CellEdge.ROOM,  CellEdge.ROOM,CellType.DROP);
+                this.boardMatrix[0][2]= new NewCell(Color.BLUE,  CellEdge.WALL, CellEdge.DOOR,  CellEdge.ROOM,  CellEdge.DOOR,CellType.SPAWN);
+                this.boardMatrix[0][3]= new NewCell(Color.GREEN,  CellEdge.WALL, CellEdge.DOOR,  CellEdge.DOOR,  CellEdge.WALL,CellType.DROP);
+
+                this.boardMatrix[1][0]= new NewCell(Color.RED,  CellEdge.DOOR, CellEdge.WALL,  CellEdge.WALL,  CellEdge.ROOM,CellType.SPAWN);
+                this.boardMatrix[1][1]= new NewCell(Color.RED,  CellEdge.WALL, CellEdge.DOOR,  CellEdge.ROOM,  CellEdge.WALL,CellType.DROP);
+                this.boardMatrix[1][2]= new NewCell(Color.YELLOW,  CellEdge.DOOR, CellEdge.ROOM,  CellEdge.WALL,  CellEdge.ROOM,CellType.DROP);
+                this.boardMatrix[1][3]= new NewCell(Color.YELLOW,  CellEdge.DOOR, CellEdge.ROOM,  CellEdge.ROOM,  CellEdge.WALL,CellType.DROP);
+
+                this.boardMatrix[2][1]= new NewCell(Color.WHITE,  CellEdge.DOOR, CellEdge.WALL,  CellEdge.WALL,  CellEdge.DOOR,CellType.DROP);
+                this.boardMatrix[2][2]= new NewCell(Color.YELLOW,  CellEdge.ROOM, CellEdge.WALL,  CellEdge.DOOR,  CellEdge.ROOM,CellType.DROP);
+                this.boardMatrix[2][3]= new NewCell(Color.YELLOW,  CellEdge.ROOM, CellEdge.WALL,  CellEdge.ROOM,  CellEdge.WALL,CellType.SPAWN);
                 break;
             case 2: //config with  no special rooms
                 //room creation
-                rooms[0] = new Room('r');
-                rooms[1] = new Room('y');
-                rooms[2] = new Room('b');
-                rooms[3] = new Room('w');
-                rooms[4] = new Room('n');
-                rooms[5] = new Room('n');
+                this.rooms[0] = new Room(Color.RED);
+                this.rooms[1] = new Room(Color.YELLOW);
+                this.rooms[2] = new Room(Color.BLUE);
+                this.rooms[3] = new Room(Color.WHITE);
+                this.rooms[4] = new Room(null);
+                this.rooms[5] = new Room(null);
 
-                this.boardMatrix[0][0]= new DropCell(  'b',  'w', 'd',  'w',  'r');
-                this.boardMatrix[0][1]= new DropCell(  'b',  'w', 'w',  'r',  'r');
-                this.boardMatrix[0][2]= new SpawnCell(  'b',  'w', 'd',  'r',  'd');
-                this.boardMatrix[1][0]= new SpawnCell(  'r',  'd', 'w',  'w',  'r');
-                this.boardMatrix[1][1]= new DropCell(  'r',  'w', 'd',  'r',  'r');
-                this.boardMatrix[1][2]= new DropCell(  'r',  'w', 'w',  'r',  'd');
-                this.boardMatrix[1][3]= new DropCell(  'y',  'w', 'r',  'd',  'w');
-                this.boardMatrix[2][1]= new DropCell(  'w',  'd', 'w',  'w',  'r');
-                this.boardMatrix[2][2]= new DropCell(  'w',  'w', 'w',  'r',  'd');
-                this.boardMatrix[2][3]= new SpawnCell(  'y',  'r', 'w',  'd',  'w');
+                this.boardMatrix[0][0]= new NewCell(Color.BLUE,  CellEdge.WALL, CellEdge.DOOR,  CellEdge.WALL,  CellEdge.ROOM,CellType.DROP);
+                this.boardMatrix[0][1]= new NewCell(Color.BLUE,  CellEdge.WALL, CellEdge.WALL,  CellEdge.ROOM,  CellEdge.ROOM,CellType.DROP);
+                this.boardMatrix[0][2]= new NewCell(Color.BLUE,  CellEdge.WALL, CellEdge.DOOR,  CellEdge.ROOM,  CellEdge.DOOR,CellType.SPAWN);
+                this.boardMatrix[1][0]= new NewCell(Color.RED,  CellEdge.DOOR, CellEdge.WALL,  CellEdge.WALL,  CellEdge.ROOM,CellType.SPAWN);
+                this.boardMatrix[1][1]= new NewCell(Color.RED,  CellEdge.WALL, CellEdge.DOOR,  CellEdge.ROOM,  CellEdge.ROOM,CellType.DROP);
+                this.boardMatrix[1][2]= new NewCell(Color.RED,  CellEdge.WALL, CellEdge.WALL,  CellEdge.ROOM,  CellEdge.DOOR,CellType.DROP);
+                this.boardMatrix[1][3]= new NewCell(Color.YELLOW,  CellEdge.WALL, CellEdge.ROOM,  CellEdge.DOOR,  CellEdge.WALL,CellType.DROP);
+                this.boardMatrix[2][1]= new NewCell(Color.WHITE,  CellEdge.DOOR, CellEdge.WALL,  CellEdge.WALL,  CellEdge.ROOM,CellType.DROP);
+                this.boardMatrix[2][2]= new NewCell(Color.WHITE,  CellEdge.WALL, CellEdge.WALL,  CellEdge.ROOM,  CellEdge.DOOR,CellType.DROP);
+                this.boardMatrix[2][3]= new NewCell(Color.YELLOW,  CellEdge.ROOM, CellEdge.WALL,  CellEdge.DOOR,  CellEdge.WALL,CellType.SPAWN);
                 break;
             case 3: //config with green and violet cell
                 //room creation
-                rooms[0] = new Room('r');
-                rooms[1] = new Room('y');
-                rooms[2] = new Room('b');
-                rooms[3] = new Room('w');
-                rooms[4] = new Room('g');
-                rooms[5] = new Room('v');
+                rooms[0] = new Room(Color.RED);
+                rooms[1] = new Room(Color.YELLOW);
+                rooms[2] = new Room(Color.BLUE);
+                rooms[3] = new Room(Color.WHITE);
+                rooms[4] = new Room(Color.GREEN);
+                rooms[5] = new Room(Color.VIOLET);
 
-                this.boardMatrix[0][0]= new DropCell(  'r',  'w', 'r',  'w',  'd');
-                this.boardMatrix[0][1]= new DropCell(  'b',  'w', 'w',  'd',  'r');
-                this.boardMatrix[0][2]= new SpawnCell(  'b',  'w', 'd',  'r',  'd');
-                this.boardMatrix[0][3]= new DropCell(  'g',  'w', 'd',  'd',  'w');
-                this.boardMatrix[1][0]= new SpawnCell(  'r',  'r', 'd',  'w',  'w');
-                this.boardMatrix[1][1]= new DropCell(  'v',  'd', 'd',  'w',  'w');
-                this.boardMatrix[1][2]= new DropCell(  'y',  'd', 'r',  'w',  'r');
-                this.boardMatrix[1][3]= new DropCell(  'y',  'd', 'r',  'r',  'w');
-                this.boardMatrix[2][0]= new DropCell(  'w',  'd', 'w',  'w',  'r');
-                this.boardMatrix[2][1]= new DropCell(  'w',  'd', 'w',  'r',  'd');
-                this.boardMatrix[2][2]= new DropCell(  'y',  'r', 'w',  'd',  'r');
-                this.boardMatrix[2][3]= new SpawnCell( 'y',  'r', 'w',  'r',  'w');
+                this.boardMatrix[0][0]= new NewCell(Color.RED,  CellEdge.WALL, CellEdge.ROOM,  CellEdge.WALL,  CellEdge.DOOR,CellType.DROP);
+                this.boardMatrix[0][1]= new NewCell(Color.BLUE,  CellEdge.WALL, CellEdge.WALL,  CellEdge.DOOR,  CellEdge.ROOM,CellType.DROP);
+                this.boardMatrix[0][2]= new NewCell(Color.BLUE,  CellEdge.WALL, CellEdge.DOOR,  CellEdge.ROOM,  CellEdge.DOOR,CellType.SPAWN);
+                this.boardMatrix[0][3]= new NewCell(Color.GREEN,  CellEdge.WALL, CellEdge.DOOR,  CellEdge.DOOR,  CellEdge.WALL,CellType.DROP);
+                this.boardMatrix[1][0]= new NewCell(Color.RED,  CellEdge.ROOM, CellEdge.DOOR,  CellEdge.WALL,  CellEdge.WALL,CellType.SPAWN);
+                this.boardMatrix[1][1]= new NewCell(Color.VIOLET,  CellEdge.DOOR, CellEdge.DOOR,  CellEdge.WALL,  CellEdge.WALL,CellType.DROP);
+                this.boardMatrix[1][2]= new NewCell(Color.YELLOW,  CellEdge.DOOR, CellEdge.ROOM,  CellEdge.WALL,  CellEdge.ROOM,CellType.DROP);
+                this.boardMatrix[1][3]= new NewCell(Color.YELLOW,  CellEdge.DOOR, CellEdge.ROOM,  CellEdge.ROOM,  CellEdge.WALL,CellType.DROP);
+                this.boardMatrix[2][0]= new NewCell(Color.WHITE,  CellEdge.DOOR, CellEdge.WALL,  CellEdge.WALL,  CellEdge.ROOM,CellType.DROP);
+                this.boardMatrix[2][1]= new NewCell(Color.WHITE,  CellEdge.DOOR, CellEdge.WALL,  CellEdge.ROOM,  CellEdge.DOOR,CellType.DROP);
+                this.boardMatrix[2][2]= new NewCell(Color.YELLOW,  CellEdge.ROOM, CellEdge.WALL,  CellEdge.DOOR,  CellEdge.ROOM,CellType.DROP);
+                this.boardMatrix[2][3]= new NewCell( Color.YELLOW,  CellEdge.ROOM, CellEdge.WALL,  CellEdge.ROOM,  CellEdge.WALL,CellType.SPAWN);
 
                 break;
             case 4: //config with 2 violet cells
                 //room creation
-                rooms[0] = new Room('r');
-                rooms[1] = new Room('y');
-                rooms[2] = new Room('b');
-                rooms[3] = new Room('w');
-                rooms[4] = new Room('n');
-                rooms[5] = new Room('v');
+                rooms[0] = new Room(Color.RED);
+                rooms[1] = new Room(Color.YELLOW);
+                rooms[2] = new Room(Color.BLUE);
+                rooms[3] = new Room(Color.WHITE);
+                rooms[4] = new Room(null);
+                rooms[5] = new Room(Color.VIOLET);
 
-                this.boardMatrix[0][0]= new DropCell(  'r',  'w', 'r',  'w',  'd');
-                this.boardMatrix[0][1]= new DropCell( 'b',  'w', 'w',  'd',  'r');
-                this.boardMatrix[0][2]= new SpawnCell(  'b',  'w', 'd',  'r',  'w');
-                this.boardMatrix[1][0]= new SpawnCell(  'r',  'r', 'd',  'w',  'w');
-                this.boardMatrix[1][1]= new DropCell(  'v',  'd', 'd',  'w',  'r');
-                this.boardMatrix[1][2]= new DropCell(  'v',  'd', 'w',  'r',  'd');
-                this.boardMatrix[1][3]= new DropCell( 'y',  'w', 'r',  'd',  'w');
-                this.boardMatrix[2][0]= new DropCell(  'w',  'd', 'w',  'w',  'r');
-                this.boardMatrix[2][1]= new DropCell(  'w',  'd', 'w',  'r',  'r');
-                this.boardMatrix[2][2]= new DropCell(  'w',  'w', 'w',  'r',  'd');
-                this.boardMatrix[2][3]= new SpawnCell(  'y',  'r', 'w',  'd',  'w');
+                this.boardMatrix[0][0]= new NewCell(Color.RED,  CellEdge.WALL, CellEdge.ROOM,  CellEdge.WALL,  CellEdge.DOOR,CellType.DROP);
+                this.boardMatrix[0][1]= new NewCell( Color.BLUE,  CellEdge.WALL, CellEdge.WALL,  CellEdge.DOOR,  CellEdge.ROOM,CellType.DROP);
+                this.boardMatrix[0][2]= new NewCell(Color.BLUE,  CellEdge.WALL, CellEdge.DOOR,  CellEdge.ROOM,  CellEdge.WALL, CellType.SPAWN);
+                this.boardMatrix[1][0]= new NewCell(Color.RED,  CellEdge.ROOM, CellEdge.DOOR,  CellEdge.WALL,  CellEdge.WALL,CellType.SPAWN);
+                this.boardMatrix[1][1]= new NewCell(Color.VIOLET,  CellEdge.DOOR, CellEdge.DOOR,  CellEdge.WALL,  CellEdge.ROOM,CellType.DROP);
+                this.boardMatrix[1][2]= new NewCell(Color.VIOLET,  CellEdge.DOOR, CellEdge.WALL,  CellEdge.ROOM,  CellEdge.DOOR,CellType.DROP);
+                this.boardMatrix[1][3]= new NewCell( Color.YELLOW,  CellEdge.WALL, CellEdge.ROOM,  CellEdge.DOOR,  CellEdge.WALL,CellType.DROP);
+                this.boardMatrix[2][0]= new NewCell(Color.WHITE,  CellEdge.DOOR, CellEdge.WALL,  CellEdge.WALL,  CellEdge.ROOM,CellType.DROP);
+                this.boardMatrix[2][1]= new NewCell(Color.WHITE,  CellEdge.DOOR, CellEdge.WALL,  CellEdge.ROOM,  CellEdge.ROOM,CellType.DROP);
+                this.boardMatrix[2][2]= new NewCell(Color.WHITE,  CellEdge.WALL, CellEdge.WALL,  CellEdge.ROOM,  CellEdge.DOOR,CellType.DROP);
+                this.boardMatrix[2][3]= new NewCell(Color.YELLOW,  CellEdge.ROOM, CellEdge.WALL,  CellEdge.DOOR,  CellEdge.WALL,CellType.SPAWN);
                 break;
             default: this.boardMatrix=null; this.rooms=null;
                 break;
         }
     }
 
+    public Map(NewCell[][] board,Room[]rooms){
+        this.rooms=rooms;
+        this.boardMatrix=board;
+    }
     public Room[] getRooms() { return rooms; }
 
-    public Cell[][] getBoardMatrix(){
+    public NewCell[][] getBoardMatrix(){
             return boardMatrix;
     }
 
-    //TODO rivedere per evitare copiatura dal web
-    private String readFile(String filename) {
-        String result = "";
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(filename));
-            StringBuilder sb = new StringBuilder();
-            String line = br.readLine();
-            while (line != null) {
-                sb.append(line);
-                line = br.readLine();
-            }
-            result = sb.toString();
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
+}
 
-}
-}

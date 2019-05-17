@@ -1,7 +1,13 @@
 package it.polimi.se2019.model.game;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
 import it.polimi.se2019.view.modelChanged;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -26,7 +32,13 @@ public class GameModel extends Observable{
         this.gameNumberId=gameNumberId;
         this.playerList = playerList;
         this.gameMode = gameMode;
-        this.currentMap=new Map(mapNumber);
+
+        Gson gson = new Gson();
+        try(JsonReader reader = new JsonReader(new FileReader("src/main/JSONfiles/map"+mapNumber+".json"))){ //TODO da rivedere
+            this.currentMap=gson.fromJson(reader, Map.class);
+        }catch( IOException e){
+
+        }
         if(gameMode.equals("normal"))
             this.killshotTrack=new KillShotTrack();
         else if(gameMode.equals("turret"))

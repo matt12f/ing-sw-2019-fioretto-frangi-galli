@@ -3,11 +3,9 @@ package it.polimi.se2019.controller;
 import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.controller.weapon_managers.*;
 import it.polimi.se2019.enums.ActionType;
+import it.polimi.se2019.enums.CellType;
 import it.polimi.se2019.model.cards.*;
-import it.polimi.se2019.model.game.Cell;
-import it.polimi.se2019.model.game.DropCell;
-import it.polimi.se2019.model.game.Player;
-import it.polimi.se2019.model.game.SpawnCell;
+import it.polimi.se2019.model.game.*;
 
 public class ActionManager {
     private ShootManager shootManager;
@@ -33,11 +31,11 @@ public class ActionManager {
         //TODO scrivere metodo
 
     }
-    private void grab(Player player, Cell cell){
+    private void grab(Player player, NewCell cell){
         //TODO scrivere metodo
-        if (cell instanceof DropCell){
+        if (cell.getCellType().equals(CellType.DROP)){
 
-        }else if (cell instanceof SpawnCell){
+        }else if (cell.getCellType().equals(CellType.SPAWN)){
 
         }
         //NB le celle vuote si riempiono alla fine!!!!

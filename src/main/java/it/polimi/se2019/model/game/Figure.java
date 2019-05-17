@@ -2,7 +2,7 @@ package it.polimi.se2019.model.game;
 
 public class Figure {
     private char color;
-    private Cell currentCell;
+    private NewCell currentCell;
 
     public Figure(char color){
         this.color = color;
@@ -12,7 +12,7 @@ public class Figure {
         return color;
     }
 
-    public Cell getCell() {
+    public NewCell getCell() {
         return currentCell;
     }
 
@@ -21,7 +21,7 @@ public class Figure {
      * and when it respawns after a player's death
      * @param currentCell
      */
-    public void setCell(Cell currentCell) {
+    public void setCell(NewCell currentCell) {
         this.currentCell = currentCell;
     }
 

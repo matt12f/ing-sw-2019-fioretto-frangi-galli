@@ -26,6 +26,7 @@ public class CyberBlade extends GunCard {
         this.thirdEffectCost = new char[1];
         thirdEffectCost[0] = 'y';
     }
+
     /**
      * @return
      */
