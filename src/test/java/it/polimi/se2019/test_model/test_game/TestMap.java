@@ -2,12 +2,10 @@ package it.polimi.se2019.test_model.test_game;
 
 
 import com.google.gson.Gson;
-import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.model.game.*;
 import org.junit.jupiter.api.Test;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,38 +14,70 @@ public class TestMap {
 
     @Test
     public void testGetBoardMatrix(){
-        Map testMap=new Map(1);
+        Map testMap=null;
+        try {
+            testMap = createMap(1);
+        } catch (FileNotFoundException e) {
+            //nothing to see here
+        }
         NewCell[][] testCellMatrix=testMap.getBoardMatrix();
         assertNotNull(testCellMatrix);
     }
 
     @Test
     public void testGetRoom(){
-        Map testMap=new Map(2);
-        Room[] testRoom=testMap.getRooms();
+        Map testMap=null;
+        try {
+            testMap = createMap(2);
+        } catch (FileNotFoundException e) {
+            //nothing to see here
+        }        Room[] testRoom=testMap.getRooms();
         assertNotNull(testRoom);
     }
     @Test
     public void testMap(){
-        Map testMap=new Map(1);
+        Map testMap=null;
+        try {
+            testMap = createMap(1);
+        } catch (FileNotFoundException e) {
+            //nothing to see here
+        }
         assertEquals(6,testMap.getRooms().length);
         assertEquals(11,countCells(testMap.getBoardMatrix()));
 
-        testMap=new Map(2);
+        testMap=null;
+        try {
+            testMap = createMap(2);
+        } catch (FileNotFoundException e) {
+            //nothing to see here
+        }
         assertEquals(6,testMap.getRooms().length);
         assertEquals(10,countCells(testMap.getBoardMatrix()));
 
-        testMap=new Map(3);
+        testMap=null;
+        try {
+            testMap = createMap(3);
+        } catch (FileNotFoundException e) {
+            //nothing to see here
+        }
         assertEquals(6,testMap.getRooms().length);
         assertEquals(12,countCells(testMap.getBoardMatrix()));
 
-        testMap=new Map(4);
+        testMap=null;
+        try {
+            testMap = createMap(4);
+        } catch (FileNotFoundException e) {
+            //nothing to see here
+        }
         assertEquals(6,testMap.getRooms().length);
         assertEquals(11,countCells(testMap.getBoardMatrix()));
 
-        testMap=new Map(5);
-        assertNull(testMap.getBoardMatrix());
-        assertNull(testMap.getRooms());
+    }
+
+    private Map createMap(int config)throws FileNotFoundException {
+        Gson gson = new Gson();
+        Reader reader = new FileReader("src/main/JSONfiles/map"+config+".json");
+        return gson.fromJson(reader, Map.class);
     }
 
     private int countCells(NewCell [][] boardMatrix){
@@ -59,26 +89,4 @@ public class TestMap {
         return count;
     }
 
-    //TODO questo non è un test junit, è servito per tradurre gli oggetti map in json
-    @Test
-    public void testJson(){
-        NewCell [][] boardMatrix = new NewCell[3][4];
-        Room[] rooms = new Room[6];
-                rooms[0] = new Room(Color.RED);
-                rooms[1] = new Room(Color.YELLOW);
-                rooms[2] = new Room(Color.BLUE);
-                rooms[3] = new Room(Color.WHITE);
-                rooms[4] = new Room(Color.GREEN);
-                rooms[5] = new Room(null);
-                /**cells creation pattern  color top-bottom-left-right
-                 */
-
-                Map test=new Map(boardMatrix, rooms);
-        Gson gson = new Gson();
-        try {
-            gson.toJson(test, new FileWriter("src/main/JSONfiles/map1.json"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

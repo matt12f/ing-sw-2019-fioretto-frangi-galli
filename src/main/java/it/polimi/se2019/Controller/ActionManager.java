@@ -16,14 +16,14 @@ public class ActionManager {
     public void actionStream(ActionType actions){
         //TODO scrivere metodo
         switch(actions){
-            case NORMAL1: normal1Manager();
-            case NORMAL2: normal2Manager();
-            case NORMAL3: normal3Manager();
-            case FRENZY1: frenzy1Manager();
-            case FRENZY2: frenzy2Manager();
-            case FRENZY3: frenzy3Manager();
-            case FRENZY4: frenzy4Manager();
-            case FRENZY5: frenzy5Manager();
+            case NORMAL1: normal1Manager();break;
+            case NORMAL2: normal2Manager();break;
+            case NORMAL3: normal3Manager();break;
+            case FRENZY1: frenzy1Manager();break;
+            case FRENZY2: frenzy2Manager();break;
+            case FRENZY3: frenzy3Manager();break;
+            case FRENZY4: frenzy4Manager();break;
+            case FRENZY5: frenzy5Manager();break;
         }
 
     }
@@ -47,47 +47,47 @@ public class ActionManager {
             //far partire la action flow dell'arma
             switch (weaponclass){
                 case "Cyberblade":
-                    CyberbladeManager.action();
+                    CyberbladeManager.action();break;
                 case "Electroscytthe":
-                    ElectroscytheManager.action();
+                    ElectroscytheManager.action();break;
                 case "FlameThrower":
-                    FlamethrowerManager.action();
+                    FlamethrowerManager.action();break;
                 case "Furnace":
-                    FurnaceManager.action();
+                    FurnaceManager.action();break;
                 case "GrenadeLauncher":
-                    GrenadeLauncherManager.action();
+                    GrenadeLauncherManager.action();break;
                 case "Heatseeker":
-                    HeatseekerManager.action();
+                    HeatseekerManager.action();break;
                 case "Hellion":
-                    HellionManager.action();
+                    HellionManager.action();break;
                 case "LockRifle":
-                    LockRifleManager.action();
+                    LockRifleManager.action();break;
                 case "MachineGun":
-                    MachinegunManager.action();
+                    MachinegunManager.action();break;
                 case "PlasmaGun":
-                    PlasmaGunManager.action();
+                    PlasmaGunManager.action();break;
                 case "PowerGlove":
-                    PowergloveManager.action();
+                    PowergloveManager.action();break;
                 case "Railgun":
-                    RailgunManager.action();
+                    RailgunManager.action();break;
                 case "RocketLauncher":
-                    RocketLauncherManager.action();
+                    RocketLauncherManager.action();break;
                 case "Shockwave":
-                    ShockwaveManager.action();
+                    ShockwaveManager.action();break;
                 case "Shotgun":
-                    ShotgunManager.action();
+                    ShotgunManager.action();break;
                 case "Sledgehammer":
-                    SledgehammerManager.action();
+                    SledgehammerManager.action();break;
                 case "Thor":
-                    ThorManager.action();
+                    ThorManager.action();break;
                 case "TractorBeam":
-                    TractorBeamManager.action();
+                    TractorBeamManager.action();break;
                 case "VortexCannon":
-                    VortexCannonManager.action();
+                    VortexCannonManager.action();break;
                 case "Whisper":
-                    WhisperManager.action();
+                    WhisperManager.action();break;
                 case "Zx2":
-                    Zx2Manager.action();
+                    Zx2Manager.action();break;
 
             }
 

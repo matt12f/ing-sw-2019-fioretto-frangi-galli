@@ -27,6 +27,7 @@
   "boardMatrix": [
     [
       {
+        "cellType": "DROP",
         "color": "RED",
         "players": [],
         "top": "WALL",
@@ -35,6 +36,7 @@
         "right": "DOOR"
       },
       {
+        "cellType": "DROP",
         "color": "BLUE",
         "players": [],
         "top": "WALL",
@@ -43,27 +45,30 @@
         "right": "ROOM"
       },
       {
-        "weaponCards": [],
+        "cellType": "SPAWN",
         "color": "BLUE",
         "players": [],
         "top": "WALL",
         "bottom": "DOOR",
         "left": "ROOM",
-        "right": "WALL"
+        "right": "WALL",
+        "weaponCards": []
       },
       null
     ],
     [
       {
-        "weaponCards": [],
+        "cellType": "SPAWN",
         "color": "RED",
         "players": [],
         "top": "ROOM",
         "bottom": "DOOR",
         "left": "WALL",
-        "right": "WALL"
+        "right": "WALL",
+        "weaponCards": []
       },
       {
+        "cellType": "DROP",
         "color": "VIOLET",
         "players": [],
         "top": "DOOR",
@@ -72,6 +77,7 @@
         "right": "ROOM"
       },
       {
+        "cellType": "DROP",
         "color": "VIOLET",
         "players": [],
         "top": "DOOR",
@@ -80,6 +86,7 @@
         "right": "DOOR"
       },
       {
+        "cellType": "DROP",
         "color": "YELLOW",
         "players": [],
         "top": "WALL",
@@ -90,6 +97,7 @@
     ],
     [
       {
+        "cellType": "DROP",
         "color": "WHITE",
         "players": [],
         "top": "DOOR",
@@ -98,6 +106,7 @@
         "right": "ROOM"
       },
       {
+        "cellType": "DROP",
         "color": "WHITE",
         "players": [],
         "top": "DOOR",
@@ -106,6 +115,7 @@
         "right": "ROOM"
       },
       {
+        "cellType": "DROP",
         "color": "WHITE",
         "players": [],
         "top": "WALL",
@@ -114,13 +124,14 @@
         "right": "DOOR"
       },
       {
-        "weaponCards": [],
+        "cellType": "SPAWN",
         "color": "YELLOW",
         "players": [],
         "top": "ROOM",
         "bottom": "WALL",
         "left": "DOOR",
-        "right": "WALL"
+        "right": "WALL",
+        "weaponCards": []
       }
     ]
   ]

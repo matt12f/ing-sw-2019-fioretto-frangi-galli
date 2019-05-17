@@ -124,5 +124,4 @@ public class NewCell {
         return temp;
     }
 
-
 }
