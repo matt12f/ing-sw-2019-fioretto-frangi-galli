@@ -1,20 +1,11 @@
 package it.polimi.se2019.model.cards;
 
-public class VortexCannon extends GunCard {
-
-    private int numberOfOptional;
-    private boolean hasAlternativeEffect;
-
-    private char [] secondaryEffectCost ;
-
-
+public class VortexCannon extends GunCardAddEff {
     /**
-     * constructor
+     * hard-coded constructor
      */
     public VortexCannon() {
         this.numberOfOptional = 1;
-        this.hasAlternativeEffect = false;
-
         this.ammoCost = new char[2];
         ammoCost[0]= 'b';
         ammoCost[1]= 'b';
@@ -28,27 +19,6 @@ public class VortexCannon extends GunCard {
 
         this.secondaryEffectCost = new char[1];
         secondaryEffectCost[0] = 'r';
+        this.thirdEffectCost=null;
     }
-    /**
-     * @return
-     */
-    public boolean getHasAlternativeEffect() {
-        return hasAlternativeEffect;
-    }
-    /**
-     * @return
-     */
-    public int getNumberOfOptional() {
-        return numberOfOptional;
-    }
-
-    /**
-     * @return
-     */
-    public char[] getSecondaryEffectCost() {
-        return  secondaryEffectCost;
-    }
-
-
-
 }

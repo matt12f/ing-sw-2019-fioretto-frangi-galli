@@ -1,19 +1,10 @@
 package it.polimi.se2019.model.cards;
 
-public class TractorBeam extends GunCard {
-
-
-    private boolean hasAlternativeEffect;
-    private char[] secondaryEffectCost;
-
-
-
+public class TractorBeam extends GunCardAltEff {
     /**
-     * constructor
+     * hard-coded constructor
      */
     public TractorBeam() {
-        this.hasAlternativeEffect = true;
-
         this.ammoCost = new char[1];
         ammoCost[0]= 'b';
         this.description ="basic mode: Move a target 0, 1, or 2 squares to a square\n" +
@@ -26,18 +17,4 @@ public class TractorBeam extends GunCard {
         secondaryEffectCost[0] = 'r';
         secondaryEffectCost[1] = 'y';
     }
-    /**
-     * @return
-     */
-    public boolean getHasAlternativeEffect() {
-        return hasAlternativeEffect;
-    }
-
-    /**
-     * @return
-     */
-    public char[] getSecondaryEffectCost() {
-        return secondaryEffectCost;
-    }
-
 }
