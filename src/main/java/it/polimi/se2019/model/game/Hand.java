@@ -74,8 +74,8 @@ public class Hand {
         int i=0;
         boolean substituted=false;
         while(!substituted && i<MAXCARDS){
-            if(this.guns[i]==discarded) {
-                this.guns[i]=newGunCard;
+            if(this.guns[i] == discarded) {
+                this.guns[i] = newGunCard;
                 substituted = true;
             }
             else i++;
