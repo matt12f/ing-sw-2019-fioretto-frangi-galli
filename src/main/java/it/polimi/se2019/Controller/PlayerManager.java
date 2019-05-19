@@ -4,7 +4,6 @@ import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.model.cards.GunCard;
 import it.polimi.se2019.model.cards.PowerupCard;
 import it.polimi.se2019.model.game.NewCell;
-import it.polimi.se2019.model.game.GameModel;
 import it.polimi.se2019.model.game.Player;
 
 
@@ -66,7 +65,7 @@ public class PlayerManager {
 
 
                // player.getPlayerBoard().getHand().substitutionGunCard(temp[0],((SpawnCell) cell).pickItem(pick) );
-                //((SpawnCell) cell).setItem(temp[0]);
+                //(cell).setItem(temp[0]);
 
             }else{
 

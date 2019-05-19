@@ -3,8 +3,6 @@ package it.polimi.se2019.view;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-import java.lang.Object;
-import it.polimi.se2019.model.*;
 import it.polimi.se2019.model.game.*;
 
 public class LocalView  extends View implements Observer {

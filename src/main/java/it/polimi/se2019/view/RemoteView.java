@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Observer;
 import java.util.Observable;
 
-
 public class RemoteView  extends View implements RMIInterface {
     private ArrayList<PlayerBoardView> playerBoardViews;
     private MapView mapView;
