@@ -7,12 +7,12 @@ import java.util.ArrayList;
 
 public class ShotgunManager {
 
-    public void action(){
+    public static void action(){
         //choose
         baseEffect();
         secondaryEffect();
     }
-    private void baseEffect(){
+    private static void baseEffect(){
         /** target: 1 (in your square)
          *  damage: 3
          *  move: 1 (if you want)
@@ -32,7 +32,7 @@ public class ShotgunManager {
         targetList.add(AdrenalineServer.getMainController().getActiveturn().getActivePlayer());
         AdrenalineServer.getMainController().getActiveturn().getActionManager().getShootManager().moveOpponent(targetList);
     }
-    private void secondaryEffect(){
+    private static void secondaryEffect(){
         /** alternative effect
          *  target: 1 (1 move away)
          *  damage: 2

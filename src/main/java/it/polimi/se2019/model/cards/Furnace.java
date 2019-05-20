@@ -1,18 +1,10 @@
 package it.polimi.se2019.model.cards;
 
-public class Furnace extends GunCard {
-
-
-    private boolean hasAlternativeEffect;
-    private char[] secondaryEffectCost;
-
-
-
+public class Furnace extends GunCardAltEff {
     /**
-     * constructor
+     * hard-coded constructor
      */
     public Furnace() {
-        this.hasAlternativeEffect = true;
         this.ammoCost = new char[2];
         ammoCost[0]= 'r';
         ammoCost[1]= 'b';
@@ -25,19 +17,4 @@ public class Furnace extends GunCard {
         secondaryEffectCost[0] = 'n';
 
     }
-    /**
-     * @return
-     */
-    public boolean getHasAlternativeEffect() {
-        return hasAlternativeEffect;
-    }
-
-    /**
-     * @return
-     */
-    public char[] getSecondaryEffectCost() {
-        return secondaryEffectCost;
-    }
-
-
 }

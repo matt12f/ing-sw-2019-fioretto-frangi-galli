@@ -1,16 +1,11 @@
 package it.polimi.se2019.model.cards;
 
-public class CyberBlade extends GunCard {
-
-    private int numberOfOptional;
-    private boolean hasAlternativeEffect ;
-
-    private char[] secondaryEffectCost;
-    private char[] thirdEffectCost;
-
+public class CyberBlade extends GunCardAddEff {
+    /**
+     * hard-coded constructor
+     */
     public CyberBlade() {
         this.numberOfOptional = 2;
-        this.hasAlternativeEffect = false;
 
         this.ammoCost = new char[2];
         ammoCost[0]= 'y';
@@ -26,35 +21,4 @@ public class CyberBlade extends GunCard {
         this.thirdEffectCost = new char[1];
         thirdEffectCost[0] = 'y';
     }
-    /**
-     * @return
-     */
-    public boolean getHasAlternativeEffect() {
-
-        return hasAlternativeEffect;
-    }
-    /**
-     * @return
-     */
-    public int getNumberOfOptional() {
-        return numberOfOptional;
-    }
-
-
-    /**
-     * @return
-     */
-    public char[] getSecondaryEffectCost() {
-
-        return secondaryEffectCost;
-    }
-
-    /**
-     * @return
-     */
-    public char[] getThirdEffectCost() {
-        return thirdEffectCost;
-    }
-
-
 }

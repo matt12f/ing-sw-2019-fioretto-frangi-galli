@@ -1,6 +1,5 @@
 package it.polimi.se2019;
 
-public class TestAdrenaline
-{
+public class TestAdrenaline{
 
 }

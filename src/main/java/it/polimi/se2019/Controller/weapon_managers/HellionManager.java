@@ -7,13 +7,13 @@ import java.util.ArrayList;
 
 public class HellionManager {
 
-    public void action(){
+    public static void action(){
         //choose
         baseEffect();
         secondaryEffect();
 
     }
-    private void baseEffect(){
+    private static void baseEffect(){
         /** target: 1 (that you can see at  LEAST 1 move from you)
          *  damage: 1
          *  marker: 1 (all target in the square/cell)
@@ -29,7 +29,7 @@ public class HellionManager {
         targetList = AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getFigure().getCell().getPlayers();
         AdrenalineServer.getMainController().getActiveturn().getActionManager().getShootManager().appointMarker(targetList, damage);
     }
-    private void secondaryEffect(){
+    private static void secondaryEffect(){
         /** alternative attack
          *  target: 1 (as basic attack)
          *  damage: 1

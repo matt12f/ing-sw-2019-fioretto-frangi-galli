@@ -1,19 +1,10 @@
 package it.polimi.se2019.model.cards;
 
-public class Shockwave extends GunCard {
-
-
-    private boolean hasAlternativeEffect;
-    private char[] secondaryEffectCost;
-
-
-
+public class Shockwave extends GunCardAltEff {
     /**
-     * constructor
+     * hard-coded constructor
      */
     public Shockwave() {
-        this.hasAlternativeEffect = true;
-
         this.ammoCost = new char[1];
         ammoCost[0]= 'y';
         this.description ="basic mode: Choose up to 3 targets on\n" +
@@ -24,21 +15,5 @@ public class Shockwave extends GunCard {
 
         this.secondaryEffectCost = new char[1];
         secondaryEffectCost[0] = 'y';
-
     }
-    /**
-     * @return
-     */
-    public boolean getHasAlternativeEffect() {
-        return hasAlternativeEffect;
-    }
-
-    /**
-     * @return
-     */
-    public char[] getSecondaryEffectCost() {
-        return secondaryEffectCost;
-    }
-
-
 }

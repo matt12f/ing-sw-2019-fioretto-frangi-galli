@@ -7,13 +7,13 @@ import java.util.ArrayList;
 
 public class ThorManager {
 
-    public void action(){
+    public static void action(){
         //choose
         baseEffect();
 
 
     }
-    private void baseEffect(){
+    private static void baseEffect(){
         /** target: 1 (that you can see)
          *  damage: 2
          *
@@ -29,7 +29,7 @@ public class ThorManager {
 
         secondaryEffect( targetList);
     }
-    private void secondaryEffect(ArrayList<Player> firstTarget){
+    private static void secondaryEffect(ArrayList<Player> firstTarget){
         /** optional effect
          * target: 1 (a target that the prievious target can see)
          *  damage: 1
@@ -45,7 +45,7 @@ public class ThorManager {
         AdrenalineServer.getMainController().getActiveturn().getActionManager().getShootManager().inflictDamage(targetList, damage);
         thirdEffect(targetList);
     }
-    private void thirdEffect(ArrayList<Player> secondTarget){
+    private static void thirdEffect(ArrayList<Player> secondTarget){
         /** optional effect, it can be used ONLY if you use the secondary effect
          * target: 1 (a target that your SECOND target can see)
          *  damage: 2

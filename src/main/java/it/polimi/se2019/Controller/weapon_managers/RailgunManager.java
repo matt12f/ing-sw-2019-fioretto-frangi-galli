@@ -7,12 +7,12 @@ import java.util.ArrayList;
 
 public class RailgunManager {
 
-    public void action(){
+    public static void action(){
         //choose
         baseEffect();
         secondaryEffect();
     }
-    private void baseEffect(){
+    private static void baseEffect(){
         /** target: 1 (in a cardinal direction) i could be in your square, ignore walls
          *  damage: 3
          *
@@ -27,7 +27,7 @@ public class RailgunManager {
         targetList.add(AdrenalineServer.getMainController().getActiveturn().getActivePlayer()) ;
         AdrenalineServer.getMainController().getActiveturn().getActionManager().getShootManager().inflictDamage(targetList, damage);
     }
-    private void secondaryEffect(){
+    private static void secondaryEffect(){
         /** target: 1,2 (in a cardinal direction, they could be in different cells)same as before
          *  damage: 2
          *

@@ -7,10 +7,10 @@ import java.util.ArrayList;
 
 public class HeatseekerManager {
 
-    public void action(){
+    public static void action(){
         baseEffect();
     }
-    private void baseEffect(){
+    private  static void baseEffect(){
         /** target: 1 (that you cannot see)
          *  damage: 3
          *

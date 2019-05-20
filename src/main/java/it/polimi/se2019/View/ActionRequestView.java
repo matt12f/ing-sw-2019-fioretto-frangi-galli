@@ -16,6 +16,9 @@ public class ActionRequestView{
             case 3: playerChoice=ActionType.NORMAL3;break;
             case 4: playerChoice=ActionType.FRENZY1;break;
             case 5: playerChoice=ActionType.FRENZY2;break;
+            case 6: playerChoice=ActionType.FRENZY3;break;
+            case 7: playerChoice=ActionType.FRENZY4;break;
+            case 8: playerChoice=ActionType.FRENZY5;break;
             default:playerChoice=null;break;
         }
         this.actionToRequest=playerChoice;

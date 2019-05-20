@@ -1,19 +1,11 @@
 package it.polimi.se2019.model.cards;
 
-public class LockRifle extends GunCard {
-
-    private int numberOfOptional;
-    private boolean hasAlternativeEffect;
-    private char [] secondaryEffectCost ;
-
-   /**
-     * constructor
+public class LockRifle extends GunCardAddEff {
+    /**
+     * hard-coded constructor
      */
     public LockRifle() {
-
         this.numberOfOptional = 1;
-        this.hasAlternativeEffect = false;
-
         this.ammoCost = new char[2];
         ammoCost[0]= 'b';
         ammoCost[1]= 'b';
@@ -23,30 +15,7 @@ public class LockRifle extends GunCard {
 
         this.secondaryEffectCost = new char[1];
         secondaryEffectCost[0] = 'r';
+        this.thirdEffectCost=null;
+
     }
-    /**
-     * @return
-     */
-    public boolean getHasAlternativeEffect() {
-        return hasAlternativeEffect;
-    }
-    /**
-     * @return
-     */
-    public int getNumberOfOptional() {
-        return numberOfOptional;
-    }
-
-
-
-    /**
-     * @return
-     */
-    public char[] getSecondaryEffectCost() {
-        return  secondaryEffectCost;
-    }
-
-
-
-
 }

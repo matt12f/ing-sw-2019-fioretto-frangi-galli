@@ -1,19 +1,10 @@
 package it.polimi.se2019.model.cards;
 
-public class Railgun extends GunCard {
-
-
-    private boolean hasAlternativeEffect;
-    private char[] secondaryEffectCost;
-
-
-
+public class Railgun extends GunCardAltEff {
     /**
-     * constructor
+     * hard-coded constructor
      */
     public Railgun() {
-        this.hasAlternativeEffect = true;
-
         this.ammoCost = new char[3];
         ammoCost[0]= 'y';
         ammoCost[1]= 'y';
@@ -24,21 +15,5 @@ public class Railgun extends GunCard {
                 "direction. Deal 2 damage to each.";
         this.secondaryEffectCost = new char[1];
         secondaryEffectCost[0] = 'n';
-
     }
-    /**
-     * @return
-     */
-    public boolean getHasAlternativeEffect() {
-        return hasAlternativeEffect;
-    }
-
-    /**
-     * @return
-     */
-    public char[] getSecondaryEffectCost() {
-        return secondaryEffectCost;
-    }
-
-
 }

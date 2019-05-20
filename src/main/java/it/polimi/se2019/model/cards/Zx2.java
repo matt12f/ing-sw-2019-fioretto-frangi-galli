@@ -1,19 +1,10 @@
 package it.polimi.se2019.model.cards;
 
-public class Zx2 extends GunCard {
-
-
-    private boolean hasAlternativeEffect;
-    private char[] secondaryEffectCost;
-
-
-
+public class Zx2 extends GunCardAltEff {
     /**
-     * constructor
+     * hard-coded constructor
      */
     public Zx2() {
-        this.hasAlternativeEffect = true;
-
         this.ammoCost = new char[2];
         ammoCost[0]= 'y';
         ammoCost[1]= 'r';
@@ -24,20 +15,5 @@ public class Zx2 extends GunCard {
 
         this.secondaryEffectCost = new char[1];
         secondaryEffectCost[0] = 'n';
-
     }
-    /**
-     * @return
-     */
-    public boolean getHasAlternativeEffect() {
-        return hasAlternativeEffect;
-    }
-
-    /**
-     * @return
-     */
-    public char[] getSecondaryEffectCost() {
-        return secondaryEffectCost;
-    }
-
 }

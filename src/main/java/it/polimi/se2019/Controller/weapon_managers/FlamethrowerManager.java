@@ -7,12 +7,12 @@ import java.util.ArrayList;
 
 public class FlamethrowerManager {
 
-    public void action(){
+    public static void action(){
         //determinare scelta
         baseEffect();
         secondaryEffect();
     }
-    private void baseEffect(){
+    private static void baseEffect(){
         /** target: 1, 2(first target 1 move away, second has to be in in a second square 1 move from the first in same direction)
          *  damage: 1
          *
@@ -24,7 +24,7 @@ public class FlamethrowerManager {
         targetList.add(AdrenalineServer.getMainController().getActiveturn().getActivePlayer()) ;
         AdrenalineServer.getMainController().getActiveturn().getActionManager().getShootManager().inflictDamage(targetList, damage);
     }
-    private void secondaryEffect(){
+    private static void secondaryEffect(){
         /** alternative attack
          *  target: cell (as the basic attack)
          *  damage: 2 n first square, 1 in second square

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class MachinegunManager {
 
-    public void action(){
+    public static void action(){
         char damage[] = new char[1];
         damage [0] = AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getFigure().getColor();
         //choose
@@ -15,7 +15,7 @@ public class MachinegunManager {
         secondaryEffect(damage);
         thirdEffect(damage);
     }
-    private void baseEffect(char damage[]){
+    private static void baseEffect(char damage[]){
         /** target: 1 or 2 (thet you can see)
          *  damage: 1
          *
@@ -26,7 +26,7 @@ public class MachinegunManager {
         targetList.add(AdrenalineServer.getMainController().getActiveturn().getActivePlayer()) ;
         AdrenalineServer.getMainController().getActiveturn().getActionManager().getShootManager().inflictDamage(targetList, damage);
     }
-    private void secondaryEffect(char damage[]){
+    private static void secondaryEffect(char damage[]){
         /** optional attack
          * target: 1 (choose one of the target of base effect)
          *  damage: 1
@@ -38,7 +38,7 @@ public class MachinegunManager {
         AdrenalineServer.getMainController().getActiveturn().getActionManager().getShootManager().inflictDamage(targetList, damage);
 
     }
-    private void thirdEffect(char damage[]){
+    private static void thirdEffect(char damage[]){
         /** target: 1 or 2 (one of the previous one, another that you can see BUT not one of the previous one)
          *  damage: 1
          *

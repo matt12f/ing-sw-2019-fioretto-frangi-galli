@@ -1,20 +1,10 @@
 package it.polimi.se2019.model.cards;
 
-public class Electroscythe extends GunCard {
-
-
-    private boolean hasAlternativeEffect;
-    private char[] secondaryEffectCost;
-
-
-
+public class Electroscythe extends GunCardAltEff {
     /**
-     * constructor
+     * hard-coded constructor
      */
     public Electroscythe() {
-
-        this.hasAlternativeEffect = true;
-
         this.ammoCost = new char[1];
         ammoCost[0]= 'b';
         this.description ="basic mode: Deal 1 damage to every other player\n" +
@@ -26,24 +16,4 @@ public class Electroscythe extends GunCard {
         secondaryEffectCost[0] = 'b';
         secondaryEffectCost[1] = 'r';
     }
-    /**
-     * @return
-     */
-    public boolean getHasAlternativeEffect() {
-        return hasAlternativeEffect;
-    }
-    /**
-     * @return
-     */
-
-    /**
-     * @return
-     */
-    public char[] getSecondaryEffectCost() {
-        return secondaryEffectCost;
-    }
-    /**
-     * @return
-     */
-
 }

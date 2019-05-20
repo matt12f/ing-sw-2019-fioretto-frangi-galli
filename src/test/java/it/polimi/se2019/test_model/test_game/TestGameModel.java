@@ -13,7 +13,7 @@ public class TestGameModel {
         ArrayList<Player> players = new ArrayList<>();
         Player player1=new Player(1,"george101",'y');
         players.add(player1);
-        GameModel testModel=new GameModel(1,players,"normal",1);
+        GameModel testModel=new GameModel(1,players,"normal",2);
 
         assertEquals(1,testModel.getGameNumberId());
         assertEquals(Decks.class,testModel.getCurrentDecks().getClass());
@@ -40,7 +40,7 @@ public class TestGameModel {
         ArrayList<Player> players = new ArrayList<>();
         Player player1=new Player(1,"george101",'y');
         players.add(player1);
-        GameModel testModel=new GameModel(1,players,"normal",1);
+        GameModel testModel=new GameModel(1,players,"normal",3);
 
         int turn=testModel.getTurn();
         assertEquals(0,turn);

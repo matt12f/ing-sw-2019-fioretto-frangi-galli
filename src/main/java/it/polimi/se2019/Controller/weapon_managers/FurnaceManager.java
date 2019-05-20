@@ -7,12 +7,12 @@ import java.util.ArrayList;
 
 public class FurnaceManager {
 
-    public void action(){
+    public static void action(){
         //determinare scelta
         baseEffect();
         secondaryEffect();
     }
-    private void baseEffect(){
+    private static void baseEffect(){
         /** target: room (choose a room you can see, but not yours, inflict damage to all pg inside)
          *  damage: 1
          *
@@ -24,7 +24,7 @@ public class FurnaceManager {
         targetList.add(AdrenalineServer.getMainController().getActiveturn().getActivePlayer()) ;
         AdrenalineServer.getMainController().getActiveturn().getActionManager().getShootManager().inflictDamage(targetList, damage);
     }
-    private void secondaryEffect(){
+    private static void secondaryEffect(){
         /** alternative attack
          *  target: cell (choose a square 1 move from you)
          *  damage: 1

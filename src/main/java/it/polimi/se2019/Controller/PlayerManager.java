@@ -1,7 +1,11 @@
 package it.polimi.se2019.controller;
 
-import it.polimi.se2019.model.game.GameModel;
+import it.polimi.se2019.AdrenalineServer;
+import it.polimi.se2019.model.cards.GunCard;
+import it.polimi.se2019.model.cards.PowerupCard;
+import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
+
 
 public class PlayerManager {
 
@@ -13,7 +17,7 @@ public class PlayerManager {
             if (isAlive(player)){
                 player.getPlayerBoard().getDamageTrack().addDamage(damage[i]);
             }else{
-                //setkill
+                //TODO setkill
                 //return eccezione morte;
             }
 
@@ -37,7 +41,7 @@ public class PlayerManager {
     }
 
 
-    private void adrenalineManager(Player player){
+    public void adrenalineManager(Player player){
 
         if(player.getPlayerBoard().getDamageTrack().getDamage().length >= 3){
             player.getPlayerBoard().getActionTileNormal().setAdrenalineMode1(true);
@@ -47,12 +51,38 @@ public class PlayerManager {
     }
 
 
-    public void gunHandManager(){
-        //TODO scrivere metodo
+    public void gunHandManager(Player player, int pick,NewCell cell){
+
+        GunCard [] temp = player.getPlayerBoard().getHand().getGuns();
+
+            if(temp[0] == null || temp[1] == null || temp[2] == null){
+                //TODO scrivere processo di richiesta all'utente, di quale arma vuole scartare
+                //richiesta all'utente di quale arma vuole scartare
+                //attesa notify da view che ritorn un integer
+                //scambio delle carte selezionate
+
+                //toppa momentanea dello scambio carte
+
+
+               // player.getPlayerBoard().getHand().substitutionGunCard(temp[0],((SpawnCell) cell).pickItem(pick) );
+                //(cell).setItem(temp[0]);
+
+            }else{
+
+                //take the first empty space in the player's hand and put the weapon in it
+
+                if (temp[0] == null){
+                    temp[0]=  cell.pickItem(pick);
+                }else  if (temp[1] == null){
+                    temp[1]= cell.pickItem(pick);
+                }else if (temp[2] == null){
+                    temp[2]=  cell.pickItem(pick);
+                }
+            }
     }
 
 
-    public void powerupHandManager(){
+    public void powerupHandManager(Player player, PowerupCard powerup){
         //TODO scrivere metodo
 
     }
@@ -65,11 +95,11 @@ public class PlayerManager {
          * viene inviato un vettore di int , l'ordine è blue - red - yellow
          */
 
-            if (ammo [0] != player.getPlayerBoard().getAmmo().getBlue()){
+            if (ammo [0] > player.getPlayerBoard().getAmmo().getBlue()){
                 enoughAmmo = false;
-            }else if (ammo [1] != player.getPlayerBoard().getAmmo().getRed()){
+            }else if (ammo [1] > player.getPlayerBoard().getAmmo().getRed()){
                 enoughAmmo = false;
-            }else if (ammo [2] != player.getPlayerBoard().getAmmo().getYellow()){
+            }else if (ammo [2] > player.getPlayerBoard().getAmmo().getYellow()){
             enoughAmmo = false;
             }else{
                 return enoughAmmo;
@@ -77,13 +107,14 @@ public class PlayerManager {
 
         //TODO altrimenti verifica se può pagare con un powerup
 
+
         return enoughAmmo;
     }
 
 
 
-    public void frenzyManager(GameModel game, Player player){
+    public void frenzyManager(){
         //TODO scrivere metodo
-        game.activateFinalFrenzy(player.getId());
+        AdrenalineServer.getMainController().getMainGameModel().activateFinalFrenzy(AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getId());
     }
 }

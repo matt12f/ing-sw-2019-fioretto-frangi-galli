@@ -1,0 +1,129 @@
+{
+  "rooms": [
+    {
+      "color": "RED",
+      "players": []
+    },
+    {
+      "color": "YELLOW",
+      "players": []
+    },
+    {
+      "color": "BLUE",
+      "players": []
+    },
+    {
+      "color": "WHITE",
+      "players": []
+    },
+    {
+      "players": []
+    },
+    {
+      "players": []
+    }
+  ],
+  "boardMatrix": [
+    [
+      {
+        "cellType": "DROP",
+        "color": "BLUE",
+        "players": [],
+        "top": "WALL",
+        "bottom": "DOOR",
+        "left": "WALL",
+        "right": "ROOM"
+      },
+      {
+        "cellType": "DROP",
+        "color": "BLUE",
+        "players": [],
+        "top": "WALL",
+        "bottom": "WALL",
+        "left": "ROOM",
+        "right": "ROOM"
+      },
+      {
+        "cellType": "SPAWN",
+        "color": "BLUE",
+        "players": [],
+        "top": "WALL",
+        "bottom": "DOOR",
+        "left": "ROOM",
+        "right": "DOOR",
+        "weaponCards": []
+      },
+      null
+    ],
+    [
+      {
+        "cellType": "SPAWN",
+        "color": "RED",
+        "players": [],
+        "top": "DOOR",
+        "bottom": "WALL",
+        "left": "WALL",
+        "right": "ROOM",
+        "weaponCards": []
+      },
+      {
+        "cellType": "DROP",
+        "color": "RED",
+        "players": [],
+        "top": "WALL",
+        "bottom": "DOOR",
+        "left": "ROOM",
+        "right": "ROOM"
+      },
+      {
+        "cellType": "DROP",
+        "color": "RED",
+        "players": [],
+        "top": "WALL",
+        "bottom": "WALL",
+        "left": "ROOM",
+        "right": "DOOR"
+      },
+      {
+        "cellType": "DROP",
+        "color": "YELLOW",
+        "players": [],
+        "top": "WALL",
+        "bottom": "ROOM",
+        "left": "DOOR",
+        "right": "WALL"
+      }
+    ],
+    [
+      null,
+      {
+        "cellType": "DROP",
+        "color": "WHITE",
+        "players": [],
+        "top": "DOOR",
+        "bottom": "WALL",
+        "left": "WALL",
+        "right": "ROOM"
+      },
+      {
+        "cellType": "DROP",
+        "color": "WHITE",
+        "players": [],
+        "top": "WALL",
+        "bottom": "WALL",
+        "left": "ROOM",
+        "right": "DOOR"
+      },
+      {
+        "cellType": "SPAWN",
+        "color": "YELLOW",
+        "players": [],
+        "top": "ROOM",
+        "bottom": "WALL",
+        "left": "DOOR",
+        "right": "WALL",
+        "weaponCards": []
+      }
+    ]
+  ]
+}

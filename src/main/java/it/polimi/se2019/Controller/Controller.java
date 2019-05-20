@@ -1,5 +1,6 @@
 package it.polimi.se2019.controller;
 
+import it.polimi.se2019.enums.CellType;
 import it.polimi.se2019.exceptions.FullException;
 import it.polimi.se2019.model.game.*;
 import it.polimi.se2019.view.LocalView;
@@ -82,14 +83,14 @@ public class Controller implements Observer {
     }
 
     private void setupBoard(){
-        Cell[][] mapMatrixToFill=mainGameModel.getCurrentMap().getBoardMatrix();
+        NewCell[][] mapMatrixToFill=mainGameModel.getCurrentMap().getBoardMatrix();
         try {
             for (int i = 0; i < 3; i++)
                 for (int j = 0; j < 4; j++)
-                    if (mapMatrixToFill[i][j] instanceof DropCell)
+                    if (mapMatrixToFill[i][j].getCellType().equals(CellType.DROP))
                     {
                         mapMatrixToFill[i][j].setItem(mainGameModel.getCurrentDecks().getAmmotilesDeck().draw());
-                    }else if (mapMatrixToFill[i][j] instanceof SpawnCell)
+                    }else if (mapMatrixToFill[i][j].getCellType().equals(CellType.SPAWN))
                     {
                         for (int k = 0; k < 3; k++)
                             mapMatrixToFill[i][j].setItem(mainGameModel.getCurrentDecks().getGunDeck().draw());
