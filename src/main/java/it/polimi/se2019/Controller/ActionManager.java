@@ -33,30 +33,31 @@ public class ActionManager {
     }
     private void grab(Player player, NewCell cell){
         //TODO scrivere metodo
-        switch(cell.getCellType()){
+        switch(cell.getCellType()) {
             case DROP:
-                AmmoTileCard temp =  cell.getDrop();
-                char [] content = temp.getContent().toCharArray();
-                for (int i= 0; i < content.length; i++){
-                    if(content[i] == 'r'){
+                AmmoTileCard temp = cell.getDrop();
+                char[] content = temp.getContent().toCharArray();
+                for (int i = 0; i < content.length; i++) {
+                    if (content[i] == 'r') {
                         player.getPlayerBoard().getAmmo().setRed(1);
-                    }else if(content[i]== 'b'){
+                    } else if (content[i] == 'b') {
                         player.getPlayerBoard().getAmmo().setBlue(1);
-                    }else if (content[i]=='y'){
+                    } else if (content[i] == 'y') {
                         player.getPlayerBoard().getAmmo().setYellow(1);
-                    }else if(content[i]== 'p'){
+                    } else if (content[i] == 'p') {
                         PowerupCard pUp = AdrenalineServer.getMainController().getMainGameModel().getCurrentDecks().getPowerupsDeck().draw();
-                        AdrenalineServer.getMainController().getActiveturn().getPlayerManager().powerupHandManager(player, pUp );
+                        AdrenalineServer.getMainController().getActiveturn().getPlayerManager().powerupHandManager(player, pUp);
                     }
                 }
-            case SPAWN:
-                //richiesta che chiede all'utente quale arma scegliere tra quelle presenti negli slot della spowncell
-                System.out.println("wich weapon you chose");
+                break;
+            case SPAWN: {
+                //richiesta che chiede all'utente quale arma scegliere tra quelle presenti negli slot della spawncell
+                System.out.println("which weapon you chose");
                 //toppa TODO richiesta all'utente
                 int pick = 0;
                 AdrenalineServer.getMainController().getActiveturn().getPlayerManager().gunHandManager(player, pick, cell);
+            }break;
         }
-
         //NB le celle vuote si riempiono alla fine!!!!
     }
     private void shoot(GunCard weapon){
@@ -166,7 +167,7 @@ public class ActionManager {
     }
     private void normal2Manager(){
         boolean stop =false;
-        if(AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getPlayerBoard().getActionTileNormal().getAdrenalineMode1()==false){
+        if(!AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getPlayerBoard().getActionTileNormal().getAdrenalineMode1()){
             //mg
             move(AdrenalineServer.getMainController().getActiveturn().getActivePlayer());
             grab(AdrenalineServer.getMainController().getActiveturn().getActivePlayer(), AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getFigure().getCell());
@@ -179,7 +180,7 @@ public class ActionManager {
 
     }
     private void normal3Manager(){
-        if(AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getPlayerBoard().getActionTileNormal().getAdrenalineMode2()==false){
+        if(!AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getPlayerBoard().getActionTileNormal().getAdrenalineMode2()){
             //s
         }else {
             //ms
