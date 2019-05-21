@@ -6,9 +6,12 @@ import it.polimi.se2019.model.game.Player;
 import java.util.ArrayList;
 
 public class ElectroscytheManager {
-
+    private static ArrayList<Player> targetList = new ArrayList<>();
+    private static char damage[] = new char[1];
     public static void action(){
         //determinare scelta
+        damage [0] = AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getFigure().getColor();
+
         baseEffect();
         secondaryEffect();
     }
@@ -17,10 +20,10 @@ public class ElectroscytheManager {
          *  damage: 1
          *
          */
-        char damage[] = new char[1];
-        damage [0] = AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getFigure().getColor();
+
+
         //TODO check, togliere il player
-        ArrayList<Player> targetList = new ArrayList<>();
+
         targetList = AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getFigure().getCell().getPlayers();
         AdrenalineServer.getMainController().getActiveturn().getActionManager().getShootManager().inflictDamage(targetList, damage);
     }

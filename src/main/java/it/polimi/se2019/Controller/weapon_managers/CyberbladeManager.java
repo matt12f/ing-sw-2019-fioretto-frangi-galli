@@ -6,8 +6,13 @@ import it.polimi.se2019.model.game.Player;
 import java.util.ArrayList;
 
 public class CyberbladeManager {
+    private static ArrayList<Player> targetList = new ArrayList<>();
+    private static char [] damage = new char[2];
 
     public static void action(){
+        damage [0] = AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getFigure().getColor();
+        damage [1] = AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getFigure().getColor();
+
 
         baseEffect();
         secondaryEffect();
@@ -19,12 +24,12 @@ public class CyberbladeManager {
          *  damage: 2
          *
          */
-        char [] damage = new char[2];
-        damage [0] = AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getFigure().getColor();
-        damage [1] = AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getFigure().getColor();
+        targetList.clear();
+
+
         //input da view del target
         //TODO è una toppa momentanea in attesa dell'input
-         ArrayList<Player> targetList = new ArrayList<>();
+
         targetList.add(AdrenalineServer.getMainController().getActiveturn().getActivePlayer());
         AdrenalineServer.getMainController().getActiveturn().getActionManager().getShootManager().inflictDamage(targetList, damage);
     }
@@ -34,7 +39,7 @@ public class CyberbladeManager {
          *  move: 1
          *
          */
-        ArrayList<Player> targetList = new ArrayList<>();
+        targetList.clear();
         targetList.add(AdrenalineServer.getMainController().getActiveturn().getActivePlayer()) ;
         AdrenalineServer.getMainController().getActiveturn().getActionManager().getShootManager().moveOpponent(targetList);
     }
@@ -44,12 +49,11 @@ public class CyberbladeManager {
          *  damage: 2
          *
          */
-        char [] damageThirdEffect = new char[2];
-        damageThirdEffect [0] = AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getFigure().getColor();
-        damageThirdEffect [1] = AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getFigure().getColor();
+        targetList.clear();
+
         //TODO è una toppa momentanea in attesa dell'input
-        ArrayList<Player> targetList = new ArrayList<>();
+
         targetList.add(AdrenalineServer.getMainController().getActiveturn().getActivePlayer()) ;
-        AdrenalineServer.getMainController().getActiveturn().getActionManager().getShootManager().inflictDamage(targetList, damageThirdEffect);
+        AdrenalineServer.getMainController().getActiveturn().getActionManager().getShootManager().inflictDamage(targetList, damage);
     }
 }

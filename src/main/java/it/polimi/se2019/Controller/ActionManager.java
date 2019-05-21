@@ -176,6 +176,7 @@ public class ActionManager {
             do{
                 move(AdrenalineServer.getMainController().getActiveturn().getActivePlayer());
             }while(!stop);
+            grab(AdrenalineServer.getMainController().getActiveturn().getActivePlayer(), AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getFigure().getCell());
         }
 
     }
@@ -188,18 +189,36 @@ public class ActionManager {
         }
     }
     private void frenzy1Manager(){
-
+     //mrs
     }
     private void frenzy2Manager(){
-
+        //mmmm
+        boolean stop =false;
+        do{
+            move(AdrenalineServer.getMainController().getActiveturn().getActivePlayer());
+        }while(!stop);
     }
     private void frenzy3Manager(){
-
+        //mmg
+        boolean stop =false;
+        do{
+            move(AdrenalineServer.getMainController().getActiveturn().getActivePlayer());
+        }while(!stop);
+        grab(AdrenalineServer.getMainController().getActiveturn().getActivePlayer(), AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getFigure().getCell());
     }
     private void frenzy4Manager(){
-
+        //mmrs
+        boolean stop =false;
+        do{
+            move(AdrenalineServer.getMainController().getActiveturn().getActivePlayer());
+        }while(!stop);
     }
     private void frenzy5Manager(){
-
+        //mmmg
+        boolean stop =false;
+        do{
+            move(AdrenalineServer.getMainController().getActiveturn().getActivePlayer());
+        }while(!stop);
+        grab(AdrenalineServer.getMainController().getActiveturn().getActivePlayer(), AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getFigure().getCell());
     }
 }
