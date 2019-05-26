@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 public class DestinationCell{
     private ArrayList<NewCell> arrivalCell;
-    private boolean [] canGrabCard;
-    private boolean [] canGrabAmmo;
+    private boolean [] canGrabCard; //TODO sarà quasi sempre un sì (come potrebbe essere no?)
+    private boolean [] canGrabAmmo; //TODO come stabilisco se può raccogliere un ammo? 1. se può accogliere gli ammo; poi?
 
     public DestinationCell() {
         ArrayList<NewCell> arrivalCell=new ArrayList<>();
