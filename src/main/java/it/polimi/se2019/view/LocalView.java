@@ -35,7 +35,6 @@ public class LocalView  extends View implements Observer {
             for (int i=0; i<3; i++) {
                 for(int j=0; j<2; j++){
                     this.mapView.getCell(i, j).setPlayers((ArrayList<Player>) arg);
-                    //TODO (Teo) questo mi lascia un po' perplesso (anche perché ad arg mi sa che si può cambiarne il tipo)
                 }
             }
         }else if(arg instanceof GunDeck){
