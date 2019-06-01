@@ -1,19 +1,17 @@
 package it.polimi.se2019.view;
 
-import it.polimi.se2019.model.game.Player;
-
 import java.util.ArrayList;
 
 public class CellView {
     private Square[][] matrix;
-    private ArrayList<Player> Players;
+    private ArrayList<FigureView> playerFigures;
 
-    public void setPlayers(ArrayList<Player> toSet){
-        this.Players = toSet;
+    public void setPlayerFigures(ArrayList<FigureView> toSet){
+        this.playerFigures = toSet;
     }
 
-    public ArrayList<Player> getPlayers(){
-        return this.Players;
+    public ArrayList<FigureView> getPlayerFigures(){
+        return this.playerFigures;
     }
 
     public Square[][] getSquare() {

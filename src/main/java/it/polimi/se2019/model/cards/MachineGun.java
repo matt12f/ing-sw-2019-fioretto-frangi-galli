@@ -16,8 +16,8 @@ public class MachineGun extends GunCardAddEff {
                 "you can see.";
         this.secondaryEffectCost = new char[1];
         secondaryEffectCost[0] = 'y';
-        this.thirdEffectCost = new char[1];
-        thirdEffectCost[0] = 'b';
+        this.tertiaryEffectCost = new char[1];
+        tertiaryEffectCost[0] = 'b';
     }
 
 }

@@ -1,14 +1,24 @@
 package it.polimi.se2019.view;
 
 
-public class PlayerHandView {
-    private CardTileView[] weapons;
+public class PlayerHandView{
+    private CardTileView[] guns;
+    private boolean[] loadedGuns;
+    private CardTileView[] powerups;
 
     public void setWeapons(CardTileView[] weapons) {
-        this.weapons = weapons;
+        this.guns = weapons;
     }
 
     public CardTileView[] getWeapons() {
-        return weapons;
+        return guns;
+    }
+
+    public CardTileView[] getPowerups() {
+        return powerups;
+    }
+
+    public void setPowerups(CardTileView[] powerups) {
+        this.powerups = powerups;
     }
 }

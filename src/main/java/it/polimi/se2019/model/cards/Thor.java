@@ -18,7 +18,7 @@ public class Thor extends GunCardAddEff {
 
         this.secondaryEffectCost = new char[1];
         secondaryEffectCost[0] = 'b';
-        this.thirdEffectCost = new char[1];
-        thirdEffectCost[0] = 'b';
+        this.tertiaryEffectCost = new char[1];
+        tertiaryEffectCost[0] = 'b';
     }
 }

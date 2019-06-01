@@ -16,6 +16,6 @@ public class GrenadeLauncher extends GunCardAddEff {
 
         this.secondaryEffectCost = new char[1];
         secondaryEffectCost[0] = 'r';
-        this.thirdEffectCost=null;
+        this.tertiaryEffectCost =null;
     }
 }

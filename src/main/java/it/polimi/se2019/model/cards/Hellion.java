@@ -16,6 +16,5 @@ public class Hellion extends GunCardAltEff{
                 "and everyone else on that square.";
         this.secondaryEffectCost = new char[1];
         secondaryEffectCost[0] = 'r';
-
     }
 }

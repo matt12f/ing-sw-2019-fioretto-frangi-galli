@@ -13,21 +13,18 @@ public class PlayerManager {
 
         int markNumber = player.getPlayerBoard().getDamageTrack().checkMarks(damage[0]);
 
-        for (int i=0; i < damage.length; i++){
-            if (isAlive(player)){
-                player.getPlayerBoard().getDamageTrack().addDamage(damage[i]);
-            }else{
+        for (char dam:damage){
+            if (isAlive(player))
+                player.getPlayerBoard().getDamageTrack().addDamage(dam);
+            else{
                 //TODO setkill
-                //return eccezione morte;
+                //return eccezione morte
             }
 
         }
-        for (int k=0; k < markNumber; k++ ){
-            if (isAlive(player)){
+        for (int k=0;k<markNumber;k++)
+            if (isAlive(player))
                 player.getPlayerBoard().getDamageTrack().addDamage(damage[0]);
-            }
-
-        }
     }
 
     public static boolean isAlive(Player player){
@@ -35,14 +32,12 @@ public class PlayerManager {
     }
 
    public void markerManager(Player player, char[] add) {
-        for (int i = 0; i < add.length; i++) {
-            player.getPlayerBoard().getDamageTrack().addMark(add[i]);
-        }
+        for (char mark:add)
+            player.getPlayerBoard().getDamageTrack().addMark(mark);
     }
 
 
     public void adrenalineManager(Player player){
-
         if(player.getPlayerBoard().getDamageTrack().getDamage().length >= 3){
             player.getPlayerBoard().getActionTileNormal().setAdrenalineMode1(true);
         }else if(player.getPlayerBoard().getDamageTrack().getDamage().length >= 6){
@@ -51,8 +46,8 @@ public class PlayerManager {
     }
 
 
+    //TODO rivedere in funzione del nuovo modo di gestione delle scelte dell'utente
     public void gunHandManager(Player player, int pick,NewCell cell){
-
         GunCard [] temp = player.getPlayerBoard().getHand().getGuns();
 
             if(temp[0] == null || temp[1] == null || temp[2] == null){

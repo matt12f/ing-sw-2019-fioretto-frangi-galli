@@ -18,7 +18,7 @@ public class RocketLauncher extends GunCardAddEff {
                 "even if you move it.";
         this.secondaryEffectCost = new char[1];
         secondaryEffectCost[0] = 'b';
-        this.thirdEffectCost = new char[1];
-        thirdEffectCost[0] = 'y';
+        this.tertiaryEffectCost = new char[1];
+        tertiaryEffectCost[0] = 'y';
     }
 }

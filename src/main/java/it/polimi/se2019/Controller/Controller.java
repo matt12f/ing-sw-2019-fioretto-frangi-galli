@@ -69,7 +69,7 @@ public class Controller implements Observer {
     }
 
     public LocalView getPlayerLocalView(int playerId){
-        return new LocalView(remoteView.getPlayerBoardViews(),remoteView.getMapView(),remoteView.getPlayerHands().get(playerId));
+        return new LocalView(remoteView.getPlayerBoardViews(),playerId,remoteView.getMapView(),remoteView.getPlayerHands().get(playerId));
     }
 
     public TurnManager getActiveturn() {

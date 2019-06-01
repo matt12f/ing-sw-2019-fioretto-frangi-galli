@@ -31,8 +31,8 @@ public class ActionManager {
         //TODO scrivere metodo
 
     }
+    //TODO TEO rivedere metodo
     private void grab(Player player, NewCell cell){
-        //TODO scrivere metodo
         switch(cell.getCellType()) {
             case DROP:
                 AmmoTileCard temp = cell.getDrop();
@@ -62,7 +62,7 @@ public class ActionManager {
     }
     private void shoot(GunCard weapon){
         //TODO Risolvere la questione associazione arma model - arma controller
-        if(weapon.getLoaded()){
+        if(weapon.isLoaded()){
             String weaponclass = weapon.getClass().toString();
             //far partire la action flow dell'arma
             switch (weaponclass){
@@ -108,9 +108,7 @@ public class ActionManager {
                     WhisperManager.action();break;
                 case "Zx2":
                     Zx2Manager.action();break;
-
             }
-
         }
 
     }

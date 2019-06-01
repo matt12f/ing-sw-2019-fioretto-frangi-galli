@@ -1,5 +1,7 @@
 package it.polimi.se2019.controller;
 
+import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
+import it.polimi.se2019.model.cards.GunCard;
 import it.polimi.se2019.model.game.Player;
 
 import java.util.ArrayList;
@@ -12,18 +14,34 @@ import java.util.ArrayList;
  * - inflict damage to players in a certain cell
  * - inflict damage to one or more players in a certain cell
  *
- * Usage of effectsOrder: examples: {"Base Opt1 Opt2", "Base Opt2 Opt1"} or {"Base", "Alternative"} meaning that
- *  you can either use one or the other. Each card has its own, but it must be customized considering which effects
- *  the individual player can pay for with ammo, and whether there are available targets using a certain effect.
- *
- *
- *
+ * Usage of effectsOrder: examples: {{"Base","Optional1","Optional2"}, {"Base","Optional2", "Optional1"}} or
+ * {{"Base"}, {"Alternative"}} meaning that you can either use one or the other. Each card has its own, but it must
+ * be customized considering which effects the individual player can pay for with ammo, and whether there are
+ * available targets using a certain effect.
  *
  */
 public class SingleCardActions{
-    private String [] effectsOrder;
-    private ArrayList<SingleEffectActions> effectActions;
-    private boolean secondTargetCanBeSame;
+    private String [][] effectsOrder; //indicates all of the possible effects order
+    private ArrayList<SingleEffectsCombinationActions> effectActions;
 
+    public SingleCardActions(GunCard gunCard, Player player) {
+        this.effectsOrder = gunCard.getEffectsOrder();
+        this.effectActions=new ArrayList<>();
+        for(int i=0;i<effectsOrder.length;i++){
+            try{
+            this.effectActions.add(gunCard.buildAvailableActions(effectsOrder[i]));
+            }
+        catch (UnavailableEffectCombinationException e){
+                //nothing to see here
+        }
+    }
+    }
 
+    public String[][] getEffectsOrder() {
+        return effectsOrder;
+    }
+
+    public ArrayList<SingleEffectsCombinationActions> getEffectActions() {
+        return effectActions;
+    }
 }

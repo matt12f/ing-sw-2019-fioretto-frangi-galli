@@ -1,10 +1,11 @@
 package it.polimi.se2019.model.cards;
 
+
 public class CyberBlade extends GunCardAddEff {
     /**
      * hard-coded constructor
      */
-    public CyberBlade() {
+    public CyberBlade(){
         this.numberOfOptional = 2;
 
         this.ammoCost = new char[2];
@@ -18,7 +19,8 @@ public class CyberBlade extends GunCardAddEff {
         this.secondaryEffectCost = new char[1];
         secondaryEffectCost[0] = 'n';
 
-        this.thirdEffectCost = new char[1];
-        thirdEffectCost[0] = 'y';
+        this.tertiaryEffectCost = new char[1];
+        tertiaryEffectCost[0] = 'y';
     }
+
 }

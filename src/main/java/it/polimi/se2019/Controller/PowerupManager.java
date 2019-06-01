@@ -1,5 +1,6 @@
 package it.polimi.se2019.controller;
 
+//TODO rivedere in funzione del nuovo modo di gestione delle scelte dell'utente
 public class PowerupManager {
     /**
      * These methods will be called by PlayerManager methods to offer the player the use of a powerup
