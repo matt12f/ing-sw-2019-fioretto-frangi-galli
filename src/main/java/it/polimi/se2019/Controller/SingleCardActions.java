@@ -29,12 +29,12 @@ public class SingleCardActions{
         this.effectActions=new ArrayList<>();
         for(int i=0;i<effectsOrder.length;i++){
             try{
-            this.effectActions.add(gunCard.buildAvailableActions(effectsOrder[i]));
+            this.effectActions.add(gunCard.buildAvailableActions(effectsOrder[i],player));
             }
         catch (UnavailableEffectCombinationException e){
                 //nothing to see here
+            }
         }
-    }
     }
 
     public String[][] getEffectsOrder() {

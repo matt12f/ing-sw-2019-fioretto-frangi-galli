@@ -1,5 +1,7 @@
 package it.polimi.se2019.model.game;
 
+import it.polimi.se2019.enums.Color;
+
 public class Player {
     private String nickname;
     private int id;
@@ -7,7 +9,7 @@ public class Player {
     private Figure figure;
     private PlayerBoard playerBoard;
 
-    public Player(int id,String nickname,char color ){
+    public Player(int id, String nickname, Color color ){
         this.id = id;
         this.nickname = nickname;
         this.score = 0;

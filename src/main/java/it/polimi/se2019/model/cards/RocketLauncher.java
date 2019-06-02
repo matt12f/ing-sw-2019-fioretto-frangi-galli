@@ -1,5 +1,10 @@
 package it.polimi.se2019.model.cards;
 
+import it.polimi.se2019.controller.ChosenAction;
+import it.polimi.se2019.controller.SingleEffectsCombinationActions;
+import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
+import it.polimi.se2019.model.game.Player;
+
 public class RocketLauncher extends GunCardAddEff {
     /**
      * hard-coded constructor
@@ -20,5 +25,40 @@ public class RocketLauncher extends GunCardAddEff {
         secondaryEffectCost[0] = 'b';
         this.tertiaryEffectCost = new char[1];
         tertiaryEffectCost[0] = 'y';
+    }
+
+    @Override
+    void applyTertiaryEffect(ChosenAction playersChoice) {
+
+    }
+
+    @Override
+    void targetsOfTertiaryEffect() {
+
+    }
+
+    @Override
+    public SingleEffectsCombinationActions buildAvailableActions(String[] effectsCombination, Player player) throws UnavailableEffectCombinationException {
+        return null;
+    }
+
+    @Override
+    void applyBaseEffect(ChosenAction playersChoice) {
+
+    }
+
+    @Override
+    void applySecondaryEffect(ChosenAction playersChoice) {
+
+    }
+
+    @Override
+    void targetsOfBaseEffect() {
+
+    }
+
+    @Override
+    void targetsOfSecondaryEffect() {
+
     }
 }

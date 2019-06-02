@@ -1,9 +1,11 @@
 package it.polimi.se2019.model.game;
 
+import it.polimi.se2019.enums.Color;
+
 import java.util.Observable;
 
 public class PlayerBoard extends Observable {
-    private char color;
+    private Color color;
     private int currentBoardValue; //equivalent to the amount of skulls, that reduce the value of the scored card
     private boolean front;
     private ActionTileNormal actionTileNormal;
@@ -12,7 +14,7 @@ public class PlayerBoard extends Observable {
     private DamageTracker damageTrack;
     private Hand hand;
 
-    public PlayerBoard(char color){
+    public PlayerBoard(Color color){
         this.color = color;
         this.currentBoardValue = 8;
         this.front=true;
@@ -25,7 +27,7 @@ public class PlayerBoard extends Observable {
     /**Return the board's color
      *
      */
-    public char getColor() {
+    public Color getColor() {
         return color;
     }
 

@@ -11,9 +11,7 @@ public class ShootManager {
         //TODO scrivere costruttore
     }
     public boolean inflictDamage(ArrayList<Player> targets, char[] damage){
-
         Player target;
-
         for(int i= 0; i<targets.size(); i++){
             target = targets.get(i);
             AdrenalineServer.getMainController().getActiveturn().getPlayerManager().damageDealer(target, damage);
