@@ -19,29 +19,62 @@ import java.util.ArrayList;
  * be customized considering which effects the individual player can pay for with ammo, and whether there are
  * available targets using a certain effect.
  *
+ * Usage of effectsCombinationActions: contains the actions possible with a certain combination (and order) of effects
+ *
+ * Usage of mustSwap: it indicates that to use a card you must swap it with one in your hand
  */
-public class SingleCardActions{
-    private String [][] effectsOrder; //indicates all of the possible effects order
-    private ArrayList<SingleEffectsCombinationActions> effectActions;
 
-    public SingleCardActions(GunCard gunCard, Player player) {
-        this.effectsOrder = gunCard.getEffectsOrder();
-        this.effectActions=new ArrayList<>();
-        for(int i=0;i<effectsOrder.length;i++){
+public class SingleCardActions{
+    private ArrayList<ArrayList<String>> effectsOrder; //indicates all of the possible effects order
+    private ArrayList<SingleEffectsCombinationActions> effectsCombinationActions;
+    private boolean mustSwap;
+
+    public SingleCardActions(GunCard gunCard, FictitiousPlayer player, boolean mustSwap) {
+        //this part builds the list of combination of the effects a player can use
+
+        //TODO metodo che prende tutti le combinazioni di un'arma e toglie quelli che non si può permettere
+        this.effectsOrder=reduceToAvailableEffects(gunCard.getEffectsOrder(),player);
+        this.effectsCombinationActions =new ArrayList<>();
+        this.mustSwap=mustSwap;
+        for(int i=0;i<effectsOrder.size();i++){
             try{
-            this.effectActions.add(gunCard.buildAvailableActions(effectsOrder[i],player));
+            this.effectsCombinationActions.add(gunCard.buildAvailableActions(effectsOrder.get(i),player));
             }
         catch (UnavailableEffectCombinationException e){
-                //nothing to see here
+                //it means there are no targets for this combination and it won't be added
             }
         }
     }
 
-    public String[][] getEffectsOrder() {
+    /**
+     */
+    private ArrayList<ArrayList<String>> reduceToAvailableEffects(ArrayList<ArrayList<String>> cardEffects,FictitiousPlayer player) {
+        ArrayList<ArrayList<String>> availableEffectsCombinations=new ArrayList<>();
+        for(ArrayList<String> combination:cardEffects) {
+            for (String effect : combination)
+                switch (effect) {//TODO scrivere codice che valuta se un effetto può essere pagato
+                    case "Base":
+                        break; //do nothing
+                    case "Alternative":
+                    case "Optional1":
+                    case "Optional2":
+                //TODO se si può permettere tutti gli effetti della combinazione allora posso aggiungerla così:
+                    availableEffectsCombinations.add(combination);
+                }
+                    /*
+        - parto da un vettore di stringhe con tutte le possibili combinazioni dell'arma
+        - escludo gli effetti che il player non può pagare (considerare l'uso di powerup per pagare gli effetti)
+        - Richiamo i metodi per "risolvere" le combinazioni, in ogni arma (alcune carte avranno più computazione di altre)
+         */
+        }
+        return availableEffectsCombinations;
+    }
+
+    public ArrayList<ArrayList<String>> getEffectsOrder(){
         return effectsOrder;
     }
 
-    public ArrayList<SingleEffectsCombinationActions> getEffectActions() {
-        return effectActions;
+    public ArrayList<SingleEffectsCombinationActions> getEffectsCombinationActions(){
+        return effectsCombinationActions;
     }
 }

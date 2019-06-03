@@ -15,7 +15,7 @@ public class RemoteView  extends View implements RMIInterface {
     private ArrayList<PlayerHandView> playerHands;
 
     public RemoteView (){
-        //da implementare ancora, deve tradurre il gamemodel nella sua controparte view
+        //TODO da implementare ancora, deve tradurre il gamemodel nella sua controparte view
     }
 
     public ArrayList<PlayerBoardView> getPlayerBoardViews() {
@@ -62,6 +62,6 @@ public class RemoteView  extends View implements RMIInterface {
 
     @Override
     public AvailableActions askAction(ActionRequestView codedAction, int playerID) throws RemoteException {
-        return AvailableActions.computeActionsByMacro(codedAction,playerID);
+        return new AvailableActions(codedAction,playerID);
     }
 }

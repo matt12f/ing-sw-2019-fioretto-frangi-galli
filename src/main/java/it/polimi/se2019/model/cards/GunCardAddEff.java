@@ -1,6 +1,6 @@
 package it.polimi.se2019.model.cards;
 
-import it.polimi.se2019.controller.ChosenAction;
+import it.polimi.se2019.view.ChosenAction;
 
 
 public abstract class GunCardAddEff extends GunCard{

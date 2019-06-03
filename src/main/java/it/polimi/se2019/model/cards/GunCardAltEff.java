@@ -1,7 +1,7 @@
 package it.polimi.se2019.model.cards;
 
 
-import it.polimi.se2019.controller.ChosenAction;
+import it.polimi.se2019.view.ChosenAction;
 
 /**
  * Secondary in these cards refers to the alternative effect

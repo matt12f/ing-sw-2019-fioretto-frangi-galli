@@ -1,14 +1,8 @@
 package it.polimi.se2019.controller.weapon_managers;
 
-import it.polimi.se2019.AdrenalineServer;
-import it.polimi.se2019.model.game.Player;
-
-import java.util.ArrayList;
-
 public class FurnaceManager {
 
     public static void action(){
-        //determinare scelta
         baseEffect();
         secondaryEffect();
     }
@@ -17,26 +11,13 @@ public class FurnaceManager {
          *  damage: 1
          *
          */
-        char damage[] = new char[1];
-        damage [0] = AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getFigure().getColor();
-        ArrayList<Player> targetList = new ArrayList<>();
-        //TODO è una toppa, in attesa di input
-        targetList.add(AdrenalineServer.getMainController().getActiveturn().getActivePlayer()) ;
-        AdrenalineServer.getMainController().getActiveturn().getActionManager().getShootManager().inflictDamage(targetList, damage);
-    }
+       }
     private static void secondaryEffect(){
         /** alternative attack
          *  target: cell (choose a square 1 move from you)
          *  damage: 1
          *  marker: 1
          */
-        char damage[] = new char[1];
-        damage [0] = AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getFigure().getColor();
-        ArrayList<Player> targetList = new ArrayList<>();
-        //TODO è una toppa, in attesa di input
-        targetList.add(AdrenalineServer.getMainController().getActiveturn().getActivePlayer()) ;
-        AdrenalineServer.getMainController().getActiveturn().getActionManager().getShootManager().inflictDamage(targetList, damage);
-        AdrenalineServer.getMainController().getActiveturn().getActionManager().getShootManager().appointMarker(targetList,damage);
-    }
+   }
    
 }

@@ -1,16 +1,20 @@
 package it.polimi.se2019.model.cards;
 
-import it.polimi.se2019.controller.ChosenAction;
+import it.polimi.se2019.controller.FictitiousPlayer;
+import it.polimi.se2019.view.ChosenAction;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
 import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
-import it.polimi.se2019.model.game.Player;
+
+import java.util.ArrayList;
 
 public class Whisper extends GunCardAddEff {
     /**
      * hard-coded constructor
      */
     public Whisper() {
-        this.effectsOrder= new String[][]{{"Base"}};
+        this.effectsOrder= new ArrayList<>();
+        this.effectsOrder.add(new ArrayList<>());
+        this.effectsOrder.get(0).add("Base");
         this.numberOfOptional = 0;
         this.ammoCost = new char[3];
         ammoCost[0] = 'b';
@@ -23,7 +27,7 @@ public class Whisper extends GunCardAddEff {
     }
 
     @Override
-    public SingleEffectsCombinationActions buildAvailableActions(String[] effectsCombination, Player player) throws UnavailableEffectCombinationException {
+    public SingleEffectsCombinationActions buildAvailableActions(ArrayList<String> effectsCombination, FictitiousPlayer player) throws UnavailableEffectCombinationException {
         //TODO scrivere codice
         return null;
     }

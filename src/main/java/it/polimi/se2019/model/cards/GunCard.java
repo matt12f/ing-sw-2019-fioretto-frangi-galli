@@ -1,16 +1,18 @@
 package it.polimi.se2019.model.cards;
 
-import it.polimi.se2019.controller.ChosenAction;
+import it.polimi.se2019.controller.FictitiousPlayer;
+import it.polimi.se2019.view.ChosenAction;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
 import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
-import it.polimi.se2019.model.game.Player;
+
+import java.util.ArrayList;
 
 public abstract class GunCard{
     protected char [] ammoCost;
     protected String description;
     private boolean loaded;
     protected char[] secondaryEffectCost;
-    protected String[][] effectsOrder;
+    protected ArrayList<ArrayList<String>> effectsOrder;
 
     public char[] getAmmoCost() {
         return ammoCost;
@@ -48,7 +50,7 @@ public abstract class GunCard{
     public void setLoaded(boolean load){
         this.loaded = load;
     }
-    public String[][] getEffectsOrder(){return effectsOrder;}
+    public ArrayList<ArrayList<String>> getEffectsOrder(){return effectsOrder;}
 
     /**
      * This method calls the single effects method and applies the player's choices, using the methods below
@@ -58,7 +60,7 @@ public abstract class GunCard{
     /**
      *This method builds the available actions, returning an exception in case there are no targets
      */
-    public abstract SingleEffectsCombinationActions buildAvailableActions(String[] effectsCombination, Player player) throws UnavailableEffectCombinationException;
+    public abstract SingleEffectsCombinationActions buildAvailableActions(ArrayList<String> effectsCombination, FictitiousPlayer player) throws UnavailableEffectCombinationException;
 
     /**
      * methods that apply the individual effects, with the selections of the player as inputs

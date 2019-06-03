@@ -6,6 +6,7 @@ import it.polimi.se2019.model.game.Room;
 
 import java.util.ArrayList;
 
+//TODO TEO classe da rivedere,è davvero utile così com'è?
 public   class TargetManager {
    private static ArrayList<Player> targetList = new ArrayList<>();
    private static Player target;

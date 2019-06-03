@@ -1,14 +1,8 @@
 package it.polimi.se2019.controller.weapon_managers;
 
-import it.polimi.se2019.AdrenalineServer;
-import it.polimi.se2019.model.game.Player;
-
-import java.util.ArrayList;
-
 public class GrenadeLauncherManager {
 
     public static void action(){
-        //determinare scelta
         baseEffect();
         secondaryEffect();
     }
@@ -17,13 +11,6 @@ public class GrenadeLauncherManager {
          *  damage: 1
          *  move: 1
          */
-        char damage[] = new char[1];
-        damage [0] = AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getFigure().getColor();
-        ArrayList<Player> targetList = new ArrayList<>();
-        //TODO è una toppa, in attesa di input
-        targetList.add(AdrenalineServer.getMainController().getActiveturn().getActivePlayer()) ;
-        AdrenalineServer.getMainController().getActiveturn().getActionManager().getShootManager().inflictDamage(targetList, damage);
-        AdrenalineServer.getMainController().getActiveturn().getActionManager().getShootManager().moveOpponent(targetList);
     }
     private static void secondaryEffect(){
         /** optional attack (before or after basic attack)
@@ -31,12 +18,6 @@ public class GrenadeLauncherManager {
          *  damage: 1
          *
          */
-        char damage[] = new char[1];
-        damage [0] = AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getFigure().getColor();
-        ArrayList<Player> targetList = new ArrayList<>();
-        //TODO è una toppa, in attesa di input
-        targetList = AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getFigure().getCell().getPlayers();
-        AdrenalineServer.getMainController().getActiveturn().getActionManager().getShootManager().inflictDamage(targetList, damage);
     }
    
 }

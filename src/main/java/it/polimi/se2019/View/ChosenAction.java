@@ -1,4 +1,4 @@
-package it.polimi.se2019.controller;
+package it.polimi.se2019.view;
 
 //TODO convert to JSON string before sending
 
@@ -7,7 +7,6 @@ import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * this class is going to send back the objects it received to "select" them

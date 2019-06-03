@@ -28,23 +28,45 @@ public class Ammo {
         return yellow;
     }
 
+    public void addAmmo(String ammo){
+        for(int i=0;i<ammo.length();i++){
+            if(ammo.charAt(i)=='b')
+                setBlue(1);
+            else if(ammo.charAt(i)=='y')
+                setYellow(1);
+            else if(ammo.charAt(i)=='r')
+                setRed(1);
+        }
+    }
+
+    public void subtractAmmo(String ammo){
+        for(int i=0;i<ammo.length();i++){
+            if(ammo.charAt(i)=='b')
+                setBlue(-1);
+            else if(ammo.charAt(i)=='y')
+                setYellow(-1);
+            else if(ammo.charAt(i)=='r')
+                setRed(-1);
+        }
+    }
+
     /**
      * these set methods add or subtract whether the value passed is positive or negative.
      * They do not prevent the value to become negative because it is prevented at the method calling.
      */
-    public void setBlue(int blue) {
+    private void setBlue(int blue) {
         this.blue += blue;
         if (this.blue > 3){
             this.blue = 3;
         }
     }
-    public void setRed(int red) {
+    private void setRed(int red) {
         this.red += red;
         if (this.red > 3){
             this.red = 3;
         }
     }
-    public void setYellow(int yellow) {
+    private void setYellow(int yellow) {
         this.yellow += yellow;
         if (this.yellow > 3){
             this.yellow = 3;

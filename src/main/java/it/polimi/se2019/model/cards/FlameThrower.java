@@ -1,9 +1,11 @@
 package it.polimi.se2019.model.cards;
 
-import it.polimi.se2019.controller.ChosenAction;
+import it.polimi.se2019.controller.FictitiousPlayer;
+import it.polimi.se2019.view.ChosenAction;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
 import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
-import it.polimi.se2019.model.game.Player;
+
+import java.util.ArrayList;
 
 public class FlameThrower extends GunCardAltEff {
     /**
@@ -25,7 +27,7 @@ public class FlameThrower extends GunCardAltEff {
     }
 
     @Override
-    public SingleEffectsCombinationActions buildAvailableActions(String[] effectsCombination, Player player) throws UnavailableEffectCombinationException {
+    public SingleEffectsCombinationActions buildAvailableActions(ArrayList<String> effectsCombination, FictitiousPlayer player) throws UnavailableEffectCombinationException {
         return null;
     }
 

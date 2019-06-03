@@ -12,6 +12,6 @@ public class NetworkHandlerSocket extends NetworkHandler {
 
     @Override
     public AvailableActions buildAndSendActionRequest(int playerId) {
-        return new AvailableActions();
+        return null;
     }
 }
