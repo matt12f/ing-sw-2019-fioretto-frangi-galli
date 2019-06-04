@@ -13,6 +13,17 @@ public class SocketServer {
 
     }
 
+    public Socket getSocket() {
+        return socket;
+    }
+
+    public ServerSocket getServer() {
+        return server;
+    }
+
+    public void setSocket(Socket socket) {
+        this.socket = socket;
+    }
 
     public void send(ObjectOutputStream obj){
 
