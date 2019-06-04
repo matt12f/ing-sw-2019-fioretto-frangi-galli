@@ -1,22 +1,24 @@
 package it.polimi.se2019.view;
 
+import it.polimi.se2019.enums.CardName;
+
 public class CardTileView {
     private String image;
-    private String type;
+    private CardName cardName;
 
     public String getImage() {
         return image;
     }
 
-    public String getType() {
-        return type;
+    public CardName getCardName() {
+        return cardName;
     }
 
     public void setImage(String image) {
         this.image = image;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setCardName(CardName cardName) {
+        this.cardName = cardName;
     }
 }

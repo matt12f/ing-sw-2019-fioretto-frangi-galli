@@ -1,5 +1,6 @@
 package it.polimi.se2019.test_model.test_game;
 
+import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.model.game.*;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +12,7 @@ public class TestGameModel {
     @Test
     public void testGameModel(){
         ArrayList<Player> players = new ArrayList<>();
-        Player player1=new Player(1,"george101",'y');
+        Player player1=new Player(1,"george101", Color.YELLOW);
         players.add(player1);
         GameModel testModel=new GameModel(1,players,"normal",2);
 
@@ -38,7 +39,7 @@ public class TestGameModel {
     @Test
     public void testGetIncrementTurn(){
         ArrayList<Player> players = new ArrayList<>();
-        Player player1=new Player(1,"george101",'y');
+        Player player1=new Player(1,"george101",Color.YELLOW);
         players.add(player1);
         GameModel testModel=new GameModel(1,players,"normal",3);
 
@@ -52,7 +53,7 @@ public class TestGameModel {
     @Test
     public void testActivateFinalFrenzy(){
         ArrayList<Player> players = new ArrayList<>();
-        Player player1=new Player(1,"george101",'y');
+        Player player1=new Player(1,"george101",Color.YELLOW);
         players.add(player1);
         GameModel testModel=new GameModel(1,players,"normal",1);
 

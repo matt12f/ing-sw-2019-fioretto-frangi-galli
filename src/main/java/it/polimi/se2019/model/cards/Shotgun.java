@@ -1,10 +1,18 @@
 package it.polimi.se2019.model.cards;
 
+import it.polimi.se2019.controller.FictitiousPlayer;
+import it.polimi.se2019.view.ChosenAction;
+import it.polimi.se2019.controller.SingleEffectsCombinationActions;
+import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
+
+import java.util.ArrayList;
+
 public class Shotgun extends GunCardAltEff {
     /**
      * hard-coded constructor
      */
     public Shotgun() {
+        super();
         this.ammoCost = new char[2];
         ammoCost[0]= 'y';
         ammoCost[1]= 'y';
@@ -16,5 +24,30 @@ public class Shotgun extends GunCardAltEff {
                 "away.";
         this.secondaryEffectCost = new char[1];
         secondaryEffectCost[0] = 'n';
+    }
+
+    @Override
+    public SingleEffectsCombinationActions buildAvailableActions(ArrayList<String> effectsCombination, FictitiousPlayer player) throws UnavailableEffectCombinationException {
+        return null;
+    }
+
+    @Override
+    void applyBaseEffect(ChosenAction playersChoice) {
+
+    }
+
+    @Override
+    void applySecondaryEffect(ChosenAction playersChoice) {
+
+    }
+
+    @Override
+    void targetsOfBaseEffect() {
+
+    }
+
+    @Override
+    void targetsOfSecondaryEffect() {
+
     }
 }

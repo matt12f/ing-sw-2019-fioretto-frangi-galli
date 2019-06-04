@@ -1,13 +1,15 @@
 package it.polimi.se2019.model.game;
 
+import it.polimi.se2019.enums.Color;
+
 public class Player {
     private String nickname;
     private int id;
     private int score;
-    private Figure figure;
+    private Figure figure; //contains color and position
     private PlayerBoard playerBoard;
 
-    public Player(int id,String nickname,char color ){
+    public Player(int id, String nickname, Color color ){
         this.id = id;
         this.nickname = nickname;
         this.score = 0;

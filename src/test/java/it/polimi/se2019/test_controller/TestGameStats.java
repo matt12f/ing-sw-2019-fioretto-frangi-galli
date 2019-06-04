@@ -1,6 +1,7 @@
 package it.polimi.se2019.test_controller;
 
 import it.polimi.se2019.controller.GameStats;
+import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.model.game.Player;
 import org.junit.jupiter.api.Test;
 
@@ -11,10 +12,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TestGameStats {
     @Test
     public void testGameStats(){
-        Player player1=new Player(1,"frank",'b');
-        Player player2=new Player(2,"george",'y');
-        Player player3=new Player(3,"miles",'w');
-        Player player4=new Player(4,"carl",'g');
+        Player player1=new Player(1,"frank", Color.BLUE);
+        Player player2=new Player(2,"george",Color.YELLOW);
+        Player player3=new Player(3,"miles",Color.WHITE);
+        Player player4=new Player(4,"carl",Color.GREEN);
 
         ArrayList<Player> players=new ArrayList<>();
         players.add(player1);

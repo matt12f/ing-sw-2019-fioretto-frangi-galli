@@ -1,7 +1,7 @@
 package it.polimi.se2019.view;
 
+import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.model.game.*;
-import it.polimi.se2019.model.game.Map;
 import it.polimi.se2019.network.RMIInterface;
 import it.polimi.se2019.controller.AvailableActions;
 import java.rmi.RemoteException;
@@ -15,12 +15,7 @@ public class RemoteView  extends View implements RMIInterface {
     private ArrayList<PlayerHandView> playerHands;
 
     public RemoteView (){
-        //da implementare ancora
-    }
-
-    @Override
-    public synchronized void addObserver(Observer o) {
-        super.addObserver(o);
+        //TODO da implementare ancora, deve tradurre il gamemodel nella sua controparte view
     }
 
     public ArrayList<PlayerBoardView> getPlayerBoardViews() {
@@ -35,18 +30,22 @@ public class RemoteView  extends View implements RMIInterface {
         return playerHands;
     }
 
+
+    @Override
+    public synchronized void addObserver(Observer o) {
+        super.addObserver(o);
+    }
+
+    //TODO rivedere con classi della view invece che del model
     @Override
     public void update(Observable o, Object arg) {
         if(arg instanceof PlayerBoard){
             for(int i=0; i<playerBoardViews.size(); i++){
-                this.playerBoardViews.get(i).setAmmo(((PlayerBoard) arg).getAmmo());
-                this.playerBoardViews.get(i).setHand(((PlayerBoard) arg).getHand());
                 this.playerBoardViews.get(i).setScore(((Player) arg).getScore());
             }
         }else if(arg instanceof Map){
             for (int i=0; i<3; i++) {
                 for(int j=0; j<2; j++){
-                    this.mapView.getCell(i, j).setPlayers((ArrayList<Player>) arg);
                 }
             }
         }else if(arg instanceof Integer){
@@ -58,14 +57,11 @@ public class RemoteView  extends View implements RMIInterface {
 
     @Override
     public LocalView getLocalView(int playerID) throws RemoteException {
-        return null;
+        return AdrenalineServer.getMainController().getPlayerLocalView(playerID);
     }
 
     @Override
     public AvailableActions askAction(ActionRequestView codedAction, int playerID) throws RemoteException {
-        AvailableActions availableActions=new AvailableActions();
-        //TODO richiama ActionManager
-        //TODO implementazione calcolo azioni fattibili chiamando il controller
-        return availableActions;
+        return new AvailableActions(codedAction,playerID);
     }
 }

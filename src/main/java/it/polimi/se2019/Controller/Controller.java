@@ -1,6 +1,7 @@
 package it.polimi.se2019.controller;
 
 import it.polimi.se2019.enums.CellType;
+import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.exceptions.FullException;
 import it.polimi.se2019.model.game.*;
 import it.polimi.se2019.view.LocalView;
@@ -30,7 +31,7 @@ public class Controller implements Observer {
 
         //This part is about the first player
         String nickname="Da fare";
-        char color='b';
+        Color color=Color.WHITE;
         //TODO chiedere nickname passando da VIEW
         //TODO scelta del colore passando da VIEW
         players.add(new Player(1,nickname,color));
@@ -69,7 +70,7 @@ public class Controller implements Observer {
     }
 
     public LocalView getPlayerLocalView(int playerId){
-        return new LocalView(remoteView.getPlayerBoardViews(),remoteView.getMapView(),remoteView.getPlayerHands().get(playerId));
+        return new LocalView(remoteView.getPlayerBoardViews(),playerId,remoteView.getMapView(),remoteView.getPlayerHands().get(playerId));
     }
 
     public TurnManager getActiveturn() {

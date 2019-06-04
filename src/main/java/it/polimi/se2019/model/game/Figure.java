@@ -1,14 +1,16 @@
 package it.polimi.se2019.model.game;
 
+import it.polimi.se2019.enums.Color;
+
 public class Figure {
-    private char color;
+    private Color color;
     private NewCell currentCell;
 
-    public Figure(char color){
+    public Figure(Color color){
         this.color = color;
     }
 
-    public char getColor() {
+    public Color getColor() {
         return color;
     }
 

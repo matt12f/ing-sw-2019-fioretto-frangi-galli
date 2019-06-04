@@ -34,7 +34,7 @@ public class NetworkHandlerRMI extends NetworkHandler{
     public LocalView getLocalView(int playerId) {
         LocalView temp;
         try {
-            temp= server.getLocalView(playerId);
+            temp=server.getLocalView(playerId);
         } catch (RemoteException e) {
             LOGGER.log(Level.FINE,"NetworkHandlerRMI getLocalView",e);
             return null;
@@ -50,7 +50,7 @@ public class NetworkHandlerRMI extends NetworkHandler{
      */
     @Override
     public AvailableActions buildAndSendActionRequest(int playerId){
-        ActionRequestView request=new ActionRequestView();
+        ActionRequestView request=new ActionRequestView(false); //TODO aggiungere boolean per richiesta di fine turno (reload)
         try {
             return server.askAction(request,playerId);
         } catch (RemoteException e) {

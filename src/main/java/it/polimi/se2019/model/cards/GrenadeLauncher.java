@@ -1,10 +1,18 @@
 package it.polimi.se2019.model.cards;
 
+import it.polimi.se2019.controller.FictitiousPlayer;
+import it.polimi.se2019.view.ChosenAction;
+import it.polimi.se2019.controller.SingleEffectsCombinationActions;
+import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
+
+import java.util.ArrayList;
+
 public class GrenadeLauncher extends GunCardAddEff {
     /**
      * hard-coded constructor
      */
     public GrenadeLauncher() {
+        super();
         this.numberOfOptional = 1;
         this.ammoCost = new char[1];
         ammoCost[0]= 'r';
@@ -16,6 +24,41 @@ public class GrenadeLauncher extends GunCardAddEff {
 
         this.secondaryEffectCost = new char[1];
         secondaryEffectCost[0] = 'r';
-        this.thirdEffectCost=null;
+        this.tertiaryEffectCost =null;
+    }
+
+    @Override
+    void applyTertiaryEffect(ChosenAction playersChoice) {
+
+    }
+
+    @Override
+    void targetsOfTertiaryEffect() {
+
+    }
+
+    @Override
+    public SingleEffectsCombinationActions buildAvailableActions(ArrayList<String> effectsCombination, FictitiousPlayer player) throws UnavailableEffectCombinationException {
+        return null;
+    }
+
+    @Override
+    void applyBaseEffect(ChosenAction playersChoice) {
+
+    }
+
+    @Override
+    void applySecondaryEffect(ChosenAction playersChoice) {
+
+    }
+
+    @Override
+    void targetsOfBaseEffect() {
+
+    }
+
+    @Override
+    void targetsOfSecondaryEffect() {
+
     }
 }

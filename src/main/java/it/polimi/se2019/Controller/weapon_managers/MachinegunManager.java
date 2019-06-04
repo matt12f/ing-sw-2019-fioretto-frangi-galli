@@ -1,52 +1,28 @@
 package it.polimi.se2019.controller.weapon_managers;
 
-import it.polimi.se2019.AdrenalineServer;
-import it.polimi.se2019.model.game.Player;
-
-import java.util.ArrayList;
-
 public class MachinegunManager {
 
     public static void action(){
-        char damage[] = new char[1];
-        damage [0] = AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getFigure().getColor();
-        //choose
-        baseEffect(damage);
-        secondaryEffect(damage);
-        thirdEffect(damage);
+         baseEffect();
+        secondaryEffect();
+        thirdEffect();
     }
-    private static void baseEffect(char damage[]){
-        /** target: 1 or 2 (thet you can see)
+    private static void baseEffect(){
+        /** target: 1 or 2 (that you can see)
          *  damage: 1
          *
          */
-        //input da view del target
-        //TODO è una toppa momentanea in attesa dell'input
-        ArrayList<Player> targetList = new ArrayList<>();
-        targetList.add(AdrenalineServer.getMainController().getActiveturn().getActivePlayer()) ;
-        AdrenalineServer.getMainController().getActiveturn().getActionManager().getShootManager().inflictDamage(targetList, damage);
     }
-    private static void secondaryEffect(char damage[]){
+    private static void secondaryEffect(){
         /** optional attack
          * target: 1 (choose one of the target of base effect)
          *  damage: 1
          */
-        //input da view del target
-        //TODO è una toppa momentanea in attesa dell'input
-        ArrayList<Player> targetList = new ArrayList<>();
-        targetList.add(AdrenalineServer.getMainController().getActiveturn().getActivePlayer()) ;
-        AdrenalineServer.getMainController().getActiveturn().getActionManager().getShootManager().inflictDamage(targetList, damage);
-
     }
-    private static void thirdEffect(char damage[]){
+    private static void thirdEffect(){
         /** target: 1 or 2 (one of the previous one, another that you can see BUT not one of the previous one)
          *  damage: 1
          *
          */
-        //input da view del target, utilizzare come input i player del metodo precedente
-        //TODO è una toppa momentanea in attesa dell'input
-        ArrayList<Player> targetList = new ArrayList<>();
-        targetList.add(AdrenalineServer.getMainController().getActiveturn().getActivePlayer()) ;
-        AdrenalineServer.getMainController().getActiveturn().getActionManager().getShootManager().inflictDamage(targetList, damage);
-    }
+       }
 }

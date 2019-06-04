@@ -13,14 +13,10 @@ import java.util.Observable;		//for update();
 import java.util.Observer;
 
 public class GameBoardGui implements Observer {
-    MapView map;
-    PlayerBoardView board;
-    PlayerHandView hand;
+
     public GameBoardGui(int config){
         Frame frame = new Frame("ADRENALINE");
-        this.map = new MapView();
-        this.board = new PlayerBoardView();
-        this.hand = new PlayerHandView();
+
         Panel mainPanel = new Panel();
         Panel mapPanel = new Panel();
         Panel ownPanel = new Panel();
