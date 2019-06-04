@@ -12,6 +12,7 @@ public class VortexCannon extends GunCardAddEff {
      * hard-coded constructor
      */
     public VortexCannon() {
+        super();
         this.numberOfOptional = 1;
         this.ammoCost = new char[2];
         ammoCost[0]= 'b';

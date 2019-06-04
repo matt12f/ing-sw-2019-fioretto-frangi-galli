@@ -13,6 +13,7 @@ public class CyberBlade extends GunCardAddEff {
      * hard-coded constructor
      */
     public CyberBlade(){
+        super();
         this.numberOfOptional = 2;
 
         this.ammoCost = new char[2];

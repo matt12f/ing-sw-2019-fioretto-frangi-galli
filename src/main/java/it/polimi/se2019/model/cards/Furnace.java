@@ -12,6 +12,7 @@ public class Furnace extends GunCardAltEff {
      * hard-coded constructor
      */
     public Furnace() {
+        super();
         this.ammoCost = new char[2];
         ammoCost[0]= 'r';
         ammoCost[1]= 'b';

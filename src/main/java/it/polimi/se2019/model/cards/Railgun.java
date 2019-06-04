@@ -12,6 +12,7 @@ public class Railgun extends GunCardAltEff {
      * hard-coded constructor
      */
     public Railgun() {
+        super();
         this.ammoCost = new char[3];
         ammoCost[0]= 'y';
         ammoCost[1]= 'y';

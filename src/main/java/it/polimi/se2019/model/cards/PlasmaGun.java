@@ -12,6 +12,7 @@ public class PlasmaGun extends GunCardAddEff {
      * hard-coded constructor
      */
     public PlasmaGun() {
+        super();
         this.numberOfOptional = 2;
         this.ammoCost = new char[2];
         ammoCost[0] = 'b';

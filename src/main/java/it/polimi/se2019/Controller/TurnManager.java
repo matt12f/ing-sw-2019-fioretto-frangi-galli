@@ -27,7 +27,7 @@ public class TurnManager {
     }
 
     public void playTurn() {
-        //TODO richiesta interazione con la GUI
+        //TODO scrivere metodo
         mapManager.refillEmptiedCells();
     }
     private void gameStatsUpdate(){

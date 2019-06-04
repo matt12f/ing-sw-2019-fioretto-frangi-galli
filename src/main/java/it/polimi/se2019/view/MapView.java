@@ -1,6 +1,7 @@
 package it.polimi.se2019.view;
 
 public class MapView {
+    //TODO variabile con immagine della mappa
     private CellView[][] boardMatrix;
     private spawnSlotView[] spawnSlots;
     private KillShotTrackerView killView;

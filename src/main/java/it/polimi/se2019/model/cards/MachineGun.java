@@ -12,6 +12,7 @@ public class MachineGun extends GunCardAddEff {
      * hard-coded constructor
      */
     public MachineGun() {
+        super();
         this.numberOfOptional = 2;
         this.ammoCost = new char[2];
         ammoCost[0]= 'b';

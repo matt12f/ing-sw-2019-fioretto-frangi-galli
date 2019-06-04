@@ -26,8 +26,8 @@ import java.util.ArrayList;
  */
 //TODO convert to JSON string before sending
 public class AvailableActions {
-    private ArrayList<FictitiousPlayer> fictitiousPlayers; //the player will choose one of these
     private ArrayList<CellInfo> singleArrivalCells; //for move and grab actions
+    private ArrayList<FictitiousPlayer> fictitiousPlayers; //the player will choose one of these
 
     /**
      * Method that calculates the actions available to a player during a certain turn (after the selection of a macro action)

@@ -12,6 +12,7 @@ public class PowerGlove extends GunCardAltEff {
      * hard-coded constructor
      */
     public PowerGlove() {
+        super();
         this.ammoCost = new char[2];
         ammoCost[0]= 'y';
         ammoCost[1]= 'b';

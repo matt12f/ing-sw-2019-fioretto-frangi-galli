@@ -12,6 +12,7 @@ public class RocketLauncher extends GunCardAddEff {
      * hard-coded constructor
      */
     public RocketLauncher() {
+        super();
         this.numberOfOptional = 2;
         this.ammoCost = new char[2];
         ammoCost[0]= 'r';

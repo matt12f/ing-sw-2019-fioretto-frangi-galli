@@ -12,6 +12,7 @@ public class Hellion extends GunCardAltEff{
      * hard-coded constructor
      */
     public Hellion() {
+        super();
         this.ammoCost = new char[2];
         ammoCost[0] = 'r';
         ammoCost[1] = 'y';

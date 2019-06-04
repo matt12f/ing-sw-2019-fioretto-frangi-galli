@@ -12,6 +12,7 @@ public class Shockwave extends GunCardAltEff {
      * hard-coded constructor
      */
     public Shockwave() {
+        super();
         this.ammoCost = new char[1];
         ammoCost[0]= 'y';
         this.description ="basic mode: Choose up to 3 targets on\n" +

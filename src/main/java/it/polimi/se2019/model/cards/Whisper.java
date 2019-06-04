@@ -12,9 +12,7 @@ public class Whisper extends GunCardAddEff {
      * hard-coded constructor
      */
     public Whisper() {
-        this.effectsOrder= new ArrayList<>();
-        this.effectsOrder.add(new ArrayList<>());
-        this.effectsOrder.get(0).add("Base");
+        super();
         this.numberOfOptional = 0;
         this.ammoCost = new char[3];
         ammoCost[0] = 'b';

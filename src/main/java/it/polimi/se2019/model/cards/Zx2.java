@@ -12,6 +12,7 @@ public class Zx2 extends GunCardAltEff {
      * hard-coded constructor
      */
     public Zx2() {
+        super();
         this.ammoCost = new char[2];
         ammoCost[0]= 'y';
         ammoCost[1]= 'r';

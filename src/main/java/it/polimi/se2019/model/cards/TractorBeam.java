@@ -12,6 +12,7 @@ public class TractorBeam extends GunCardAltEff {
      * hard-coded constructor
      */
     public TractorBeam() {
+        super();
         this.ammoCost = new char[1];
         ammoCost[0]= 'b';
         this.description ="basic mode: Move a target 0, 1, or 2 squares to a square\n" +

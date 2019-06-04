@@ -33,7 +33,7 @@ public class SingleCardActions{
         //this part builds the list of combination of the effects a player can use
 
         //TODO metodo che prende tutti le combinazioni di un'arma e toglie quelli che non si può permettere
-        this.effectsOrder=reduceToAvailableEffects(gunCard.getEffectsOrder(),player);
+        this.effectsOrder=reduceToAvailableEffects(gunCard,gunCard.getEffectsOrder(),player);
         this.effectsCombinationActions =new ArrayList<>();
         this.mustSwap=mustSwap;
         for(int i=0;i<effectsOrder.size();i++){
@@ -48,20 +48,27 @@ public class SingleCardActions{
 
     /**
      */
-    private ArrayList<ArrayList<String>> reduceToAvailableEffects(ArrayList<ArrayList<String>> cardEffects,FictitiousPlayer player) {
+    private ArrayList<ArrayList<String>> reduceToAvailableEffects(GunCard gunCard, ArrayList<ArrayList<String>> cardEffects,FictitiousPlayer player) {
         ArrayList<ArrayList<String>> availableEffectsCombinations=new ArrayList<>();
+        boolean available;
         for(ArrayList<String> combination:cardEffects) {
+            available=true;
             for (String effect : combination)
-                switch (effect) {//TODO scrivere codice che valuta se un effetto può essere pagato
-                    case "Base":
-                        break; //do nothing
-                    case "Alternative":
-                    case "Optional1":
-                    case "Optional2":
+                switch (effect) {
+                case "Optional1":{
+                        if(!ActionManager.canAffordCost(player.getAvailableAmmo(),gunCard.getSecondaryEffectCost(),true))
+                            available=false;
+                    }break;
+                    case "Optional2":{
+                        if(!ActionManager.canAffordCost(player.getAvailableAmmo(),gunCard.getTertiaryEffectCost(),true))
+                            available=false;
+                    }break;
+                        default: break; //case "Base"
                 //TODO se si può permettere tutti gli effetti della combinazione allora posso aggiungerla così:
-                    availableEffectsCombinations.add(combination);
                 }
-                    /*
+            if(available)
+                availableEffectsCombinations.add(combination);
+        /*
         - parto da un vettore di stringhe con tutte le possibili combinazioni dell'arma
         - escludo gli effetti che il player non può pagare (considerare l'uso di powerup per pagare gli effetti)
         - Richiamo i metodi per "risolvere" le combinazioni, in ogni arma (alcune carte avranno più computazione di altre)

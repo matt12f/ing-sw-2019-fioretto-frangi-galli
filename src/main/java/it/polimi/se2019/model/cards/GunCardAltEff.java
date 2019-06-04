@@ -9,7 +9,11 @@ import it.polimi.se2019.view.ChosenAction;
 public abstract class GunCardAltEff extends GunCard{
 
     protected boolean hasAlternativeEffect=true;
-    protected String [][] effectsOrder={{"Base"},{"Alternative"}};
+
+    public GunCardAltEff(){
+        super();
+        effectsOrder.get(1).add("Optional1");
+    }
 
     public void applyEffects(ChosenAction playersChoice){
         for(int i=0;i<playersChoice.getOrderOfExecution().size();i++)
@@ -23,8 +27,8 @@ public abstract class GunCardAltEff extends GunCard{
         return hasAlternativeEffect;
     }
 
-    public char[] getSecondaryEffectCost() {
-        return secondaryEffectCost;
+    public char[] getTertiaryEffectCost() {
+        return null;
     }
 
 }

@@ -18,7 +18,7 @@ public class weaponMenuGUI {
 
     private Button baseAttackButton;
     private Button secondaryAttackButton;
-    private Button thirdAttackButton ;
+    private Button thirdAttackButton;
 
     public weaponMenuGUI(){
         Frame frame = new Frame("weapon menu");

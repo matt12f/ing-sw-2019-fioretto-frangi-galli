@@ -12,6 +12,7 @@ public class Shotgun extends GunCardAltEff {
      * hard-coded constructor
      */
     public Shotgun() {
+        super();
         this.ammoCost = new char[2];
         ammoCost[0]= 'y';
         ammoCost[1]= 'y';

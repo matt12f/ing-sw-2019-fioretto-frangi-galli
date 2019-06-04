@@ -54,19 +54,19 @@ public class Ammo {
      * these set methods add or subtract whether the value passed is positive or negative.
      * They do not prevent the value to become negative because it is prevented at the method calling.
      */
-    private void setBlue(int blue) {
+    public void setBlue(int blue) {
         this.blue += blue;
         if (this.blue > 3){
             this.blue = 3;
         }
     }
-    private void setRed(int red) {
+    public void setRed(int red) {
         this.red += red;
         if (this.red > 3){
             this.red = 3;
         }
     }
-    private void setYellow(int yellow) {
+    public void setYellow(int yellow) {
         this.yellow += yellow;
         if (this.yellow > 3){
             this.yellow = 3;

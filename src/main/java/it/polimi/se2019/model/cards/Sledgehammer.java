@@ -12,6 +12,7 @@ public class Sledgehammer extends GunCardAltEff {
      * hard-coded constructor
      */
     public Sledgehammer() {
+        super();
         this.ammoCost = new char[2];
         ammoCost[0]= 'y';
         this.description ="basic mode: Deal 2 damage to 1 target on\n" +

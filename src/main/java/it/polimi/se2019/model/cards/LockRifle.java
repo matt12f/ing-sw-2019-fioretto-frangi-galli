@@ -12,6 +12,7 @@ public class LockRifle extends GunCardAddEff {
      * hard-coded constructor
      */
     public LockRifle() {
+        super();
         this.numberOfOptional = 1;
         this.ammoCost = new char[2];
         ammoCost[0]= 'b';

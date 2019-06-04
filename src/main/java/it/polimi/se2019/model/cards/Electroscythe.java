@@ -12,6 +12,7 @@ public class Electroscythe extends GunCardAltEff {
      * hard-coded constructor
      */
     public Electroscythe() {
+        super();
         this.ammoCost = new char[1];
         ammoCost[0]= 'b';
         this.description ="basic mode: Deal 1 damage to every other player\n" +

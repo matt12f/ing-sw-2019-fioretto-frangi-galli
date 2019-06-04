@@ -12,6 +12,7 @@ public class FlameThrower extends GunCardAltEff {
      * hard-coded constructor
      */
     public FlameThrower() {
+        super();
         this.ammoCost = new char[1];
         ammoCost[0]= 'r';
         this.description ="basic mode: Choose a square 1 move away and possibly a second square\n" +

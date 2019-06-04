@@ -45,7 +45,7 @@ public class FictitiousPlayer {
             this.usableCards=evaluateUsableCards(player,frenzyReload);
             if(cell.isCanGrabCard())
                 for(GunCard gunCard:cell.getCell().getWeaponCards())
-                    if(canAffordCardCost(this.availableAmmo,gunCard,true))
+                    if(ActionManager.canAffordCost(this.availableAmmo,gunCard.getAmmoCost(),true))
                         this.usableCards.add(gunCard);
 
             this.availableCardActions = new ArrayList<>();
@@ -67,34 +67,29 @@ public class FictitiousPlayer {
         ArrayList<GunCard> usableCards=new ArrayList<>();
         //evaluates if the guns are loaded
         for(GunCard gunCard: player.getPlayerBoard().getHand().getGuns()){
-            if(gunCard!=null && (gunCard.isLoaded()||frenzyReload && canAffordCardCost(player.getPlayerBoard().getAmmo(),gunCard,false)))
+            if(gunCard!=null && (gunCard.isLoaded()||frenzyReload && ActionManager.canAffordCost(player.getPlayerBoard().getAmmo(),gunCard.getAmmoCost(),false)))
                 usableCards.add(gunCard);
         }
         return usableCards;
     }
 
-    /**
-     * this method evaluates if a player can pay the cost to grab a GunCard from a SpawnCell
-     * @param fullOrReload: if true it evaluates the full cost of reloading, if false it evaluates only the buying cost
-     */
-    private boolean canAffordCardCost(Ammo availableAmmo, GunCard gunCard, boolean fullOrReload) {
-        int blue=0;
-        int red=0;
-        int yellow=0;
-        int start;
-        if (fullOrReload)
-            start=0;
-        else
-            start=1;
-        for(int i=start;i<gunCard.getAmmoCost().length;i++) {
-            switch (gunCard.getAmmoCost()[i]) {
-                case 'b':blue++;break;
-                case 'y':yellow++;break;
-                case 'r':red++;break;
-            }
-        }
-        //TODO considerare che può essere pagato con l'uso dei powerups
-        return availableAmmo.getYellow()>=yellow && availableAmmo.getBlue()>=blue && availableAmmo.getRed()>=red;
+    public Color getPlayerColor() {
+        return playerColor;
     }
 
+    public NewCell getPosition() {
+        return position;
+    }
+
+    public Ammo getAvailableAmmo() {
+        return availableAmmo;
+    }
+
+    public ArrayList<GunCard> getUsableCards() {
+        return usableCards;
+    }
+
+    public ArrayList<SingleCardActions> getAvailableCardActions() {
+        return availableCardActions;
+    }
 }

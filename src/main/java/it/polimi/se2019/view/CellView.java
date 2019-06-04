@@ -3,7 +3,7 @@ package it.polimi.se2019.view;
 import java.util.ArrayList;
 
 public class CellView {
-    private Square[][] matrix;
+    private Square[][] matrix; //TODO sarà 3x3 e ci vanno le figure e le ammotiles
     private ArrayList<FigureView> playerFigures;
 
     public void setPlayerFigures(ArrayList<FigureView> toSet){

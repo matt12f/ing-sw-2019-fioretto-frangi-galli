@@ -14,10 +14,21 @@ public abstract class GunCard{
     protected char[] secondaryEffectCost;
     protected ArrayList<ArrayList<String>> effectsOrder;
 
+    /**
+     * every guncard has a base effect
+     */
+    public GunCard(){
+        this.loaded=true;
+        this.effectsOrder=new ArrayList<>();
+        this.effectsOrder.add(new ArrayList<>());
+        this.effectsOrder.get(0).add("Base");
+    }
+
     public char[] getAmmoCost() {
         return ammoCost;
     }
 
+    @Deprecated
     public int getRedAmmoCost() {
         int redCont=0;
         for(char singleCost:ammoCost)
@@ -25,6 +36,7 @@ public abstract class GunCard{
                 redCont++;
         return redCont;
     }
+    @Deprecated
     public int getYellowAmmoCost() {
         int yellowCont=0;
         for(char singleCost:ammoCost)
@@ -32,7 +44,7 @@ public abstract class GunCard{
                 yellowCont++;
         return yellowCont;
     }
-
+    @Deprecated
     public int getBlueAmmoCost() {
         int blueCont=0;
         for(char singleCost:ammoCost)
@@ -51,6 +63,11 @@ public abstract class GunCard{
         this.loaded = load;
     }
     public ArrayList<ArrayList<String>> getEffectsOrder(){return effectsOrder;}
+
+    public char[] getSecondaryEffectCost() {
+        return secondaryEffectCost;
+    }
+    public abstract char[] getTertiaryEffectCost();
 
     /**
      * This method calls the single effects method and applies the player's choices, using the methods below

@@ -12,6 +12,7 @@ public class GrenadeLauncher extends GunCardAddEff {
      * hard-coded constructor
      */
     public GrenadeLauncher() {
+        super();
         this.numberOfOptional = 1;
         this.ammoCost = new char[1];
         ammoCost[0]= 'r';
