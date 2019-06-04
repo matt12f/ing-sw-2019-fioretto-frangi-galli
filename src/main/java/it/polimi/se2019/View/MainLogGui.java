@@ -30,11 +30,11 @@ public class MainLogGui implements java.util.Observer{
         Frame frame = new Frame("LOG");
         frame.add("Top", new Label("choose your nickname and start a game"));
         this.nickTextField = new TextField();
+        frame.add("Top", new Label("insert ip address"));
         frame.add("Center", nickTextField);
         Panel mainPanel = new Panel();
-        this.createGameButton= new Button("Create Game");
-        this.joinGameButton= new Button("join Game");
         this.startGameButton= new Button("Start");
+
         this. radio1 = new JRadioButton("1");
         radio1.setSelected(true);
         this.radio2 = new JRadioButton("2");

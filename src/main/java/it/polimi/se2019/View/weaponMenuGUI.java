@@ -16,9 +16,7 @@ public class weaponMenuGUI {
     private TextField weaponInfo;
     private TextField weaponCharge;
 
-    private Button baseAttackButton;
-    private Button secondaryAttackButton;
-    private Button thirdAttackButton ;
+
 
     public weaponMenuGUI(){
         Frame frame = new Frame("weapon menu");
@@ -29,13 +27,9 @@ public class weaponMenuGUI {
 
         frame.add(weaponCharge);
         Panel attackPanel = new Panel();
-        this.baseAttackButton= new Button("Base Attack");
-        this.secondaryAttackButton= new Button("Second Attack");
-        this.thirdAttackButton = new Button("Third Attack");
 
-        attackPanel.add(baseAttackButton);
-        attackPanel.add(secondaryAttackButton);
-        attackPanel.add(thirdAttackButton);
+
+
         frame.add("bottom", attackPanel);
         frame.add(weaponInfo);
         frame.addWindowListener(new MainLogGui.CloseListener());
