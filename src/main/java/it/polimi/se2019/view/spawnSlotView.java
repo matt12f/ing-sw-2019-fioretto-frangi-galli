@@ -1,5 +1,5 @@
 package it.polimi.se2019.view;
 
-public class SpawnSlotView {
+public class spawnSlotView {
     private CardTileView[] weapons;
 }
