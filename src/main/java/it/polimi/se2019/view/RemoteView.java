@@ -64,4 +64,14 @@ public class RemoteView  extends View implements RMIInterface {
     public AvailableActions askAction(ActionRequestView codedAction, int playerID) throws RemoteException {
         return new AvailableActions(codedAction,playerID);
     }
+
+    @Override
+    public void setNicknameRMI(String nickname) throws RemoteException, IllegalArgumentException, InterruptedException {
+
+    }
+
+    @Override
+    public String actionRequest() throws RemoteException {
+        return null;
+    }
 }

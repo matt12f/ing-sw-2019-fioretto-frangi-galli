@@ -3,6 +3,8 @@ package it.polimi.se2019.model.cards;
 
 import it.polimi.se2019.view.ChosenAction;
 
+import java.util.ArrayList;
+
 /**
  * Secondary in these cards refers to the alternative effect
  */
@@ -12,7 +14,9 @@ public abstract class GunCardAltEff extends GunCard{
 
     public GunCardAltEff(){
         super();
-        effectsOrder.get(1).add("Optional1");
+        ArrayList<String> secondCombination=new ArrayList<>();
+        secondCombination.add("Optional1");
+        this.effectsOrder.add(secondCombination);
     }
 
     public void applyEffects(ChosenAction playersChoice){

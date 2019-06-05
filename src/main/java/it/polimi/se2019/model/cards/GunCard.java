@@ -20,8 +20,9 @@ public abstract class GunCard{
     public GunCard(){
         this.loaded=true;
         this.effectsOrder=new ArrayList<>();
-        this.effectsOrder.add(new ArrayList<>());
-        this.effectsOrder.get(0).add("Base");
+        ArrayList<String> firstCombination=new ArrayList<>();
+        firstCombination.add("Base");
+        this.effectsOrder.add(firstCombination);
     }
 
     public char[] getAmmoCost() {
