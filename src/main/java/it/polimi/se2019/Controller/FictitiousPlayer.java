@@ -1,5 +1,6 @@
 package it.polimi.se2019.controller;
 
+import it.polimi.se2019.enums.CardName;
 import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.model.cards.GunCard;
 import it.polimi.se2019.model.game.Ammo;
@@ -7,6 +8,9 @@ import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This class is used to create an Arraylist that is going to contain: player's color, position, available ammo, list of usable cards and their
@@ -19,11 +23,13 @@ import java.util.ArrayList;
  *
  */
 public class FictitiousPlayer {
+    private static final Logger LOGGER = Logger.getLogger(FictitiousPlayer.class.getName());
     private Color playerColor;
     private NewCell position;
+    private ArrayList<CardName> usedPwUps;
     private Ammo availableAmmo;
-    private ArrayList<GunCard> usableCards;
     private ArrayList<SingleCardActions> availableCardActions; //for the actions you can do with one card
+
 
     /**
      * This method creates a fictitious player that has supposedly taken the choices contained in the parameter cell
@@ -31,9 +37,11 @@ public class FictitiousPlayer {
      * @param player used to add the ammo picked up to the existing ammo a player has
      * @return fictitious player
      */
-    public FictitiousPlayer (Player player,CellInfo cell,boolean shoot, boolean frenzyReload){
+    public FictitiousPlayer (Player player, CellInfo cell, boolean shoot, boolean frenzyReload, ArrayList<CardName> usedPwUps){
+        ArrayList<GunCard> usableCards=new ArrayList<>();
         this.playerColor=player.getFigure().getColor();
         this.position =cell.getCell();
+        this.usedPwUps=usedPwUps;
         if (cell.isCanGrabAmmo()){
             this.availableAmmo=player.getPlayerBoard().getAmmo();
             this.availableAmmo.addAmmo(cell.getCell().getDrop().getContent());
@@ -42,20 +50,26 @@ public class FictitiousPlayer {
             // if the player chooses one of those, he must discard one of his current cards. This could work
             // because the use of a card is exclusionary (you can only use one at a time).
         if(shoot){
-            this.usableCards=evaluateUsableCards(player,frenzyReload);
+            usableCards=evaluateUsableCards(player,frenzyReload);
             if(cell.isCanGrabCard())
                 for(GunCard gunCard:cell.getCell().getWeaponCards())
-                    if(ActionManager.canAffordCost(this.availableAmmo,gunCard.getAmmoCost(),true))
-                        this.usableCards.add(gunCard);
+                    if(ActionManager.canAffordCost(this.availableAmmo,gunCard.getAmmoCost(),true,this.usedPwUps))
+                        usableCards.add(gunCard);
 
             this.availableCardActions = new ArrayList<>();
-            for (GunCard gunCard : this.usableCards)
-                this.availableCardActions.add(new SingleCardActions(gunCard,this,this.usableCards.size()>3));
+            for (GunCard gunCard : usableCards)
+                this.availableCardActions.add(new SingleCardActions(gunCard,this,usableCards.size()>3));
+
+            //removal of not usable cards (with no targets)
+            try {
+                this.availableCardActions.removeAll(Collections.singleton(null));
+            }catch(NullPointerException e){
+                LOGGER.log(Level.WARNING,"Fictitious Player unavailable card actions clearing ",e);
+            }
+
         }else{
-            this.usableCards = null;
             this.availableCardActions = null;
         }
-        //TODO rimozione carte non utilizzabili sia da usableCards che da availableCardActions
     }
 
     /**
@@ -67,10 +81,14 @@ public class FictitiousPlayer {
         ArrayList<GunCard> usableCards=new ArrayList<>();
         //evaluates if the guns are loaded
         for(GunCard gunCard: player.getPlayerBoard().getHand().getGuns()){
-            if(gunCard!=null && (gunCard.isLoaded()||frenzyReload && ActionManager.canAffordCost(player.getPlayerBoard().getAmmo(),gunCard.getAmmoCost(),false)))
+            if(gunCard!=null && (gunCard.isLoaded()||frenzyReload && ActionManager.canAffordCost(player.getPlayerBoard().getAmmo(),gunCard.getAmmoCost(),false,usedPwUps)))
                 usableCards.add(gunCard);
         }
         return usableCards;
+    }
+
+    public ArrayList<CardName> getUsedPwUps() {
+        return usedPwUps;
     }
 
     public Color getPlayerColor() {
@@ -83,10 +101,6 @@ public class FictitiousPlayer {
 
     public Ammo getAvailableAmmo() {
         return availableAmmo;
-    }
-
-    public ArrayList<GunCard> getUsableCards() {
-        return usableCards;
     }
 
     public ArrayList<SingleCardActions> getAvailableCardActions() {
