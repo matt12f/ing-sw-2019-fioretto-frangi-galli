@@ -25,20 +25,20 @@ import java.util.ArrayList;
  */
 
 public class SingleCardActions{
+    private String usableGunCardName;
     private ArrayList<ArrayList<String>> effectsOrder; //indicates all of the possible effects order
     private ArrayList<SingleEffectsCombinationActions> effectsCombinationActions;
     private boolean mustSwap;
 
     public SingleCardActions(GunCard gunCard, FictitiousPlayer player, boolean mustSwap) {
-        //this part builds the list of combination of the effects a player can use
-
-        //TODO metodo che prende tutti le combinazioni di un'arma e toglie quelli che non si può permettere
+        //this part builds the list of combination of the effects a player can afford to use
+        this.usableGunCardName=gunCard.getClass().toString();
         this.effectsOrder=reduceToAvailableEffects(gunCard,gunCard.getEffectsOrder(),player);
         this.effectsCombinationActions =new ArrayList<>();
         this.mustSwap=mustSwap;
-        for(int i=0;i<effectsOrder.size();i++){
+        for(ArrayList<String> effectsCombination:effectsOrder){
             try{
-            this.effectsCombinationActions.add(gunCard.buildAvailableActions(effectsOrder.get(i),player));
+            this.effectsCombinationActions.add(gunCard.buildAvailableActions(effectsCombination,player));
             }
         catch (UnavailableEffectCombinationException e){
                 //it means there are no targets for this combination and it won't be added
@@ -56,25 +56,27 @@ public class SingleCardActions{
             for (String effect : combination)
                 switch (effect) {
                 case "Optional1":{
-                        if(!ActionManager.canAffordCost(player.getAvailableAmmo(),gunCard.getSecondaryEffectCost(),true))
+                        if(!ActionManager.canAffordCost(player.getAvailableAmmo(),gunCard.getSecondaryEffectCost(),true, player.getUsedPwUps()))
                             available=false;
                     }break;
                     case "Optional2":{
-                        if(!ActionManager.canAffordCost(player.getAvailableAmmo(),gunCard.getTertiaryEffectCost(),true))
+                        if(!ActionManager.canAffordCost(player.getAvailableAmmo(),gunCard.getTertiaryEffectCost(),true, player.getUsedPwUps()))
                             available=false;
                     }break;
                         default: break; //case "Base"
-                //TODO se si può permettere tutti gli effetti della combinazione allora posso aggiungerla così:
                 }
             if(available)
                 availableEffectsCombinations.add(combination);
-        /*
-        - parto da un vettore di stringhe con tutte le possibili combinazioni dell'arma
-        - escludo gli effetti che il player non può pagare (considerare l'uso di powerup per pagare gli effetti)
-        - Richiamo i metodi per "risolvere" le combinazioni, in ogni arma (alcune carte avranno più computazione di altre)
-         */
         }
         return availableEffectsCombinations;
+    }
+
+    public String getUsableGunCardName() {
+        return usableGunCardName;
+    }
+
+    public boolean isMustSwap() {
+        return mustSwap;
     }
 
     public ArrayList<ArrayList<String>> getEffectsOrder(){

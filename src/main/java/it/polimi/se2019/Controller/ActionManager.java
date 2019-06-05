@@ -1,8 +1,11 @@
 package it.polimi.se2019.controller;
 
 
+import it.polimi.se2019.enums.CardName;
 import it.polimi.se2019.model.cards.*;
 import it.polimi.se2019.model.game.Ammo;
+
+import java.util.ArrayList;
 
 public class ActionManager {
     private ShootManager shootManager;
@@ -33,7 +36,7 @@ public class ActionManager {
      * this method evaluates if a player can pay the cost to grab a GunCard from a SpawnCell
      * @param fullOrReload: if true it evaluates the full cost of reloading, if false it evaluates only the buying cost
      */
-    public static boolean canAffordCost(Ammo availableAmmo, char[] ammoCost, boolean fullOrReload) {
+    public static boolean canAffordCost(Ammo availableAmmo, char[] ammoCost, boolean fullOrReload, ArrayList<CardName> usedPwUps) {
         int blue=0;
         int red=0;
         int yellow=0;
@@ -42,14 +45,15 @@ public class ActionManager {
             start=0;
         else
             start=1;
-        for(int i=start;i<ammoCost.length;i++) {
+        for(int i=start;i<ammoCost.length;i++){
             switch (ammoCost[i]) {
                 case 'b':blue++;break;
                 case 'y':yellow++;break;
                 case 'r':red++;break;
             }
         }
-        //TODO considerare che può essere pagato con l'uso dei powerups
+
+        //TODO considerare che può essere pagato con l'uso dei powerups (è importante il colore dei cubetti sul pwup)
         return availableAmmo.getYellow()>=yellow && availableAmmo.getBlue()>=blue && availableAmmo.getRed()>=red;
     }
 }

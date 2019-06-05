@@ -38,14 +38,14 @@ public class AvailableActions {
     public AvailableActions(ActionRequestView macroAction, int playerId) {
         Player player=AdrenalineServer.getMainController().getMainGameModel().getPlayerList().get(playerId);
         switch (macroAction.getActionToRequest()){
-            case NORMAL1:  buildActions(player,3,false,false,false);break;
-            case NORMAL2:  buildActions(player,1,true,false,false);break;
-            case NORMAL3:  buildActions(player,0,false,true,false);break;
-            case FRENZY1:  buildActions(player,1,false,true,true);break;
-            case FRENZY2:  buildActions(player,4,false,false,false);break;
-            case FRENZY3:  buildActions(player,2,true,false,false);break;
-            case FRENZY4:  buildActions(player,2,false,true,true);break;
-            case FRENZY5:  buildActions(player,3,true,false,false);break;
+            case NORMAL1:  buildActions(player,macroAction,3,false,false,false);break;
+            case NORMAL2:  buildActions(player,macroAction,1,true,false,false);break;
+            case NORMAL3:  buildActions(player,macroAction,0,false,true,false);break;
+            case FRENZY1:  buildActions(player,macroAction,1,false,true,true);break;
+            case FRENZY2:  buildActions(player,macroAction,4,false,false,false);break;
+            case FRENZY3:  buildActions(player,macroAction,2,true,false,false);break;
+            case FRENZY4:  buildActions(player,macroAction,2,false,true,true);break;
+            case FRENZY5:  buildActions(player,macroAction,3,true,false,false);break;
         }
     }
 
@@ -59,7 +59,10 @@ public class AvailableActions {
      *                    be considered when evaluating which cards the player can use
      * @return available actions object to return to the player (CLIENT)
      */
-    private void buildActions(Player player, int moveDistance, boolean grab, boolean shoot, boolean frenzyReload){
+    private void buildActions(Player player, ActionRequestView macroAction, int moveDistance, boolean grab, boolean shoot, boolean frenzyReload){
+
+        //TODO chiamata per applicare modifiche dei powerup
+
         //checks for adrenaline modes
         if(player.getPlayerBoard().getActionTileNormal().getAdrenalineMode1() && grab)
             moveDistance++;
@@ -70,7 +73,7 @@ public class AvailableActions {
         this.singleArrivalCells=createArrivalCells(player,moveDistance,grab);
 
         for(CellInfo cell:this.singleArrivalCells)
-            this.fictitiousPlayers.add(new FictitiousPlayer(player, cell,shoot,frenzyReload));
+            this.fictitiousPlayers.add(new FictitiousPlayer(player, cell,shoot,frenzyReload,macroAction.getPowerupUse().getUsedPowerups()));
     }
 
     /**

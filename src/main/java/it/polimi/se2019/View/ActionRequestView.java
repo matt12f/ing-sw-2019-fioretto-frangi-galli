@@ -14,7 +14,7 @@ public class ActionRequestView{
      */
     public ActionRequestView(boolean turnConclusion){
         if(!turnConclusion){
-        int choice=1;//TODO questo va richiesto a video, a seconda del clic invia il tipo di richiesta
+        int choice=1;//TODO richiesta di click a video, a seconda del clic invia il tipo di richiesta
         switch (choice){
             case 1: this.actionToRequest=ActionType.NORMAL1;break;
             case 2: this.actionToRequest=ActionType.NORMAL2;break;
@@ -48,12 +48,12 @@ public class ActionRequestView{
                 int idPlayerToMove=3;//chi vuoi spostare?
                 String direction="Up";//in quale direzione? (attivare celle cliccabili)
                 int distanceOfMovement=1;//di quante celle?
-                return new PowerupUse(idPlayerToMove,direction,distanceOfMovement,null);
+                return new PowerupUse(CardName.PWUP_NEWTON,idPlayerToMove,direction,distanceOfMovement,null);
             }
             else if(cardView.getCardName().equals(CardName.PWUP_TELEPORTER)){
                 //TODO messaggi a video: vuoi usarla?
                 CellView temp=new CellView();//in quale cella ti vuoi spostare?
-                return new PowerupUse(AdrenalineClient.getLocalView().getPlayerId(),"None",0,temp);
+                return new PowerupUse(CardName.PWUP_TELEPORTER, AdrenalineClient.getLocalView().getPlayerId(),"None",0,temp);
             }
             return null;
     }

@@ -20,7 +20,7 @@ public class SingleEffectsCombinationActions {
     private ArrayList<NewCell> targetCells; //To choose from
 
 
-    public SingleEffectsCombinationActions(GunCard gunCard, Player player) {
+    public SingleEffectsCombinationActions(GunCard gunCard, FictitiousPlayer player) {
         //TODO evaluation for this combination of guncard, player, effectsOrder
     }
 
