@@ -1,6 +1,5 @@
 package it.polimi.se2019.view;
 
-
 public class PlayerBoardView {
     private AmmoView ammo;
     private boolean front;
