@@ -84,7 +84,7 @@ public class AdrenalineServer implements Runnable {
 
 
         /**try{
-            //penso non servi --> mainController=new Controller();
+            //penso non servi --> mainController=new controller();
             logInterface stubLogIn = (logInterface) UnicastRemoteObject.exportObject(lobbies, 0);
             Registry registry = LocateRegistry.getRegistry();
             registry.bind("lobbyCreation", lobbies);

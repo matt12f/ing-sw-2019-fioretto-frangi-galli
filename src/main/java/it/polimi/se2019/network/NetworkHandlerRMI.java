@@ -10,10 +10,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * This class represents the RMI network handler, that enables communication between the Remote View obj in the server
- * and the Local View in the client
+ * This class represents the RMI network handler, that enables communication between the Remote view obj in the server
+ * and the Local view in the client
  *
- * It looks for the RemoteView of the game offered by the Controller
+ * It looks for the RemoteView of the game offered by the controller
  */
 
 public class NetworkHandlerRMI extends NetworkHandler{

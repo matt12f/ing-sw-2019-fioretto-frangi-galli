@@ -24,7 +24,7 @@ public class Controller implements Observer {
     private TurnManager activeturn;
 
     /**
-     * This constructor generates one local Controller object for one Player
+     * This constructor generates one local controller object for one Player
      */
     public Controller() {
         ArrayList<Player> players = new ArrayList<>();
@@ -56,7 +56,7 @@ public class Controller implements Observer {
         try {
             Naming.rebind("rmi://localhost/adrenaline", virtualView);
         } catch (RemoteException | MalformedURLException e){
-            LOGGER.log(Level.FINE,"Controller",e);
+            LOGGER.log(Level.FINE,"controller",e);
         }
         return virtualView;
     }
@@ -99,7 +99,7 @@ public class Controller implements Observer {
                         mapMatrixToFill[i][j]=null;
                     }
         }catch(FullException e){
-            LOGGER.log(Level.FINE,"Setup game in Controller",e);
+            LOGGER.log(Level.FINE,"Setup game in controller",e);
         }
     }
 

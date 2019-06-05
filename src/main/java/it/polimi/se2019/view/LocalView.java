@@ -19,10 +19,6 @@ public class LocalView  extends View implements Observer {
         this.playerHand = playerHand;
     }
 
-    private void fakeMethodForGit(String resolveIssue){
-        if (resolveIssue.length()>4)
-            System.out.println("OMG");
-    }
     public ArrayList<PlayerBoardView> getPlayerBoardViews() {
         return playerBoardViews;
     }

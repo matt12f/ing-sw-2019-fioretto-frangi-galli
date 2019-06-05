@@ -7,11 +7,6 @@ public class PlayerBoardView {
     private ActionTileView actionTile;
     private int score;
 
-    private void fakeMethodForGit(String resolveIssue){
-        if (resolveIssue.length()>4)
-            System.out.println("OMG");
-    }
-
     public void setScore(int toSet){
         this.score=toSet;
     }

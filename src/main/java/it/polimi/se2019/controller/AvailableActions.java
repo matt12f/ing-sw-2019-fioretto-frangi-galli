@@ -12,7 +12,7 @@ import it.polimi.se2019.view.ActionRequestView;
 import java.util.ArrayList;
 
 /**
- * This class builds the message object that the ActionManager in Controller builds and sends over to the Client
+ * This class builds the message object that the ActionManager in controller builds and sends over to the Client
  * to choose from
  *
  * In the Normal 1 combination (move, move, move) you will only use the cell object
