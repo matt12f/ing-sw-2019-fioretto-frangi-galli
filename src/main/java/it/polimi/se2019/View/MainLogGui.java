@@ -1,13 +1,9 @@
 package it.polimi.se2019.view;
 
 
-import java.awt.Button;
+import java.awt.*;
 import javax.swing.*;
 import javax.swing.event.*;
-import java.awt.Panel;
-import java.awt.Frame;
-import java.awt.TextField;
-import java.awt.Label;
 import java.awt.event.WindowEvent;	//for CloseListener()
 import java.awt.event.WindowAdapter;	//for CloseListener()
 import java.lang.Integer;		//int from Model is passed as an Integer
@@ -15,43 +11,38 @@ import java.util.Observable;		//for update();
 import java.awt.event.ActionListener;	//for addController()
 public class MainLogGui implements java.util.Observer{
     private TextField nickTextField;
-    private Button createGameButton;
-    private Button joinGameButton;
+    private TextField ipTextField;
+
     private Button startGameButton;
-    //radioGroup
-    private ButtonGroup groupRadio;
-    private JRadioButton radio1;
-    private JRadioButton radio2;
-    private JRadioButton radio3;
-    private JRadioButton radio4;
+
 
 
     public MainLogGui(){
         Frame frame = new Frame("LOG");
-        frame.add("Top", new Label("choose your nickname and start a game"));
+        JPanel mainpanel = new JPanel(new GridBagLayout());
+        GridBagConstraints container = new GridBagConstraints();
+        mainpanel.setLayout(new GridBagLayout());
+
+        container.fill = GridBagConstraints.HORIZONTAL;
+        container.gridx = 1;
+        container.gridy = 1;
+        mainpanel.add(new Label("choose your nickname and start a game"), container);
         this.nickTextField = new TextField();
-        frame.add("Top", new Label("insert ip address"));
-        frame.add("Center", nickTextField);
-        Panel mainPanel = new Panel();
+        mainpanel.add(nickTextField, container);
+
+
+        container.fill = GridBagConstraints.HORIZONTAL;
+        container.gridx = 1;
+        container.gridy = 2;
+        mainpanel.add(new Label("insert ip address"), container);
+        mainpanel.add(ipTextField, container);
+
         this.startGameButton= new Button("Start");
+        container.fill = GridBagConstraints.HORIZONTAL;
+        container.gridx = 1;
+        container.gridy = 3;
+        mainpanel.add(startGameButton, container);
 
-        this. radio1 = new JRadioButton("1");
-        radio1.setSelected(true);
-        this.radio2 = new JRadioButton("2");
-        this.radio3 = new JRadioButton("3");
-        this.radio4 = new JRadioButton("4");
-
-        this.groupRadio = new ButtonGroup();
-        groupRadio.add(radio1);
-        groupRadio.add(radio2);
-        groupRadio.add(radio3);
-        groupRadio.add(radio4);
-
-
-        mainPanel.add(createGameButton);
-        mainPanel.add(joinGameButton);
-        mainPanel.add(startGameButton);
-        frame.add("bottom", mainPanel);
         frame.addWindowListener(new CloseListener());
         frame.setSize(600,600);
         frame.setLocation(100,100);
@@ -66,13 +57,9 @@ public class MainLogGui implements java.util.Observer{
     } //update()
 
     public void addController(ActionListener controller){
-        createGameButton.addActionListener(controller);
-        joinGameButton.addActionListener(controller);
+
         startGameButton.addActionListener(controller);
-        radio1.addActionListener(controller);
-        radio2.addActionListener(controller);
-        radio3.addActionListener(controller);
-        radio4.addActionListener(controller);
+
 
     } //addController()
 
