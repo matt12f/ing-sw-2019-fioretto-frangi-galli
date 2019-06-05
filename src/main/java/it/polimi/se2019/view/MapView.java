@@ -6,6 +6,10 @@ public class MapView {
     private spawnSlotView[] spawnSlots;
     private KillShotTrackerView killView;
 
+    private void fakeMethodForGit(String resolveIssue){
+        if (resolveIssue.length()>4)
+            System.out.println("OMG");
+    }
     public CellView getCell (int i, int j){
         return boardMatrix[i][j];
     }
