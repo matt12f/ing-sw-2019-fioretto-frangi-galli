@@ -1,5 +1,6 @@
 package it.polimi.se2019.view;
 
+
 public class PlayerBoardView {
     private AmmoView ammo;
     private boolean front;
@@ -17,6 +18,11 @@ public class PlayerBoardView {
 
     public AmmoView getAmmo(){
         return ammo;
+    }
+
+
+    public void setAmmo(AmmoView toSet){
+        this.ammo=toSet;
     }
 
     public boolean isFront() {

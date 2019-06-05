@@ -1,45 +1,26 @@
 package it.polimi.se2019.view;
 
-import it.polimi.se2019.model.game.*;
-
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+import it.polimi.se2019.model.game.*;
 
 public class LocalView  extends View implements Observer {
     private ArrayList<PlayerBoardView> playerBoardViews;
-    private int playerId;
+    private PlayerBoardView personalPlayerBoardView;
     private MapView mapView;
     private PlayerHandView playerHand;
 
-    public LocalView(ArrayList<PlayerBoardView> playerBoardViews,int playerId, MapView mapView, PlayerHandView playerHand) {
+    public LocalView(ArrayList<PlayerBoardView> playerBoardViews, MapView mapView, PlayerHandView playerHand) {
         this.playerBoardViews = playerBoardViews;
-        this.playerId=playerId;
         this.mapView = mapView;
         this.playerHand = playerHand;
     }
 
-    public ArrayList<PlayerBoardView> getPlayerBoardViews() {
-        return playerBoardViews;
-    }
-
     public PlayerBoardView getPersonalPlayerBoardView() {
-        return playerBoardViews.get(playerId);
+        return personalPlayerBoardView;
     }
 
-    public MapView getMapView() {
-        return mapView;
-    }
-
-    public PlayerHandView getPlayerHand() {
-        return playerHand;
-    }
-
-    public int getPlayerId() {
-        return playerId;
-    }
-
-    //TODO rivedere update di Hand e Ammo con classi corrette: PlayerHandView e AmmoView
     @Override
     public void update(Observable o, Object arg) {
         if(arg instanceof PlayerBoard){
@@ -48,6 +29,7 @@ public class LocalView  extends View implements Observer {
         }else if(arg instanceof Map){
             for (int i=0; i<3; i++) {
                 for(int j=0; j<2; j++){
+                    //TODO (Teo) questo mi lascia un po' perplesso (anche perché ad arg mi sa che si può cambiarne il tipo)
                 }
             }
         }else if(arg instanceof GunDeck){
