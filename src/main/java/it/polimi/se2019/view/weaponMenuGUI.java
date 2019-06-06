@@ -1,10 +1,7 @@
 package it.polimi.se2019.view;
 
-import java.awt.Button;
-import java.awt.Panel;
-import java.awt.Frame;
-import java.awt.TextField;
-import java.awt.Label;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;	//for CloseListener()
 import java.awt.event.WindowAdapter;	//for CloseListener()
@@ -12,32 +9,35 @@ import java.lang.Integer;		//int from Model is passed as an Integer
 import java.util.Observable;		//for update();
 
 public class weaponMenuGUI {
-    private TextField weaponName;
-    private TextField weaponInfo;
-    private TextField weaponCharge;
+    private Label weaponName;
+    private Label weaponInfo;
+    private Label weaponCharge;
 
-    private Button baseAttackButton;
-    private Button secondaryAttackButton;
-    private Button thirdAttackButton;
+
 
     public weaponMenuGUI(){
         Frame frame = new Frame("weapon menu");
-        this.weaponName = new TextField();
-        this.weaponInfo = new TextField();
-        this.weaponCharge = new TextField();
-        frame.add(weaponName);
+        this.weaponName = new Label();
+        this.weaponInfo = new Label();
+        this.weaponCharge = new Label();
+        JPanel mainPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints container = new GridBagConstraints();
+        mainPanel.setLayout(new GridBagLayout());
 
-        frame.add(weaponCharge);
-        Panel attackPanel = new Panel();
-        this.baseAttackButton= new Button("Base Attack");
-        this.secondaryAttackButton= new Button("Second Attack");
-        this.thirdAttackButton = new Button("Third Attack");
+        container.fill = GridBagConstraints.HORIZONTAL;
+        container.gridx = 1;
+        container.gridy = 1;
+        mainPanel.add(weaponName, container);
+        mainPanel.add(weaponInfo, container);
 
-        attackPanel.add(baseAttackButton);
-        attackPanel.add(secondaryAttackButton);
-        attackPanel.add(thirdAttackButton);
-        frame.add("bottom", attackPanel);
-        frame.add(weaponInfo);
+        container.fill = GridBagConstraints.HORIZONTAL;
+        container.gridx = 1;
+        container.gridy = 2;
+        mainPanel.add(weaponCharge, container);
+
+
+
+
         frame.addWindowListener(new MainLogGui.CloseListener());
         frame.setSize(200,200);
         frame.setLocation(500,500);
