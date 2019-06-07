@@ -19,6 +19,7 @@ public class ShootManager {
         //TODO IL RITORNO NON VA BENE! SI RIFERISCE A UN SOLO PLAYER QUANDO GLI PASSIAMO UN ARRAYLIST!!
         return (PlayerManager.isAlive(AdrenalineServer.getMainController().getActiveturn().getActivePlayer()));
     }
+
     public void appointMarker(ArrayList<Player> targets, char [] markers){
         //TODO scrivere metodo
         Player target;

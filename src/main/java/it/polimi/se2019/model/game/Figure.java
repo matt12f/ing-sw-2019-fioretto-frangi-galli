@@ -14,6 +14,17 @@ public class Figure {
         return color;
     }
 
+    public char getColorChar(){
+        switch (this.color){
+            case RED: return 'r';
+            case BLUE:return 'b';
+            case GREEN:return 'g';
+            case VIOLET:return 'v';
+            case YELLOW:return 'y';
+            default: return ' ';
+        }
+    }
+
     public NewCell getCell() {
         return currentCell;
     }

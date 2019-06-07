@@ -1,6 +1,7 @@
 package it.polimi.se2019.controller;
 
 
+import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.enums.CardName;
 import it.polimi.se2019.model.cards.*;
 import it.polimi.se2019.model.game.Ammo;
@@ -52,8 +53,16 @@ public class ActionManager {
                 case 'r':red++;break;
             }
         }
+        int availableBlue=availableAmmo.getBlue();
+        int availableRed=availableAmmo.getRed();
+        int availableYellow=availableAmmo.getYellow();
 
-        //TODO considerare che può essere pagato con l'uso dei powerups (è importante il colore dei cubetti sul pwup)
-        return availableAmmo.getYellow()>=yellow && availableAmmo.getBlue()>=blue && availableAmmo.getRed()>=red;
+        for(PowerupCard powerupCard: AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getPlayerBoard().getHand().getPowerups())
+            switch (powerupCard.getCubeColor()){
+                case 'b':availableBlue++;break;
+                case 'y':availableYellow++;break;
+                case 'r':availableRed++;break;
+            }
+        return availableBlue>=blue&&availableRed>=red&&availableYellow>=yellow;
     }
 }

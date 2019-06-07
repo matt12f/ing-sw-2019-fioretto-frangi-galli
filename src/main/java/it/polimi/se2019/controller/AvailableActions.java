@@ -61,10 +61,9 @@ public class AvailableActions {
      * @return available actions object to return to the player (CLIENT)
      */
     private void buildActions(Player player, ActionRequestView macroAction, int moveDistance, boolean grab, boolean shoot, boolean frenzyReload){
-
         for (PowerupUse powerupUse:macroAction.getPowerupUse()){
             if(powerupUse.getDirectionOfMove().equals("None"))
-                PowerupManager.teleporterManager(powerupUse.getIndexInHand(),player,MapManager.cellViewToNewCell(powerupUse.getCellForSelfMovement()));
+                PowerupManager.teleporterManager(powerupUse.getIndexInHand(),MapManager.cellViewToNewCell(powerupUse.getCellForSelfMovement()));
             else
                 PowerupManager.newtonManager(powerupUse.getIndexInHand(),AdrenalineServer.getMainController().getMainGameModel().getPlayerList().get(powerupUse.getIdPlayerToMove()),powerupUse.getMovementDistance(),powerupUse.getDirectionOfMove());
         }
@@ -94,9 +93,7 @@ public class AvailableActions {
             // in ogni cella del percorso (fino a una lunghezza massima di maxDistance), per riempire l'array, dovrò usare
             // l'operazione sottostante, dove "cell" è la cella in cui è terminato l'algoritmo di esplorazione
             NewCell cell=new NewCell(Color.BLUE, CellEdge.WALL,CellEdge.WALL,CellEdge.WALL,CellEdge.WALL, CellType.DROP); //TODO da calcolare come indicato sopra
-            singleArrivalCells.add(new CellInfo(cell,true/* calcolo1 && grab */,false /* calcolo2 && grab*/));
-            //TODO calcolo1: da calcolare se può pagarne il prezzo, se non ha spazio nella mano può sempre scartarne una
-            //TODO calcolo2: si stabilisce se ci sono ammo da raccogliere (quasi sempre si) (se si è solo spostato, senza grab, sarà false!!)
+            singleArrivalCells.add(new CellInfo(cell, grab,cell.getDrop()!=null && grab ));
 
         }else if(grab) //for actions without movement but with grab
             singleArrivalCells.add(new CellInfo(player.getFigure().getCell(),true, player.getFigure().getCell().getCellType().equals(CellType.DROP) && player.getFigure().getCell().getDrop()!=null));

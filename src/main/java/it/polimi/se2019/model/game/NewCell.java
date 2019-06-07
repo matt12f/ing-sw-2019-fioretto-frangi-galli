@@ -71,13 +71,13 @@ public class NewCell {
             throw new FullException("gun hand already full");
     }
 
-    public boolean needsRefill(boolean deckOk){
+    public boolean needsRefill(boolean emptyDeck){
         if(this.cellType.equals(CellType.SPAWN)){
-            if (this.weaponCards.size()<3&&deckOk)
+            if (this.weaponCards.size()<3 && !emptyDeck)
                 return true;
         }
         else if(this.cellType.equals(CellType.DROP)){
-                if (this.drop==null && deckOk)
+                if (this.drop==null && !emptyDeck)
                     return true;
         }
         return false;

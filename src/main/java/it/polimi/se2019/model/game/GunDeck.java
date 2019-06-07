@@ -47,8 +47,4 @@ public class GunDeck {
         activeDeck.remove(0);
         return drawn;
     }
-
-    public boolean isEmpty(){
-        return activeDeck.isEmpty();
-    }
 }

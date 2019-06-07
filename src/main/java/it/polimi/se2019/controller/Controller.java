@@ -99,7 +99,7 @@ public class Controller implements Observer {
                         mapMatrixToFill[i][j]=null;
                     }
         }catch(FullException e){
-            LOGGER.log(Level.FINE,"Setup game in controller",e);
+            LOGGER.log(Level.FINE,"Setup game in controller", e);
         }
     }
 

@@ -27,12 +27,12 @@ public class PlayerManager {
         return (player.getPlayerBoard().getDamageTrack().getDamage().length<12);
     }
 
-   public void markerManager(Player player, char[] add) {
+   public static void markerManager(Player player, char[] add) {
         for (char mark: add)
             player.getPlayerBoard().getDamageTrack().addMark(mark);
     }
 
-    public void adrenalineManager(Player player){
+    public static void adrenalineManager(Player player){
         if(player.getPlayerBoard().getDamageTrack().getDamage().length >= 3){
             player.getPlayerBoard().getActionTileNormal().setAdrenalineMode1(true);
         }else if(player.getPlayerBoard().getDamageTrack().getDamage().length >= 6){
@@ -40,17 +40,9 @@ public class PlayerManager {
         }
     }
 
-
-    //TODO scrivere metodo
-        public void gunHandManager(){
-    }
-
-
-    public void powerupHandManager(Player player, PowerupCard powerup){
-        //TODO scrivere metodo
+    public void payGunCardCost(boolean fullOrReload){
 
     }
-
 
     public void frenzyManager(){
         //TODO scrivere metodo
