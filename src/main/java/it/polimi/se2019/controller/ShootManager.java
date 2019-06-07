@@ -28,6 +28,7 @@ public class ShootManager {
             AdrenalineServer.getMainController().getActiveturn().getPlayerManager().markerManager(target, markers);
         }
     }
+
     public void moveOpponent(ArrayList<Player> targets){
         //TODO scrivere metodo
     }

@@ -1,14 +1,9 @@
 package it.polimi.se2019.network;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Collections;
-
-import static it.polimi.se2019.AdrenalineServer.socketClientCounter;
 
 public class SocketClients implements Runnable{
 

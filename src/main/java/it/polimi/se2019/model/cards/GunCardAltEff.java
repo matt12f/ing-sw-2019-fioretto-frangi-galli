@@ -1,7 +1,7 @@
 package it.polimi.se2019.model.cards;
 
 
-import it.polimi.se2019.view.ChosenAction;
+import it.polimi.se2019.view.ChosenActions;
 
 import java.util.ArrayList;
 
@@ -19,7 +19,7 @@ public abstract class GunCardAltEff extends GunCard{
         this.effectsOrder.add(secondCombination);
     }
 
-    public void applyEffects(ChosenAction playersChoice){
+    public void applyEffects(ChosenActions playersChoice){
         for(int i=0;i<playersChoice.getOrderOfExecution().size();i++)
             switch (playersChoice.getOrderOfExecution().get(i)){
                 case "Base":applyBaseEffect(playersChoice);break;

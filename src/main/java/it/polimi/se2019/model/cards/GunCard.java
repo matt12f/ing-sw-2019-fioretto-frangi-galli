@@ -1,7 +1,7 @@
 package it.polimi.se2019.model.cards;
 
 import it.polimi.se2019.controller.FictitiousPlayer;
-import it.polimi.se2019.view.ChosenAction;
+import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
 import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
 
@@ -73,7 +73,7 @@ public abstract class GunCard{
     /**
      * This method calls the single effects method and applies the player's choices, using the methods below
      */
-    public abstract void applyEffects(ChosenAction playersChoices);
+    public abstract void applyEffects(ChosenActions playersChoices);
 
     /**
      *This method builds the available actions, returning an exception in case there are no targets
@@ -83,8 +83,8 @@ public abstract class GunCard{
     /**
      * methods that apply the individual effects, with the selections of the player as inputs
      */
-    abstract void applyBaseEffect(ChosenAction playersChoice);  //TODO valutare classe apposita per input al singolo effetto
-    abstract void applySecondaryEffect(ChosenAction playersChoice);  //TODO valutare classe apposita per input al singolo effetto
+    abstract void applyBaseEffect(ChosenActions playersChoice);  //TODO valutare classe apposita per input al singolo effetto
+    abstract void applySecondaryEffect(ChosenActions playersChoice);  //TODO valutare classe apposita per input al singolo effetto
 
     /**
      * Methods to calculate the possible targets that return a SingleEffectAction

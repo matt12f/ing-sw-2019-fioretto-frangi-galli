@@ -1,7 +1,7 @@
 package it.polimi.se2019.model.cards;
 
 import it.polimi.se2019.controller.FictitiousPlayer;
-import it.polimi.se2019.view.ChosenAction;
+import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
 import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
 
@@ -32,12 +32,12 @@ public class TractorBeam extends GunCardAltEff {
     }
 
     @Override
-    void applyBaseEffect(ChosenAction playersChoice) {
+    void applyBaseEffect(ChosenActions playersChoice) {
 
     }
 
     @Override
-    void applySecondaryEffect(ChosenAction playersChoice) {
+    void applySecondaryEffect(ChosenActions playersChoice) {
 
     }
 

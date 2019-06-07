@@ -36,7 +36,7 @@ public class ActionManager {
      * this method evaluates if a player can pay the cost to grab a GunCard from a SpawnCell
      * @param fullOrReload: if true it evaluates the full cost of reloading, if false it evaluates only the buying cost
      */
-    public static boolean canAffordCost(Ammo availableAmmo, char[] ammoCost, boolean fullOrReload, ArrayList<CardName> usedPwUps) {
+    public static boolean canAffordCost(Ammo availableAmmo, char[] ammoCost, boolean fullOrReload) {
         int blue=0;
         int red=0;
         int yellow=0;

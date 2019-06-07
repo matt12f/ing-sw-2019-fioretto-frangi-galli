@@ -3,11 +3,14 @@ package it.polimi.se2019.view;
 import it.polimi.se2019.AdrenalineClient;
 import it.polimi.se2019.enums.ActionType;
 import it.polimi.se2019.enums.CardName;
+import it.polimi.se2019.enums.CellEdge;
+
+import java.util.ArrayList;
 
 public class ActionRequestView{
     private ActionType actionToRequest;
     private boolean [] reload;
-    private PowerupUse powerupUse;
+    private ArrayList<PowerupUse> powerupUse;
 
     /** this constructor manages both the normal request of a macro action and the end of the turn
      * when the player must decide wether he wants to use a powerup and/or reload
@@ -41,21 +44,24 @@ public class ActionRequestView{
     /**
      * this method covers the offer of the powerups newton and teleporter before the macro actions
      */
-    private PowerupUse powerupManagerView() {
-        for(CardTileView cardView:AdrenalineClient.getLocalView().getPlayerHand().getPowerups())
-            if (cardView.getCardName().equals(CardName.PWUP_NEWTON)){
-             //TODO messaggi a video: vuoi usarla? se la risposta è no ritorno null
-                int idPlayerToMove=3;//chi vuoi spostare?
+    private ArrayList<PowerupUse> powerupManagerView() {
+        ArrayList<PowerupUse> temp=new ArrayList<>();
+        CardTileView[] cardView=AdrenalineClient.getLocalView().getPlayerHand().getPowerups();
+        for(int i=0;i<cardView.length;i++)
+            if (cardView[i].getCardName().equals(CardName.PWUP_NEWTON)){
+             //TODO messaggi a video: vuoi usarla? se la risposta è no
+                int idPlayerToMove=3;//chi vuoi spostare? vanno bene tutti (tranne se stesso)
+                //TODO check per vedere dove ci si può spostare
                 String direction="Up";//in quale direzione? (attivare celle cliccabili)
                 int distanceOfMovement=1;//di quante celle?
-                return new PowerupUse(CardName.PWUP_NEWTON,idPlayerToMove,direction,distanceOfMovement,null);
+                temp.add(new PowerupUse(i,idPlayerToMove,distanceOfMovement,direction,null));
             }
-            else if(cardView.getCardName().equals(CardName.PWUP_TELEPORTER)){
+            else if(cardView[i].getCardName().equals(CardName.PWUP_TELEPORTER)){
                 //TODO messaggi a video: vuoi usarla?
-                CellView temp=new CellView();//in quale cella ti vuoi spostare?
-                return new PowerupUse(CardName.PWUP_TELEPORTER, AdrenalineClient.getLocalView().getPlayerId(),"None",0,temp);
+                CellView destCell=new CellView(1,1, CellEdge.WALL,CellEdge.WALL,CellEdge.WALL,CellEdge.WALL);//in quale cella ti vuoi spostare? vanno bene tutte (tranne quella dov'è attualmente)
+                temp.add(new PowerupUse(i,AdrenalineClient.getLocalView().getPlayerId(),0,"None",destCell));
             }
-            return null;
+        return temp;
     }
 
     public ActionType getActionToRequest() {
@@ -66,7 +72,7 @@ public class ActionRequestView{
         return reload;
     }
 
-    public PowerupUse getPowerupUse() {
+    public ArrayList<PowerupUse> getPowerupUse() {
         return powerupUse;
     }
 }

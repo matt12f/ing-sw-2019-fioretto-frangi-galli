@@ -1,6 +1,6 @@
 package it.polimi.se2019.model.cards;
 
-import it.polimi.se2019.view.ChosenAction;
+import it.polimi.se2019.view.ChosenActions;
 
 
 public abstract class GunCardAddEff extends GunCard{
@@ -25,7 +25,7 @@ public abstract class GunCardAddEff extends GunCard{
         return secondaryEffectCost;
     }
 
-    public void applyEffects(ChosenAction playersChoice){
+    public void applyEffects(ChosenActions playersChoice){
         for(int i=0;i<playersChoice.getOrderOfExecution().size();i++)
             switch (playersChoice.getOrderOfExecution().get(i)){
                 case "Base":applyBaseEffect(playersChoice);break;
@@ -43,7 +43,7 @@ public abstract class GunCardAddEff extends GunCard{
     /**
      * methods that apply the individual effects, with the selections of the player as inputs
      */
-    abstract void applyTertiaryEffect(ChosenAction playersChoice);
+    abstract void applyTertiaryEffect(ChosenActions playersChoice);
 
     /**
      * Methods called by available actions builder to calculate the possible targets

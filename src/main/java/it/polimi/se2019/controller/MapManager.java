@@ -4,6 +4,7 @@ import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.enums.CellType;
 import it.polimi.se2019.exceptions.FullException;
 import it.polimi.se2019.model.game.*;
+import it.polimi.se2019.view.CellView;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,5 +39,9 @@ public class MapManager {
             }
         }
         cellFinish.addPlayers(player);
+    }
+
+    public static NewCell cellViewToNewCell(CellView cellView){
+        return AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix()[cellView.getLineIndex()][cellView.getColumnIndex()];
     }
 }

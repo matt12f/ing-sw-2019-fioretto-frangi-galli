@@ -8,6 +8,7 @@ import it.polimi.se2019.model.cards.GunCard;
 import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ActionRequestView;
+import it.polimi.se2019.view.PowerupUse;
 
 import java.util.ArrayList;
 
@@ -61,7 +62,12 @@ public class AvailableActions {
      */
     private void buildActions(Player player, ActionRequestView macroAction, int moveDistance, boolean grab, boolean shoot, boolean frenzyReload){
 
-        //TODO chiamata per applicare modifiche dei powerup
+        for (PowerupUse powerupUse:macroAction.getPowerupUse()){
+            if(powerupUse.getDirectionOfMove().equals("None"))
+                PowerupManager.teleporterManager(powerupUse.getIndexInHand(),player,MapManager.cellViewToNewCell(powerupUse.getCellForSelfMovement()));
+            else
+                PowerupManager.newtonManager(powerupUse.getIndexInHand(),AdrenalineServer.getMainController().getMainGameModel().getPlayerList().get(powerupUse.getIdPlayerToMove()),powerupUse.getMovementDistance(),powerupUse.getDirectionOfMove());
+        }
 
         //checks for adrenaline modes
         if(player.getPlayerBoard().getActionTileNormal().getAdrenalineMode1() && grab)
@@ -73,7 +79,7 @@ public class AvailableActions {
         this.singleArrivalCells=createArrivalCells(player,moveDistance,grab);
 
         for(CellInfo cell:this.singleArrivalCells)
-            this.fictitiousPlayers.add(new FictitiousPlayer(player, cell,shoot,frenzyReload,macroAction.getPowerupUse().getUsedPowerups()));
+            this.fictitiousPlayers.add(new FictitiousPlayer(player, cell,shoot,frenzyReload));
     }
 
     /**

@@ -82,6 +82,10 @@ public class Hand {
         }
         if(!substituted) throw new CardNotFoundException("guns");
     }
+
+    public void removePowerUp(int indexInHand){
+        this.powerups[indexInHand]=null;
+    }
 }
 
 

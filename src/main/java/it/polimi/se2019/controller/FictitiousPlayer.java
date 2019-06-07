@@ -26,7 +26,6 @@ public class FictitiousPlayer {
     private static final Logger LOGGER = Logger.getLogger(FictitiousPlayer.class.getName());
     private Color playerColor;
     private NewCell position;
-    private ArrayList<CardName> usedPwUps;
     private Ammo availableAmmo;
     private ArrayList<SingleCardActions> availableCardActions; //for the actions you can do with one card
 
@@ -37,11 +36,10 @@ public class FictitiousPlayer {
      * @param player used to add the ammo picked up to the existing ammo a player has
      * @return fictitious player
      */
-    public FictitiousPlayer (Player player, CellInfo cell, boolean shoot, boolean frenzyReload, ArrayList<CardName> usedPwUps){
+    public FictitiousPlayer (Player player, CellInfo cell, boolean shoot, boolean frenzyReload){
         ArrayList<GunCard> usableCards=new ArrayList<>();
         this.playerColor=player.getFigure().getColor();
         this.position =cell.getCell();
-        this.usedPwUps=usedPwUps;
         if (cell.isCanGrabAmmo()){
             this.availableAmmo=player.getPlayerBoard().getAmmo();
             this.availableAmmo.addAmmo(cell.getCell().getDrop().getContent());
@@ -53,7 +51,7 @@ public class FictitiousPlayer {
             usableCards=evaluateUsableCards(player,frenzyReload);
             if(cell.isCanGrabCard())
                 for(GunCard gunCard:cell.getCell().getWeaponCards())
-                    if(ActionManager.canAffordCost(this.availableAmmo,gunCard.getAmmoCost(),true,this.usedPwUps))
+                    if(ActionManager.canAffordCost(this.availableAmmo,gunCard.getAmmoCost(),true))
                         usableCards.add(gunCard);
 
             this.availableCardActions = new ArrayList<>();
@@ -81,14 +79,10 @@ public class FictitiousPlayer {
         ArrayList<GunCard> usableCards=new ArrayList<>();
         //evaluates if the guns are loaded
         for(GunCard gunCard: player.getPlayerBoard().getHand().getGuns()){
-            if(gunCard!=null && (gunCard.isLoaded()||frenzyReload && ActionManager.canAffordCost(player.getPlayerBoard().getAmmo(),gunCard.getAmmoCost(),false,usedPwUps)))
+            if(gunCard!=null && (gunCard.isLoaded()||frenzyReload && ActionManager.canAffordCost(player.getPlayerBoard().getAmmo(),gunCard.getAmmoCost(),false)))
                 usableCards.add(gunCard);
         }
         return usableCards;
-    }
-
-    public ArrayList<CardName> getUsedPwUps() {
-        return usedPwUps;
     }
 
     public Color getPlayerColor() {

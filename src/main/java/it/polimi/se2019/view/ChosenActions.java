@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * this class is going to send back the objects it received to "select" them
  */
-public class ChosenAction {//TODO convert to JSON string before sending
+public class ChosenActions {//TODO convert to JSON string before sending
     //for move and grab actions
     private NewCell arrivalCell;
     private int gunCardToSwap;

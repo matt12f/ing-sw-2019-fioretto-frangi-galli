@@ -1,7 +1,7 @@
 package it.polimi.se2019.model.cards;
 
 import it.polimi.se2019.controller.FictitiousPlayer;
-import it.polimi.se2019.view.ChosenAction;
+import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
 import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
 
@@ -30,7 +30,7 @@ public class Heatseeker extends GunCardAddEff {
     }
 
     @Override
-    void applyBaseEffect(ChosenAction playersChoice) {
+    void applyBaseEffect(ChosenActions playersChoice) {
         //TODO scrivere codice
     }
 
@@ -44,7 +44,7 @@ public class Heatseeker extends GunCardAddEff {
     }
 
     @Override
-    void applyTertiaryEffect(ChosenAction playersChoice) {
+    void applyTertiaryEffect(ChosenActions playersChoice) {
         throw new UnsupportedOperationException();
     }
     @Override
@@ -52,7 +52,7 @@ public class Heatseeker extends GunCardAddEff {
         throw new UnsupportedOperationException();
     }
     @Override
-    void applySecondaryEffect(ChosenAction playersChoice) {
+    void applySecondaryEffect(ChosenActions playersChoice) {
         throw new UnsupportedOperationException();
     }
     @Override
