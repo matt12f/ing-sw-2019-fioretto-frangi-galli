@@ -97,10 +97,9 @@ public class MapManager {
             throw new OuterWallException();
     }
 
-    // these arrays encode the possible movements in the 4 cardinal directions
+    // these arrays encode the possible movements in the 4 cardinal directions (Up,Down,Left,Right)
     private static final int[] row = {-1, 1, 0, 0};
     private static final int[] col = {0, 0, -1, 1};
-    private static final String[] direction = {"Up", "Down", "Left", "Right"};
 
     /**
      * this method evaluates if a move in the board is valid
