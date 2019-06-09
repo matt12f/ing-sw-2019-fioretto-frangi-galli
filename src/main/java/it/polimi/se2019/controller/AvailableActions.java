@@ -1,10 +1,12 @@
 package it.polimi.se2019.controller;
 
 import it.polimi.se2019.AdrenalineServer;
+import it.polimi.se2019.enums.ActionType;
 import it.polimi.se2019.enums.CellEdge;
 import it.polimi.se2019.enums.CellType;
 import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.model.cards.GunCard;
+import it.polimi.se2019.model.game.Map;
 import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ActionRequestView;
@@ -53,14 +55,15 @@ public class AvailableActions {
     /**
      * method that builds the available actions from the macro actions
      * @param player: is the subject of the action
-     * @param moveDistance: number of move actions in the macro actions
+     * @param maxMoveDistance: number of move actions in the macro actions
      * @param grab: if there is a grab option
      * @param shoot: if there is a shoot option (sometimes it's the only action possible)
      * @param frenzyReload: if there's a frenzy action with the possibility to reload a gun before shooting it must
      *                    be considered when evaluating which cards the player can use
      * @return available actions object to return to the player (CLIENT)
      */
-    private void buildActions(Player player, ActionRequestView macroAction, int moveDistance, boolean grab, boolean shoot, boolean frenzyReload){
+    private void buildActions(Player player, ActionRequestView macroAction, int maxMoveDistance, boolean grab, boolean shoot, boolean frenzyReload){
+        NewCell[][] board=AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix();
         for (PowerupUse powerupUse:macroAction.getPowerupUse()){
             if(powerupUse.getDirectionOfMove().equals("None"))
                 PowerupManager.teleporterManager(powerupUse.getIndexInHand(),MapManager.cellViewToNewCell(powerupUse.getCellForSelfMovement()));
@@ -70,12 +73,19 @@ public class AvailableActions {
 
         //checks for adrenaline modes
         if(player.getPlayerBoard().getActionTileNormal().getAdrenalineMode1() && grab)
-            moveDistance++;
+            maxMoveDistance++;
         if(player.getPlayerBoard().getActionTileNormal().getAdrenalineMode2() && shoot)
-            moveDistance++;
+            maxMoveDistance++;
+
+        //determines the minimum move distance
+        int minMoveDistance;
+        if(macroAction.getActionToRequest().equals(ActionType.NORMAL1))
+            minMoveDistance=1;
+        else
+            minMoveDistance=0;
 
         this.fictitiousPlayers=new ArrayList<>();
-        this.singleArrivalCells=createArrivalCells(player,moveDistance,grab);
+        this.singleArrivalCells=createArrivalCells(board,player,minMoveDistance,maxMoveDistance,grab);
 
         for(CellInfo cell:this.singleArrivalCells)
             this.fictitiousPlayers.add(new FictitiousPlayer(player, cell,shoot,frenzyReload));
@@ -84,16 +94,21 @@ public class AvailableActions {
     /**
      * arrivalCell setup
      */
-    private static  ArrayList<CellInfo> createArrivalCells(Player player, int moveDistance, boolean grab){
+    private static  ArrayList<CellInfo> createArrivalCells(NewCell[][] board, Player player,int minMoveDistance, int maxMoveDistance, boolean grab){
         ArrayList<CellInfo> singleArrivalCells = new ArrayList<>();
 
-        if(moveDistance!=0){ //For move and move+grab actions
+        //in case the player is allowed NOT to move from his current cell (all of the macroActions except for Normal1)
+        if(minMoveDistance==0)
+            singleArrivalCells.add(new CellInfo(player.getFigure().getCell(),grab,player.getFigure().getCell().getDrop()!=null && grab));
+
+        NewCell referenceCell=player.getFigure().getCell();
+
+        if(maxMoveDistance!=0){ //For move and move+grab actions
             //here I'll add the cells that the player can move into
-            //TODO Parto dalla posizione del player, mi sposto da lì in cerca di percorsi con cicli while;
-            // in ogni cella del percorso (fino a una lunghezza massima di maxDistance), per riempire l'array, dovrò usare
-            // l'operazione sottostante, dove "cell" è la cella in cui è terminato l'algoritmo di esplorazione
-            NewCell cell=new NewCell(Color.BLUE, CellEdge.WALL,CellEdge.WALL,CellEdge.WALL,CellEdge.WALL, CellType.DROP); //TODO da calcolare come indicato sopra
-            singleArrivalCells.add(new CellInfo(cell, grab,cell.getDrop()!=null && grab ));
+            for(NewCell [] cellRow: board)
+                for(NewCell singleCell: cellRow)
+                    if(!singleCell.getCellType().equals(CellType.OUTSIDEBOARD) && singleCell!=player.getFigure().getCell() && MapManager.distanceBetweenCells(board,referenceCell,singleCell) <= maxMoveDistance)
+                        singleArrivalCells.add(new CellInfo(referenceCell, grab,singleCell.getDrop()!=null && grab));
 
         }else if(grab) //for actions without movement but with grab
             singleArrivalCells.add(new CellInfo(player.getFigure().getCell(),true, player.getFigure().getCell().getCellType().equals(CellType.DROP) && player.getFigure().getCell().getDrop()!=null));

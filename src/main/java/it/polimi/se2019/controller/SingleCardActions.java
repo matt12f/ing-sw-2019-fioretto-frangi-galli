@@ -46,8 +46,6 @@ public class SingleCardActions{
         }
     }
 
-    /**
-     */
     private ArrayList<ArrayList<String>> reduceToAvailableEffects(GunCard gunCard, ArrayList<ArrayList<String>> cardEffects,FictitiousPlayer player) {
         ArrayList<ArrayList<String>> availableEffectsCombinations=new ArrayList<>();
         boolean available;
@@ -56,11 +54,11 @@ public class SingleCardActions{
             for (String effect : combination)
                 switch (effect) {
                 case "Optional1":{
-                        if(!ActionManager.canAffordCost(player.getAvailableAmmo(),gunCard.getSecondaryEffectCost(),true, player.getUsedPwUps()))
+                        if(!ActionManager.canAffordCost(player.getAvailableAmmo(),gunCard.getSecondaryEffectCost(),true))
                             available=false;
                     }break;
                     case "Optional2":{
-                        if(!ActionManager.canAffordCost(player.getAvailableAmmo(),gunCard.getTertiaryEffectCost(),true, player.getUsedPwUps()))
+                        if(!ActionManager.canAffordCost(player.getAvailableAmmo(),gunCard.getTertiaryEffectCost(),true))
                             available=false;
                     }break;
                         default: break; //case "Base"

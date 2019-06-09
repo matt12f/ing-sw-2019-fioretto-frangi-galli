@@ -24,6 +24,7 @@ public class ActionManager {
      * @param drop
      */
     public void dropManager(AmmoTileCard drop){
+        //TODO serve questo metodo?
     }
 
     /**
@@ -31,6 +32,7 @@ public class ActionManager {
      * including the controlling cycle about the player's weapon hand
      */
     public void spawnDropManager(GunCard weapon){
+        //TODO serve questo metodo?
     }
 
     /**

@@ -39,9 +39,5 @@ public class SingleEffectsCombinationActions {
         return new ArrayList<>();//TODO scrivere codice
     }
 
-    /* checks if a cell is N moves away from another cell*/
-    private boolean isAcellNmovesAway(int desiredDistance, NewCell cell1, NewCell cell2){
-        return false;//TODO scrivere codice
-    }
 }
 

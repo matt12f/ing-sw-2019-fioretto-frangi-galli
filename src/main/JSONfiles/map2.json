@@ -53,7 +53,15 @@
         "right": "DOOR",
         "weaponCards": []
       },
-      null
+      {
+        "cellType": "OUTSIDEBOARD",
+        "color": "WHITE",
+        "players": [],
+        "top": "WALL",
+        "bottom": "WALL",
+        "left": "WALL",
+        "right": "WALL"
+      }
     ],
     [
       {
@@ -95,7 +103,15 @@
       }
     ],
     [
-      null,
+      {
+        "cellType": "OUTSIDEBOARD",
+        "color": "WHITE",
+        "players": [],
+        "top": "WALL",
+        "bottom": "WALL",
+        "left": "WALL",
+        "right": "WALL"
+      },
       {
         "cellType": "DROP",
         "color": "WHITE",

@@ -1,6 +1,7 @@
 package it.polimi.se2019.controller;
 
 import it.polimi.se2019.AdrenalineServer;
+import it.polimi.se2019.exceptions.OuterWallException;
 import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
 
@@ -16,7 +17,12 @@ public class PowerupManager {
      * That would be too late.)
      */
     public static void newtonManager(int cardIndexInHand, Player player, int distance, String direction){
-        NewCell cell=MapManager.getCellInDirection(player.getFigure().getCell(),distance,direction);
+        NewCell cell= null;
+        try {
+            cell = MapManager.getCellInDirection(AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix(),player.getFigure().getCell(),distance,direction);
+        } catch (OuterWallException e) {
+            //TODO loggare eccezione, sarebbe errato riceverla qui
+        }
         if(cell!=null){
             MapManager.movePlayer(player,cell);
             removeFromHand(cardIndexInHand);

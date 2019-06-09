@@ -124,4 +124,13 @@ public class NewCell {
         return temp;
     }
 
+    public CellEdge getEdge(int edgeNumber){
+        switch (edgeNumber){
+            case 0: return this.top;
+            case 1: return this.bottom;
+            case 2: return this.left;
+            case 3: return this.right;
+            default:return CellEdge.WALL;
+        }
+    }
 }

@@ -2,6 +2,7 @@ package it.polimi.se2019.test_model.test_game;
 
 
 import com.google.gson.Gson;
+import it.polimi.se2019.enums.CellType;
 import it.polimi.se2019.model.game.*;
 import org.junit.jupiter.api.Test;
 
@@ -74,7 +75,7 @@ public class TestMap {
 
     }
 
-    private Map createMap(int config)throws FileNotFoundException {
+    public static Map createMap(int config)throws FileNotFoundException {
         Gson gson = new Gson();
         Reader reader = new FileReader("src/main/JSONfiles/map"+config+".json");
         return gson.fromJson(reader, Map.class);
@@ -84,7 +85,7 @@ public class TestMap {
         int count=0;
         for(int i=0; i<boardMatrix.length;i++)
             for(int j=0;j<boardMatrix[i].length;j++)
-                if(boardMatrix[i][j]!=null)
+                if(!boardMatrix[i][j].getCellType().equals(CellType.OUTSIDEBOARD))
                     count++;
         return count;
     }
