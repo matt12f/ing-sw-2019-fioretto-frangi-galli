@@ -17,29 +17,32 @@ public class weaponMenuGUI {
 
     public weaponMenuGUI(){
         Frame frame = new Frame("weapon menu");
-        this.weaponName = new Label();
-        this.weaponInfo = new Label();
-        this.weaponCharge = new Label();
+        this.weaponName = new Label("Nome");
+        this.weaponInfo = new Label("info");
+        this.weaponCharge = new Label("charged");
         JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints container = new GridBagConstraints();
         mainPanel.setLayout(new GridBagLayout());
 
-        container.fill = GridBagConstraints.HORIZONTAL;
+
         container.gridx = 1;
         container.gridy = 1;
         mainPanel.add(weaponName, container);
-        mainPanel.add(weaponInfo, container);
-
-        container.fill = GridBagConstraints.HORIZONTAL;
         container.gridx = 1;
         container.gridy = 2;
+        mainPanel.add(weaponInfo, container);
+
+
+        container.gridx = 1;
+        container.gridy = 3;
         mainPanel.add(weaponCharge, container);
 
 
 
 
         frame.addWindowListener(new MainLogGui.CloseListener());
-        frame.setSize(200,200);
+        frame.add(mainPanel);
+        frame.setSize(400,400);
         frame.setLocation(500,500);
         frame.setVisible(true);
 
