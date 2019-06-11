@@ -4,4 +4,8 @@ public class PlayerZoneGUI {
     public PlayerHandViewGUI hand;
     public PlayerBoardViewGUI board;
 
+    public PlayerZoneGUI (){
+
+
+    }
 }

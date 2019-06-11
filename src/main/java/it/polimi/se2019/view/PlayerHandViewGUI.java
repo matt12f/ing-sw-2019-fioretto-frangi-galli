@@ -18,7 +18,7 @@ public class PlayerHandViewGUI {
         JPanel powerup3 = new JPanel();
         JPanel ammo = new JPanel(new GridBagLayout());
         GridBagConstraints ammoContainer = new GridBagConstraints();
-
+        ammo.setLayout(new GridBagLayout());
         //first column//
         container.gridx = 0;
         container.gridy = 0;
@@ -47,6 +47,22 @@ public class PlayerHandViewGUI {
         container.gridx = 0;
         container.gridy = 6;
         mainPanel.add(ammo);
+
+        //ammo first raw//
+        ammoContainer.gridx = 0;
+        ammoContainer.gridy = 0;
+        ammo.add(new Label("BLUE:"));
+
+        //ammo second raw//
+        ammoContainer.gridx = 0;
+        ammoContainer.gridy = 1;
+        ammo.add(new Label("RED:"));
+
+        //ammo third raw//
+        ammoContainer.gridx = 0;
+        ammoContainer.gridy = 2;
+        ammo.add(new Label("YELLOW:"));
+
 
     }
 }

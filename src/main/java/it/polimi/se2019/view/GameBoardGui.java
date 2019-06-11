@@ -13,7 +13,7 @@ public class GameBoardGui implements Observer {
     public MapViewGUI map;
     public PlayerZoneGUI playerZone;
     public ScoreViewGUI scoreZone;
-
+    public BoardZoneGUI boardZone;
     public GameBoardGui(int config){
         Frame frame = new Frame("ADRENALINE");
 
@@ -21,7 +21,31 @@ public class GameBoardGui implements Observer {
         GridBagConstraints container = new GridBagConstraints();
         mainPanel.setLayout(new GridBagLayout());
 
+
+        this.map = new MapViewGUI();
+        container.gridx=0;
+        container.gridy=0;
+        //mainPanel.add(map);
+
+
+        this.scoreZone = new ScoreViewGUI();
+        container.gridx=1;
+        container.gridy=0;
+        //mainPanel.add(scoreZone);
+
+
+        this.boardZone = new BoardZoneGUI();
+        container.gridx=1;
+        container.gridy=1;
+        //mainPanel.add(boardZone);
+
+        this.playerZone = new PlayerZoneGUI();
+        container.gridx=0;
+        container.gridy=2;
+        //mainPanel.add(playerZone);
+
         frame.addWindowListener(new MainLogGui.CloseListener());
+        frame.add(mainPanel);
         frame.setSize(1280,720);
         frame.setLocation(0,0);
         frame.setVisible(true);

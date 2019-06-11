@@ -8,7 +8,7 @@ import java.awt.event.WindowAdapter;	//for CloseListener()
 import java.lang.Integer;		//int from Model is passed as an Integer
 import java.util.Observable;		//for update();
 
-public class weaponMenuGUI {
+public class WeaponMenuGUI {
     private JPanel image;
     private Label weaponName;
     private Label weaponInfo;
@@ -16,7 +16,7 @@ public class weaponMenuGUI {
 
 
 
-    public weaponMenuGUI(){
+    public WeaponMenuGUI(){
         Frame frame = new Frame("weapon menu");
         this.weaponName = new Label("Nome");
         this.weaponInfo = new Label("info");
