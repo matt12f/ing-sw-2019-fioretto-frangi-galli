@@ -7,7 +7,8 @@ import org.junit.jupiter.api.Test;
 public class TestGeneralGui {
     @Test
     public void TestGeneralGui(){
-        weaponMenuGUI gui = new weaponMenuGUI();
+        //weaponMenuGUI gui = new weaponMenuGUI();
+        MainLogGui log = new MainLogGui();
         while(true){}
     }
 }

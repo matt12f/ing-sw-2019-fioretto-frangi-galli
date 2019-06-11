@@ -24,25 +24,28 @@ public class MainLogGui implements java.util.Observer{
         mainPanel.setLayout(new GridBagLayout());
 
 
-        container.gridx = 0;
+        container.gridx = 1;
         container.gridy = 1;
         mainPanel.add(new Label("choose your nickname and start a game"), container);
         this.nickTextField = new TextField();
-        container.gridx = 0;
+        container.fill = GridBagConstraints.HORIZONTAL;
+        container.gridx = 1;
         container.gridy = 2;
         mainPanel.add(nickTextField, container);
 
 
 
-        container.gridx = 0;
+        container.gridx = 1;
         container.gridy = 3;
         mainPanel.add(new Label("insert ip address"), container);
-        container.gridx = 0;
+        this.ipTextField = new TextField();
+        container.fill = GridBagConstraints.HORIZONTAL;
+        container.gridx = 1;
         container.gridy = 4;
         mainPanel.add(ipTextField, container);
 
         this.startGameButton= new Button("Start");
-        container.gridx = 0;
+        container.gridx = 1;
         container.gridy = 5;
         mainPanel.add(startGameButton, container);
 

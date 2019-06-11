@@ -9,6 +9,7 @@ import java.lang.Integer;		//int from Model is passed as an Integer
 import java.util.Observable;		//for update();
 
 public class weaponMenuGUI {
+    private JPanel image;
     private Label weaponName;
     private Label weaponInfo;
     private Label weaponCharge;
@@ -20,21 +21,24 @@ public class weaponMenuGUI {
         this.weaponName = new Label("Nome");
         this.weaponInfo = new Label("info");
         this.weaponCharge = new Label("charged");
+        this.image = new JPanel();
         JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints container = new GridBagConstraints();
         mainPanel.setLayout(new GridBagLayout());
 
-
-        container.gridx = 1;
-        container.gridy = 1;
+        container.gridx = 0;
+        container.gridy = 0;
         mainPanel.add(weaponName, container);
         container.gridx = 1;
-        container.gridy = 2;
+        container.gridy = 0;
+        mainPanel.add(weaponName, container);
+        container.gridx = 1;
+        container.gridy = 1;
         mainPanel.add(weaponInfo, container);
 
 
         container.gridx = 1;
-        container.gridy = 3;
+        container.gridy = 2;
         mainPanel.add(weaponCharge, container);
 
 
