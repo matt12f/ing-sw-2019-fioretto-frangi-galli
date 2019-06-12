@@ -1,6 +1,6 @@
 package it.polimi.se2019.controller;
 
-import it.polimi.se2019.model.cards.GunCard;
+import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
 import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
 
@@ -12,32 +12,64 @@ import java.util.ArrayList;
 public class SingleEffectsCombinationActions {
     private ArrayList<Player> targetList1; //To choose from
     private ArrayList<Player> targetList2; //To choose from
-    private int maxNumberOfTargets; //For the GUI/CLI
+    private int maxNumberOfTargetsList1; //For the GUI/CLI
+    private int maxNumberOfTargetsList2; //For the GUI/CLI
     private String directionOfMovement; //To Choose from
     private int maxDistanceOfMovement; //For the GUI/CLI
     private boolean allowedMovement; //For the GUI/CLI
     private boolean yourOrTheirMovement; //For the GUI/CLI
     private ArrayList<NewCell> targetCells; //To choose from
 
-
-    public SingleEffectsCombinationActions(GunCard gunCard, FictitiousPlayer player) {
-        //TODO evaluation for this combination of guncard, player, effectsOrder
+    public SingleEffectsCombinationActions() {
+        this.targetList1=new ArrayList<>();
+        this.targetList2=new ArrayList<>();
+        this.maxNumberOfTargetsList1=0;
+        this.directionOfMovement="None";
+        this.maxDistanceOfMovement=0;
+        this.allowedMovement=false;
+        this.targetCells=new ArrayList<>();
     }
 
-    /* returns the targets a certain player can see */
-    private ArrayList<Player> visibleTargets(Player playersPOV){
-        return new ArrayList<>();//TODO scrivere codice
+    public void addToTargetList1(ArrayList<Player> targetList1) {
+        this.targetList1.addAll(targetList1);
     }
 
-    /* returns the squares you can see/in one direction*/
-    private ArrayList<NewCell> squareRetriever(String direction, boolean visible, int movesAway){
-        return new ArrayList<>();//TODO scrivere codice
+    public void addToTargetList2(ArrayList<Player> targetList2) {
+        this.targetList1.addAll(targetList2);
     }
 
-    /* returns a list of players different from a given list, effectively removing the players you can’t hurt*/
-    private ArrayList<Player> untouchableRemover(ArrayList<Player> NotAvailablePlayers){
-        return new ArrayList<>();//TODO scrivere codice
+    public void setMaxNumberOfTargetsList1(int maxNumberOfTargets) {
+        this.maxNumberOfTargetsList1 = maxNumberOfTargets;
     }
 
+    public void setMaxNumberOfTargetsList2(int maxNumberOfTargetsList2) {
+        this.maxNumberOfTargetsList2 = maxNumberOfTargetsList2;
+    }
+
+    public void setDirectionOfMovement(String directionOfMovement) {
+        this.directionOfMovement = directionOfMovement;
+    }
+
+    public void setMaxDistanceOfMovement(int maxDistanceOfMovement) {
+        this.maxDistanceOfMovement = maxDistanceOfMovement;
+    }
+
+    public void setAllowedMovement(boolean allowedMovement) {
+        this.allowedMovement = allowedMovement;
+    }
+
+    public void setYourOrTheirMovement(boolean yourOrTheirMovement) {
+        this.yourOrTheirMovement = yourOrTheirMovement;
+    }
+
+    public void setTargetCells(ArrayList<NewCell> targetCells) {
+        this.targetCells = targetCells;
+    }
+
+    //TODO c'è altro da controllare?
+    public void validate() throws UnavailableEffectCombinationException{
+        if (this.targetList1.isEmpty() &&this.targetList2.isEmpty() &&this.targetCells.isEmpty())
+            throw new UnavailableEffectCombinationException();
+    }
 }
 

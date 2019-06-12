@@ -67,19 +67,19 @@ public class TestMapManager {
 
         NewCell[][] board=testMap.getBoardMatrix();
 
-        assertDoesNotThrow(()->MapManager.getCellInDirection(board,board[0][0],2,"Right"));
+        assertDoesNotThrow(()->MapManager.getCellInDirection(board,board[0][0],2,3));
         try {
-            assertEquals(board[0][2],MapManager.getCellInDirection(board,board[0][0],2,"Right"));
+            assertEquals(board[0][2],MapManager.getCellInDirection(board,board[0][0],2,3));
         } catch (OuterWallException e) {
             fail();
         }
 
-        assertThrows(OuterWallException.class,()->MapManager.getCellInDirection(board,board[0][0],2,"Down"));
+        assertThrows(OuterWallException.class,()->MapManager.getCellInDirection(board,board[0][0],2,1));
 
-        assertThrows(OuterWallException.class,()->MapManager.getCellInDirection(board,board[2][2],3,"Up"));
+        assertThrows(OuterWallException.class,()->MapManager.getCellInDirection(board,board[2][2],3,0));
 
         try {
-            assertEquals(board[0][2],MapManager.getCellInDirection(board,board[2][2],2,"Up"));
+            assertEquals(board[0][2],MapManager.getCellInDirection(board,board[2][2],2,0));
         } catch (OuterWallException e) {
             fail();
         }

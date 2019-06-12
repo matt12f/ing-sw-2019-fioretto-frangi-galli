@@ -38,6 +38,10 @@ public class NewCell {
         }
     }
 
+    public Color getColor() {
+        return color;
+    }
+
     public CellType getCellType() {
         return cellType;
     }

@@ -88,7 +88,9 @@ public abstract class GunCard{
 
     /**
      * Methods to calculate the possible targets that return a SingleEffectAction
+     * @param actions
+     * @param player
      */
-    abstract void targetsOfBaseEffect();
-    abstract void targetsOfSecondaryEffect();
+    abstract void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player);
+    abstract void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player);
 }

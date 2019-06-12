@@ -7,22 +7,29 @@ import java.util.ArrayList;
 public class Room {
     private Color color;
     private ArrayList<Player> players;
+    private ArrayList<NewCell> cells;
 
-    public Room(Color color){
-        this.players=new ArrayList<>();
-        this.color = color;
+    public boolean isEmpty(){
+        if (players==null)
+            return true;
+        else if (players.isEmpty())
+            return true;
+        else
+            return false;
     }
 
-    /**
-     * @return the color of the room
-     */
-    public Color getColors(){
+    public void addCell(NewCell cell) {
+        this.cells.add(cell);
+    }
+
+    public ArrayList<NewCell> getCells() {
+        return cells;
+    }
+
+    public Color getColor(){
         return color;
     }
 
-    /**
-     * @return all of the players in the room
-     */
     public ArrayList<Player> getPlayers(){
         return players;
     }

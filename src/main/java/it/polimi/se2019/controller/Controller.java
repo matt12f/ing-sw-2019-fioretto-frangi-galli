@@ -21,14 +21,14 @@ public class Controller implements Observer {
     private static final Logger LOGGER = Logger.getLogger(Controller.class.getName());
     private GameModel mainGameModel;
     private RemoteView remoteView;
-    private TurnManager activeturn;
+    private TurnManager activeTurn;
 
+    //TODO rivedere costrutture con la nuova modalità di connessione
     /**
      * This constructor generates one local controller object for one Player
      */
     public Controller() {
         ArrayList<Player> players = new ArrayList<>();
-
         //This part is about the first player
         String nickname="Da fare";
         Color color=Color.WHITE;
@@ -42,7 +42,7 @@ public class Controller implements Observer {
         int mapNumber=1; //TODO fare scegliere il numero di mappa
         this.mainGameModel=new GameModel(0,players,gameMode,mapNumber);
         this.remoteView=setupRemoteObjExport();
-        this.activeturn = new TurnManager();
+        this.activeTurn = new TurnManager();
     }
 
     /**
@@ -73,16 +73,28 @@ public class Controller implements Observer {
         return new LocalView(remoteView.getPlayerBoardViews(),playerId,remoteView.getMapView(),remoteView.getPlayerHands().get(playerId));
     }
 
-    public TurnManager getActiveturn() {
-        return activeturn;
+    public TurnManager getActiveTurn() {
+        return activeTurn;
     }
 
+    //TODO Work in progress
     public GameStats playGame() {
         setupBoard();
-        //TODO ciclo che fa partire startTurn()
+        //TODO ciclo provvisorio che gioca il turno
+        while(mainGameModel.getKillshotTrack().getSkulls()>0){
+            playRound();
+        }
+        PlayerManager.frenzyActivator();
+        playRound();
         return new GameStats(mainGameModel.getPlayerList(),mainGameModel.getTurn());
     }
 
+    private void playRound(){
+        for(Player player:mainGameModel.getPlayerList()){
+            activeTurn.setActivePlayer(player);
+            activeTurn.playTurn();
+        }
+    }
     private void setupBoard(){
         NewCell[][] mapMatrixToFill=mainGameModel.getCurrentMap().getBoardMatrix();
         try {
@@ -101,11 +113,6 @@ public class Controller implements Observer {
         }catch(FullException e){
             LOGGER.log(Level.FINE,"Setup game in controller", e);
         }
-    }
-
-    private void startTurn(){
-        //TODO scrivere preparazione (cos'altro serve?)
-        activeturn.playTurn();
     }
 
     @Override

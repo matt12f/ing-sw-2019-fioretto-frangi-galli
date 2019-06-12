@@ -1,5 +1,7 @@
 package it.polimi.se2019.model.cards;
 
+import it.polimi.se2019.controller.FictitiousPlayer;
+import it.polimi.se2019.controller.SingleEffectsCombinationActions;
 import it.polimi.se2019.view.ChosenActions;
 
 
@@ -47,7 +49,9 @@ public abstract class GunCardAddEff extends GunCard{
 
     /**
      * Methods called by available actions builder to calculate the possible targets
+     * @param actions
+     * @param player
      */
-    abstract void targetsOfTertiaryEffect();
+    abstract void targetsOfTertiaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player);
 
 }

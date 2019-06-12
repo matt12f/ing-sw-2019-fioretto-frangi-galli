@@ -41,12 +41,12 @@ public class Sledgehammer extends GunCardAltEff {
     }
 
     @Override
-    void targetsOfBaseEffect() {
+    void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
 
     }
 
     @Override
-    void targetsOfSecondaryEffect() {
+    void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
 
     }
 }

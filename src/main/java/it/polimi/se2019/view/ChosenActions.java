@@ -27,4 +27,36 @@ public class ChosenActions {//TODO convert to JSON string before sending
     public ArrayList<String> getOrderOfExecution() {
         return orderOfExecution;
     }
+
+    public NewCell getArrivalCell() {
+        return arrivalCell;
+    }
+
+    public int getGunCardToSwap() {
+        return gunCardToSwap;
+    }
+
+    public boolean isPickDrop() {
+        return pickDrop;
+    }
+
+    public String getCardToUse() {
+        return cardToUse;
+    }
+
+    public ArrayList<Player> getTargetList1() {
+        return targetList1;
+    }
+
+    public ArrayList<Player> getTargetList2() {
+        return targetList2;
+    }
+
+    public String getDirectionOfMovement() {
+        return directionOfMovement;
+    }
+
+    public NewCell getTargetCells() {
+        return targetCells;
+    }
 }

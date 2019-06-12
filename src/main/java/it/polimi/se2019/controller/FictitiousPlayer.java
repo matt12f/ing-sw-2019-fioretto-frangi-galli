@@ -1,5 +1,6 @@
 package it.polimi.se2019.controller;
 
+import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.enums.CardName;
 import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.model.cards.GunCard;
@@ -24,6 +25,7 @@ import java.util.logging.Logger;
  */
 public class FictitiousPlayer {
     private static final Logger LOGGER = Logger.getLogger(FictitiousPlayer.class.getName());
+    private int playerId;
     private Color playerColor;
     private NewCell position;
     private Ammo availableAmmo;
@@ -37,7 +39,8 @@ public class FictitiousPlayer {
      * @return fictitious player
      */
     public FictitiousPlayer (Player player, CellInfo cell, boolean shoot, boolean frenzyReload){
-        ArrayList<GunCard> usableCards=new ArrayList<>();
+        this.playerId=player.getId();
+        ArrayList<GunCard> usableCards;
         this.playerColor=player.getFigure().getColor();
         this.position =cell.getCell();
         if (cell.isCanGrabAmmo()){
@@ -83,6 +86,10 @@ public class FictitiousPlayer {
                 usableCards.add(gunCard);
         }
         return usableCards;
+    }
+
+    public Player getCorrespondingPlayer(){
+        return AdrenalineServer.getMainController().getMainGameModel().getPlayerList().get(playerId);
     }
 
     public Color getPlayerColor() {

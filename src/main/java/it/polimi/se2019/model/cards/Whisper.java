@@ -1,6 +1,10 @@
 package it.polimi.se2019.model.cards;
 
+import it.polimi.se2019.AdrenalineServer;
+import it.polimi.se2019.controller.ActionManager;
 import it.polimi.se2019.controller.FictitiousPlayer;
+import it.polimi.se2019.controller.MapManager;
+import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
 import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
@@ -26,8 +30,12 @@ public class Whisper extends GunCardAddEff {
 
     @Override
     public SingleEffectsCombinationActions buildAvailableActions(ArrayList<String> effectsCombination, FictitiousPlayer player) throws UnavailableEffectCombinationException {
-        //TODO scrivere codice
-        return null;
+        SingleEffectsCombinationActions actions=new SingleEffectsCombinationActions();
+
+        targetsOfBaseEffect(actions, player);
+
+        actions.validate();
+        return actions;
     }
 
     @Override
@@ -37,12 +45,19 @@ public class Whisper extends GunCardAddEff {
 
     /** target: 1 (that you can see, but at LEAST 2 moves away from you)
      *  damage: 3
-     *  marker: 1
+     *  mark: 1
+     * @param actions
+     * @param player
      */
     @Override
-    void targetsOfBaseEffect() {
-        //TODO scrivere codice
+    void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+        ArrayList<Player> targets=new ArrayList<>();
+        for(Player target: ActionManager.visibleTargets(player))
+            if(MapManager.distanceBetweenCells(AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix(),player.getPosition(),target.getFigure().getCell())>2)
+                targets.add(target);
 
+        actions.addToTargetList1(targets);
+        actions.setMaxNumberOfTargetsList1(1);
     }
 
     @Override
@@ -50,7 +65,7 @@ public class Whisper extends GunCardAddEff {
         throw new UnsupportedOperationException();
     }
     @Override
-    void targetsOfTertiaryEffect() {
+    void targetsOfTertiaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         throw new UnsupportedOperationException();
     }
     @Override
@@ -58,7 +73,7 @@ public class Whisper extends GunCardAddEff {
         throw new UnsupportedOperationException();
     }
     @Override
-    void targetsOfSecondaryEffect() {
+    void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         throw new UnsupportedOperationException();
     }
 }

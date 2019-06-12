@@ -15,6 +15,13 @@ import java.util.logging.Logger;
 public class MapManager {
     private static final Logger LOGGER = Logger.getLogger(MapManager.class.getName());
 
+    public static Room getRoom(NewCell cell){
+        for(Room room: AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getRooms())
+           if(room.getColor().equals(cell.getColor()))
+            return room;
+        return null;
+    }
+
     public static void refillEmptiedCells() {
         NewCell[][] mapMatrixToFill = AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix();
         for (int i = 0; i < 3; i++)
@@ -39,11 +46,6 @@ public class MapManager {
         }
     }
 
-    public static void movePlayer(Player player, NewCell arrivalCell) {
-        player.getFigure().getCell().removePlayers(player);
-        arrivalCell.addPlayers(player);
-    }
-
     public static NewCell cellViewToNewCell(CellView cellView) {
         return AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix()[cellView.getLineIndex()][cellView.getColumnIndex()];
     }
@@ -63,24 +65,24 @@ public class MapManager {
      * this method returns a cell in a given direction that is a certain number of steps away.
      * @throws OuterWallException in case it reaches outside an external wall in that direction
      */
-    public static NewCell getCellInDirection(NewCell[][] board, NewCell referenceCell, int distance, String direction) throws OuterWallException {
+    public static NewCell getCellInDirection(NewCell[][] board, NewCell referenceCell, int distance, int directionIndex) throws OuterWallException {
         int lineIndex = getLineOrColumnIndex(board, referenceCell, true);
         int columnIndex = getLineOrColumnIndex(board, referenceCell, false);
 
         NewCell cellToReturn;
 
         try {
-            switch (direction) {
-                case "Up":
+            switch (directionIndex) {
+                case 0: //Up
                     cellToReturn = board[lineIndex - distance][columnIndex];
                     break;
-                case "Down":
+                case 1: //Down
                     cellToReturn = board[lineIndex + distance][columnIndex];
                     break;
-                case "Left":
+                case 2: //Left
                     cellToReturn = board[lineIndex][columnIndex - distance];
                     break;
-                case "Right":
+                case 3: //Right
                     cellToReturn = board[lineIndex][columnIndex + distance];
                     break;
                 default:

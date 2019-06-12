@@ -16,15 +16,15 @@ public class PowerupManager {
      * 1 or 2 squares in one direction. (You can't use this to move a figure after it respawns at the end of your turn.
      * That would be too late.)
      */
-    public static void newtonManager(int cardIndexInHand, Player player, int distance, String direction){
+    public static void newtonManager(int cardIndexInHand, Player player, int distance, int directionIndex){
         NewCell cell= null;
         try {
-            cell = MapManager.getCellInDirection(AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix(),player.getFigure().getCell(),distance,direction);
+            cell = MapManager.getCellInDirection(AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix(),player.getFigure().getCell(),distance,directionIndex);
         } catch (OuterWallException e) {
             //TODO loggare eccezione, sarebbe errato riceverla qui
         }
         if(cell!=null){
-            MapManager.movePlayer(player,cell);
+            ActionManager.movePlayer(player,cell);
             removeFromHand(cardIndexInHand);
         }
     }
@@ -35,7 +35,7 @@ public class PowerupManager {
      * late.)
      */
     public static void teleporterManager(int cardIndexInHand, NewCell destinationCell){
-        MapManager.movePlayer(AdrenalineServer.getMainController().getActiveturn().getActivePlayer(),destinationCell);
+        ActionManager.movePlayer(AdrenalineServer.getMainController().getActiveTurn().getActivePlayer(),destinationCell);
         removeFromHand(cardIndexInHand);
     }
 
@@ -56,11 +56,11 @@ public class PowerupManager {
     public static void grenadeManager(Player playerDamaged,Player playerGivingDamage, int cardIndexInHand){
         char [] marks=new char[1];
         marks[0]=playerGivingDamage.getFigure().getColorChar();
-        PlayerManager.markerManager(playerDamaged,marks);
+        PlayerManager.markerDealer(playerDamaged,marks);
         removeFromHand(cardIndexInHand);
     }
 
     private static void removeFromHand(int cardIndexInHand) {
-        AdrenalineServer.getMainController().getActiveturn().getActivePlayer().getPlayerBoard().getHand().removePowerUp(cardIndexInHand);
+        AdrenalineServer.getMainController().getActiveTurn().getActivePlayer().getPlayerBoard().getHand().removePowerUp(cardIndexInHand);
     }
 }

@@ -27,7 +27,7 @@ import java.util.ArrayList;
  *
  * The client will then build an "answer object" containing his selection
  */
-//TODO convert to JSON string before sending
+
 public class AvailableActions {
     private ArrayList<CellInfo> singleArrivalCells; //for move and grab actions
     private ArrayList<FictitiousPlayer> fictitiousPlayers; //the player will choose one of these
@@ -68,7 +68,7 @@ public class AvailableActions {
             if(powerupUse.getDirectionOfMove().equals("None"))
                 PowerupManager.teleporterManager(powerupUse.getIndexInHand(),MapManager.cellViewToNewCell(powerupUse.getCellForSelfMovement()));
             else
-                PowerupManager.newtonManager(powerupUse.getIndexInHand(),AdrenalineServer.getMainController().getMainGameModel().getPlayerList().get(powerupUse.getIdPlayerToMove()),powerupUse.getMovementDistance(),powerupUse.getDirectionOfMove());
+                PowerupManager.newtonManager(powerupUse.getIndexInHand(),AdrenalineServer.getMainController().getMainGameModel().getPlayerList().get(powerupUse.getIdPlayerToMove()),powerupUse.getMovementDistance(),powerupUse.getIndexOfMove());
         }
 
         //checks for adrenaline modes

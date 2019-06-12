@@ -1,6 +1,9 @@
 package it.polimi.se2019.model.cards;
 
+import it.polimi.se2019.AdrenalineServer;
+import it.polimi.se2019.controller.ActionManager;
 import it.polimi.se2019.controller.FictitiousPlayer;
+import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
 import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
@@ -23,23 +26,40 @@ public class Heatseeker extends GunCardAddEff {
         this.tertiaryEffectCost =null;
     }
 
+    /**
+     * here the order of the effects is not important because there's only one effect to perform
+     */
     @Override
     public SingleEffectsCombinationActions buildAvailableActions(ArrayList<String> effectsCombination, FictitiousPlayer player) throws UnavailableEffectCombinationException {
-        //TODO scrivere codice
-        return null;
+        SingleEffectsCombinationActions actions=new SingleEffectsCombinationActions();
+
+        targetsOfBaseEffect(actions, player);
+
+        actions.validate();
+        return actions;
     }
 
     @Override
-    void applyBaseEffect(ChosenActions playersChoice) {
+    void applyBaseEffect(ChosenActions playersChoice){
         //TODO scrivere codice
     }
 
     /** target: 1 (that you cannot see)
      *  damage: 3
+     * @param actions
+     * @param player
      */
     @Override
-    void targetsOfBaseEffect() {
-        //TODO scrivere codice
+     void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+        //copies the whole player list
+        ArrayList<Player> allPlayers=new ArrayList<>(AdrenalineServer.getMainController().getMainGameModel().getPlayerList());
+
+        //adds list of targets you cannot see
+        actions.addToTargetList1(allPlayers);
+        actions.setMaxNumberOfTargetsList1(1);
+
+        //removes the targets that you can see
+        ActionManager.untouchableRemover(allPlayers, ActionManager.visibleTargets(player));
 
     }
 
@@ -48,7 +68,7 @@ public class Heatseeker extends GunCardAddEff {
         throw new UnsupportedOperationException();
     }
     @Override
-    void targetsOfTertiaryEffect() {
+    void targetsOfTertiaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         throw new UnsupportedOperationException();
     }
     @Override
@@ -56,7 +76,7 @@ public class Heatseeker extends GunCardAddEff {
         throw new UnsupportedOperationException();
     }
     @Override
-    void targetsOfSecondaryEffect() {
+    void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         throw new UnsupportedOperationException();
     }
 }

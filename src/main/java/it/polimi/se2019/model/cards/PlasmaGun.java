@@ -36,7 +36,7 @@ public class PlasmaGun extends GunCardAddEff {
     }
 
     @Override
-    void targetsOfTertiaryEffect() {
+    void targetsOfTertiaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
 
     }
 
@@ -56,12 +56,12 @@ public class PlasmaGun extends GunCardAddEff {
     }
 
     @Override
-    void targetsOfBaseEffect() {
+    void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
 
     }
 
     @Override
-    void targetsOfSecondaryEffect() {
+    void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
 
     }
 }

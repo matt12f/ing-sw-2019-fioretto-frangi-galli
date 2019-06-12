@@ -2,6 +2,7 @@ package it.polimi.se2019.model.game;
 
 import com.google.gson.Gson;
 
+import it.polimi.se2019.enums.CellType;
 import it.polimi.se2019.view.modelChanged;
 
 import java.io.FileReader;
@@ -36,6 +37,7 @@ public class GameModel extends Observable{
         this.playerList = playerList;
         this.gameMode = gameMode;
 
+        //Map setup
         Gson gson = new Gson();
         try (Reader reader = new FileReader("src/main/JSONfiles/map"+mapNumber+".json")) {
             // Convert JSON File to Java Object
@@ -43,6 +45,19 @@ public class GameModel extends Observable{
         } catch (IOException e) {
             LOGGER.log(Level.FINE,"GameModel",e);
         }
+        for(NewCell[] line:this.currentMap.getBoardMatrix())
+            for(NewCell singleCell:line)
+                if(!singleCell.getCellType().equals(CellType.OUTSIDEBOARD))
+                    switch (singleCell.getColor()){
+                        case RED: this.currentMap.getRooms()[0].addCell(singleCell);break;
+                        case YELLOW: this.currentMap.getRooms()[1].addCell(singleCell);break;
+                        case BLUE: this.currentMap.getRooms()[2].addCell(singleCell);break;
+                        case WHITE: this.currentMap.getRooms()[3].addCell(singleCell);break;
+                        case GREEN: this.currentMap.getRooms()[4].addCell(singleCell);break;
+                        case VIOLET: this.currentMap.getRooms()[5].addCell(singleCell);break;
+                    }
+
+        //game mode setup
         if(gameMode.equals("normal"))
             this.killshotTrack=new KillShotTrack();
         else if(gameMode.equals("turret"))
@@ -51,6 +66,7 @@ public class GameModel extends Observable{
             this.killshotTrack=new KillShotTrackDomination();
         else
             this.killshotTrack=null;
+
         this.finalFrenzy=false;
         this.turn=0;
     }
@@ -84,7 +100,7 @@ public class GameModel extends Observable{
     }
 
     /**
-     * this method builds the actiontile Frenzy objects for each player
+     * this method builds the action tile frenzy objects for each player
      * and the method checks and sends the right amount of frenzy actions to the constructor.
      * @param activePlayer is the player that has to play the first frenzy turn (sent by the controller)
      */
