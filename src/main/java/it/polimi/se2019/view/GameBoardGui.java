@@ -2,6 +2,7 @@ package it.polimi.se2019.view;
 
 import javax.swing.*;
 import java.awt.*;
+import javax.imageio.*;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;	//for CloseListener()
 import java.awt.event.WindowAdapter;	//for CloseListener()
@@ -14,6 +15,7 @@ public class GameBoardGui implements Observer {
     public PlayerZoneGUI playerZone;
     public ScoreViewGUI scoreZone;
     public BoardZoneGUI boardZone;
+    public ImageIcon background;
     public GameBoardGui(int config){
         Frame frame = new Frame("ADRENALINE");
 
@@ -22,10 +24,16 @@ public class GameBoardGui implements Observer {
         mainPanel.setLayout(new GridBagLayout());
 
 
-        this.map = new MapViewGUI();
+        this.background = new ImageIcon(new ImageIcon("src/main/sprite/maps/background.png").getImage().getScaledInstance(1280,720,Image.SCALE_DEFAULT));
+        JLabel labelBackground = new JLabel(background);
+        labelBackground.setIcon(background);
+
+        //container.anchor = GridBagConstraints.NORTHWEST;
+        this.map = new MapViewGUI(config);
         container.gridx=0;
         container.gridy=0;
-        //mainPanel.add(map);
+        container.gridheight = 2;
+        //mainPanel.add(map, container);
 
 
         this.scoreZone = new ScoreViewGUI();
@@ -44,10 +52,12 @@ public class GameBoardGui implements Observer {
         container.gridy=2;
         //mainPanel.add(playerZone);
 
+        labelBackground.add(mainPanel);
         frame.addWindowListener(new MainLogGui.CloseListener());
-        frame.add(mainPanel);
+        frame.add(labelBackground);
         frame.setSize(1280,720);
         frame.setLocation(0,0);
+
         frame.setVisible(true);
     }
 

@@ -8,8 +8,8 @@ public class TestGeneralGui {
     public void TestGeneralGui(){
         //weaponMenuGUI gui = new weaponMenuGUI();
         //MainLogGui log = new MainLogGui();
-        //GameBoardGui board =new GameBoardGui(1);
-        MapViewGUI map = new MapViewGUI();
+        GameBoardGui board =new GameBoardGui(1);
+        //MapViewGUI map = new MapViewGUI(4);
         while(true){}
     }
 }
