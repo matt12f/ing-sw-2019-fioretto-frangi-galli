@@ -10,7 +10,7 @@ public class MapViewGUI {
 
     public MapViewGUI(){
 
-        this.map = new ImageIcon(new ImageIcon("src/main/sprite/maps/1.png").getImage().getScaledInstance(600,300,Image.SCALE_DEFAULT));
+        this.map = new ImageIcon(new ImageIcon("src/main/sprite/maps/1.png").getImage().getScaledInstance(637,482,Image.SCALE_DEFAULT));
         JLabel label = new JLabel(map);
         label.setIcon(map);
 
