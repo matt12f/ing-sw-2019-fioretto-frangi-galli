@@ -13,6 +13,17 @@ public class GrenadeLauncher extends GunCardAddEff {
      */
     public GrenadeLauncher() {
         super();
+
+        ArrayList<String> secondCombination=new ArrayList<>();
+        secondCombination.add("Base");
+        secondCombination.add("Optional1");
+        this.effectsOrder.add(secondCombination);
+
+        ArrayList<String> thirdCombination=new ArrayList<>();
+        thirdCombination.add("Optional1");
+        thirdCombination.add("Base");
+        this.effectsOrder.add(thirdCombination);
+
         this.numberOfOptional = 1;
         this.ammoCost = new char[1];
         ammoCost[0]= 'r';

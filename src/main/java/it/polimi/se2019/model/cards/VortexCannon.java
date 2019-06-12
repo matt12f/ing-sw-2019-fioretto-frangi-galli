@@ -13,6 +13,11 @@ public class VortexCannon extends GunCardAddEff {
      */
     public VortexCannon() {
         super();
+        ArrayList<String> secondCombination=new ArrayList<>();
+        secondCombination.add("Base");
+        secondCombination.add("Optional1");
+        this.effectsOrder.add(secondCombination);
+
         this.numberOfOptional = 1;
         this.ammoCost = new char[2];
         ammoCost[0]= 'b';

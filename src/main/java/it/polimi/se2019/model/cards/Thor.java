@@ -13,6 +13,18 @@ public class Thor extends GunCardAddEff {
      */
     public Thor() {
         super();
+
+        ArrayList<String> secondCombination=new ArrayList<>();
+        secondCombination.add("Base");
+        secondCombination.add("Optional1");
+        this.effectsOrder.add(secondCombination);
+
+        ArrayList<String> thirdCombination=new ArrayList<>();
+        thirdCombination.add("Base");
+        thirdCombination.add("Optional1");
+        thirdCombination.add("Optional2");
+        this.effectsOrder.add(thirdCombination);
+
         this.numberOfOptional = 2;
         this.ammoCost = new char[2];
         ammoCost[0]= 'b';

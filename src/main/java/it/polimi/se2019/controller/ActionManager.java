@@ -1,6 +1,5 @@
 package it.polimi.se2019.controller;
 
-
 import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.enums.CellEdge;
 import it.polimi.se2019.exceptions.OuterWallException;
@@ -108,9 +107,9 @@ public class ActionManager {
         //it will add all of the targets in the room first
         ArrayList<Player> targets=new ArrayList<>(MapManager.getRoom(playersPOV.getPosition()).getPlayers());
 
-        //it will then add all of the targets in adjacent rooms
+        //it will then add all of the targets in adjacent rooms (through a door)
         for(int i=0;i<4;i++)
-            if(playersPOV.getPosition().getEdge(i).equals(CellEdge.ROOM))
+            if(playersPOV.getPosition().getEdge(i).equals(CellEdge.DOOR))
                 try {
                     Room roomYouCanSee=MapManager.getRoom(MapManager.getCellInDirection(AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix(),playersPOV.getPosition(),1,i));
                     if(!roomYouCanSee.isEmpty())
@@ -132,9 +131,9 @@ public class ActionManager {
         //it will add first the squares in your room
         ArrayList<NewCell> squares=new ArrayList<>(MapManager.getRoom(playersPOV.getPosition()).getCells());
 
-        //it will then add the squares in adjacent rooms
+        //it will then add the squares in adjacent rooms (through a door)
         for(int i=0;i<4;i++)
-            if(playersPOV.getPosition().getEdge(i).equals(CellEdge.ROOM))
+            if(playersPOV.getPosition().getEdge(i).equals(CellEdge.DOOR))
                 try {
                     Room roomYouCanSee=MapManager.getRoom(MapManager.getCellInDirection(AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix(),playersPOV.getPosition(),1,i));
                     squares.addAll(roomYouCanSee.getCells());

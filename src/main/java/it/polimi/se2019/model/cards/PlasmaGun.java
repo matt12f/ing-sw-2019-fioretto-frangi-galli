@@ -13,6 +13,34 @@ public class PlasmaGun extends GunCardAddEff {
      */
     public PlasmaGun() {
         super();
+
+        ArrayList<String> secondCombination=new ArrayList<>();
+        secondCombination.add("Base");
+        secondCombination.add("Optional1");
+        this.effectsOrder.add(secondCombination);
+
+        ArrayList<String> thirdCombination=new ArrayList<>();
+        thirdCombination.add("Base");
+        thirdCombination.add("Optional2");
+        this.effectsOrder.add(thirdCombination);
+
+        ArrayList<String> fourthCombination=new ArrayList<>();
+        fourthCombination.add("Base");
+        fourthCombination.add("Optional1");
+        fourthCombination.add("Optional2");
+        this.effectsOrder.add(fourthCombination);
+
+        ArrayList<String> fifthCombination=new ArrayList<>();
+        fifthCombination.add("Optional1");
+        fifthCombination.add("Base");
+        this.effectsOrder.add(fifthCombination);
+
+        ArrayList<String> sixthCombination=new ArrayList<>();
+        sixthCombination.add("Optional1");
+        sixthCombination.add("Base");
+        sixthCombination.add("Optional2");
+        this.effectsOrder.add(sixthCombination);
+
         this.numberOfOptional = 2;
         this.ammoCost = new char[2];
         ammoCost[0] = 'b';

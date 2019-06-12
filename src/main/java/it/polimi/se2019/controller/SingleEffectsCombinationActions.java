@@ -3,6 +3,7 @@ package it.polimi.se2019.controller;
 import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
 import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
+import it.polimi.se2019.model.game.Room;
 
 import java.util.ArrayList;
 
@@ -19,6 +20,7 @@ public class SingleEffectsCombinationActions {
     private boolean allowedMovement; //For the GUI/CLI
     private boolean yourOrTheirMovement; //For the GUI/CLI
     private ArrayList<NewCell> targetCells; //To choose from
+    private ArrayList<Room> targetRooms; //To choose from
 
     public SingleEffectsCombinationActions() {
         this.targetList1=new ArrayList<>();
@@ -28,6 +30,7 @@ public class SingleEffectsCombinationActions {
         this.maxDistanceOfMovement=0;
         this.allowedMovement=false;
         this.targetCells=new ArrayList<>();
+        this.targetRooms=new ArrayList<>();
     }
 
     public void addToTargetList1(ArrayList<Player> targetList1) {
@@ -66,9 +69,17 @@ public class SingleEffectsCombinationActions {
         this.targetCells = targetCells;
     }
 
+    public void addToTargetRooms(ArrayList<Room> targetRooms) {
+        this.targetRooms.addAll(targetRooms);
+    }
+
+    public void addToTargetCells(ArrayList<NewCell> targetCells) {
+        this.targetCells.addAll(targetCells);
+    }
+
     //TODO c'è altro da controllare?
     public void validate() throws UnavailableEffectCombinationException{
-        if (this.targetList1.isEmpty() &&this.targetList2.isEmpty() &&this.targetCells.isEmpty())
+        if (this.targetList1.isEmpty() &&this.targetList2.isEmpty() &&this.targetCells.isEmpty() && this.targetRooms.isEmpty())
             throw new UnavailableEffectCombinationException();
     }
 }
