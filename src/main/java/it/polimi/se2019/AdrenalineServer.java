@@ -4,40 +4,33 @@ import it.polimi.se2019.controller.Controller;
 import it.polimi.se2019.network.*;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.lang.reflect.Array;
-import java.net.ServerSocket;
 import java.net.Socket;
-import java.rmi.AccessException;
-import java.rmi.AlreadyBoundException;
-import java.rmi.Remote;
+import java.rmi.*;
 import java.rmi.registry.Registry;
 import java.rmi.registry.LocateRegistry;
-import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class AdrenalineServer implements Runnable {
     //This controller contains and manages the  game logic for all players (it's initialized only
     // if a player creates a new game)
     private static Controller mainController;
 
-    public static void main( String[] args) throws IOException, ClassNotFoundException {
+    public static void main( String[] args) throws IOException, ClassNotFoundException, NotBoundException, InterruptedException {
         SocketClients socketClient;
         RMIClients rmiClients;
-        String req = "";
-        ArrayList<String> Nicknames = new ArrayList<>();
-        Timer timer = null;
-        ArrayList<Integer> socketToRemove;
+        String req;
+        ArrayList<String> nicknames = new ArrayList<>();
+        ArrayList<String> Host;
+        ArrayList<Integer> toRemove;
         ArrayList<GameHandler> games = new ArrayList<>();
         ArrayList<Socket> sockets;
-        ArrayList<ClientHandler> socketClients;
+        ArrayList<ClientHandler> hostToRemove;
+        ArrayList<ClientHandler> clients;
+        clientCallBack stubClient;
         int connections = 0;
         boolean start =  false;
-        int i = 0;
+        int i;
+        Registry registry;
         socketClient = new SocketClients();
         rmiClients= new RMIClients();
         Thread threadSocket = new Thread(rmiClients); //prende gli utenti via Socket
@@ -45,12 +38,12 @@ public class AdrenalineServer implements Runnable {
         threadRMI.start();
         threadSocket.start();
         while (!start){
-            socketClients = socketClient.getClients();
-            for (ClientHandler client: socketClients) {
+            clients = socketClient.getClients();
+            for (ClientHandler client: clients) {
                 if (client.getThread().getState() == Thread.State.valueOf("WAITING")){
                     req = client.getNickname();
-                    if (Nicknames.indexOf(req) == -1){
-                        Nicknames.add(req);
+                    if (nicknames.indexOf(req) == -1){
+                        nicknames.add(req);
                         client.setAccepted(true);
                         connections++;
                     }else {
@@ -58,53 +51,99 @@ public class AdrenalineServer implements Runnable {
                     }
                     client.getThread().notify();
                 }
+                //sockets counter
                 sockets = socketClient.getSocket();
-                socketToRemove = socketClientCounter(connections, sockets);
-                connections = socketToRemove.get(0);
-                socketToRemove.remove(0);
-                while(!(socketToRemove.isEmpty())){
-                    i = socketToRemove.get(socketToRemove.size() - 1);
+                toRemove = socketClientCounter(connections, sockets);
+                connections = toRemove.get(0);
+                toRemove.remove(0);
+                while(!(toRemove.isEmpty())){
+                    i = toRemove.get(toRemove.size() - 1);
                     sockets.remove(i);
                 }
                 socketClient.setSocket(sockets);
+                //rmi counter
+                toRemove = rmiClientCounter(connections, rmiClients.getClients());
+                connections -= toRemove.size();
+                Host = rmiClients.getHosts();
+                hostToRemove = rmiClients.getClients();
+                while(!toRemove.isEmpty()){
+                    Host.remove(toRemove.get(toRemove.size() - 1));
+                    hostToRemove.remove(toRemove.get(toRemove.size() - 1));
+                    toRemove.remove(toRemove.size() - 1);
+                }
+                rmiClients.setHosts(Host);
+                rmiClients.setClients(hostToRemove);
+
                 if (connections == 5){  //TODO sostituire poi con costante
                     start = true;
                     socketClient.setStart(start);
                 }
-
-
-
             }
-            if (threadRMI.getState() == Thread.State.valueOf("WAITING")){
+            for (ClientHandler client: rmiClients.getClients()) {
+                if (client.getThread().getState() == Thread.State.valueOf("WAITING")){
+                    req = client.getNickname();
+                    if(nicknames.indexOf(req) == -1){
+                        client.setAccepted(false);
+                    }else{
+                        nicknames.add(req);
+                        client.setAccepted(true);
+                    }
+                }
+                //sockets counter
+                sockets = socketClient.getSocket();
+                toRemove = socketClientCounter(connections, sockets);
+                connections = toRemove.get(0);
+                toRemove.remove(0);
+                while(!(toRemove.isEmpty())){
+                    i = toRemove.get(toRemove.size() - 1);
+                    sockets.remove(i);
+                }
+                socketClient.setSocket(sockets);
+                //rmi counter
+                toRemove = rmiClientCounter(connections, rmiClients.getClients());
+                connections -= toRemove.size();
+                Host = rmiClients.getHosts();
+                hostToRemove = rmiClients.getClients();
+                while(!toRemove.isEmpty()){
+                    Host.remove(toRemove.get(toRemove.size() - 1));
+                    hostToRemove.remove(toRemove.get(toRemove.size() - 1));
+                    toRemove.remove(toRemove.size() - 1);
+                }
+                rmiClients.setHosts(Host);
+                rmiClients.setClients(hostToRemove);
+
+                if (connections == 5){  //TODO sostituire poi con costante
+                    start = true;
+                    socketClient.setStart(start);
+                }
             }
-            //qui riconta i client, per essere sicuri di non eccedere i 5 utenti
         }
-        //usa addAll per mergiare due ArrayList
-        games.add(new GameHandler()); //TODO Definire Game handler e mettere i parametri
-
-
-        /**try{
-            //penso non servi --> mainController=new controller();
-            logInterface stubLogIn = (logInterface) UnicastRemoteObject.exportObject(lobbies, 0);
-            Registry registry = LocateRegistry.getRegistry();
-            registry.bind("lobbyCreation", lobbies);
-
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        } catch (AlreadyBoundException e) {
-            e.printStackTrace();
-        } catch (AccessException e) {
+        try {
+            threadRMI.join();
+            threadSocket.join();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-        //accesso lobby
-        try{
-            log
-        }*/
-
-
-
+        clients = socketClient.getClients();
+        clients.addAll(rmiClients.getClients());
+        games.add(new GameHandler(clients)); //TODO Definire Game handler e mettere i parametri
     }
+
+
+    private static ArrayList<Integer> rmiClientCounter (int openedConnections, ArrayList<ClientHandler> hosts) throws RemoteException, NotBoundException {
+        ArrayList<Integer> hostToRemove = new ArrayList<>();
+        for (ClientHandler client: hosts) {
+            Registry registry = LocateRegistry.getRegistry(client.getHost());
+            clientCallBack stubClient = (clientCallBack) registry.lookup(("C" + client.getHost()));
+            try {
+                stubClient.ClientCallBack();
+            }catch (RemoteException e ){
+                hostToRemove.add(hosts.indexOf(client));
+            }
+        }
+        return hostToRemove;
+    }
+
 
     /**this method return information about the number of clients connected and which socket are not working
      *
@@ -113,8 +152,7 @@ public class AdrenalineServer implements Runnable {
      * @return
      * @throws IOException
      */
-
-    public static ArrayList<Integer> socketClientCounter (int openedConnections, ArrayList<Socket> client) throws IOException {
+    private static ArrayList<Integer> socketClientCounter (int openedConnections, ArrayList<Socket> client) throws IOException {
         ArrayList<Integer> update = new ArrayList<>();
         int i=0;
         int count;

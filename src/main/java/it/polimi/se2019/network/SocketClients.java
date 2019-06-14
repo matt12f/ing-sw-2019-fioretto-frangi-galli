@@ -28,6 +28,7 @@ public class SocketClients implements Runnable{
                 t = new Thread(lobby);
                 lobby.setSocket(this.socket.get(this.socket.size() - 1));
                 lobby.setThread(t);
+                lobby.setHost(null); //TODO valuta se tenerlo null o dargli l'host effettivo, tanto socket basta per distinguerli
                 this.Clients.add(lobby);
             }
 

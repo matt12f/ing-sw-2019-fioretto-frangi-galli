@@ -1,33 +1,64 @@
 package it.polimi.se2019.network;
 
 import it.polimi.se2019.controller.AvailableActions;
+import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.view.ActionRequestView;
 import it.polimi.se2019.view.LocalView;
+import it.polimi.se2019.enums.Status;
 
 import java.io.*;
 import java.net.Socket;
 import java.rmi.RemoteException;
+import java.rmi.registry.Registry;
+import java.util.Observable;
+import java.util.Observer;
 
-public class ClientHandler implements Runnable, RMIInterface {
+;
+
+public class ClientHandler implements Runnable, RMIInterface, Observer {
     private String nickname;
     private Thread thread;
-    private Socket socket;
-    private boolean accepted = false;
+    private Socket socket = null;
+    private boolean accepted = false; //used in a first moment to verify the nickname's uniqueness
     private String host;
+    private Status status = Status.NOTREADY;
+    private Registry registry = null;
+    private Color color;
 
     @Override
-    public void run() {
+    public void run(){
         try {
-            ObjectInputStream input = (ObjectInputStream) this.socket.getInputStream();
-            while (!this.accepted){
-                this.nickname = (String) input.readObject();
-                this.thread.wait();
-                if(!this.accepted){
-                    //todo comunicare al client di scegliere un nuovo nickname
+            if(this.socket == null){
+                this.status = Status.READY;
+                while(!this.accepted){
+
+                }
+                //todo Semaforo?
+            }else{
+                ObjectOutputStream output = (ObjectOutputStream) this.socket.getOutputStream();
+                ObjectInputStream input = (ObjectInputStream) this.socket.getInputStream();
+                output.writeObject(true);
+                while (!this.accepted){
+                    this.nickname = (String) input.readObject();
+                    this.thread.wait();
+                    if(!this.accepted){
+                        throw new IllegalArgumentException();
+                    }
                 }
             }
-            //da qui inizia la partita
-            this.thread.wait();
+            while(/*condizione su fine partita*/){
+                switch (this.status){
+                    case MYTURN:
+                        //comunicazioni del turno
+                    break;
+                    case NOTMYTURN:
+                        while(this.status == Status.NOTMYTURN){
+                        }
+                        //per update client
+                    break;
+                }
+            }
+            this.thread.wait(); //todo semaforo su status (START)
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -71,7 +102,7 @@ public class ClientHandler implements Runnable, RMIInterface {
     @Override
     public void setNicknameRMI(String nickname) throws RemoteException, IllegalArgumentException, InterruptedException {
         setNickname(nickname);
-        this.getThread().wait();
+        this.getThread().wait(); //todo forse puoi sostituirli con dei semafori
         if(!this.accepted)
             throw (new IllegalArgumentException());
     }
@@ -108,4 +139,33 @@ public class ClientHandler implements Runnable, RMIInterface {
         return(choice);
     }
 
+    public void setRegistry(Registry registry) {
+        this.registry = registry;
+    }
+
+    public Registry getRegistry() {
+        return registry;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    @Override
+    public Status getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        
+    }
 }

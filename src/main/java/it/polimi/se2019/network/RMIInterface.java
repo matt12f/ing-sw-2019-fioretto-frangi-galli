@@ -1,6 +1,7 @@
 package it.polimi.se2019.network;
 
 import it.polimi.se2019.controller.AvailableActions;
+import it.polimi.se2019.enums.Status;
 import it.polimi.se2019.view.ActionRequestView;
 import it.polimi.se2019.view.LocalView;
 
@@ -12,5 +13,6 @@ public interface RMIInterface extends Remote{
     AvailableActions askAction(ActionRequestView codedAction, int playerID) throws RemoteException; //this method returns the possible actions
     void setNicknameRMI (String nickname) throws RemoteException, IllegalArgumentException, InterruptedException;
     String actionRequest () throws RemoteException;
+    Status getStatus() throws  RemoteException;
 }
 

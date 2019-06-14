@@ -4,6 +4,7 @@ import it.polimi.se2019.enums.CellType;
 import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.exceptions.FullException;
 import it.polimi.se2019.model.game.*;
+import it.polimi.se2019.network.ClientHandler;
 import it.polimi.se2019.view.LocalView;
 import it.polimi.se2019.view.RemoteView;
 
@@ -27,20 +28,14 @@ public class Controller implements Observer {
     /**
      * This constructor generates one local controller object for one Player
      */
-    public Controller() {
-        ArrayList<Player> players = new ArrayList<>();
-        //This part is about the first player
-        String nickname="Da fare";
-        Color color=Color.WHITE;
-        //TODO chiedere nickname passando da VIEW
-        //TODO scelta del colore passando da VIEW
-        players.add(new Player(1,nickname,color));
+    public Controller(ArrayList<Player> players) {
 
-        //This part is about the game
-        //TODO chiedere la modalità di gioco
         String gameMode="normal";
+
         int mapNumber=1; //TODO fare scegliere il numero di mappa
-        this.mainGameModel=new GameModel(0,players,gameMode,mapNumber);
+
+        this.mainGameModel=new GameModel(0,players,gameMode,mapNumber); //todo game mode non è da rimuovere?
+
         this.remoteView=setupRemoteObjExport();
         this.activeTurn = new TurnManager();
     }

@@ -131,4 +131,8 @@ public class GameModel extends Observable{
     public void incrementTurn() {
         this.turn++;
     }
+
+    public void setTurn (int turn){
+        this.turn = turn;
+    }
 }
