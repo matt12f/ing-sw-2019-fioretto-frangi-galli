@@ -105,8 +105,9 @@ public class AdrenalineServer implements Runnable {
                 Host = rmiClients.getHosts();
                 hostToRemove = rmiClients.getClients();
                 while(!toRemove.isEmpty()){
-                    Host.remove(toRemove.get(toRemove.size() - 1));
-                    hostToRemove.remove(toRemove.get(toRemove.size() - 1));
+                    i = toRemove.get(toRemove.size() - 1);
+                    Host.remove(i);
+                    hostToRemove.remove(i);
                     toRemove.remove(toRemove.size() - 1);
                 }
                 rmiClients.setHosts(Host);
