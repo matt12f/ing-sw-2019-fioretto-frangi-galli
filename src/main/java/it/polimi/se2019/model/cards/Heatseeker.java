@@ -51,15 +51,10 @@ public class Heatseeker extends GunCardAddEff {
      */
     @Override
      void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        //copies the whole player list
-        ArrayList<Player> allPlayers=new ArrayList<>(AdrenalineServer.getMainController().getMainGameModel().getPlayerList());
-
         //adds list of targets you cannot see
-        actions.addToTargetList1(allPlayers);
+        actions.addToTargetList1(ActionManager.notVisibleTargets(player));
         actions.setMaxNumberOfTargetsList1(1);
 
-        //removes the targets that you can see
-        ActionManager.untouchableRemover(allPlayers, ActionManager.visibleTargets(player));
 
     }
 

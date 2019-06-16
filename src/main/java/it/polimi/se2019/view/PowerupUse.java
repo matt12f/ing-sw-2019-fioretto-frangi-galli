@@ -27,16 +27,6 @@ public class PowerupUse {
         return directionOfMove;
     }
 
-    public int getIndexOfMove() {
-        switch (directionOfMove){
-            case "Up":return 0;
-            case "Down":return 1;
-            case"Left":return 2;
-            case "Right": return 3;
-        }
-        return -1;
-    }
-
     public int getMovementDistance() {
         return movementDistance;
     }

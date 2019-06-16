@@ -15,7 +15,7 @@ public class SingleEffectsCombinationActions {
     private ArrayList<Player> targetList2; //To choose from
     private int maxNumberOfTargetsList1; //For the GUI/CLI
     private int maxNumberOfTargetsList2; //For the GUI/CLI
-    private String directionOfMovement; //To Choose from
+    private ArrayList<String> possibleDirOfMov; //To Choose from
     private int maxDistanceOfMovement; //For the GUI/CLI
     private boolean allowedMovement; //For the GUI/CLI
     private boolean yourOrTheirMovement; //For the GUI/CLI
@@ -26,12 +26,64 @@ public class SingleEffectsCombinationActions {
         this.targetList1=new ArrayList<>();
         this.targetList2=new ArrayList<>();
         this.maxNumberOfTargetsList1=0;
-        this.directionOfMovement="None";
+        this.possibleDirOfMov=new ArrayList<>();
+        this.possibleDirOfMov.add("None");
         this.maxDistanceOfMovement=0;
         this.allowedMovement=false;
         this.targetCells=new ArrayList<>();
         this.targetRooms=new ArrayList<>();
     }
+
+
+    //TODO c'è altro da controllare?
+    public void validate() throws UnavailableEffectCombinationException{
+        if (this.targetList1.isEmpty() &&this.targetList2.isEmpty() &&this.targetCells.isEmpty() && this.targetRooms.isEmpty())
+            throw new UnavailableEffectCombinationException();
+    }
+
+    /** ------------- GETTER METHODS ------------- */
+
+    public ArrayList<Player> getTargetList1() {
+        return targetList1;
+    }
+
+    public ArrayList<Player> getTargetList2() {
+        return targetList2;
+    }
+
+    public int getMaxNumberOfTargetsList1() {
+        return maxNumberOfTargetsList1;
+    }
+
+    public int getMaxNumberOfTargetsList2() {
+        return maxNumberOfTargetsList2;
+    }
+
+    public ArrayList<String> getPossibleDirOfMov() {
+        return possibleDirOfMov;
+    }
+
+    public int getMaxDistanceOfMovement() {
+        return maxDistanceOfMovement;
+    }
+
+    public boolean isAllowedMovement() {
+        return allowedMovement;
+    }
+
+    public boolean isYourOrTheirMovement() {
+        return yourOrTheirMovement;
+    }
+
+    public ArrayList<NewCell> getTargetCells() {
+        return targetCells;
+    }
+
+    public ArrayList<Room> getTargetRooms() {
+        return targetRooms;
+    }
+
+    /** ------------- SETTER METHODS ------------- */
 
     public void addToTargetList1(ArrayList<Player> targetList1) {
         this.targetList1.addAll(targetList1);
@@ -41,6 +93,7 @@ public class SingleEffectsCombinationActions {
         this.targetList1.addAll(targetList2);
     }
 
+
     public void setMaxNumberOfTargetsList1(int maxNumberOfTargets) {
         this.maxNumberOfTargetsList1 = maxNumberOfTargets;
     }
@@ -49,8 +102,16 @@ public class SingleEffectsCombinationActions {
         this.maxNumberOfTargetsList2 = maxNumberOfTargetsList2;
     }
 
-    public void setDirectionOfMovement(String directionOfMovement) {
-        this.directionOfMovement = directionOfMovement;
+    public void addToTargetRooms(ArrayList<Room> targetRooms) {
+        this.targetRooms.addAll(targetRooms);
+    }
+
+    public void addToTargetCells(ArrayList<NewCell> targetCells) {
+        this.targetCells.addAll(targetCells);
+    }
+
+    public void addPossibleDirOfMov(String directionOfMovement) {
+        this.possibleDirOfMov.add(directionOfMovement);
     }
 
     public void setMaxDistanceOfMovement(int maxDistanceOfMovement) {
@@ -65,22 +126,6 @@ public class SingleEffectsCombinationActions {
         this.yourOrTheirMovement = yourOrTheirMovement;
     }
 
-    public void setTargetCells(ArrayList<NewCell> targetCells) {
-        this.targetCells = targetCells;
-    }
 
-    public void addToTargetRooms(ArrayList<Room> targetRooms) {
-        this.targetRooms.addAll(targetRooms);
-    }
-
-    public void addToTargetCells(ArrayList<NewCell> targetCells) {
-        this.targetCells.addAll(targetCells);
-    }
-
-    //TODO c'è altro da controllare?
-    public void validate() throws UnavailableEffectCombinationException{
-        if (this.targetList1.isEmpty() &&this.targetList2.isEmpty() &&this.targetCells.isEmpty() && this.targetRooms.isEmpty())
-            throw new UnavailableEffectCombinationException();
-    }
 }
 

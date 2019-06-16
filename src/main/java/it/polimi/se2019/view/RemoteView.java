@@ -1,6 +1,7 @@
 package it.polimi.se2019.view;
 
 import it.polimi.se2019.AdrenalineServer;
+import it.polimi.se2019.enums.Status;
 import it.polimi.se2019.model.game.*;
 import it.polimi.se2019.network.RMIInterface;
 import it.polimi.se2019.controller.AvailableActions;
@@ -72,6 +73,11 @@ public class RemoteView  extends View implements RMIInterface {
 
     @Override
     public String actionRequest() throws RemoteException {
+        return null;
+    }
+
+    @Override
+    public Status getStatus() throws RemoteException {
         return null;
     }
 }

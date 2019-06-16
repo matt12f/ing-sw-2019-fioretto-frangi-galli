@@ -10,7 +10,7 @@ public class Player {
     private PlayerBoard playerBoard;
 
     public Player(int id, String nickname, Color color ){
-        this.id = id; //forse può non servire
+        this.id = id;
         this.nickname = nickname;
         this.score = 0;
         this.playerBoard = new PlayerBoard(color);

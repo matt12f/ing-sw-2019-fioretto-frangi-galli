@@ -1,6 +1,8 @@
 package it.polimi.se2019.model.cards;
 
+import it.polimi.se2019.controller.ActionManager;
 import it.polimi.se2019.controller.FictitiousPlayer;
+import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
 import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
@@ -52,21 +54,33 @@ public class VortexCannon extends GunCardAddEff {
 
     @Override
     void applyBaseEffect(ChosenActions playersChoice) {
-
+        //TODO scrivere metodo
     }
 
     @Override
     void applySecondaryEffect(ChosenActions playersChoice) {
-
+        //TODO scrivere metodo
     }
 
+    /**
+     * Choose a square you can see, but not your square. Call it "the vortex".
+     * Choose a target on the vortex or 1 move away from it. Move it onto the vortex and give it 2 damage.
+     */
     @Override
     void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-
+        ArrayList<NewCell> possibleVortex=new ArrayList<>(ActionManager.visibleSquares(player));
+        actions.addToTargetCells(possibleVortex);
+        //TODO nella view: scegliere target lì, o nei quadrati adiacenti
+        //TODO maxNumberTargetsOnCell=1
     }
 
-    @Override
-    void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+    /**
+     * Choose up to 2 other targets on the vortex or 1 move away from it.
+     * Move them onto the vortex and give them each 1 damage.
+     */
 
+     @Override
+    void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+         //TODO maxNumberTargetsOnCell=3
     }
 }

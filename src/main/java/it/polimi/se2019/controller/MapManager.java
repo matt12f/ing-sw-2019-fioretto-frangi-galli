@@ -15,6 +15,26 @@ import java.util.logging.Logger;
 public class MapManager {
     private static final Logger LOGGER = Logger.getLogger(MapManager.class.getName());
 
+    public static int getIndexOfMove(String directionOfMove) {
+        switch (directionOfMove){
+            case "Up":return 0;
+            case "Down":return 1;
+            case"Left":return 2;
+            case "Right": return 3;
+        }
+        return -1;
+    }
+
+    public static String getDirOfMove(int indexOfMove) {
+        switch (indexOfMove){
+            case 0: return"Up";
+            case 1: return "Down";
+            case 2: return "Left";
+            case 3:return "Right";
+        }
+        return "None";
+    }
+
     public static Room getRoom(NewCell cell){
         for(Room room: AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getRooms())
            if(room.getColor().equals(cell.getColor()))

@@ -1,6 +1,8 @@
 package it.polimi.se2019.model.cards;
 
+import it.polimi.se2019.controller.ActionManager;
 import it.polimi.se2019.controller.FictitiousPlayer;
+import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
 import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
@@ -26,27 +28,31 @@ public class Zx2 extends GunCardAltEff {
     }
 
     @Override
-    public SingleEffectsCombinationActions buildAvailableActions(ArrayList<String> effectsCombination, FictitiousPlayer player) throws UnavailableEffectCombinationException {
-        return null;
-    }
-
-    @Override
     void applyBaseEffect(ChosenActions playersChoice) {
-
+        //TODO scrivere metodo
     }
 
     @Override
     void applySecondaryEffect(ChosenActions playersChoice) {
-
+        //TODO scrivere metodo
     }
 
+    /**
+     * Deal 1 damage and 2 marks to 1 target you can see.
+     */
     @Override
     void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-
+        ArrayList<Player> targets = new ArrayList<>(ActionManager.visibleTargets(player));
+        actions.addToTargetList1(targets);
+        actions.setMaxNumberOfTargetsList1(1);
     }
 
+    /**
+     * Choose up to 3 targets you can see and deal 1 mark to each.
+     */
     @Override
     void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-
+        targetsOfBaseEffect(actions,player);
+        actions.setMaxNumberOfTargetsList1(3);
     }
 }

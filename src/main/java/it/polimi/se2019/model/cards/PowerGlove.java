@@ -1,6 +1,12 @@
 package it.polimi.se2019.model.cards;
 
+import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.controller.FictitiousPlayer;
+import it.polimi.se2019.controller.MapManager;
+import it.polimi.se2019.enums.CellEdge;
+import it.polimi.se2019.exceptions.OuterWallException;
+import it.polimi.se2019.model.game.NewCell;
+import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
 import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
@@ -31,27 +37,52 @@ public class PowerGlove extends GunCardAltEff {
     }
 
     @Override
-    public SingleEffectsCombinationActions buildAvailableActions(ArrayList<String> effectsCombination, FictitiousPlayer player) throws UnavailableEffectCombinationException {
-        return null;
-    }
-
-    @Override
     void applyBaseEffect(ChosenActions playersChoice) {
-
+        //TODO scrivere metodo
     }
 
     @Override
     void applySecondaryEffect(ChosenActions playersChoice) {
-
+        //TODO scrivere metodo
     }
 
+    /**
+     * Choose 1 target on any square exactly 1 move away. Move onto that square and give the target 1 damage and 2 marks.
+     */
     @Override
     void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+        NewCell[][] board = AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix();
+        ArrayList<Player> targets = new ArrayList<>();
+        try {
+            for (int i = 0; i < 4; i++){
+                if(!player.getPosition().getEdge(i).equals(CellEdge.WALL))
+                    targets.addAll(MapManager.getCellInDirection(board,player.getPosition(),1,i).getPlayers());
+            }
+        }catch (OuterWallException e){
+            //Won't ever happen
+        }
+        actions.addToTargetList1(targets);
+        actions.setMaxNumberOfTargetsList1(1);
 
+        //you will then move to that square automatically
     }
 
+    /**
+     * Choose a square exactly 1 move away. Move onto that square. You may deal 2 damage to 1 target there.
+     *
+     * If you want, you may move 1 more square in that same direction (but only if it is a legal move).
+     * You may deal 2 damage to 1 target there, as well.
+     */
     @Override
     void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+        //choice of a player to damage in one cell away
+        targetsOfBaseEffect(actions,player);
+
+        //you will then move automatically there and damage the target
+
+        actions.setAllowedMovement(true);
+        actions.setYourOrTheirMovement(true);
+        //TODO rivedere per il secondo target
 
     }
 }

@@ -101,7 +101,7 @@ public class ActionManager {
     }
 
     /**
-     *  Returns the targets a certain player can see
+     *  Returns the targets a certain player can see (doesn't include yourself)
      *  */
     public static ArrayList<Player> visibleTargets(FictitiousPlayer playersPOV){
         //it will add all of the targets in the room first
@@ -124,8 +124,18 @@ public class ActionManager {
         return targets;
     }
 
+    public static ArrayList<Player> notVisibleTargets(FictitiousPlayer playersPOV){
+        ArrayList<Player> allTargets = new ArrayList<>(AdrenalineServer.getMainController().getMainGameModel().getPlayerList());
+
+        allTargets.removeAll(visibleTargets(playersPOV));
+
+        allTargets.remove(playersPOV.getCorrespondingPlayer());
+
+        return allTargets;
+    }
+
     /**
-     * returns the squares you can see
+     * returns the squares you can see (including yours)
      * */
     public static ArrayList<NewCell> visibleSquares(FictitiousPlayer playersPOV){
         //it will add first the squares in your room

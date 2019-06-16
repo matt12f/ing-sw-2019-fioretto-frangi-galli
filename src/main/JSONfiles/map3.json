@@ -2,27 +2,33 @@
   "rooms": [
     {
       "color": "RED",
-      "players": []
+      "players": [],
+      "cells": []
     },
     {
       "color": "YELLOW",
-      "players": []
+      "players": [],
+      "cells": []
     },
     {
       "color": "BLUE",
-      "players": []
+      "players": [],
+      "cells": []
     },
     {
       "color": "WHITE",
-      "players": []
+      "players": [],
+      "cells": []
     },
     {
       "color": "GREEN",
-      "players": []
+      "players": [],
+      "cells": []
     },
     {
       "color": "VIOLET",
-      "players": []
+      "players": [],
+      "cells": []
     }
   ],
   "boardMatrix": [

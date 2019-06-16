@@ -26,11 +26,6 @@ public class Railgun extends GunCardAltEff {
     }
 
     @Override
-    public SingleEffectsCombinationActions buildAvailableActions(ArrayList<String> effectsCombination, FictitiousPlayer player) throws UnavailableEffectCombinationException {
-        return null;
-    }
-
-    @Override
     void applyBaseEffect(ChosenActions playersChoice) {
 
     }
@@ -39,14 +34,20 @@ public class Railgun extends GunCardAltEff {
     void applySecondaryEffect(ChosenActions playersChoice) {
 
     }
-
+    /**
+     * Choose a cardinal direction and 1 target in that direction. Deal 3 damage to it.
+     */
     @Override
     void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-
+        //TODO 4 liste di target? una per direzione?
     }
 
+    /**
+     * Choose a cardinal direction and 1 or 2 targets in that direction. Deal 2 damage to each.
+     */
     @Override
     void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-
+        //TODO 4 liste di target? una per direzione?
     }
+
 }
