@@ -29,31 +29,6 @@ public abstract class GunCard{
         return ammoCost;
     }
 
-    @Deprecated
-    public int getRedAmmoCost() {
-        int redCont=0;
-        for(char singleCost:ammoCost)
-            if (singleCost=='r')
-                redCont++;
-        return redCont;
-    }
-    @Deprecated
-    public int getYellowAmmoCost() {
-        int yellowCont=0;
-        for(char singleCost:ammoCost)
-            if (singleCost=='r')
-                yellowCont++;
-        return yellowCont;
-    }
-    @Deprecated
-    public int getBlueAmmoCost() {
-        int blueCont=0;
-        for(char singleCost:ammoCost)
-            if (singleCost=='r')
-                blueCont++;
-        return blueCont;
-    }
-
     public String getDescription() {
         return description;
     }

@@ -38,16 +38,6 @@ public class VortexCannon extends GunCardAddEff {
     }
 
     @Override
-    void applyTertiaryEffect(ChosenActions playersChoice) {
-
-    }
-
-    @Override
-    void targetsOfTertiaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-
-    }
-
-    @Override
     public SingleEffectsCombinationActions buildAvailableActions(ArrayList<String> effectsCombination, FictitiousPlayer player) throws UnavailableEffectCombinationException {
         return null;
     }
@@ -68,8 +58,8 @@ public class VortexCannon extends GunCardAddEff {
      */
     @Override
     void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        ArrayList<NewCell> possibleVortex=new ArrayList<>(ActionManager.visibleSquares(player));
-        actions.addToTargetCells(possibleVortex);
+        //TODO struttura per celle che possano essere vortex
+
         //TODO nella view: scegliere target lì, o nei quadrati adiacenti
         //TODO maxNumberTargetsOnCell=1
     }
@@ -82,5 +72,14 @@ public class VortexCannon extends GunCardAddEff {
      @Override
     void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
          //TODO maxNumberTargetsOnCell=3
+    }
+
+    @Override
+    void applyTertiaryEffect(ChosenActions playersChoice) {
+        throw new UnsupportedOperationException();
+    }
+    @Override
+    void targetsOfTertiaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+        throw new UnsupportedOperationException();
     }
 }

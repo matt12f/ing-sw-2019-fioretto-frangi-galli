@@ -5,7 +5,6 @@ import it.polimi.se2019.controller.FictitiousPlayer;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
-import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
 
 import java.util.ArrayList;
 
@@ -43,8 +42,8 @@ public class Zx2 extends GunCardAltEff {
     @Override
     void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         ArrayList<Player> targets = new ArrayList<>(ActionManager.visibleTargets(player));
-        actions.addToTargetList1(targets);
-        actions.setMaxNumberOfTargetsList1(1);
+        actions.addToPlayerTargetList(targets);
+        actions.setMaxNumPlayerTargets(1);
     }
 
     /**
@@ -53,6 +52,6 @@ public class Zx2 extends GunCardAltEff {
     @Override
     void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         targetsOfBaseEffect(actions,player);
-        actions.setMaxNumberOfTargetsList1(3);
+        actions.setMaxNumPlayerTargets(3);
     }
 }

@@ -1,9 +1,9 @@
 package it.polimi.se2019.model.cards;
 
+import it.polimi.se2019.controller.ActionManager;
 import it.polimi.se2019.controller.FictitiousPlayer;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
-import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
 
 import java.util.ArrayList;
 
@@ -46,37 +46,44 @@ public class MachineGun extends GunCardAddEff {
     }
 
     @Override
-    void applyTertiaryEffect(ChosenActions playersChoice) {
-
-    }
-
-    @Override
-    void targetsOfTertiaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-
-    }
-
-    @Override
-    public SingleEffectsCombinationActions buildAvailableActions(ArrayList<String> effectsCombination, FictitiousPlayer player) throws UnavailableEffectCombinationException {
-        return null;
-    }
-
-    @Override
     void applyBaseEffect(ChosenActions playersChoice) {
-
+        //TODO scrivere metodo
     }
 
     @Override
     void applySecondaryEffect(ChosenActions playersChoice) {
-
+        //TODO scrivere metodo
     }
 
+    @Override
+    void applyTertiaryEffect(ChosenActions playersChoice) {
+        //TODO scrivere metodo
+    }
+
+    /**
+     * Choose 1 or 2 targets you can see and deal 1 damage to each.
+     */
     @Override
     void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-
+        actions.addToPlayerTargetList(new ArrayList<>(ActionManager.visibleTargets(player)));
+        actions.setMaxNumPlayerTargets(2);
     }
 
+    /**
+     * Deal 1 additional damage to one of those targets.
+     */
     @Override
     void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+        //TODO basta un boolean per usare l'effetto (se ci sono target): gestione nella view del resto
+    }
 
+    /**
+     * Deal 1 additional damage to the other of those targets and/or deal 1 damage to a different target you can see.
+     */
+    @Override
+    void targetsOfTertiaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+        //TODO basta un boolean per offrire l'effetto, indicando che il target dev'essere diverso
+
+        //TODO basta un boolean per offrire la seconda parte dell'effetto, se ci sono altri target visibili
     }
 }

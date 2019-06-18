@@ -2,11 +2,9 @@ package it.polimi.se2019.model.cards;
 
 import it.polimi.se2019.controller.ActionManager;
 import it.polimi.se2019.controller.FictitiousPlayer;
-import it.polimi.se2019.controller.MapManager;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
-import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
 
 import java.util.ArrayList;
 
@@ -36,23 +34,6 @@ public class LockRifle extends GunCardAddEff {
     }
 
     @Override
-    public SingleEffectsCombinationActions buildAvailableActions(ArrayList<String> effectsCombination, FictitiousPlayer player) throws UnavailableEffectCombinationException {
-        SingleEffectsCombinationActions actions=new SingleEffectsCombinationActions();
-        for(String effect: effectsCombination){
-
-            if (effect.equals("Base"))
-                targetsOfBaseEffect(actions, player);
-            else if (effect.equals("Optional1"))
-                targetsOfSecondaryEffect(actions, player);
-            else if(effect.equals("Optional2"))
-                targetsOfTertiaryEffect(actions,player);
-
-        }
-        actions.validate();
-        return actions;
-    }
-
-    @Override
     void applyBaseEffect(ChosenActions playersChoice) {
         //TODO scrivere metodo
     }
@@ -68,8 +49,8 @@ public class LockRifle extends GunCardAddEff {
     @Override
     void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         ArrayList<Player> targets=new ArrayList<>(ActionManager.visibleTargets(player));
-        actions.addToTargetList1(targets);
-        actions.setMaxNumberOfTargetsList1(1);
+        actions.addToPlayerTargetList(targets);
+        actions.setMaxNumPlayerTargets(1);
     }
 
     /**
@@ -85,11 +66,11 @@ public class LockRifle extends GunCardAddEff {
     //useless methods
     @Override
     void applyTertiaryEffect(ChosenActions playersChoice) {
-        //Does nothing
+        throw new UnsupportedOperationException();
     }
     @Override
     void targetsOfTertiaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        //does nothing
+        throw new UnsupportedOperationException();
     }
 
 }

@@ -29,25 +29,12 @@ public class Whisper extends GunCardAddEff {
     }
 
     @Override
-    public SingleEffectsCombinationActions buildAvailableActions(ArrayList<String> effectsCombination, FictitiousPlayer player) throws UnavailableEffectCombinationException {
-        SingleEffectsCombinationActions actions=new SingleEffectsCombinationActions();
-
-        targetsOfBaseEffect(actions, player);
-
-        actions.validate();
-        return actions;
-    }
-
-    @Override
     void applyBaseEffect(ChosenActions playersChoice) {
         //TODO scrivere codice
     }
 
-    /** target: 1 (that you can see, but at LEAST 2 moves away from you)
-     *  damage: 3
-     *  mark: 1
-     * @param actions
-     * @param player
+    /**
+     * Deal 3 damage and 1 mark to 1 target you can see. Your target must be at least 2 moves away from you.
      */
     @Override
     void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
@@ -56,8 +43,8 @@ public class Whisper extends GunCardAddEff {
             if(MapManager.distanceBetweenCells(AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix(),player.getPosition(),target.getFigure().getCell())>2)
                 targets.add(target);
 
-        actions.addToTargetList1(targets);
-        actions.setMaxNumberOfTargetsList1(1);
+        actions.addToPlayerTargetList(targets);
+        actions.setMaxNumPlayerTargets(1);
     }
 
     @Override

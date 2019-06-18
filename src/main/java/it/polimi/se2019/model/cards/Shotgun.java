@@ -49,11 +49,10 @@ public class Shotgun extends GunCardAltEff {
         ArrayList<Player> targets = new ArrayList<>(player.getPosition().getPlayers());
         targets.remove(player.getCorrespondingPlayer());
 
-        actions.addToTargetList1(targets);
-        actions.setMaxNumberOfTargetsList1(1);
+        actions.addToPlayerTargetList(targets);
+        actions.setMaxNumPlayerTargets(1);
 
-        actions.setAllowedMovement(true);
-        actions.setYourOrTheirMovement(false);
+        actions.setCanMoveOpponent(true);
         actions.setMaxDistanceOfMovement(1);
     }
 
@@ -73,7 +72,7 @@ public class Shotgun extends GunCardAltEff {
         }catch (OuterWallException e){
             //Won't ever happen
         }
-        actions.addToTargetList1(targets);
-        actions.setMaxNumberOfTargetsList1(1);
+        actions.addToPlayerTargetList(targets);
+        actions.setMaxNumPlayerTargets(1);
     }
 }

@@ -9,7 +9,6 @@ import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
-import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
 
 import java.util.ArrayList;
 
@@ -57,8 +56,8 @@ public class Shockwave extends GunCardAltEff {
         }catch (OuterWallException e){
             //Won't ever happen
         }
-        actions.addToTargetList1(targets);
-        actions.setMaxNumberOfTargetsList1(3);
+        actions.addToPlayerTargetList(targets);
+        actions.setMaxNumPlayerTargets(3);
         //TODO controllare che i target siano ognuno su uno square diverso
 
     }
@@ -68,6 +67,6 @@ public class Shockwave extends GunCardAltEff {
      */
     @Override
     void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        //TODO basta scegliere se usarlo o no
+        //TODO basta scegliere se usarlo o no (controllo se ci sono target)
     }
 }

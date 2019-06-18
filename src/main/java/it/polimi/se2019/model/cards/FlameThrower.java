@@ -58,6 +58,6 @@ public class FlameThrower extends GunCardAltEff {
      */
     @Override
     void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        //TODO come
+        //TODO come sopra
     }
 }

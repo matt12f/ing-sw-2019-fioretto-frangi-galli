@@ -1,9 +1,9 @@
 package it.polimi.se2019.model.cards;
 
+import it.polimi.se2019.controller.ActionManager;
 import it.polimi.se2019.controller.FictitiousPlayer;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
-import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
 
 import java.util.ArrayList;
 
@@ -43,37 +43,42 @@ public class Thor extends GunCardAddEff {
     }
 
     @Override
-    void applyTertiaryEffect(ChosenActions playersChoice) {
-
-    }
-
-    @Override
-    void targetsOfTertiaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-
-    }
-
-    @Override
-    public SingleEffectsCombinationActions buildAvailableActions(ArrayList<String> effectsCombination, FictitiousPlayer player) throws UnavailableEffectCombinationException {
-        return null;
-    }
-
-    @Override
     void applyBaseEffect(ChosenActions playersChoice) {
-
+        //TODO scrivere metodo
     }
 
     @Override
     void applySecondaryEffect(ChosenActions playersChoice) {
-
+        //TODO scrivere metodo
     }
 
+    @Override
+    void applyTertiaryEffect(ChosenActions playersChoice) {
+        //TODO scrivere metodo
+    }
+
+    /**
+     * Deal 2 damage to 1 target you can see.
+     */
     @Override
     void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-
+        actions.addToPlayerTargetList(new ArrayList<>(ActionManager.visibleTargets(player)));
+        actions.setMaxNumPlayerTargets(1);
     }
 
+    /**
+     * Deal 1 damage to a second target that your first target can see.
+     */
     @Override
     void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+        //custom management in view
+    }
 
+    /**
+     * Deal 2 damage to a third target that your second target can see. You cannot use this effect unless you first use the chain reaction.
+     */
+    @Override
+    void targetsOfTertiaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+        //custom management in view
     }
 }

@@ -37,15 +37,20 @@ public class Hellion extends GunCardAltEff{
         //TODO scrivere metodo
     }
 
+    /**
+     * Deal 1 damage to 1 target you can see at least 1 move away. Then give 1 mark to that target and everyone else on that square.
+     */
     @Override
     void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         ArrayList<Player> targets=new ArrayList<>(ActionManager.visibleTargets(player));
         targets.removeAll(player.getPosition().getPlayers()); //it's certainly more than one move away if it's not on your cell
 
-        actions.addToTargetList1(targets);
-        actions.setMaxNumberOfTargetsList1(1);
+        actions.addToPlayerTargetList(targets);
+        actions.setMaxNumPlayerTargets(1);
     }
-
+    /**
+     * Deal 1 damage to 1 target you can see at least 1 move away. Then give 2 marks to that target and everyone else on that square.
+     */
     @Override
     void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         targetsOfBaseEffect(actions,player);

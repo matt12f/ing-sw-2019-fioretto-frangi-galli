@@ -44,8 +44,6 @@ public class Furnace extends GunCardAltEff {
 
     /**
      * Choose a room you can see, but not the room you are in. Deal 1 damage to everyone in that room.
-     * @param actions
-     * @param player
      */
     @Override
     void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
@@ -65,8 +63,6 @@ public class Furnace extends GunCardAltEff {
 
     /**
      * Choose a square exactly one move away. Deal 1 damage and 1 mark to everyone on that square.
-     * @param actions
-     * @param player
      */
     @Override
     void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {

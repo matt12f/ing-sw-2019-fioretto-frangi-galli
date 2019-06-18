@@ -2,6 +2,7 @@ package it.polimi.se2019.model.cards;
 
 
 import it.polimi.se2019.controller.FictitiousPlayer;
+import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
 import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
@@ -67,16 +68,6 @@ public class CyberBlade extends GunCardAddEff {
     }
 
     @Override
-    void applyTertiaryEffect(ChosenActions playersChoice) {
-
-    }
-
-    @Override
-    void targetsOfTertiaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-
-    }
-
-    @Override
     public SingleEffectsCombinationActions buildAvailableActions(ArrayList<String> effectsCombination, FictitiousPlayer player) throws UnavailableEffectCombinationException {
         return null;
     }
@@ -92,12 +83,39 @@ public class CyberBlade extends GunCardAddEff {
     }
 
     @Override
-    void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+    void applyTertiaryEffect(ChosenActions playersChoice) {
 
     }
 
+    /**
+     * Deal 2 damage to 1 target on your square.
+     */
+    @Override
+    void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+        ArrayList<Player> targets=new ArrayList<>(player.getPosition().getPlayers());
+        targets.remove(player.getCorrespondingPlayer());
+
+        actions.addToPlayerTargetList(targets);
+        actions.setMaxNumPlayerTargets(1);
+    }
+
+    /**
+     * Move 1 square before or after the basic effect.
+     */
     @Override
     void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+        //TODO se usato dopo effetto base: no problem
 
+        //TODO se usato prima dell'effetto base: devo ricalcolare le possibilità
+    }
+
+    /**
+     * Deal 2 damage to a different target on your square. The shadowstep may be used before or after this effect.
+     */
+    @Override
+    void targetsOfTertiaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+        //TODO basta scegliere di usare l'effetto
+        //TODO basta mettere un flag che dica che il target dev'essere diverso
+        // Nella view verrà (proponendo la stessa lista di prima - quello già scelto)
     }
 }

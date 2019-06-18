@@ -1,9 +1,7 @@
 package it.polimi.se2019.model.cards;
 
-import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.controller.ActionManager;
 import it.polimi.se2019.controller.FictitiousPlayer;
-import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
 import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
@@ -26,36 +24,19 @@ public class Heatseeker extends GunCardAddEff {
         this.tertiaryEffectCost =null;
     }
 
-    /**
-     * here the order of the effects is not important because there's only one effect to perform
-     */
-    @Override
-    public SingleEffectsCombinationActions buildAvailableActions(ArrayList<String> effectsCombination, FictitiousPlayer player) throws UnavailableEffectCombinationException {
-        SingleEffectsCombinationActions actions=new SingleEffectsCombinationActions();
-
-        targetsOfBaseEffect(actions, player);
-
-        actions.validate();
-        return actions;
-    }
-
     @Override
     void applyBaseEffect(ChosenActions playersChoice){
         //TODO scrivere codice
     }
 
-    /** target: 1 (that you cannot see)
-     *  damage: 3
-     * @param actions
-     * @param player
+    /**
+     * Choose 1 target you cannot see and deal 3 damage to it.
      */
     @Override
      void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         //adds list of targets you cannot see
-        actions.addToTargetList1(ActionManager.notVisibleTargets(player));
-        actions.setMaxNumberOfTargetsList1(1);
-
-
+        actions.addToPlayerTargetList(ActionManager.notVisibleTargets(player));
+        actions.setMaxNumPlayerTargets(1);
     }
 
     @Override

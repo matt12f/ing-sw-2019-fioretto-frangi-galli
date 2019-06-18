@@ -22,6 +22,10 @@ public abstract class GunCardAltEff extends GunCard{
         this.effectsOrder.add(secondCombination);
     }
 
+    /**
+     * This method works for every card of this type
+     * @throws UnavailableEffectCombinationException if the effect has no targets
+     */
     @Override
     public SingleEffectsCombinationActions buildAvailableActions(ArrayList<String> effectsCombination, FictitiousPlayer player) throws UnavailableEffectCombinationException {
         SingleEffectsCombinationActions actions=new SingleEffectsCombinationActions();
@@ -39,7 +43,7 @@ public abstract class GunCardAltEff extends GunCard{
         for(int i=0;i<playersChoice.getOrderOfExecution().size();i++)
             switch (playersChoice.getOrderOfExecution().get(i)){
                 case "Base":applyBaseEffect(playersChoice);break;
-                case "Alternative":applySecondaryEffect(playersChoice);break;
+                case "Optional1":applySecondaryEffect(playersChoice);break;
                 default:break;
             }
     }

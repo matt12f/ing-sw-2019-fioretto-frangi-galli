@@ -8,7 +8,6 @@ import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
-import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
 
 import java.util.ArrayList;
 
@@ -61,9 +60,9 @@ public class TractorBeam extends GunCardAltEff {
                    targetsToMove.add(target);
 
 
-        actions.addToTargetList1(targetsToMove);
-        actions.setMaxNumberOfTargetsList1(1);
-        actions.addToTargetCells(visibleSquares);
+        actions.addToPlayerTargetList(targetsToMove);
+        actions.setMaxNumPlayerTargets(1);
+        //TODO rivedere con nuova struttura
     }
 
     /**
@@ -77,7 +76,7 @@ public class TractorBeam extends GunCardAltEff {
             if(MapManager.distanceBetweenCells(board,target.getFigure().getCell(),player.getPosition())<=2)
                 targets.add(target);
 
-        actions.addToTargetList1(targets);
-        actions.setMaxNumberOfTargetsList1(1);
+        actions.addToPlayerTargetList(targets);
+        actions.setMaxNumPlayerTargets(1);
     }
 }

@@ -1,9 +1,10 @@
 package it.polimi.se2019.model.cards;
 
+import it.polimi.se2019.controller.ActionManager;
 import it.polimi.se2019.controller.FictitiousPlayer;
+import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
-import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
 
 import java.util.ArrayList;
 
@@ -29,7 +30,6 @@ public class GrenadeLauncher extends GunCardAddEff {
         ammoCost[0]= 'r';
         this.description ="basic effect: Deal 1 damage to 1 target you can see. Then you may move\n" +
                 "the target 1 square.\n"+
-                "the target 1 square.\n" +
                 "with extra grenade: Deal 1 damage to every player on a square you can\n" +
                 "see. You can use this before or after the basic effect's move.";
 
@@ -39,37 +39,43 @@ public class GrenadeLauncher extends GunCardAddEff {
     }
 
     @Override
-    void applyTertiaryEffect(ChosenActions playersChoice) {
-
-    }
-
-    @Override
-    void targetsOfTertiaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-
-    }
-
-    @Override
-    public SingleEffectsCombinationActions buildAvailableActions(ArrayList<String> effectsCombination, FictitiousPlayer player) throws UnavailableEffectCombinationException {
-        return null;
-    }
-
-    @Override
     void applyBaseEffect(ChosenActions playersChoice) {
-
+        //TODO scrivere metodo
     }
 
     @Override
     void applySecondaryEffect(ChosenActions playersChoice) {
-
+        //TODO scrivere metodo
     }
 
+    /**
+     * Deal 1 damage to 1 target you can see. Then you may move the target 1 square.
+     */
     @Override
     void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+        ArrayList<Player> targets=new ArrayList<>(ActionManager.visibleTargets(player));
+        actions.addToPlayerTargetList(targets);
+        actions.setMaxNumPlayerTargets(1);
+
+        actions.setCanMoveOpponent(true);
+        actions.setMaxDistanceOfMovement(1);
 
     }
 
+    /**
+     * Deal 1 damage to every player on a square you can see. You can use this before or after the basic effect.
+     */
     @Override
     void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+       actions.addToTargetCells(new ArrayList<>(ActionManager.visibleSquares(player)));
+    }
 
+    @Override
+    void applyTertiaryEffect(ChosenActions playersChoice) {
+        throw new UnsupportedOperationException();
+    }
+    @Override
+    void targetsOfTertiaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+        throw new UnsupportedOperationException();
     }
 }

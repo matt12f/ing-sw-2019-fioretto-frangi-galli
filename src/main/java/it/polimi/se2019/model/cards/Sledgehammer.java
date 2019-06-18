@@ -1,12 +1,9 @@
 package it.polimi.se2019.model.cards;
 
 import it.polimi.se2019.controller.FictitiousPlayer;
-import it.polimi.se2019.controller.MapManager;
-import it.polimi.se2019.enums.CellEdge;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
-import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
 
 import java.util.ArrayList;
 
@@ -46,8 +43,8 @@ public class Sledgehammer extends GunCardAltEff {
         ArrayList<Player> targets =new ArrayList<>(player.getPosition().getPlayers());
         targets.remove(player.getCorrespondingPlayer());
 
-        actions.addToTargetList1(targets);
-        actions.setMaxNumberOfTargetsList1(1);
+        actions.addToPlayerTargetList(targets);
+        actions.setMaxNumPlayerTargets(1);
     }
 
     /**
@@ -56,13 +53,11 @@ public class Sledgehammer extends GunCardAltEff {
     @Override
     void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         targetsOfBaseEffect(actions,player);
-        actions.setAllowedMovement(true);
-        actions.setYourOrTheirMovement(false);
+        actions.setCanMoveOpponent(true);
         actions.setMaxDistanceOfMovement(2);
 
-        for (int i = 0; i < 4 ; i++)
-            if (!player.getPosition().getEdge(i).equals(CellEdge.WALL))
-                actions.addPossibleDirOfMov(MapManager.getDirOfMove(i));
+        /*for (int i = 0; i < 4 ; i++)
+            if (!player.getPosition().getEdge(i).equals(CellEdge.WALL))*/
             //TODO dove può essere spostato??
     }
 }

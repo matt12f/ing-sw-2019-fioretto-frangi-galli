@@ -2,7 +2,10 @@ package it.polimi.se2019.model.cards;
 
 import it.polimi.se2019.controller.FictitiousPlayer;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
+import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
 import it.polimi.se2019.view.ChosenActions;
+
+import java.util.ArrayList;
 
 
 public abstract class GunCardAddEff extends GunCard{
@@ -27,12 +30,27 @@ public abstract class GunCardAddEff extends GunCard{
         return secondaryEffectCost;
     }
 
+    @Override
+    public SingleEffectsCombinationActions buildAvailableActions(ArrayList<String> effectsCombination, FictitiousPlayer player) throws UnavailableEffectCombinationException {
+        SingleEffectsCombinationActions actions=new SingleEffectsCombinationActions();
+        for(String effect: effectsCombination){
+            if (effect.equals("Base"))
+                targetsOfBaseEffect(actions, player);
+            else if (effect.equals("Optional1"))
+                targetsOfSecondaryEffect(actions, player);
+            else if(effect.equals("Optional2"))
+                targetsOfTertiaryEffect(actions, player);
+        }
+        actions.validate();
+        return actions;
+    }
+
     public void applyEffects(ChosenActions playersChoice){
         for(int i=0;i<playersChoice.getOrderOfExecution().size();i++)
             switch (playersChoice.getOrderOfExecution().get(i)){
                 case "Base":applyBaseEffect(playersChoice);break;
-                case "Second":applySecondaryEffect(playersChoice);break;
-                case "Third":applyTertiaryEffect(playersChoice);break;
+                case "Optional1":applySecondaryEffect(playersChoice);break;
+                case "Optional2":applyTertiaryEffect(playersChoice);break;
                 default:break;
             }
     }
