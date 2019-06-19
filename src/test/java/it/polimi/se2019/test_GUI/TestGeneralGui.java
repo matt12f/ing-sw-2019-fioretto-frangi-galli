@@ -6,10 +6,12 @@ import org.junit.jupiter.api.Test;
 public class TestGeneralGui {
     @Test
     public void TestGeneralGui(){
-        //weaponMenuGUI gui = new weaponMenuGUI();
+        //WeaponMenuGUI gui = new WeaponMenuGUI();
         //MainLogGui log = new MainLogGui();
-        GameBoardGui board =new GameBoardGui(1);
-        //MapViewGUI map = new MapViewGUI(4);
+        //GameBoardGui board =new GameBoardGui(1);
+       //MapViewGUI map = new MapViewGUI(1);
+        //BoardZoneGUI boards = new BoardZoneGUI();
+        PlayerHandViewGUI hand = new PlayerHandViewGUI();
         while(true){}
     }
 }

@@ -10,12 +10,14 @@ public class PlayerHandViewGUI {
         GridBagConstraints container = new GridBagConstraints();
         mainPanel.setLayout(new GridBagLayout());
 
-        JPanel weapon1 = new JPanel();
-        JPanel weapon2 = new JPanel();
-        JPanel weapon3 = new JPanel();
-        JPanel powerup1 = new JPanel();
-        JPanel powerup2 = new JPanel();
-        JPanel powerup3 = new JPanel();
+        ImageIcon wpImage1 = new ImageIcon(new ImageIcon("src/main/sprite/cards/weapons/weapons_back.png").getImage().getScaledInstance(80,163,Image.SCALE_DEFAULT));
+        JButton weapon1 = new JButton(wpImage1);
+        JButton weapon2 = new JButton(wpImage1);
+        JButton weapon3 = new JButton(wpImage1);
+        ImageIcon pwImage1 = new ImageIcon(new ImageIcon("src/main/sprite/cards/powerups/powerups_back.png").getImage().getScaledInstance(49,92,Image.SCALE_DEFAULT));
+        JButton powerup1 = new JButton(pwImage1);
+        JButton powerup2 = new JButton(pwImage1);
+        JButton powerup3 = new JButton(pwImage1);
         JPanel ammo = new JPanel(new GridBagLayout());
         GridBagConstraints ammoContainer = new GridBagConstraints();
         ammo.setLayout(new GridBagLayout());
@@ -64,5 +66,17 @@ public class PlayerHandViewGUI {
         ammo.add(new Label("YELLOW:"));
 
 
+
+
+
+        //mainPanel.setBorder(BorderFactory.createBevelBorder(1));
+        //mainPanel.setSize(900,200);
+        Frame frame = new Frame("ADRENALINE");
+        frame.addWindowListener(new MainLogGui.CloseListener());
+        frame.add(mainPanel);
+
+        frame.setSize(1280,720);
+        frame.setLocation(0,0);
+        frame.setVisible(true);
     }
 }

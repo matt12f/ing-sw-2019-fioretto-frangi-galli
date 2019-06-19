@@ -9,6 +9,7 @@ import java.awt.event.WindowAdapter;	//for CloseListener()
 import java.lang.Integer;		//int from Model is passed as an Integer
 import java.util.Observable;		//for update();
 import java.util.Observer;
+import java.awt.*;
 
 public class GameBoardGui implements Observer {
     public MapViewGUI map;
@@ -28,37 +29,40 @@ public class GameBoardGui implements Observer {
         JLabel labelBackground = new JLabel(background);
         labelBackground.setIcon(background);
 
-        //container.anchor = GridBagConstraints.NORTHWEST;
+        container.anchor = GridBagConstraints.NORTHWEST;
         this.map = new MapViewGUI(config);
         container.gridx=0;
         container.gridy=0;
-        container.gridheight = 2;
-        //mainPanel.add(map, container);
-
-
+        //container.gridheight = 2;
+        mainPanel.add(map, container);
+        /**
+        container.anchor = GridBagConstraints.NORTHEAST;
         this.scoreZone = new ScoreViewGUI();
         container.gridx=1;
         container.gridy=0;
-        //mainPanel.add(scoreZone);
+        mainPanel.add(scoreZone, container);
 
 
+        container.anchor = GridBagConstraints.EAST;
         this.boardZone = new BoardZoneGUI();
         container.gridx=1;
         container.gridy=1;
-        //mainPanel.add(boardZone);
+        mainPanel.add(boardZone, container);
 
+
+        container.anchor = GridBagConstraints.SOUTH;
         this.playerZone = new PlayerZoneGUI();
         container.gridx=0;
         container.gridy=2;
-        //mainPanel.add(playerZone);
-
+        mainPanel.add(playerZone, container);
+        */
         labelBackground.add(mainPanel);
         frame.addWindowListener(new MainLogGui.CloseListener());
         frame.add(labelBackground);
         frame.setSize(1280,720);
         frame.setLocation(0,0);
-
         frame.setVisible(true);
+
     }
 
     public void update(Observable obs, Object obj) {

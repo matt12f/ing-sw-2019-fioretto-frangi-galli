@@ -1,6 +1,8 @@
 package it.polimi.se2019.view;
 
-public class PlayerZoneGUI {
+import java.awt.*;
+
+public class PlayerZoneGUI extends Component {
     public PlayerHandViewGUI hand;
     public PlayerBoardViewGUI board;
 

@@ -13,7 +13,7 @@ import java.rmi.registry.Registry;
 import java.util.Observable;
 import java.util.Observer;
 
-;
+
 
 public class ClientHandler implements Runnable, RMIInterface, Observer {
     private String nickname;
@@ -46,7 +46,7 @@ public class ClientHandler implements Runnable, RMIInterface, Observer {
                     }
                 }
             }
-            while(/*condizione su fine partita*/){
+           /** while(condizione su fine partita){
                 switch (this.status){
                     case MYTURN:
                         //comunicazioni del turno
@@ -57,7 +57,7 @@ public class ClientHandler implements Runnable, RMIInterface, Observer {
                         //per update client
                     break;
                 }
-            }
+            }*/
             this.thread.wait(); //todo semaforo su status (START)
         } catch (IOException e) {
             e.printStackTrace();

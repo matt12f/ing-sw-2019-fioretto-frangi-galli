@@ -73,7 +73,7 @@ public class GameHandler implements Runnable {
         //TODO chiedere al primo mappa e numero di teschi
 
         //gestione dei turni
-        while (/*Condizione di fine partita*/){
+        /**while (Condizione di fine partita){
             i = this.controller.getMainGameModel().getTurn();
             clientTurn = this.players.get(i);
             clientTurn.setStatus(Status.MYTURN);
@@ -82,7 +82,7 @@ public class GameHandler implements Runnable {
 
             clientTurn.setStatus(Status.NOTMYTURN);
             nextTurn();
-        }
+        }*/
     }
 
     private void CreateController(){
