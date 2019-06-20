@@ -3,7 +3,7 @@ package it.polimi.se2019.view;
 import javax.swing.*;
 import java.awt.*;
 
-public class BoardZoneGUI extends Component {
+public class BoardZoneGUI extends JPanel {
     private ImageIcon boardImage1;
     private ImageIcon boardImage2;
     private ImageIcon boardImage3;
@@ -15,9 +15,9 @@ public class BoardZoneGUI extends Component {
     private JLabel board4;
 
     public BoardZoneGUI(){
-        JPanel mainPanel = new JPanel(new GridBagLayout());
+
         GridBagConstraints container = new GridBagConstraints();
-        mainPanel.setLayout(new GridBagLayout());
+       setLayout(new GridBagLayout());
 
     //TODO questa roba va poi rifatta in un for dinamicamente
         this.boardImage1 = new ImageIcon(new ImageIcon("src/main/sprite/boards/normal/blue.jpg").getImage().getScaledInstance(280,69,Image.SCALE_DEFAULT));
@@ -27,7 +27,7 @@ public class BoardZoneGUI extends Component {
         container.gridx=0;
         container.gridy=0;
 
-        mainPanel.add(board1, container);
+        add(board1, container);
     ///////////////////
 
         this.boardImage2 = new ImageIcon(new ImageIcon("src/main/sprite/boards/normal/green.jpg").getImage().getScaledInstance(280,69,Image.SCALE_DEFAULT));
@@ -37,7 +37,7 @@ public class BoardZoneGUI extends Component {
         container.gridx=0;
         container.gridy=1;
 
-        mainPanel.add(board2, container);
+        add(board2, container);
 
         ///////////////////
         this.boardImage3 = new ImageIcon(new ImageIcon("src/main/sprite/boards/normal/grey.jpg").getImage().getScaledInstance(280,69,Image.SCALE_DEFAULT));
@@ -47,7 +47,7 @@ public class BoardZoneGUI extends Component {
         container.gridx=0;
         container.gridy=2;
 
-        mainPanel.add(board3, container);
+        add(board3, container);
 
         ///////////////////
         this.boardImage4 = new ImageIcon(new ImageIcon("src/main/sprite/boards/normal/purple.jpg").getImage().getScaledInstance(280,69,Image.SCALE_DEFAULT));
@@ -57,7 +57,7 @@ public class BoardZoneGUI extends Component {
         container.gridx=0;
         container.gridy=3;
 
-        mainPanel.add(board4, container);
+        add(board4, container);
 
 
         /**

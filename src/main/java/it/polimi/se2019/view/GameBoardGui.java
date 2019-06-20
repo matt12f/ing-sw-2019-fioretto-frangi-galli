@@ -29,11 +29,13 @@ public class GameBoardGui implements Observer {
         JLabel labelBackground = new JLabel(background);
         labelBackground.setIcon(background);
 
+
+        mainPanel.setLayout(new GridBagLayout());
         container.anchor = GridBagConstraints.NORTHWEST;
         this.map = new MapViewGUI(config);
         container.gridx=0;
         container.gridy=0;
-        //container.gridheight = 2;
+        container.gridheight = 2;
         mainPanel.add(map, container);
         /**
         container.anchor = GridBagConstraints.NORTHEAST;
@@ -42,7 +44,8 @@ public class GameBoardGui implements Observer {
         container.gridy=0;
         mainPanel.add(scoreZone, container);
 
-
+         */
+        mainPanel.setLayout(new GridBagLayout());
         container.anchor = GridBagConstraints.EAST;
         this.boardZone = new BoardZoneGUI();
         container.gridx=1;
@@ -50,15 +53,17 @@ public class GameBoardGui implements Observer {
         mainPanel.add(boardZone, container);
 
 
+        mainPanel.setLayout(new GridBagLayout());
         container.anchor = GridBagConstraints.SOUTH;
         this.playerZone = new PlayerZoneGUI();
         container.gridx=0;
         container.gridy=2;
+        container.gridwidth = 2;
         mainPanel.add(playerZone, container);
-        */
+
         labelBackground.add(mainPanel);
         frame.addWindowListener(new MainLogGui.CloseListener());
-        frame.add(labelBackground);
+        frame.add(mainPanel);
         frame.setSize(1280,720);
         frame.setLocation(0,0);
         frame.setVisible(true);

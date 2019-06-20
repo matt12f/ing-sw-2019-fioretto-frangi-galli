@@ -3,12 +3,12 @@ package it.polimi.se2019.view;
 import javax.swing.*;
 import java.awt.*;
 
-public class PlayerHandViewGUI {
+public class PlayerHandViewGUI extends JPanel {
 
     public PlayerHandViewGUI(){
-        JPanel mainPanel = new JPanel(new GridBagLayout());
+        //JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints container = new GridBagConstraints();
-        mainPanel.setLayout(new GridBagLayout());
+        setLayout(new GridBagLayout());
 
         ImageIcon wpImage1 = new ImageIcon(new ImageIcon("src/main/sprite/cards/weapons/weapons_back.png").getImage().getScaledInstance(80,163,Image.SCALE_DEFAULT));
         JButton weapon1 = new JButton(wpImage1);
@@ -24,31 +24,31 @@ public class PlayerHandViewGUI {
         //first column//
         container.gridx = 0;
         container.gridy = 0;
-        mainPanel.add(weapon1);
+        add(weapon1);
         //second column//
         container.gridx = 0;
         container.gridy = 1;
-        mainPanel.add(weapon2);
+        add(weapon2);
         //third column//
         container.gridx = 0;
         container.gridy = 2;
-        mainPanel.add(weapon3);
+        add(weapon3);
         //fourth column//
         container.gridx = 0;
         container.gridy = 3;
-        mainPanel.add(powerup1);
+        add(powerup1);
         //fifth column//
         container.gridx = 0;
         container.gridy = 4;
-        mainPanel.add(powerup2);
+        add(powerup2);
         //sixth column//
         container.gridx = 0;
         container.gridy = 5;
-        mainPanel.add(powerup3);
+        add(powerup3);
         //seventh column//
         container.gridx = 0;
         container.gridy = 6;
-        mainPanel.add(ammo);
+        add(ammo);
 
         //ammo first raw//
         ammoContainer.gridx = 0;
@@ -68,7 +68,7 @@ public class PlayerHandViewGUI {
 
 
 
-
+        /**
         //mainPanel.setBorder(BorderFactory.createBevelBorder(1));
         //mainPanel.setSize(900,200);
         Frame frame = new Frame("ADRENALINE");
@@ -78,5 +78,6 @@ public class PlayerHandViewGUI {
         frame.setSize(1280,720);
         frame.setLocation(0,0);
         frame.setVisible(true);
+         */
     }
 }

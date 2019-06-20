@@ -8,10 +8,12 @@ public class TestGeneralGui {
     public void TestGeneralGui(){
         //WeaponMenuGUI gui = new WeaponMenuGUI();
         //MainLogGui log = new MainLogGui();
-        //GameBoardGui board =new GameBoardGui(1);
+        GameBoardGui board =new GameBoardGui(1);
        //MapViewGUI map = new MapViewGUI(1);
         //BoardZoneGUI boards = new BoardZoneGUI();
-        PlayerHandViewGUI hand = new PlayerHandViewGUI();
+        //PlayerHandViewGUI hand = new PlayerHandViewGUI();
+        //PlayerBoardViewGUI board = new PlayerBoardViewGUI();
+        //PlayerZoneGUI playerzne = new PlayerZoneGUI();
         while(true){}
     }
 }
