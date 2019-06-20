@@ -1,5 +1,6 @@
 package it.polimi.se2019.controller;
 
+import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
 import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
@@ -200,6 +201,7 @@ class PlayerWithTargets {
     public PlayerWithTargets(Player target) {
         this.target = target;
         this.targetsItCanSee=new ArrayList<>(ActionManager.visibleTargets(new FictitiousPlayer(target,new CellInfo(target.getFigure().getCell(),false,false),false,false)));
+        this.targetsItCanSee.remove(AdrenalineServer.getMainController().getActiveTurn().getActivePlayer());
     }
 }
 

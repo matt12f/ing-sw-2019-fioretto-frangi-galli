@@ -154,6 +154,20 @@ public class ActionManager {
         return squares;
     }
 
+    public static ArrayList<Player> targetsOneMoveAway(FictitiousPlayer player){
+        NewCell[][] board= AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix();
+        ArrayList<Player> targets=new ArrayList<>();
+        try {
+            for (int i = 0; i < 4 ; i++) {
+                if (!player.getPosition().getEdge(i).equals(CellEdge.WALL))
+                    targets.addAll(MapManager.getCellInDirection(board,player.getPosition(),1,i).getPlayers());
+            }
+        }catch (OuterWallException e){
+            //Won't happen
+        }
+        return targets;
+    }
+
     /**
      * returns a list of players different from a given list, effectively removing the players you can’t hurt
      * */
