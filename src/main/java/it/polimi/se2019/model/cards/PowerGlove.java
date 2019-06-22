@@ -77,8 +77,6 @@ public class PowerGlove extends GunCardAltEff {
         //choice of a player to damage in one cell away
         targetsOfBaseEffect(actions,player);
 
-
-        //TODO rivedere per il secondo target
-
+        actions.setOfferableExtra(true); //to be then evaluated in view
     }
 }

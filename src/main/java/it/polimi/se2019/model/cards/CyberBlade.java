@@ -114,8 +114,8 @@ public class CyberBlade extends GunCardAddEff {
      */
     @Override
     void targetsOfTertiaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        //TODO basta scegliere di usare l'effetto
-        //TODO basta mettere un flag che dica che il target dev'essere diverso
-        // Nella view verrà (proponendo la stessa lista di prima - quello già scelto)
+        actions.setSameListDifferentTarget(true);
+        //TODO basta scegliere di usare l'effetto (se ci sono altri target sul tuo square)
+
     }
 }

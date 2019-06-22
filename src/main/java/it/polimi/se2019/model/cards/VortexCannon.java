@@ -75,7 +75,9 @@ public class VortexCannon extends GunCardAddEff {
             ArrayList<Player> targets=new ArrayList<>(player.getPosition().getPlayers());
             targets.remove(player.getCorrespondingPlayer());
             targets.addAll(ActionManager.targetsOneMoveAway(player));
-            actions.addCellsWithTargets(cell, targets, maxTargetCell, 1, 1, 1);
+            actions.addCellsWithTargets(cell, targets, maxTargetCell, 1);
+            actions.setMaxCellToSelect(1);
+            actions.setMinCellToSelect(1);
         }
     }
 

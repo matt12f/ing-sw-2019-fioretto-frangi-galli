@@ -33,7 +33,6 @@ public class TractorBeam extends GunCardAltEff {
 
     @Override
     void applyBaseEffect(ChosenActions playersChoice) {
-        //TODO controllare sul player che vuole essere spostato nella cella desiderata (max distanza tra i due: 2 mosse)
         //TODO scrivere metodo
     }
 
@@ -53,16 +52,15 @@ public class TractorBeam extends GunCardAltEff {
         ArrayList<NewCell> visibleSquares=new ArrayList<>(ActionManager.visibleSquares(player));
 
         //These are the players that you can move to end up in squares that you can see
-        ArrayList<Player> targetsToMove = new ArrayList<>();
-        for(NewCell visibleSquare:visibleSquares)
+        for(NewCell visibleSquare:visibleSquares){
+            ArrayList<Player> targetsYouCanMove=new ArrayList<>();
             for(Player target:AdrenalineServer.getMainController().getMainGameModel().getPlayerList())
                if(!target.equals(player.getCorrespondingPlayer()) && MapManager.distanceBetweenCells(board,target.getFigure().getCell(),visibleSquare) <= 2)
-                   targetsToMove.add(target);
-
-
-        actions.addToPlayerTargetList(targetsToMove);
-        actions.setMaxNumPlayerTargets(1);
-        //TODO rivedere con nuova struttura
+                   targetsYouCanMove.add(target);
+            actions.addCellsWithTargets(visibleSquare,targetsYouCanMove,1,1);
+            actions.setMaxCellToSelect(1);
+            actions.setMinCellToSelect(1);
+        }
     }
 
     /**

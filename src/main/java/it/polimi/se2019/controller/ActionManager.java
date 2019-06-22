@@ -154,18 +154,28 @@ public class ActionManager {
         return squares;
     }
 
+    /**
+     * This method gives you a list of players one move away
+     */
     public static ArrayList<Player> targetsOneMoveAway(FictitiousPlayer player){
-        NewCell[][] board= AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix();
         ArrayList<Player> targets=new ArrayList<>();
+        for(NewCell cell: cellsOneMoveAway(player))
+            targets.addAll(cell.getPlayers());
+        return targets;
+    }
+
+    public static ArrayList<NewCell> cellsOneMoveAway(FictitiousPlayer player){
+        NewCell[][] board= AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix();
+        ArrayList<NewCell> cellsOneMoveAway=new ArrayList<>();
         try {
             for (int i = 0; i < 4 ; i++) {
                 if (!player.getPosition().getEdge(i).equals(CellEdge.WALL))
-                    targets.addAll(MapManager.getCellInDirection(board,player.getPosition(),1,i).getPlayers());
+                    cellsOneMoveAway.add(MapManager.getCellInDirection(board,player.getPosition(),1,i));
             }
         }catch (OuterWallException e){
             //Won't happen
         }
-        return targets;
+        return cellsOneMoveAway;
     }
 
     /**
