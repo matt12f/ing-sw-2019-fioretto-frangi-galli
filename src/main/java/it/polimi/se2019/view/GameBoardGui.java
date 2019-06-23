@@ -62,7 +62,7 @@ public class GameBoardGui implements Observer {
         mainPanel.add(playerZone, container);
 
         labelBackground.add(mainPanel);
-        frame.addWindowListener(new MainLogGui.CloseListener());
+        frame.addWindowListener(new GameBoardGui.CloseListener());
         frame.add(mainPanel);
         frame.setSize(1280,720);
         frame.setLocation(0,0);

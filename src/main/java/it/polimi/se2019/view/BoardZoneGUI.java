@@ -2,6 +2,8 @@ package it.polimi.se2019.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class BoardZoneGUI extends JPanel {
 
@@ -10,6 +12,7 @@ public class BoardZoneGUI extends JPanel {
     private PlayerBoardViewGUI board2;
     private PlayerBoardViewGUI board3;
     private PlayerBoardViewGUI board4;
+    private JButton score;
 
     public BoardZoneGUI(){
 
@@ -56,18 +59,22 @@ public class BoardZoneGUI extends JPanel {
 
         add(board4, container);
 
+        this.score = new JButton("View Score");
+
         container.gridx=0;
         container.gridy=4;
-        add(new JButton("View Score"),container);
+        add(score,container);
 
-        /**
-        Frame frame = new Frame("boards");
-        frame.addWindowListener(new MainLogGui.CloseListener());
-        frame.add(mainPanel);
+        score.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ScoreViewGUI frame =new ScoreViewGUI();
+                frame.setVisible(true);
+            }
 
-        frame.setSize(1280,720);
-        frame.setLocation(0,0);
-        frame.setVisible(true);
-        */
+        });
+
     }
+
+
 }
