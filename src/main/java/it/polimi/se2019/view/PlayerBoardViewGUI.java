@@ -8,9 +8,22 @@ public class PlayerBoardViewGUI extends JPanel{
     private ImageIcon boardImage;
     protected JLabel board;
 
-    public PlayerBoardViewGUI(){
+    public PlayerBoardViewGUI(char color, int x, int y){
 
-        this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/normal/yellow.jpg").getImage().getScaledInstance(340,109, Image.SCALE_DEFAULT));
+        switch (color){
+            case 'y': this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/normal/yellow.jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
+                break;
+            case 'b': this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/normal/blue.jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
+                break;
+            case 'p': this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/normal/purple.jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
+                break;
+            case 'g': this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/normal/green.jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
+                break;
+            case 'r': this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/normal/grey.jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
+                break;
+
+        }
+
 
         this.board = new JLabel(boardImage);
         board.setIcon(boardImage);

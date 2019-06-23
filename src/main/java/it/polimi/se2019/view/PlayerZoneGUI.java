@@ -21,7 +21,7 @@ public class PlayerZoneGUI extends JPanel {
         add(hand, container);
 
         setLayout(new GridBagLayout());
-        this.board = new PlayerBoardViewGUI();
+        this.board = new PlayerBoardViewGUI('y',420, 109);
         container.gridx=1;
         container.gridy=0;
 
