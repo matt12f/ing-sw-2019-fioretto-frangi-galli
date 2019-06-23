@@ -1,8 +1,13 @@
 package it.polimi.se2019.model.cards;
 
+import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.controller.ActionManager;
 import it.polimi.se2019.controller.FictitiousPlayer;
+import it.polimi.se2019.controller.MapManager;
+import it.polimi.se2019.enums.CellEdge;
+import it.polimi.se2019.exceptions.OuterWallException;
 import it.polimi.se2019.model.game.NewCell;
+import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
 import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
@@ -38,11 +43,6 @@ public class VortexCannon extends GunCardAddEff {
     }
 
     @Override
-    public SingleEffectsCombinationActions buildAvailableActions(ArrayList<String> effectsCombination, FictitiousPlayer player) throws UnavailableEffectCombinationException {
-        return null;
-    }
-
-    @Override
     void applyBaseEffect(ChosenActions playersChoice) {
         //TODO scrivere metodo
     }
@@ -58,20 +58,27 @@ public class VortexCannon extends GunCardAddEff {
      */
     @Override
     void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        //TODO struttura per celle che possano essere vortex
-
-        //TODO nella view: scegliere target lì, o nei quadrati adiacenti
-        //TODO maxNumberTargetsOnCell=1
+        targetFiller(actions,player,1);
     }
 
     /**
      * Choose up to 2 other targets on the vortex or 1 move away from it.
      * Move them onto the vortex and give them each 1 damage.
      */
-
      @Override
     void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-         //TODO maxNumberTargetsOnCell=3
+         targetFiller(actions,player,3);
+    }
+
+    private void targetFiller(SingleEffectsCombinationActions actions, FictitiousPlayer player, int maxTargetCell){
+        for(NewCell cell:ActionManager.visibleSquares(player)) {
+            ArrayList<Player> targets=new ArrayList<>(player.getPosition().getPlayers());
+            targets.remove(player.getCorrespondingPlayer());
+            targets.addAll(ActionManager.targetsOneMoveAway(player));
+            actions.addCellsWithTargets(cell, targets, maxTargetCell, 1);
+            actions.setMaxCellToSelect(1);
+            actions.setMinCellToSelect(1);
+        }
     }
 
     @Override

@@ -1,5 +1,6 @@
 package it.polimi.se2019.controller;
 
+import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
 import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
@@ -25,13 +26,15 @@ public class SingleEffectsCombinationActions{
     private ArrayList<NewCell> targetCells; //To choose from
     private ArrayList<Room> targetRooms; //To choose from
 
+    private boolean offerableBase; //For the GUI/CLI
     private boolean offerableOpt1; //For the GUI/CLI
     private boolean offerableOpt2; //For the GUI/CLI
 
     private boolean offerableExtra; //For the GUI/CLI; It's used by PowerGlove and MachineGun
-    private ArrayList<Player> extraTargets; //To choose from
 
     private ArrayList<CellWithTargets> cellsWithTargets; //To choose from
+    private int minCellToSelect; //For the GUI/CLI
+    private int maxCellToSelect; //For the GUI/CLI
 
     private boolean sameListDifferentTarget; //For the GUI/CLI
 
@@ -46,11 +49,11 @@ public class SingleEffectsCombinationActions{
         this.targetCells=new ArrayList<>();
         this.targetRooms=new ArrayList<>();
 
+        this.offerableBase=true;
         this.offerableOpt1=true;
         this.offerableOpt2=true;
 
         this.offerableExtra=false;
-        this.extraTargets=new ArrayList<>();
 
         this.cellsWithTargets=new ArrayList<>();
 
@@ -63,9 +66,11 @@ public class SingleEffectsCombinationActions{
      * this method
      * @throws UnavailableEffectCombinationException when an effect combination has no targets
      */
-    //TODO c'è altro da controllare?
+    //TODO nuovo check con passaggio della combinazione degli effetti
     public void validate() throws UnavailableEffectCombinationException{
-        if (this.playersTargetList.isEmpty() && this.targetCells.isEmpty() && this.targetRooms.isEmpty() && this.playersWithTargets.isEmpty() && this.cellsWithTargets.isEmpty() &&this.extraTargets.isEmpty())
+        if(!this.offerableBase && !this.offerableOpt1 && !this.offerableOpt2)
+            throw new UnavailableEffectCombinationException();
+        if (this.playersTargetList.isEmpty() && this.targetCells.isEmpty() && this.targetRooms.isEmpty() && this.playersWithTargets.isEmpty() && this.cellsWithTargets.isEmpty())
             throw new UnavailableEffectCombinationException();
     }
 
@@ -95,6 +100,10 @@ public class SingleEffectsCombinationActions{
         return targetRooms;
     }
 
+    public boolean isOfferableBase() {
+        return offerableBase;
+    }
+
     public boolean isOfferableOpt1() {
         return offerableOpt1;
     }
@@ -109,6 +118,14 @@ public class SingleEffectsCombinationActions{
 
     public ArrayList<CellWithTargets> getCellsWithTargets() {
         return cellsWithTargets;
+    }
+
+    public int getMinCellToSelect() {
+        return minCellToSelect;
+    }
+
+    public int getMaxCellToSelect() {
+        return maxCellToSelect;
     }
 
     public boolean isSameListDifferentTarget() {
@@ -145,6 +162,10 @@ public class SingleEffectsCombinationActions{
         this.canMoveOpponent = canMoveOpponent;
     }
 
+    public void setOfferableBase(boolean offerableBase) {
+        this.offerableBase = offerableBase;
+    }
+
     public void setOfferableOpt1(boolean offerableOpt1) {
         this.offerableOpt1 = offerableOpt1;
     }
@@ -157,39 +178,24 @@ public class SingleEffectsCombinationActions{
         this.offerableExtra = offerableExtra;
     }
 
-    public void addToExtraTarget(ArrayList<Player> extraTargets){
-        this.extraTargets.addAll(extraTargets);
-    }
-
     public void setSameListDifferentTarget(boolean sameListDifferentTarget) {
         this.sameListDifferentTarget = sameListDifferentTarget;
     }
 
-    public void addCellsWithTargets(NewCell targetCell, ArrayList<Player> targets, int maxTargets, int minTargets, int minCellToSelect, int maxCellToSelect) {
-        this.cellsWithTargets.add(new CellWithTargets(targetCell, targets, maxTargets, minTargets, minCellToSelect, maxCellToSelect));
+    public void addCellsWithTargets(NewCell targetCell, ArrayList<Player> targets, int maxTargets, int minTargets) {
+        this.cellsWithTargets.add(new CellWithTargets(targetCell, targets, maxTargets, minTargets));
+    }
+
+    public void setMinCellToSelect(int minCellToSelect) {
+        this.minCellToSelect = minCellToSelect;
+    }
+
+    public void setMaxCellToSelect(int maxCellToSelect) {
+        this.maxCellToSelect = maxCellToSelect;
     }
 
     public void addPlayersWithTargets(Player basePlayer) {
         this.playersWithTargets.add(new PlayerWithTargets(basePlayer));
-    }
-}
-
-class CellWithTargets{
-    NewCell targetCell;
-    ArrayList<Player> targets; //These are targets to choose from
-    int maxTargets;
-    int minTargets;
-
-    int minCellToSelect;
-    int maxCellToSelect;
-
-    public CellWithTargets(NewCell targetCell, ArrayList<Player> targets, int maxTargets, int minTargets, int minCellToSelect, int maxCellToSelect) {
-        this.targetCell = targetCell;
-        this.targets = targets;
-        this.maxTargets = maxTargets;
-        this.minTargets = minTargets;
-        this.minCellToSelect = minCellToSelect;
-        this.maxCellToSelect = maxCellToSelect;
     }
 }
 
@@ -200,6 +206,7 @@ class PlayerWithTargets {
     public PlayerWithTargets(Player target) {
         this.target = target;
         this.targetsItCanSee=new ArrayList<>(ActionManager.visibleTargets(new FictitiousPlayer(target,new CellInfo(target.getFigure().getCell(),false,false),false,false)));
+        this.targetsItCanSee.remove(AdrenalineServer.getMainController().getActiveTurn().getActivePlayer());
     }
 }
 

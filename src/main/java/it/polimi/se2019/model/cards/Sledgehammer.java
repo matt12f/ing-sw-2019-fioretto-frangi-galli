@@ -1,6 +1,12 @@
 package it.polimi.se2019.model.cards;
 
+import it.polimi.se2019.AdrenalineServer;
+import it.polimi.se2019.controller.ActionManager;
 import it.polimi.se2019.controller.FictitiousPlayer;
+import it.polimi.se2019.controller.MapManager;
+import it.polimi.se2019.enums.CellEdge;
+import it.polimi.se2019.exceptions.OuterWallException;
+import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
@@ -27,12 +33,12 @@ public class Sledgehammer extends GunCardAltEff {
 
     @Override
     void applyBaseEffect(ChosenActions playersChoice) {
-
+        //TODO scrivere metodo
     }
 
     @Override
     void applySecondaryEffect(ChosenActions playersChoice) {
-
+        //TODO scrivere metodo
     }
 
     /**
@@ -53,11 +59,24 @@ public class Sledgehammer extends GunCardAltEff {
     @Override
     void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         targetsOfBaseEffect(actions,player);
-        actions.setCanMoveOpponent(true);
-        actions.setMaxDistanceOfMovement(2);
 
-        /*for (int i = 0; i < 4 ; i++)
-            if (!player.getPosition().getEdge(i).equals(CellEdge.WALL))*/
-            //TODO dove può essere spostato??
+        NewCell [][] board= AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix();
+
+        ArrayList<NewCell> cellsToMoveTargetOn=new ArrayList<>();
+        try {
+            for (int i = 0; i < 4 ; i++) {
+                if (!player.getPosition().getEdge(i).equals(CellEdge.WALL))
+                    cellsToMoveTargetOn.add(MapManager.getCellInDirection(board,player.getPosition(),1,i));
+                if(!cellsToMoveTargetOn.get(cellsToMoveTargetOn.size()-1).getEdge(i).equals(CellEdge.WALL))
+                    cellsToMoveTargetOn.add(MapManager.getCellInDirection(board,cellsToMoveTargetOn.get(cellsToMoveTargetOn.size()-1),1,i));
+            }
+        }catch (OuterWallException e){
+            //Won't happen
+        }
+
+        cellsToMoveTargetOn.add(player.getPosition());
+
+        for(NewCell cell:cellsToMoveTargetOn)
+            actions.addCellsWithTargets(cell,new ArrayList<>(),0,0);
     }
 }

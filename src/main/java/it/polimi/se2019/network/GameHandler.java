@@ -94,6 +94,4 @@ public class GameHandler implements Runnable {
         }
         this.controller = new Controller(players, 0, 5); //todo SONO TEMPORANEI, RIMUOVILI FACENDOLO BENE
     }
-
-
 }

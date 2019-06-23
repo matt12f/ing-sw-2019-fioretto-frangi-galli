@@ -9,11 +9,11 @@ import java.lang.Integer;		//int from Model is passed as an Integer
 import java.util.Observable;		//for update();
 
 public class WeaponMenuGUI {
-    private JPanel image;
+    private JLabel image;
     private Label weaponName;
     private Label weaponInfo;
     private Label weaponCharge;
-
+    private ImageIcon img;
 
 
     public WeaponMenuGUI(){
@@ -21,14 +21,18 @@ public class WeaponMenuGUI {
         this.weaponName = new Label("Nome");
         this.weaponInfo = new Label("info");
         this.weaponCharge = new Label("charged");
-        this.image = new JPanel();
+        this.img = new ImageIcon(new ImageIcon("src/main/sprite/cards/weapons/weapons_cyberblade.png").getImage().getScaledInstance(120,203,Image.SCALE_DEFAULT));
+        this.image = new JLabel(img);
         JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints container = new GridBagConstraints();
         mainPanel.setLayout(new GridBagLayout());
 
         container.gridx = 0;
-        container.gridy = 0;
-        mainPanel.add(weaponName, container);
+        container.gridy = 1;
+        //container.gridheight = 3;
+        mainPanel.add(image, container);
+
+
         container.gridx = 1;
         container.gridy = 0;
         mainPanel.add(weaponName, container);

@@ -1,7 +1,9 @@
 package it.polimi.se2019.model.cards;
 
+import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.controller.ActionManager;
 import it.polimi.se2019.controller.FictitiousPlayer;
+import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
 
@@ -61,8 +63,9 @@ public class Thor extends GunCardAddEff {
      * Deal 2 damage to 1 target you can see.
      */
     @Override
-    void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        actions.addToPlayerTargetList(new ArrayList<>(ActionManager.visibleTargets(player)));
+    void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player){
+        //here we'll fill the list of visible players
+        actions.addToPlayerTargetList(ActionManager.visibleTargets(player));
         actions.setMaxNumPlayerTargets(1);
     }
 
@@ -70,8 +73,10 @@ public class Thor extends GunCardAddEff {
      * Deal 1 damage to a second target that your first target can see.
      */
     @Override
-    void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        //custom management in view
+    void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player){
+        //here I'm filling a list with every player and the targets they can see
+        for(Player player1: AdrenalineServer.getMainController().getMainGameModel().getPlayerList())
+            actions.addPlayersWithTargets(player1);
     }
 
     /**

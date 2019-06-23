@@ -74,7 +74,8 @@ public class MachineGun extends GunCardAddEff {
      */
     @Override
     void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        //TODO basta un boolean per usare l'effetto (se ci sono target): gestione nella view del resto
+        if(actions.getPlayersTargetList().isEmpty())
+            actions.setOfferableOpt1(false);
     }
 
     /**
@@ -82,8 +83,9 @@ public class MachineGun extends GunCardAddEff {
      */
     @Override
     void targetsOfTertiaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        //TODO basta un boolean per offrire l'effetto, indicando che il target dev'essere diverso
+        actions.setOfferableOpt2(true);
+        actions.setSameListDifferentTarget(true); //In this case it's from the original list
 
-        //TODO basta un boolean per offrire la seconda parte dell'effetto, se ci sono altri target visibili
+        actions.setOfferableExtra(true);
     }
 }

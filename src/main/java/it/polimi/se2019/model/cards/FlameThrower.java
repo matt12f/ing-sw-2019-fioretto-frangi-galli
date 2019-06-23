@@ -1,7 +1,12 @@
 package it.polimi.se2019.model.cards;
 
+import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.controller.FictitiousPlayer;
+import it.polimi.se2019.controller.MapManager;
 import it.polimi.se2019.enums.CellEdge;
+import it.polimi.se2019.exceptions.OuterWallException;
+import it.polimi.se2019.model.game.NewCell;
+import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
 import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
@@ -31,6 +36,7 @@ public class FlameThrower extends GunCardAltEff {
     @Override
     void applyBaseEffect(ChosenActions playersChoice) {
         //TODO scrivere metodo
+        //TODO verifica in view che i target siano su celle diverse
     }
 
     @Override
@@ -44,12 +50,32 @@ public class FlameThrower extends GunCardAltEff {
      */
     @Override
     void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        //TODO 8 liste di target? una per direzione?
-        //Nota di riflessione: una volta individuata la cella, la si può mostrare e il player poi sceglierà chi colpire
-        //dall'elenco dei giocatori ricavato dalla view, in modo da non dover inviare le liste possibili di targets.
-        //TODO valutare spostamento scelta dei player da colpire nella view (dai dati salvati lì). Qui si calcolano altre
-        //ad esempio le celle che può scegliere e poi si chiede nella view chi colpire al loro interno, riducendo
-        // la complessità del calcolo qui
+        NewCell[][] board= AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix();
+
+        NewCell cellOneMoveAway;
+        ArrayList<Player> targetsInOneDirection=new ArrayList<>();
+
+        for (int i = 0; i < 4 ; i++){ //selects a direction
+            targetsInOneDirection.clear();
+            try{
+                cellOneMoveAway= MapManager.getCellInDirection(board, player.getPosition(), 1, i);
+
+                try{
+                    targetsInOneDirection.addAll(cellOneMoveAway.getPlayers());
+                    targetsInOneDirection.addAll(MapManager.getCellInDirection(board, player.getPosition(), 2, i).getPlayers());
+                    }
+                    catch (OuterWallException e){
+                    actions.addCellsWithTargets(cellOneMoveAway,targetsInOneDirection,1,1);
+                        //This happens if you move out of the board while getting the second cell
+                    }
+
+            actions.addCellsWithTargets(cellOneMoveAway,targetsInOneDirection,2,1);
+            }catch (OuterWallException e2){
+                //this happens if you are close to an edge and try to move outside of the board
+            }
+        }
+        actions.setMinCellToSelect(1);
+        actions.setMaxCellToSelect(1);
     }
 
     /**

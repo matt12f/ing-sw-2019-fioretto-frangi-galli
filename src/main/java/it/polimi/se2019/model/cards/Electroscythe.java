@@ -35,7 +35,8 @@ public class Electroscythe extends GunCardAltEff {
      */
     @Override
     void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        //TODO basta decidere se usare l'effetto (indicare se non ci sono target)
+        if(player.getPosition().getPlayers().size()==1)
+            actions.setOfferableBase(false);
     }
 
     /**
@@ -43,6 +44,7 @@ public class Electroscythe extends GunCardAltEff {
      */
     @Override
     void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        //TODO basta decidere se usare l'effetto (indicare se non ci sono target)
+        if(player.getPosition().getPlayers().size()==1)
+            actions.setOfferableOpt1(false);
     }
 }

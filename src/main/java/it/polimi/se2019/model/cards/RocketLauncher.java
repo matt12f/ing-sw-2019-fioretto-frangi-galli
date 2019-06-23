@@ -112,6 +112,7 @@ public class RocketLauncher extends GunCardAddEff {
      */
     @Override
     void targetsOfTertiaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        //TODO basta scegliere di usare l'effetto
+        if(actions.getPlayersTargetList().isEmpty())
+            actions.setOfferableOpt2(false);
     }
 }
