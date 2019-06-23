@@ -9,8 +9,8 @@ import java.util.ArrayList;
 
 public class RMIClients implements Runnable, logInterface{
 
-    private ArrayList<ClientHandler> Clients;
-    private ArrayList<String> Hosts;
+    private ArrayList<ClientHandler> Clients= new ArrayList<>();
+    private ArrayList<String> Hosts = new ArrayList<>();
     private Thread t;
     private boolean start = false;
 

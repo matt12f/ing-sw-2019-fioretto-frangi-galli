@@ -8,6 +8,8 @@ public enum Status {
     START,
     MYTURN,
     NOTMYTURN,
-    UPDATED
+    WAITING,
+    UPDATED,
+    FRENZY_START
 }
 

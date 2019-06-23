@@ -17,19 +17,25 @@ public class SocketClients implements Runnable{
         //Qui si accettano gli utenti tramite Socket
         ServerSocket serverSocket = null;
         ClientHandler lobby;
-        Thread t;
+        Socket socketTemp;
+        Thread threadTemp;
         int count=0;
         int i=0;
         try {
             serverSocket = new ServerSocket(9000); //PORTA TEMPORANEA TODO Sostituire con caricamento da file
             while(!this.start){ //Finche siamo qui dentro stiamo aspettando le condizioni per startare la partita
-                this.socket.add(serverSocket.accept());
+                System.out.println("aspetto un client");
+                socketTemp = serverSocket.accept();
+                socketTemp.setKeepAlive(true);
+                this.socket.add(socketTemp);
+                System.out.println("Nuovo client("+ this.socket.size() +"), socket: " + socketTemp);
                 lobby = new ClientHandler();
-                t = new Thread(lobby);
-                lobby.setSocket(this.socket.get(this.socket.size() - 1));
-                lobby.setThread(t);
+                //threadTemp = new Thread(lobby);
+                lobby.setSocket(socketTemp);
+                lobby.setThread(null); //todo risetta correttamente il thread
                 lobby.setHost(null); //TODO valuta se tenerlo null o dargli l'host effettivo, tanto socket basta per distinguerli
                 this.Clients.add(lobby);
+                lobby.start();
             }
 
         } catch (IOException e) {
@@ -37,16 +43,17 @@ public class SocketClients implements Runnable{
         }
     }
 
+
     public void setThread(Thread t) {
         this.t = t;
     }
 
     public ArrayList<ClientHandler> getClients() {
-        return Clients;
+        return this.Clients;
     }
 
     public ArrayList<Socket> getSocket() {
-        return socket;
+        return this.socket;
     }
 
     public void setStart(boolean start) {

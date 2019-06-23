@@ -1,5 +1,6 @@
 package it.polimi.se2019.network;
 
+import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.controller.AvailableActions;
 import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.view.ActionRequestView;
@@ -13,9 +14,9 @@ import java.rmi.registry.Registry;
 import java.util.Observable;
 import java.util.Observer;
 
-;
 
-public class ClientHandler implements Runnable, RMIInterface, Observer {
+
+public class ClientHandler extends Thread implements RMIInterface, Observer {
     private String nickname;
     private Thread thread;
     private Socket socket = null;
@@ -28,6 +29,7 @@ public class ClientHandler implements Runnable, RMIInterface, Observer {
     @Override
     public void run(){
         try {
+            System.out.println("Partito clientHandler della socket: " + this.socket);
             if(this.socket == null){
                 this.status = Status.READY;
                 while(!this.accepted){
@@ -35,18 +37,20 @@ public class ClientHandler implements Runnable, RMIInterface, Observer {
                 }
                 //todo Semaforo?
             }else{
-                ObjectOutputStream output = (ObjectOutputStream) this.socket.getOutputStream();
-                ObjectInputStream input = (ObjectInputStream) this.socket.getInputStream();
-                output.writeObject(true);
+                ObjectOutputStream output = new ObjectOutputStream(this.socket.getOutputStream());
+                ObjectInputStream input = new ObjectInputStream(this.socket.getInputStream());
+                output.writeBoolean(true);
+                output.flush();
                 while (!this.accepted){
                     this.nickname = (String) input.readObject();
-                    this.thread.wait();
-                    if(!this.accepted){
-                        throw new IllegalArgumentException();
-                    }
+                    System.out.println("nick ricevuto: " + this.nickname);
+                    AdrenalineServer.nickController(this);
+                    System.out.println("Nick controllato");
+                    output.writeBoolean(this.accepted);
+                    output.flush();
                 }
             }
-            while(/*condizione su fine partita*/){
+            while(!status.equals(Status.FRENZY_START)){
                 switch (this.status){
                     case MYTURN:
                         //comunicazioni del turno
@@ -166,6 +170,6 @@ public class ClientHandler implements Runnable, RMIInterface, Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        
+        //todo devi creare l'aggiornamento della remoteView
     }
 }

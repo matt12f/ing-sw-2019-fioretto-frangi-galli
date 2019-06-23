@@ -25,7 +25,7 @@ public class GameHandler implements Runnable {
         return  nicknames;
     }
 
-    public void nextTurn(){
+    private void nextTurn(){
         int turn = this.controller.getMainGameModel().getTurn();
         if(turn == (this.players.size() - 1))
             turn = 0;
@@ -72,8 +72,10 @@ public class GameHandler implements Runnable {
 
         //TODO chiedere al primo mappa e numero di teschi
 
+
+        CreateController();
         //gestione dei turni
-        while (/*Condizione di fine partita*/){
+        while (this.controller.getMainGameModel().getKillshotTrack().getSkulls() > 0){
             i = this.controller.getMainGameModel().getTurn();
             clientTurn = this.players.get(i);
             clientTurn.setStatus(Status.MYTURN);
@@ -90,6 +92,8 @@ public class GameHandler implements Runnable {
         for (ClientHandler client: this.players) {
             players.add(new Player(0, client.getNickname(), client.getColor()));
         }
-        this.controller = new Controller(players);
+        this.controller = new Controller(players, 0, 5); //todo SONO TEMPORANEI, RIMUOVILI FACENDOLO BENE
     }
+
+
 }

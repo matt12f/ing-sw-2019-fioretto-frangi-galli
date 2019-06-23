@@ -28,14 +28,8 @@ public class Controller implements Observer {
     /**
      * This constructor generates one local controller object for one Player
      */
-    public Controller(ArrayList<Player> players) {
-
-        String gameMode="normal";
-
-        int mapNumber=1; //TODO fare scegliere il numero di mappa
-
-        this.mainGameModel=new GameModel(0,players,gameMode,mapNumber); //todo game mode non è da rimuovere?
-
+    public Controller(ArrayList<Player> players, int mapNumber, int skulls) {
+        this.mainGameModel=new GameModel(players, mapNumber, skulls);
         this.remoteView=setupRemoteObjExport();
         this.activeTurn = new TurnManager();
     }
