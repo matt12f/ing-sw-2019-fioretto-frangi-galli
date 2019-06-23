@@ -10,8 +10,9 @@ public class KillShotTrack {
      * Default constructor
      *
      */
-    public KillShotTrack(){
-        this.kills=new String[8];
+    public KillShotTrack(int skulls){
+        this.kills=new String[skulls];
+        this.skulls = skulls;
     }
 
     public int getSkulls() {

@@ -18,9 +18,7 @@ public class GameModel extends Observable{
     private static final Logger LOGGER = Logger.getLogger(GameModel.class.getName());
 
     private Decks currentDecks;
-    private int gameNumberId; // Potrebbe servire per il multiGame
     private ArrayList<Player> playerList;
-    private String gameMode;
     private Map currentMap;
     private KillShotTrack killshotTrack;
     private boolean finalFrenzy;
@@ -31,11 +29,9 @@ public class GameModel extends Observable{
         viewObserver.add(toAdd);
     }
     
-    public GameModel(int gameNumberId,ArrayList<Player> playerList, String gameMode,int mapNumber){
+    public GameModel(ArrayList<Player> playerList, int mapNumber, int skulls){
         this.currentDecks=new Decks();
-        this.gameNumberId=gameNumberId;
         this.playerList = playerList;
-        this.gameMode = gameMode;
 
         //Map setup
         Gson gson = new Gson();
@@ -57,16 +53,7 @@ public class GameModel extends Observable{
                         case VIOLET: this.currentMap.getRooms()[5].addCell(singleCell);break;
                     }
 
-        //game mode setup
-        if(gameMode.equals("normal"))
-            this.killshotTrack=new KillShotTrack();
-        else if(gameMode.equals("turret"))
-            this.killshotTrack=new KillShotTrackTurret();
-        else if(gameMode.equals("domination"))
-            this.killshotTrack=new KillShotTrackDomination();
-        else
-            this.killshotTrack=null;
-
+        this.killshotTrack=new KillShotTrack(skulls);
         this.finalFrenzy=false;
         this.turn=0;
     }
@@ -75,16 +62,8 @@ public class GameModel extends Observable{
         return currentDecks;
     }
 
-    public int getGameNumberId() {
-        return gameNumberId;
-    }
-
     public ArrayList<Player> getPlayerList() {
         return playerList;
-    }
-
-    public String getGameMode() {
-        return gameMode;
     }
 
     public Map getCurrentMap() {
