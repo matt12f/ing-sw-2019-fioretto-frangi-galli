@@ -11,14 +11,14 @@ public class PlayerHandViewGUI extends JPanel {
         GridBagConstraints container = new GridBagConstraints();
         setLayout(new GridBagLayout());
 
-        ImageIcon wpImage1 = new ImageIcon(new ImageIcon("src/main/sprite/cards/weapons/weapons_back.png").getImage().getScaledInstance(80,163,Image.SCALE_DEFAULT));
-        JButton weapon1 = new JButton(wpImage1);
-        JButton weapon2 = new JButton(wpImage1);
-        JButton weapon3 = new JButton(wpImage1);
-        ImageIcon pwImage1 = new ImageIcon(new ImageIcon("src/main/sprite/cards/powerups/powerups_back.png").getImage().getScaledInstance(49,92,Image.SCALE_DEFAULT));
-        JButton powerup1 = new JButton(pwImage1);
-        JButton powerup2 = new JButton(pwImage1);
-        JButton powerup3 = new JButton(pwImage1);
+
+        WeaponButtonGUI weapon1 = new WeaponButtonGUI();
+        WeaponButtonGUI weapon2 = new WeaponButtonGUI();
+        WeaponButtonGUI weapon3 = new WeaponButtonGUI();
+
+        PowerupButtonGUI powerup1 = new PowerupButtonGUI();
+        PowerupButtonGUI powerup2 = new PowerupButtonGUI();
+        PowerupButtonGUI powerup3 = new PowerupButtonGUI();
         this.ammo = new AmmoGUI();
 
 
