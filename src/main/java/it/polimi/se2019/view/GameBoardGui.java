@@ -30,23 +30,23 @@ public class GameBoardGui implements Observer {
         labelBackground.setIcon(background);
 
 
-        mainPanel.setLayout(new GridBagLayout());
-        container.anchor = GridBagConstraints.NORTHWEST;
+        //mainPanel.setLayout(new GridBagLayout());
+        //container.anchor = GridBagConstraints.NORTHWEST;
         this.map = new MapViewGUI(config);
         container.gridx=0;
         container.gridy=0;
         container.gridheight = 2;
         mainPanel.add(map, container);
-        /**
-        container.anchor = GridBagConstraints.NORTHEAST;
+
+        /** container.anchor = GridBagConstraints.NORTHEAST;
         this.scoreZone = new ScoreViewGUI();
         container.gridx=1;
         container.gridy=0;
         mainPanel.add(scoreZone, container);
+        */
 
-         */
-        mainPanel.setLayout(new GridBagLayout());
-        container.anchor = GridBagConstraints.EAST;
+        //mainPanel.setLayout(new GridBagLayout());
+        //container.anchor = GridBagConstraints.EAST;
         this.boardZone = new BoardZoneGUI();
         container.gridx=1;
         container.gridy=1;

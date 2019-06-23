@@ -18,7 +18,7 @@ public class BoardZoneGUI extends JPanel {
 
     //TODO questa roba va poi rifatta in un for dinamicamente
 
-        this.board1 = new PlayerBoardViewGUI('b', 320,89);
+        this.board1 = new PlayerBoardViewGUI('b', 420,109);
 
 
         container.gridx=0;
@@ -28,7 +28,7 @@ public class BoardZoneGUI extends JPanel {
     ///////////////////
 
 
-        this.board2 = new PlayerBoardViewGUI('g',320,89);
+        this.board2 = new PlayerBoardViewGUI('g',420,109);
 
 
         container.gridx=0;
@@ -38,7 +38,7 @@ public class BoardZoneGUI extends JPanel {
 
         ///////////////////
 
-        this.board3 = new PlayerBoardViewGUI('r',320,89);
+        this.board3 = new PlayerBoardViewGUI('r',420,109);
 
 
         container.gridx=0;
@@ -48,7 +48,7 @@ public class BoardZoneGUI extends JPanel {
 
         ///////////////////
 
-        this.board4 = new PlayerBoardViewGUI('p',320,89);
+        this.board4 = new PlayerBoardViewGUI('p',420,109);
 
 
         container.gridx=0;
@@ -56,6 +56,9 @@ public class BoardZoneGUI extends JPanel {
 
         add(board4, container);
 
+        container.gridx=0;
+        container.gridy=4;
+        add(new JButton("View Score"),container);
 
         /**
         Frame frame = new Frame("boards");

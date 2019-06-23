@@ -18,21 +18,21 @@ public class AmmoGUI extends JPanel {
         add(new Label("BLUE:"),container);
 
         //ammo second raw//
-        setLayout(new GridBagLayout());
+        //setLayout(new GridBagLayout());
         container.gridx = 0;
         container.gridy = 1;
         add(new Label("RED:"),container);
 
         //ammo third raw//
-       setLayout(new GridBagLayout());
+       //setLayout(new GridBagLayout());
         container.gridx = 0;
         container.gridy = 2;
         add(new Label("YELLOW:"), container);
 
         //ammo fourraw//
-        setLayout(new GridBagLayout());
+        //setLayout(new GridBagLayout());
         container.gridx = 0;
-        container.gridy = 2;
+        container.gridy = 3;
         add(actionButton,container);
     }
 }
