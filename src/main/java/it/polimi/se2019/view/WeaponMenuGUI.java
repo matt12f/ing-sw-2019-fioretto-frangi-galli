@@ -8,7 +8,7 @@ import java.awt.event.WindowAdapter;	//for CloseListener()
 import java.lang.Integer;		//int from Model is passed as an Integer
 import java.util.Observable;		//for update();
 
-public class WeaponMenuGUI {
+public class WeaponMenuGUI extends JFrame{
     private JLabel image;
     private Label weaponName;
     private Label weaponInfo;
@@ -17,7 +17,7 @@ public class WeaponMenuGUI {
 
 
     public WeaponMenuGUI(){
-        Frame frame = new Frame("weapon menu");
+
         this.weaponName = new Label("Nome");
         this.weaponInfo = new Label("info");
         this.weaponCharge = new Label("charged");
@@ -48,11 +48,11 @@ public class WeaponMenuGUI {
 
 
 
-        frame.addWindowListener(new MainLogGui.CloseListener());
-        frame.add(mainPanel);
-        frame.setSize(400,400);
-        frame.setLocation(500,500);
-        frame.setVisible(true);
+        addWindowListener(new WeaponMenuGUI.CloseListener());
+        add(mainPanel);
+        setSize(400,400);
+        setLocation(500,500);
+        setVisible(true);
 
     }
 
@@ -61,15 +61,12 @@ public class WeaponMenuGUI {
 
     } //update()
 
-    public void addController(ActionListener controller){
 
-
-    } //addController()
 
     public static class CloseListener extends WindowAdapter {
         public void windowClosing(WindowEvent e) {
             e.getWindow().setVisible(false);
-            System.exit(0);
+
         } //windowClosing()
     } //CloseListener
 }

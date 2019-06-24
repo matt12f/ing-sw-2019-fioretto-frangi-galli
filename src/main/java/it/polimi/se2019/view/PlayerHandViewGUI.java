@@ -2,6 +2,8 @@ package it.polimi.se2019.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class PlayerHandViewGUI extends JPanel {
 
@@ -58,6 +60,25 @@ public class PlayerHandViewGUI extends JPanel {
         container.gridx = 0;
         container.gridy = 6;
         add(ammo);
+
+        weapon1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                WeaponMenuGUI frame =new WeaponMenuGUI();
+                frame.setVisible(true);
+            }});
+        weapon2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                WeaponMenuGUI frame =new WeaponMenuGUI();
+                frame.setVisible(true);
+            }});
+        weapon3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                WeaponMenuGUI frame =new WeaponMenuGUI();
+                frame.setVisible(true);
+            }});
 
 
 
