@@ -1,10 +1,10 @@
 package it.polimi.se2019.model.cards;
 
 
-import it.polimi.se2019.controller.FictitiousPlayer;
+import it.polimi.se2019.controller.*;
+import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
-import it.polimi.se2019.controller.SingleEffectsCombinationActions;
 import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
 
 import java.util.ArrayList;
@@ -69,44 +69,96 @@ public class CyberBlade extends GunCardAddEff {
 
     @Override
     public SingleEffectsCombinationActions buildAvailableActions(ArrayList<String> effectsCombination, FictitiousPlayer player) throws UnavailableEffectCombinationException {
-        return null;
+        SingleEffectsCombinationActions actions=new SingleEffectsCombinationActions();
+
+        switch (effectsCombination.toString()){
+            case "[Base]":targetsOfBaseEffect(actions,player);break;
+            case "[Base, Optional1]":{
+                targetsOfBaseEffect(actions,player);
+                targetsOfSecondaryEffect(actions,player);
+            } break;
+            case "[Base, Optional2]":{
+                targetsOfBaseEffect(actions,player);
+                if(actions.getPlayersTargetList().size()<2)
+                    actions.setOfferableOpt2(false);
+            }break;
+            case "[Base, Optional2, Optional1]":{
+                targetsOfBaseEffect(actions,player);
+                if(actions.getPlayersTargetList().size()<2)
+                    actions.setOfferableOpt2(false);
+                targetsOfSecondaryEffect(actions,player);
+            }break;
+            case "[Base, Optional1, Optional2]":{
+                targetsOfBaseEffect(actions,player);
+                targetsOfSecondaryEffect(actions,player);
+                actions.setOfferableOpt2(enabler(actions));
+            }break;
+            case "[Optional1, Base]":targetsOfTertiaryEffect(actions,player);break;
+            case "[Optional1, Base, Optional2]":{
+                targetsOfTertiaryEffect(actions,player);
+                actions.setOfferableOpt2(enabler(actions));
+            }break;
+
+            default:break;
+        }
+
+        actions.validate();
+        return actions;
+    }
+
+    private boolean enabler(SingleEffectsCombinationActions actions) {
+        boolean possibleOpt2=false;
+        for(CellWithTargets cell:actions.getCellsWithTargets())
+            if(cell.getTargets().size()>=2){
+                possibleOpt2=true;
+                cell.setMaxTargetsInCell(cell.getMaxTargetsInCell()+1);
+                if(cell.getMinTargetsInCell()==0)
+                    cell.setMinTargetsInCell(1);
+            }
+        return possibleOpt2;
     }
 
     @Override
     void applyBaseEffect(ChosenActions playersChoice) {
-
+        //TODO scrivere metodo
     }
 
     @Override
     void applySecondaryEffect(ChosenActions playersChoice) {
-
+        //TODO scrivere metodo
     }
 
     @Override
     void applyTertiaryEffect(ChosenActions playersChoice) {
-
+        //TODO scrivere metodo
     }
 
     /**
      * Deal 2 damage to 1 target on your square.
+     *
+     * returns: a square with the targets there
      */
     @Override
     void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        ArrayList<Player> targets=new ArrayList<>(player.getPosition().getPlayers());
+        ArrayList<Player> targets = new ArrayList<>(player.getPosition().getPlayers());
         targets.remove(player.getCorrespondingPlayer());
-
         actions.addToPlayerTargetList(targets);
         actions.setMaxNumPlayerTargets(1);
     }
 
     /**
      * Move 1 square before or after the basic effect.
+     *
+     * returns: squares where you can move
      */
     @Override
     void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        //TODO se usato dopo effetto base: no problem
-
-        //TODO se usato prima dell'effetto base: devo ricalcolare le possibilità
+        for(NewCell cell: ActionManager.cellsOneMoveAway(player.getPosition())){
+            actions.addCellsWithTargets(cell,cell.getPlayers(),0,0,true,false);
+        }
+        actions.setCanMoveYourself(true);
+        actions.setMinCellToSelect(1);
+        actions.setMaxCellToSelect(1);
     }
 
     /**
@@ -114,8 +166,11 @@ public class CyberBlade extends GunCardAddEff {
      */
     @Override
     void targetsOfTertiaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        actions.setSameListDifferentTarget(true);
-        //TODO basta scegliere di usare l'effetto (se ci sono altri target sul tuo square)
-
+        for(NewCell cell: ActionManager.cellsOneMoveAway(player.getPosition())){
+            actions.addCellsWithTargets(cell,cell.getPlayers(),1,1,true,false);
+        }
+        actions.setCanMoveYourself(true);
+        actions.setMinCellToSelect(1);
+        actions.setMaxCellToSelect(1);
     }
 }

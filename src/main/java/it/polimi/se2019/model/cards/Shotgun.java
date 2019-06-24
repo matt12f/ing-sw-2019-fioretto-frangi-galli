@@ -1,6 +1,7 @@
 package it.polimi.se2019.model.cards;
 
 import it.polimi.se2019.AdrenalineServer;
+import it.polimi.se2019.controller.ActionManager;
 import it.polimi.se2019.controller.FictitiousPlayer;
 import it.polimi.se2019.controller.MapManager;
 import it.polimi.se2019.enums.CellEdge;
@@ -52,8 +53,12 @@ public class Shotgun extends GunCardAltEff {
         actions.addToPlayerTargetList(targets);
         actions.setMaxNumPlayerTargets(1);
 
+        for(NewCell cell: ActionManager.cellsOneMoveAway(player.getPosition()))
+            actions.addCellsWithTargets(cell,new ArrayList<>(),0,0,false,true);
+
         actions.setCanMoveOpponent(true);
-        actions.setMaxDistanceOfMovement(1);
+        actions.setMaxCellToSelect(1);
+        actions.setMinCellToSelect(1);
     }
 
     /**
@@ -63,14 +68,15 @@ public class Shotgun extends GunCardAltEff {
     void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         NewCell[][] board= AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix();
         ArrayList<Player> targets = new ArrayList<>();
-        try {
 
         for (int i = 0; i < 4; i++){
+            try{
             if(!player.getPosition().getEdge(i).equals(CellEdge.WALL))
                 targets.addAll(MapManager.getCellInDirection(board,player.getPosition(),1,i).getPlayers());
-        }
-        }catch (OuterWallException e){
-            //Won't ever happen
+
+            }catch (OuterWallException e){
+                //Won't ever happen
+            }
         }
         actions.addToPlayerTargetList(targets);
         actions.setMaxNumPlayerTargets(1);

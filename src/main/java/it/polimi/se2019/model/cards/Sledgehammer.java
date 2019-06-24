@@ -63,20 +63,24 @@ public class Sledgehammer extends GunCardAltEff {
         NewCell [][] board= AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix();
 
         ArrayList<NewCell> cellsToMoveTargetOn=new ArrayList<>();
-        try {
-            for (int i = 0; i < 4 ; i++) {
+        for (int i = 0; i < 4 ; i++) {
+            try {
                 if (!player.getPosition().getEdge(i).equals(CellEdge.WALL))
                     cellsToMoveTargetOn.add(MapManager.getCellInDirection(board,player.getPosition(),1,i));
                 if(!cellsToMoveTargetOn.get(cellsToMoveTargetOn.size()-1).getEdge(i).equals(CellEdge.WALL))
                     cellsToMoveTargetOn.add(MapManager.getCellInDirection(board,cellsToMoveTargetOn.get(cellsToMoveTargetOn.size()-1),1,i));
+            }catch (OuterWallException e){
+                //Won't happen
             }
-        }catch (OuterWallException e){
-            //Won't happen
         }
 
         cellsToMoveTargetOn.add(player.getPosition());
 
         for(NewCell cell:cellsToMoveTargetOn)
-            actions.addCellsWithTargets(cell,new ArrayList<>(),0,0);
+            actions.addCellsWithTargets(cell,new ArrayList<>(),0,0,false,true);
+
+        actions.setCanMoveOpponent(true);
+        actions.setMinCellToSelect(1);
+        actions.setMaxCellToSelect(1);
     }
 }

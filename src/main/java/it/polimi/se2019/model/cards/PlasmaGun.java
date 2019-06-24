@@ -1,9 +1,13 @@
 package it.polimi.se2019.model.cards;
 
-import it.polimi.se2019.controller.ActionManager;
-import it.polimi.se2019.controller.FictitiousPlayer;
+import it.polimi.se2019.AdrenalineServer;
+import it.polimi.se2019.controller.*;
+import it.polimi.se2019.enums.CellEdge;
+import it.polimi.se2019.enums.Color;
+import it.polimi.se2019.exceptions.OuterWallException;
+import it.polimi.se2019.model.game.NewCell;
+import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
-import it.polimi.se2019.controller.SingleEffectsCombinationActions;
 import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
 
 import java.util.ArrayList;
@@ -59,51 +63,97 @@ public class PlasmaGun extends GunCardAddEff {
         tertiaryEffectCost[0] = 'b';
     }
 
-
+    /**
+     * here the target methods are used in a different way than the actions of the optional actions
+     */
     @Override
     public SingleEffectsCombinationActions buildAvailableActions(ArrayList<String> effectsCombination, FictitiousPlayer player) throws UnavailableEffectCombinationException {
-        return null;
+        SingleEffectsCombinationActions actions=new SingleEffectsCombinationActions();
+        actions.setOfferableOpt2(false);
+
+        switch (effectsCombination.toString()){
+            case "[Base]":targetsOfBaseEffect(actions,player);break;
+            case "[Optional1, Base]": targetsOfTertiaryEffect(actions,player);break;
+            case "[Base, Optional1]":{
+                targetsOfBaseEffect(actions,player);
+                targetsOfSecondaryEffect(actions,player);
+            } break;
+            case "[Base, Optional1, Optional2]":{
+                targetsOfBaseEffect(actions,player);
+                targetsOfSecondaryEffect(actions,player);
+                actions.setOfferableOpt2(true);
+            }break;
+            case "[Base, Optional2]":{
+                targetsOfBaseEffect(actions,player);
+                actions.setOfferableOpt2(true);
+            }break;
+            case "[Optional1, Base, Optional2]":{
+                targetsOfTertiaryEffect(actions,player);
+                actions.setOfferableOpt2(true);
+            }break;
+            default:break;
+        }
+
+        actions.validate();
+        return actions;
     }
 
     @Override
     void applyBaseEffect(ChosenActions playersChoice) {
-
+        //TODO scrivere metodo
     }
 
     @Override
     void applySecondaryEffect(ChosenActions playersChoice) {
-
+        //TODO scrivere metodo
     }
 
     @Override
     void applyTertiaryEffect(ChosenActions playersChoice) {
-
+        //TODO scrivere metodo
     }
 
     /**
      * Deal 2 damage to 1 target you can see.
+     *
+     * actually returns: 1 square with your position and the targets visible from there
      */
     @Override
     void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player){
-        actions.addToPlayerTargetList(new ArrayList<>(ActionManager.visibleTargets(player)));
+        actions.addToPlayerTargetList(ActionManager.visibleTargets(player));
         actions.setMaxNumPlayerTargets(1);
     }
 
     /**
      * Move 1 or 2 squares. This effect can be used either before or after the basic effect.
+     *
+     * actually returns: squares 1 e 2 moves away without targets (where you can move)
      */
     @Override
     void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        //TODO se usato dopo effetto base: no problem
-
-        //TODO se usato prima dell'effetto base: devo ricalcolare le possibilità
+        for(NewCell cell: MapManager.squaresInRadius2(player)){
+            actions.addCellsWithTargets(cell,new ArrayList<>(),0,0,true,false);
+        }
+        actions.setCanMoveYourself(true);
+        actions.setMinCellToSelect(1);
+        actions.setMaxCellToSelect(1);
     }
 
     /**
      * Deal 1 additional damage to your target.
+     *
+     * actually returns: square 1 e 2 moves away (where you can move) containing the targets visible from there
      */
     @Override
     void targetsOfTertiaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        actions.setMaxNumPlayerTargets(2);
-    }
+        for(NewCell cellToAddTargets: MapManager.squaresInRadius2(player)){
+            actions.addCellsWithTargets(cellToAddTargets,ActionManager.visibleTargets(cellToAddTargets),1,1,true,false);
+        }
+        actions.setCanMoveYourself(true);
+        actions.setMinCellToSelect(1);
+        actions.setMaxCellToSelect(1);
+        }
+
+
+
 }

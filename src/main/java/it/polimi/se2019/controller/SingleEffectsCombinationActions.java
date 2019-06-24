@@ -19,8 +19,7 @@ public class SingleEffectsCombinationActions{
 
     //these variables are for moving an opponent and they inform the client on how they can do that
     private boolean canMoveOpponent; //For the GUI/CLI
-    private int maxDistanceOfMovement; //For the GUI/CLI
-    //if you can move it will be done automatically when applying the changes
+    private boolean canMoveYourself; //For the GUI/CLI
 
     //these variables are for hitting everyone in a cell/room
     private ArrayList<NewCell> targetCells; //To choose from
@@ -38,13 +37,12 @@ public class SingleEffectsCombinationActions{
 
     private boolean sameListDifferentTarget; //For the GUI/CLI
 
-    private ArrayList<PlayerWithTargets> playersWithTargets;
+    private ArrayList<PlayerWithTargets> playersWithTargets; //for T.H.O.R use only
 
     public SingleEffectsCombinationActions() {
         this.playersTargetList =new ArrayList<>();
         this.maxNumPlayerTargets=0;
 
-        this.maxDistanceOfMovement=0;
         this.canMoveOpponent=false;
         this.targetCells=new ArrayList<>();
         this.targetRooms=new ArrayList<>();
@@ -84,12 +82,12 @@ public class SingleEffectsCombinationActions{
         return maxNumPlayerTargets;
     }
 
-    public int getMaxDistanceOfMovement() {
-        return maxDistanceOfMovement;
-    }
-
     public boolean isCanMoveOpponent() {
         return canMoveOpponent;
+    }
+
+    public boolean isCanMoveYourself() {
+        return canMoveYourself;
     }
 
     public ArrayList<NewCell> getTargetCells() {
@@ -154,12 +152,12 @@ public class SingleEffectsCombinationActions{
         this.targetCells.addAll(targetCells);
     }
 
-    public void setMaxDistanceOfMovement(int maxDistanceOfMovement) {
-        this.maxDistanceOfMovement = maxDistanceOfMovement;
-    }
-
     public void setCanMoveOpponent(boolean canMoveOpponent) {
         this.canMoveOpponent = canMoveOpponent;
+    }
+
+    public void setCanMoveYourself(boolean canMoveYourself) {
+        this.canMoveYourself = canMoveYourself;
     }
 
     public void setOfferableBase(boolean offerableBase) {
@@ -182,8 +180,8 @@ public class SingleEffectsCombinationActions{
         this.sameListDifferentTarget = sameListDifferentTarget;
     }
 
-    public void addCellsWithTargets(NewCell targetCell, ArrayList<Player> targets, int maxTargets, int minTargets) {
-        this.cellsWithTargets.add(new CellWithTargets(targetCell, targets, maxTargets, minTargets));
+    public void addCellsWithTargets(NewCell targetCell, ArrayList<Player> targets, int maxTargets, int minTargets,boolean canMoveYourSelfHere, boolean canMoveOthersHere) {
+        this.cellsWithTargets.add(new CellWithTargets(targetCell, targets, maxTargets, minTargets,canMoveYourSelfHere,canMoveOthersHere));
     }
 
     public void setMinCellToSelect(int minCellToSelect) {

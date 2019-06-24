@@ -104,23 +104,27 @@ public class ActionManager {
      *  Returns the targets a certain player can see (doesn't include yourself)
      *  */
     public static ArrayList<Player> visibleTargets(FictitiousPlayer playersPOV){
+        ArrayList<Player> targets = visibleTargets(playersPOV.getPosition());
+        //It will finally remove the current player from the target list
+        targets.remove(playersPOV.getCorrespondingPlayer());
+
+        return targets;
+    }
+
+    public static ArrayList<Player> visibleTargets(NewCell playersPosition){
         //it will add all of the targets in the room first
-        ArrayList<Player> targets=new ArrayList<>(MapManager.getRoom(playersPOV.getPosition()).getPlayers());
+        ArrayList<Player> targets=new ArrayList<>(MapManager.getRoom(playersPosition).getPlayers());
 
         //it will then add all of the targets in adjacent rooms (through a door)
         for(int i=0;i<4;i++)
-            if(playersPOV.getPosition().getEdge(i).equals(CellEdge.DOOR))
+            if(playersPosition.getEdge(i).equals(CellEdge.DOOR))
                 try {
-                    Room roomYouCanSee=MapManager.getRoom(MapManager.getCellInDirection(AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix(),playersPOV.getPosition(),1,i));
+                    Room roomYouCanSee=MapManager.getRoom(MapManager.getCellInDirection(AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix(),playersPosition,1,i));
                     if(!roomYouCanSee.isEmpty())
                         targets.addAll(roomYouCanSee.getPlayers());
                 } catch (OuterWallException e){
                     //Won't ever happen
                 }
-
-        //It will finally remove the current player from the target list
-        targets.remove(playersPOV.getCorrespondingPlayer());
-
         return targets;
     }
 
@@ -159,18 +163,18 @@ public class ActionManager {
      */
     public static ArrayList<Player> targetsOneMoveAway(FictitiousPlayer player){
         ArrayList<Player> targets=new ArrayList<>();
-        for(NewCell cell: cellsOneMoveAway(player))
+        for(NewCell cell: cellsOneMoveAway(player.getPosition()))
             targets.addAll(cell.getPlayers());
         return targets;
     }
 
-    public static ArrayList<NewCell> cellsOneMoveAway(FictitiousPlayer player){
+    public static ArrayList<NewCell> cellsOneMoveAway(NewCell position){
         NewCell[][] board= AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix();
         ArrayList<NewCell> cellsOneMoveAway=new ArrayList<>();
         try {
             for (int i = 0; i < 4 ; i++) {
-                if (!player.getPosition().getEdge(i).equals(CellEdge.WALL))
-                    cellsOneMoveAway.add(MapManager.getCellInDirection(board,player.getPosition(),1,i));
+                if (!position.getEdge(i).equals(CellEdge.WALL))
+                    cellsOneMoveAway.add(MapManager.getCellInDirection(board,position,1,i));
             }
         }catch (OuterWallException e){
             //Won't happen

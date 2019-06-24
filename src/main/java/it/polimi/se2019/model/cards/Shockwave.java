@@ -47,9 +47,9 @@ public class Shockwave extends GunCardAltEff {
     @Override
     void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         //These are the players that you can move to end up in squares that you can see
-        for(NewCell visibleSquare:ActionManager.cellsOneMoveAway(player)){
+        for(NewCell visibleSquare:ActionManager.cellsOneMoveAway(player.getPosition())){
            if(!visibleSquare.getPlayers().isEmpty())
-               actions.addCellsWithTargets(visibleSquare,visibleSquare.getPlayers(),1,1);
+               actions.addCellsWithTargets(visibleSquare,visibleSquare.getPlayers(),1,1,false,false);
         }
         actions.setMaxCellToSelect(3);
         actions.setMinCellToSelect(1);

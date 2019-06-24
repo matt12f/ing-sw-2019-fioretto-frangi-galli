@@ -65,11 +65,11 @@ public class FlameThrower extends GunCardAltEff {
                     targetsInOneDirection.addAll(MapManager.getCellInDirection(board, player.getPosition(), 2, i).getPlayers());
                     }
                     catch (OuterWallException e){
-                    actions.addCellsWithTargets(cellOneMoveAway,targetsInOneDirection,1,1);
+                    actions.addCellsWithTargets(cellOneMoveAway,targetsInOneDirection,1,1,false,false);
                         //This happens if you move out of the board while getting the second cell
                     }
 
-            actions.addCellsWithTargets(cellOneMoveAway,targetsInOneDirection,2,1);
+            actions.addCellsWithTargets(cellOneMoveAway,targetsInOneDirection,2,1,false,false);
             }catch (OuterWallException e2){
                 //this happens if you are close to an edge and try to move outside of the board
             }

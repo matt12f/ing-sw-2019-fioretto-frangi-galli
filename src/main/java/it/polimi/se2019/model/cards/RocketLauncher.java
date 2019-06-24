@@ -1,10 +1,10 @@
 package it.polimi.se2019.model.cards;
 
-import it.polimi.se2019.controller.ActionManager;
-import it.polimi.se2019.controller.FictitiousPlayer;
+import it.polimi.se2019.controller.*;
+import it.polimi.se2019.enums.Color;
+import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
-import it.polimi.se2019.controller.SingleEffectsCombinationActions;
 import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
 
 import java.util.ArrayList;
@@ -64,22 +64,33 @@ public class RocketLauncher extends GunCardAddEff {
 
     @Override
     public SingleEffectsCombinationActions buildAvailableActions(ArrayList<String> effectsCombination, FictitiousPlayer player) throws UnavailableEffectCombinationException {
-        return null;
+        SingleEffectsCombinationActions actions=new SingleEffectsCombinationActions();
+
+        if(effectsCombination.toString().equals("[Base]")||effectsCombination.toString().equals("[Base, Optional2]"))
+            targetsOfBaseEffect(actions,player);
+        else if(effectsCombination.toString().equals("[Base, Optional1]")||effectsCombination.toString().equals("[Base, Optional1, Optional2]")) {
+            targetsOfBaseEffect(actions,player);
+            targetsOfSecondaryEffect(actions,player);
+        }else if(effectsCombination.toString().equals("[Optional1, Base]")||effectsCombination.toString().equals("[Optional1, Base, Optional2]"))
+                targetsOfTertiaryEffect(actions,player);
+
+        actions.validate();
+        return actions;
     }
 
     @Override
     void applyBaseEffect(ChosenActions playersChoice) {
-
+        //TODO scrivere metodo
     }
 
     @Override
     void applySecondaryEffect(ChosenActions playersChoice) {
-
+        //TODO scrivere metodo
     }
 
     @Override
     void applyTertiaryEffect(ChosenActions playersChoice) {
-
+        //TODO scrivere metodo
     }
 
     /**
@@ -94,7 +105,8 @@ public class RocketLauncher extends GunCardAddEff {
         actions.setMaxNumPlayerTargets(1);
 
         actions.setCanMoveOpponent(true);
-        actions.setMaxDistanceOfMovement(1);
+        for(NewCell cell: ActionManager.cellsOneMoveAway(player.getPosition()))
+            actions.addCellsWithTargets(cell,new ArrayList<>(),0,0,false,true);
     }
 
     /**
@@ -102,17 +114,33 @@ public class RocketLauncher extends GunCardAddEff {
      */
     @Override
     void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        //TODO se usato dopo effetto base: no problem
-
-        //TODO se usato prima dell'effetto base: devo ricalcolare le possibilità
+        for(NewCell cell:MapManager.squaresInRadius2(player))
+            actions.addCellsWithTargets(cell,new ArrayList<>(),0,0,true,false);
+        actions.setCanMoveYourself(true);
+        actions.setMaxCellToSelect(1);
+        actions.setMinCellToSelect(1);
     }
 
     /**
      * During the basic effect, deal 1 damage to every player on your target's original square – including the target, even if you move it.
+     *
+     * actually returns: cells where you can move & hit a target + cells where you can move the target after you've hit it
      */
     @Override
     void targetsOfTertiaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        if(actions.getPlayersTargetList().isEmpty())
-            actions.setOfferableOpt2(false);
+        for(NewCell cell:MapManager.squaresInRadius2(player)){
+            ArrayList<Player> targets = new ArrayList<>(ActionManager.visibleTargets(cell));
+            targets.removeAll(cell.getPlayers());
+            actions.addCellsWithTargets(cell, targets, 1, 1, true, false);
+        }
+
+        for(CellWithTargets cellWithTarget: actions.getCellsWithTargets()){
+            for(NewCell cell: ActionManager.cellsOneMoveAway(cellWithTarget.getTargetCell()))
+                actions.addCellsWithTargets(cell, new ArrayList<>(),0,0,false,true);
+        }
+        actions.setCanMoveYourself(true);
+        actions.setMaxCellToSelect(1);
+        actions.setMinCellToSelect(1);
+
     }
 }

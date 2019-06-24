@@ -2,6 +2,7 @@ package it.polimi.se2019.model.cards;
 
 import it.polimi.se2019.controller.ActionManager;
 import it.polimi.se2019.controller.FictitiousPlayer;
+import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
@@ -57,9 +58,12 @@ public class GrenadeLauncher extends GunCardAddEff {
         actions.addToPlayerTargetList(targets);
         actions.setMaxNumPlayerTargets(1);
 
-        actions.setCanMoveOpponent(true);
-        actions.setMaxDistanceOfMovement(1);
+        for(NewCell cell: ActionManager.cellsOneMoveAway(player.getPosition()))
+            actions.addCellsWithTargets(cell,new ArrayList<>(),0,0,false,true);
 
+        actions.setCanMoveOpponent(true);
+        actions.setMaxCellToSelect(1);
+        actions.setMinCellToSelect(1);
     }
 
     /**

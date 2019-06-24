@@ -9,6 +9,7 @@ import it.polimi.se2019.model.game.*;
 import it.polimi.se2019.view.CellView;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -165,6 +166,25 @@ public class MapManager {
                 }
         }
         return minimumDist; //this will never be used
+    }
+
+    public static ArrayList<NewCell> squaresInRadius2(FictitiousPlayer player){
+        NewCell [][] board= AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix();
+        ArrayList<NewCell> possibleCells=new ArrayList<>(ActionManager.cellsOneMoveAway(player.getPosition()));
+        for (NewCell cell: ActionManager.cellsOneMoveAway(player.getPosition())){
+            for (int i = 0; i < 4; i++) {
+                try{
+                    NewCell possibleCell=MapManager.getCellInDirection(board,cell,1,i);
+                    if(!cell.getEdge(i).equals(CellEdge.WALL) && !possibleCells.contains(possibleCell))
+                        possibleCells.add(possibleCell);
+
+                }catch (OuterWallException e){
+                    //Won't happen
+                }
+
+            }
+        }
+        return possibleCells;
     }
 }
 

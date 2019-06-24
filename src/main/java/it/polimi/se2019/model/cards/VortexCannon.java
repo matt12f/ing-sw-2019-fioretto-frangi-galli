@@ -68,17 +68,30 @@ public class VortexCannon extends GunCardAddEff {
      @Override
     void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
          targetFiller(actions,player,3);
+         actions.setSameListDifferentTarget(true);
     }
 
+    /**
+     * this is an accessory method that returns a list of cells that can become a "Vortex" with the available targets
+     * @param actions object to build on
+     * @param player POV
+     * @param maxTargetCell max number of targets on a cell
+     */
     private void targetFiller(SingleEffectsCombinationActions actions, FictitiousPlayer player, int maxTargetCell){
-        for(NewCell cell:ActionManager.visibleSquares(player)) {
-            ArrayList<Player> targets=new ArrayList<>(player.getPosition().getPlayers());
-            targets.remove(player.getCorrespondingPlayer());
-            targets.addAll(ActionManager.targetsOneMoveAway(player));
-            actions.addCellsWithTargets(cell, targets, maxTargetCell, 1);
-            actions.setMaxCellToSelect(1);
-            actions.setMinCellToSelect(1);
+        for(NewCell cell:ActionManager.visibleSquares(player)){
+            if (!cell.equals(player.getPosition())){
+                ArrayList<Player> targets=new ArrayList<>(cell.getPlayers());
+                targets.remove(player.getCorrespondingPlayer());
+
+                targets.addAll(ActionManager.targetsOneMoveAway(player));
+                actions.addCellsWithTargets(cell, targets, maxTargetCell, 1,false,false);
+            }
         }
+        actions.setMaxCellToSelect(1);
+        actions.setMinCellToSelect(1);
+        actions.setCanMoveOpponent(true); //this is going to be true but there will not be "available" squares where to
+        // move the player, meaning this is a vortexCannon card and the player that was hit must be moved automatically
+        // to the selected vortex
     }
 
     @Override
