@@ -14,9 +14,9 @@ public class PlayerHandViewGUI extends JPanel {
         setLayout(new GridBagLayout());
 
 
-        WeaponButtonGUI weapon1 = new WeaponButtonGUI();
-        WeaponButtonGUI weapon2 = new WeaponButtonGUI();
-        WeaponButtonGUI weapon3 = new WeaponButtonGUI();
+        WeaponButtonGUI weapon1 = new WeaponButtonGUI(100,163);
+        WeaponButtonGUI weapon2 = new WeaponButtonGUI(100,163);
+        WeaponButtonGUI weapon3 = new WeaponButtonGUI(100,163);
 
         PowerupButtonGUI powerup1 = new PowerupButtonGUI();
         PowerupButtonGUI powerup2 = new PowerupButtonGUI();
