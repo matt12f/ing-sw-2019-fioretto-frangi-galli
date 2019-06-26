@@ -147,17 +147,22 @@ public class MapViewGUI extends JPanel {
         labelBackground.add(cella11);
         labelBackground.add(cella12);
         labelBackground.add(cella13);
-        labelBackground.add(cella14);
+        if(config != 2 && config != 4){
+            labelBackground.add(cella14);
+        }
 
         labelBackground.add(cella21);
         labelBackground.add(cella22);
         labelBackground.add(cella23);
         labelBackground.add(cella24);
 
-        labelBackground.add(cella31);
+        if (config != 1 && config != 2){
+            labelBackground.add(cella31);
+        }
         labelBackground.add(cella32);
         labelBackground.add(cella33);
         labelBackground.add(cella34);
+
         add(labelBackground);
 
 
