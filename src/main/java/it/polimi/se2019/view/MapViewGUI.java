@@ -1,6 +1,8 @@
 package it.polimi.se2019.view;
 
+import javax.sound.sampled.Line;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 
 
@@ -19,6 +21,24 @@ public class MapViewGUI extends JPanel {
     private WeaponButtonGUI weaponyellow1;
     private WeaponButtonGUI weaponyellow2;
     private WeaponButtonGUI weaponyellow3;
+
+
+    private CellViewGUI cella11;
+    private CellViewGUI cella12;
+    private CellViewGUI cella13;
+    private CellViewGUI cella14;
+
+    private CellViewGUI cella21;
+    private CellViewGUI cella22;
+    private CellViewGUI cella23;
+    private CellViewGUI cella24;
+
+    private CellViewGUI cella31;
+    private CellViewGUI cella32;
+    private CellViewGUI cella33;
+    private CellViewGUI cella34;
+
+
     public MapViewGUI(int config){
 
 
@@ -69,10 +89,50 @@ public class MapViewGUI extends JPanel {
         this.weaponyellow3.setLocation(518, 375);
 
 
+        ////spazio celle////
 
-        GridBagConstraints container = new GridBagConstraints();
+        /////first line////7
+         this.cella11 = new CellViewGUI();
+         this.cella11.setLocation(95,90);
 
-        setLayout(new GridBagLayout());
+        this.cella12 = new CellViewGUI();
+        this.cella12.setLocation(200,90);
+
+        this.cella13 = new CellViewGUI();
+        this.cella13.setLocation(305,90);
+
+        this.cella14 = new CellViewGUI();
+        this.cella14.setLocation(410,90);
+
+        ////second line/////
+        this.cella21 = new CellViewGUI();
+        this.cella21.setLocation(95,200);
+
+        this.cella22 = new CellViewGUI();
+        this.cella22.setLocation(200,200);
+
+        this.cella23 = new CellViewGUI();
+        this.cella23.setLocation(305,200);
+
+        this.cella24 = new CellViewGUI();
+        this.cella24.setLocation(410,200);
+
+        ////third line////
+        this.cella31 = new CellViewGUI();
+        this.cella31.setLocation(95,305);
+
+        this.cella32 = new CellViewGUI();
+        this.cella32.setLocation(200,305);
+
+        this.cella33 = new CellViewGUI();
+        this.cella33.setLocation(305,305);
+
+        this.cella34 = new CellViewGUI();
+        this.cella34.setLocation(410,305);
+
+
+        ///////add zone////
+
         //labelBackground.add(mainPanel);
         labelBackground.add(weaponblue1);
         labelBackground.add(weaponblue2);
@@ -83,23 +143,29 @@ public class MapViewGUI extends JPanel {
         labelBackground.add(weaponyellow1);
         labelBackground.add(weaponyellow2);
         labelBackground.add(weaponyellow3);
-        add(labelBackground,container);
 
-        //container.gridx= 0;
-        //container.gridy = 0;
+        labelBackground.add(cella11);
+        labelBackground.add(cella12);
+        labelBackground.add(cella13);
+        labelBackground.add(cella14);
+
+        labelBackground.add(cella21);
+        labelBackground.add(cella22);
+        labelBackground.add(cella23);
+        labelBackground.add(cella24);
+
+        labelBackground.add(cella31);
+        labelBackground.add(cella32);
+        labelBackground.add(cella33);
+        labelBackground.add(cella34);
+        add(labelBackground);
 
 
 
-        //toppa per test
 
-        /**
-        Frame frame = new Frame("ADRENALINE");
-        frame.addWindowListener(new MainLogGui.CloseListener());
-        frame.add(labelBackground);
 
-        frame.setSize(1280,720);
-        frame.setLocation(0,0);
-        frame.setVisible(true);*/
+
+
 
     }
 
