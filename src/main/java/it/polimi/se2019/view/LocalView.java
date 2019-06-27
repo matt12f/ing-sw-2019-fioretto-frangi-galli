@@ -10,9 +10,11 @@ public class LocalView  extends View implements Observer {
     private ArrayList<PlayerBoardView> playerBoardViews;
     private int playerId;
     private MapView mapView;
+    private CellView playerPosition;
     private PlayerHandView playerHand;
 
     public LocalView(ArrayList<PlayerBoardView> playerBoardViews,int playerId, MapView mapView, PlayerHandView playerHand) {
+        //TODO aggiungere la posizione del player
         this.playerBoardViews = playerBoardViews;
         this.playerId=playerId;
         this.mapView = mapView;
@@ -33,6 +35,10 @@ public class LocalView  extends View implements Observer {
 
     public PlayerHandView getPlayerHand() {
         return playerHand;
+    }
+
+    public CellView getPlayerPosition() {
+        return playerPosition;
     }
 
     public int getPlayerId() {

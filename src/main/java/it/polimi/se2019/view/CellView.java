@@ -1,24 +1,18 @@
 package it.polimi.se2019.view;
 
 import it.polimi.se2019.enums.CellEdge;
+import it.polimi.se2019.model.game.NewCell;
 
 import java.util.ArrayList;
 
 public class CellView {
-    protected CellEdge top;
-    protected CellEdge bottom;
-    protected CellEdge left;
-    protected CellEdge right;
+    private NewCell correspondingCell;
     private int lineIndex;
     private int columnIndex;
     private Square[][] matrix; //TODO sarà 3x3 e ci vanno le figure e le ammotiles
     private ArrayList<FigureView> playerFigures;
 
-    public CellView(int lineIndex, int columnIndex, CellEdge top, CellEdge bottom, CellEdge left, CellEdge right) {
-        this.top = top;
-        this.bottom = bottom;
-        this.left = left;
-        this.right = right;
+    public CellView(int lineIndex, int columnIndex,NewCell playerPosition) {
         this.lineIndex = lineIndex;
         this.columnIndex = columnIndex;
         this.matrix = new Square[3][3];
@@ -31,6 +25,10 @@ public class CellView {
 
     public ArrayList<FigureView> getPlayerFigures(){
         return this.playerFigures;
+    }
+
+    public NewCell getCorrespondingCell() {
+        return correspondingCell;
     }
 
     public int getLineIndex() {
@@ -50,19 +48,19 @@ public class CellView {
     }
 
     public boolean isUpWall(){
-        return this.top.equals(CellEdge.WALL);
+        return this.correspondingCell.getEdge(0).equals(CellEdge.WALL);
     }
 
     public boolean isDownWall(){
-        return this.bottom.equals(CellEdge.WALL);
+        return this.correspondingCell.getEdge(1).equals(CellEdge.WALL);
     }
 
     public boolean isLeftWall(){
-        return this.left.equals(CellEdge.WALL);
+        return this.correspondingCell.getEdge(2).equals(CellEdge.WALL);
     }
 
     public boolean isRightWall(){
-        return this.right.equals(CellEdge.WALL);
+        return this.correspondingCell.getEdge(3).equals(CellEdge.WALL);
     }
 }
 

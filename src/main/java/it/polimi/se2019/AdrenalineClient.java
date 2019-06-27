@@ -286,7 +286,7 @@ class clientCallBackClass implements clientCallBack{
     @Override
 public void ClientCallBack() throws RemoteException {
         /*
-        //this method is empty because is used by the server only to check if the connection works before the match' start
+        //this method is empty because is used by the server only to check if the connection works before the match start
          */
     }
 }

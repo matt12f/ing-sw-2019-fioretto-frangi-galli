@@ -29,7 +29,6 @@ import java.util.ArrayList;
  */
 
 public class AvailableActions {
-    private ArrayList<CellInfo> singleArrivalCells; //for move and grab actions
     private ArrayList<FictitiousPlayer> fictitiousPlayers; //the player will choose one of these
 
     /**
@@ -64,7 +63,7 @@ public class AvailableActions {
      */
     private void buildActions(Player player, ActionRequestView macroAction, int maxMoveDistance, boolean grab, boolean shoot, boolean frenzyReload){
         NewCell[][] board=AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix();
-        for (PowerupUse powerupUse:macroAction.getPowerupUse()){
+        for (PowerupUse powerupUse : macroAction.getPowerupUse()){
             if(powerupUse.getDirectionOfMove().equals("None"))
                 PowerupManager.teleporterManager(powerupUse.getIndexInHand(),MapManager.cellViewToNewCell(powerupUse.getCellForSelfMovement()));
             else
@@ -84,11 +83,12 @@ public class AvailableActions {
         else
             minMoveDistance=0;
 
-        this.fictitiousPlayers=new ArrayList<>();
-        this.singleArrivalCells=createArrivalCells(board,player,minMoveDistance,maxMoveDistance,grab);
+        //for move and grab actions
+        ArrayList<CellInfo> singleArrivalCells=createArrivalCells(board,player,minMoveDistance,maxMoveDistance,grab);
 
-        for(CellInfo cell:this.singleArrivalCells)
-            this.fictitiousPlayers.add(new FictitiousPlayer(player, cell,shoot,frenzyReload));
+        this.fictitiousPlayers=new ArrayList<>();
+        for(CellInfo cell:singleArrivalCells)
+            this.fictitiousPlayers.add(new FictitiousPlayer(player, cell, shoot, frenzyReload));
     }
 
     /**
@@ -115,5 +115,9 @@ public class AvailableActions {
         else  //for actions without movement and grab
             singleArrivalCells.add(new CellInfo(player.getFigure().getCell(),false,false));
         return singleArrivalCells;
+    }
+
+    public ArrayList<FictitiousPlayer> getFictitiousPlayers() {
+        return fictitiousPlayers;
     }
 }

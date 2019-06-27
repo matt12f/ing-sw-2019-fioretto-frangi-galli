@@ -28,36 +28,47 @@ public class FictitiousPlayer {
     private int playerId;
     private Color playerColor;
     private NewCell position;
+    private boolean grabbedAmmo;
     private Ammo availableAmmo;
+    private ArrayList<GunCard> pickableCards;
     private ArrayList<SingleCardActions> availableCardActions; //for the actions you can do with one card
 
 
     /**
      * This method creates a fictitious player that has supposedly taken the choices contained in the parameter cell
-     * @param cell incapsulates the choices about movement and
+     * @param cell encapsulates the choices about movement and
      * @param player used to add the ammo picked up to the existing ammo a player has
-     * @return fictitious player
+     * returns fictitious player
      */
     public FictitiousPlayer (Player player, CellInfo cell, boolean shoot, boolean frenzyReload){
         this.playerId=player.getId();
         ArrayList<GunCard> usableCards;
         this.playerColor=player.getFigure().getColor();
         this.position =cell.getCell();
+
         if (cell.isCanGrabAmmo()){
             this.availableAmmo=player.getPlayerBoard().getAmmo();
-            this.availableAmmo.addAmmo(cell.getCell().getDrop().getContent());
+            if(cell.getCell().getDrop()!=null){
+                this.availableAmmo.addAmmo(cell.getCell().getDrop().getContent());
+                this.grabbedAmmo=true;
+            }
+
         }
-            //the "pickable" cards can ALL be added to the cards a player can choose from, if it's noted that
-            // if the player chooses one of those, he must discard one of his current cards. This could work
-            // because the use of a card is exclusionary (you can only use one at a time).
+        this.pickableCards=new ArrayList<>();
+        //this is done for grab/move+grab actions where you may want to just pick a card
+        if(cell.isCanGrabCard())
+            for(GunCard gunCard:cell.getCell().getWeaponCards())
+                if(gunCard!=null && ActionManager.canAffordCost(this.availableAmmo,gunCard.getAmmoCost(),true))
+                    this.pickableCards.add(gunCard);
+
+        //the "pickable" cards can ALL be added to the cards a player can choose from, if it's noted that
+        // if the player chooses one of those, he must discard one of his current cards. This could work
+        // because the use of a card is exclusionary (you can only use one at a time).
+        this.availableCardActions = new ArrayList<>();
         if(shoot){
             usableCards=evaluateUsableCards(player,frenzyReload);
-            if(cell.isCanGrabCard())
-                for(GunCard gunCard:cell.getCell().getWeaponCards())
-                    if(ActionManager.canAffordCost(this.availableAmmo,gunCard.getAmmoCost(),true))
-                        usableCards.add(gunCard);
+            usableCards.addAll(pickableCards);
 
-            this.availableCardActions = new ArrayList<>();
             for (GunCard gunCard : usableCards)
                 this.availableCardActions.add(new SingleCardActions(gunCard,this,usableCards.size()>3));
 
@@ -68,8 +79,6 @@ public class FictitiousPlayer {
                 LOGGER.log(Level.WARNING,"Fictitious Player unavailable card actions clearing ",e);
             }
 
-        }else{
-            this.availableCardActions = null;
         }
     }
 
@@ -90,6 +99,18 @@ public class FictitiousPlayer {
 
     public Player getCorrespondingPlayer(){
         return AdrenalineServer.getMainController().getMainGameModel().getPlayerList().get(playerId);
+    }
+
+    public boolean isGrabbedAmmo() {
+        return grabbedAmmo;
+    }
+
+    public int getPlayerId() {
+        return playerId;
+    }
+
+    public ArrayList<GunCard> getPickableCards() {
+        return pickableCards;
     }
 
     public Color getPlayerColor() {

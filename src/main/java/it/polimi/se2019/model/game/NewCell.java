@@ -1,5 +1,7 @@
 package it.polimi.se2019.model.game;
 
+import it.polimi.se2019.AdrenalineServer;
+import it.polimi.se2019.controller.MapManager;
 import it.polimi.se2019.enums.CellEdge;
 import it.polimi.se2019.enums.CellType;
 import it.polimi.se2019.enums.Color;
@@ -136,5 +138,23 @@ public class NewCell {
             case 3: return this.right;
             default:return CellEdge.WALL;
         }
+    }
+
+    /**
+     * this method returns the visual index of the cell on the X axis
+     * @return effective index in the matrix + 1 for improved readability by user
+     */
+    public int getXIndex(){
+        NewCell[][] board=AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix();
+        return MapManager.getLineOrColumnIndex(board,this,true) + 1;
+    }
+
+    /**
+     * this method returns the visual index of the cell on the Y axis
+     * @return effective index in the matrix + 1 for improved readability by user
+     */
+    public int getYIndex(){
+        NewCell[][] board=AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix();
+        return MapManager.getLineOrColumnIndex(board,this,false) + 1;
     }
 }

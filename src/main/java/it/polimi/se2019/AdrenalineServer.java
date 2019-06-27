@@ -85,6 +85,9 @@ public class AdrenalineServer{
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        lobbyClient = socketClient.getClients();
+        lobbyClient.addAll(rmiClients.getClients());
+        games.add(new GameHandler(lobbyClient)); //TODO Definire Game handler e mettere i parametri
     }
 
 
@@ -145,11 +148,7 @@ public class AdrenalineServer{
         return connectionNumber;
     }
 
-    public static ArrayList<ClientHandler> getLobbyClient() {
-        return lobbyClient;
-    }
-
-    public static void addClient (ClientHandler newClient){
-        lobbyClient.add(newClient);
+    public static Controller getMainController() {
+        return mainController;
     }
 }

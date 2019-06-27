@@ -18,9 +18,9 @@ public class WeaponMenuGUI extends JFrame{
 
     public WeaponMenuGUI(){
 
-        this.weaponName = new Label("Nome");
-        this.weaponInfo = new Label("info");
-        this.weaponCharge = new Label("charged");
+        this.weaponName = new Label("Name");
+        this.weaponInfo = new Label("Info");
+        this.weaponCharge = new Label("Loaded");
         this.img = new ImageIcon(new ImageIcon("src/main/sprite/cards/weapons/weapons_cyberblade.png").getImage().getScaledInstance(120,203,Image.SCALE_DEFAULT));
         this.image = new JLabel(img);
         JPanel mainPanel = new JPanel(new GridBagLayout());
