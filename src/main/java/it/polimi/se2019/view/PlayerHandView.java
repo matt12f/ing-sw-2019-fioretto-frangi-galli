@@ -4,7 +4,7 @@ package it.polimi.se2019.view;
 import it.polimi.se2019.model.cards.GunCard;
 import it.polimi.se2019.model.cards.PowerupCard;
 
-public class PlayerHandView{
+public abstract class PlayerHandView{
     private GunCard[] guns;
     private boolean[] loadedGuns;
     private PowerupCard[] powerups;
