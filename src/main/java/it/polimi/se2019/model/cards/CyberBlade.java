@@ -68,34 +68,34 @@ public class CyberBlade extends GunCardAddEff {
     }
 
     @Override
-    public SingleEffectsCombinationActions buildAvailableActions(ArrayList<String> effectsCombination, FictitiousPlayer player) throws UnavailableEffectCombinationException {
+    public SingleEffectsCombinationActions buildAvailableActions(Controller currentController, FictitiousPlayer player, ArrayList<String> effectsCombination) throws UnavailableEffectCombinationException {
         SingleEffectsCombinationActions actions=new SingleEffectsCombinationActions(effectsCombination.toString());
 
         switch (effectsCombination.toString()){
-            case "[Base]":targetsOfBaseEffect(actions,player);break;
+            case "[Base]":targetsOfBaseEffect(currentController, actions, player);break;
             case "[Base, Optional1]":{
-                targetsOfBaseEffect(actions,player);
-                targetsOfSecondaryEffect(actions,player);
+                targetsOfBaseEffect(currentController,actions, player);
+                targetsOfSecondaryEffect(currentController, actions, player);
             } break;
             case "[Base, Optional2]":{
-                targetsOfBaseEffect(actions,player);
+                targetsOfBaseEffect(currentController, actions, player);
                 if(actions.getPlayersTargetList().size()<2)
                     actions.setOfferableOpt2(false);
             }break;
             case "[Base, Optional2, Optional1]":{
-                targetsOfBaseEffect(actions,player);
+                targetsOfBaseEffect(currentController, actions, player);
                 if(actions.getPlayersTargetList().size()<2)
                     actions.setOfferableOpt2(false);
-                targetsOfSecondaryEffect(actions,player);
+                targetsOfSecondaryEffect(currentController, actions, player);
             }break;
             case "[Base, Optional1, Optional2]":{
-                targetsOfBaseEffect(actions,player);
-                targetsOfSecondaryEffect(actions,player);
+                targetsOfBaseEffect(currentController, actions, player);
+                targetsOfSecondaryEffect(currentController, actions, player);
                 actions.setOfferableOpt2(enabler(actions));
             }break;
-            case "[Optional1, Base]":targetsOfTertiaryEffect(actions,player);break;
+            case "[Optional1, Base]":targetsOfTertiaryEffect(currentController, actions, player);break;
             case "[Optional1, Base, Optional2]":{
-                targetsOfTertiaryEffect(actions,player);
+                targetsOfTertiaryEffect(currentController, actions, player);
                 actions.setOfferableOpt2(enabler(actions));
             }break;
 
@@ -139,7 +139,7 @@ public class CyberBlade extends GunCardAddEff {
      * returns: a square with the targets there
      */
     @Override
-    void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+    void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         ArrayList<Player> targets = new ArrayList<>(player.getPosition().getPlayers());
         targets.remove(player.getCorrespondingPlayer());
         actions.addToPlayerTargetList(targets);
@@ -152,8 +152,8 @@ public class CyberBlade extends GunCardAddEff {
      * returns: squares where you can move
      */
     @Override
-    void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        for(NewCell cell: ActionManager.cellsOneMoveAway(player.getPosition())){
+    void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+        for(NewCell cell: ActionManager.cellsOneMoveAway(currentController,player.getPosition())){
             actions.addCellsWithTargets(cell,cell.getPlayers(),0,0,true,false);
         }
         actions.setCanMoveYourself(true);
@@ -165,8 +165,8 @@ public class CyberBlade extends GunCardAddEff {
      * Deal 2 damage to a different target on your square. The shadowstep may be used before or after this effect.
      */
     @Override
-    void targetsOfTertiaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        for(NewCell cell: ActionManager.cellsOneMoveAway(player.getPosition())){
+    void targetsOfTertiaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+        for(NewCell cell: ActionManager.cellsOneMoveAway(currentController,player.getPosition())){
             actions.addCellsWithTargets(cell,cell.getPlayers(),1,1,true,false);
         }
         actions.setCanMoveYourself(true);

@@ -14,14 +14,13 @@ public class TurnManager {
         this.activePlayer = activePlayer;
     }
 
-    public void playTurn() {
+    public void playTurn(Controller currentController) {
         PlayerManager.adrenalineManager(activePlayer);
         //TODO scrivere metodo
-        MapManager.refillEmptiedCells();
+        MapManager.refillEmptiedCells(currentController.getMainGameModel().getCurrentMap().getBoardMatrix(),currentController.getMainGameModel().getCurrentDecks());
     }
     private void gameStatsUpdate(){
         //TODO scrivere metodo
     }
-
 
 }

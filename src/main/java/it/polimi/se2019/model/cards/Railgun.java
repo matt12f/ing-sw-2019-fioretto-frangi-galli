@@ -2,12 +2,10 @@ package it.polimi.se2019.model.cards;
 
 import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.controller.*;
-import it.polimi.se2019.enums.CellEdge;
 import it.polimi.se2019.exceptions.OuterWallException;
 import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
-import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
 
 import java.util.ArrayList;
 
@@ -43,8 +41,8 @@ public class Railgun extends GunCardAltEff {
      * Anyone on a square in that direction (including yours) is a valid target.
      */
     @Override
-    void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        NewCell[][] board= AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix();
+    void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+        NewCell[][] board= currentController.getMainGameModel().getCurrentMap().getBoardMatrix();
 
         NewCell cellOneMoveAway;
         ArrayList<Player> targetsInOneDirection=new ArrayList<>();
@@ -85,8 +83,8 @@ public class Railgun extends GunCardAltEff {
      * Anyone on a square in that direction (including yours) is a valid target.
      */
     @Override
-    void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        targetsOfBaseEffect(actions,player);
+    void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+        targetsOfBaseEffect(currentController, actions, player);
         for(CellWithTargets cell: actions.getCellsWithTargets())
             cell.setMaxTargetsInCell(2);
     }

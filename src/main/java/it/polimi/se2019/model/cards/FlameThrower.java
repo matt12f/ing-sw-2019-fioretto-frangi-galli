@@ -1,15 +1,14 @@
 package it.polimi.se2019.model.cards;
 
 import it.polimi.se2019.AdrenalineServer;
+import it.polimi.se2019.controller.Controller;
 import it.polimi.se2019.controller.FictitiousPlayer;
 import it.polimi.se2019.controller.MapManager;
-import it.polimi.se2019.enums.CellEdge;
 import it.polimi.se2019.exceptions.OuterWallException;
 import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
-import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
 
 import java.util.ArrayList;
 
@@ -49,8 +48,8 @@ public class FlameThrower extends GunCardAltEff {
      * On each square, you may choose 1 target and give it 1 damage.
      */
     @Override
-    void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        NewCell[][] board= AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix();
+    void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+        NewCell[][] board= currentController.getMainGameModel().getCurrentMap().getBoardMatrix();
 
         NewCell cellOneMoveAway;
         ArrayList<Player> targetsInOneDirection=new ArrayList<>();
@@ -83,7 +82,8 @@ public class FlameThrower extends GunCardAltEff {
      *Deal 2 damage to everyone on the first square and 1 damage to everyone on the second square.
      */
     @Override
-    void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        //TODO come sopra
+    void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+        targetsOfBaseEffect(currentController,actions,player);
+        //TODO check se è offerable
     }
 }

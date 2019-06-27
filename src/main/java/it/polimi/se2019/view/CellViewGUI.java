@@ -1,7 +1,6 @@
 package it.polimi.se2019.view;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class CellViewGUI extends JButton {

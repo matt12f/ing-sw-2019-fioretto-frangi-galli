@@ -1,15 +1,12 @@
 package it.polimi.se2019.model.cards;
 
 import it.polimi.se2019.AdrenalineServer;
-import it.polimi.se2019.controller.ActionManager;
-import it.polimi.se2019.controller.FictitiousPlayer;
-import it.polimi.se2019.controller.MapManager;
+import it.polimi.se2019.controller.*;
 import it.polimi.se2019.enums.CellEdge;
 import it.polimi.se2019.exceptions.OuterWallException;
 import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
-import it.polimi.se2019.controller.SingleEffectsCombinationActions;
 
 import java.util.ArrayList;
 
@@ -45,7 +42,7 @@ public class Sledgehammer extends GunCardAltEff {
      * Deal 2 damage to 1 target on your square.
      */
     @Override
-    void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+    void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         ArrayList<Player> targets =new ArrayList<>(player.getPosition().getPlayers());
         targets.remove(player.getCorrespondingPlayer());
 
@@ -57,10 +54,10 @@ public class Sledgehammer extends GunCardAltEff {
      * Deal 3 damage to 1 target on your square, then move that target 0, 1, or 2 squares in one direction.
      */
     @Override
-    void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        targetsOfBaseEffect(actions,player);
+    void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+        targetsOfBaseEffect(currentController, actions, player);
 
-        NewCell [][] board= AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix();
+        NewCell [][] board= currentController.getMainGameModel().getCurrentMap().getBoardMatrix();
 
         ArrayList<NewCell> cellsToMoveTargetOn=new ArrayList<>();
         for (int i = 0; i < 4 ; i++) {

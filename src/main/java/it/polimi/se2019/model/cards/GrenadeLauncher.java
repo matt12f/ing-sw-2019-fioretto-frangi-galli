@@ -1,6 +1,7 @@
 package it.polimi.se2019.model.cards;
 
 import it.polimi.se2019.controller.ActionManager;
+import it.polimi.se2019.controller.Controller;
 import it.polimi.se2019.controller.FictitiousPlayer;
 import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
@@ -53,12 +54,12 @@ public class GrenadeLauncher extends GunCardAddEff {
      * Deal 1 damage to 1 target you can see. Then you may move the target 1 square.
      */
     @Override
-    void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        ArrayList<Player> targets=new ArrayList<>(ActionManager.visibleTargets(player));
+    void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+        ArrayList<Player> targets=new ArrayList<>(ActionManager.visibleTargets(currentController,player));
         actions.addToPlayerTargetList(targets);
         actions.setMaxNumPlayerTargets(1);
 
-        for(NewCell cell: ActionManager.cellsOneMoveAway(player.getPosition()))
+        for(NewCell cell: ActionManager.cellsOneMoveAway(currentController, player.getPosition()))
             actions.addCellsWithTargets(cell,new ArrayList<>(),0,0,false,true);
 
         actions.setCanMoveOpponent(true);
@@ -70,8 +71,8 @@ public class GrenadeLauncher extends GunCardAddEff {
      * Deal 1 damage to every player on a square you can see. You can use this before or after the basic effect.
      */
     @Override
-    void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-       actions.addToTargetCells(new ArrayList<>(ActionManager.visibleSquares(player)));
+    void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+       actions.addToTargetCells(new ArrayList<>(ActionManager.visibleSquares(currentController,player)));
     }
 
     @Override
@@ -79,7 +80,7 @@ public class GrenadeLauncher extends GunCardAddEff {
         throw new UnsupportedOperationException();
     }
     @Override
-    void targetsOfTertiaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+    void targetsOfTertiaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         throw new UnsupportedOperationException();
     }
 }

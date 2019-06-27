@@ -24,6 +24,7 @@ import java.util.logging.Logger;
  *
  */
 public class FictitiousPlayer {
+    private Player correspondingPlayer;
     private static final Logger LOGGER = Logger.getLogger(FictitiousPlayer.class.getName());
     private int playerId;
     private Color playerColor;
@@ -40,7 +41,8 @@ public class FictitiousPlayer {
      * @param player used to add the ammo picked up to the existing ammo a player has
      * returns fictitious player
      */
-    public FictitiousPlayer (Player player, CellInfo cell, boolean shoot, boolean frenzyReload){
+    public FictitiousPlayer (Controller currentController, Player player, CellInfo cell, boolean shoot, boolean frenzyReload){
+        this.correspondingPlayer=player;
         this.playerId=player.getId();
         ArrayList<GunCard> usableCards;
         this.playerColor=player.getFigure().getColor();
@@ -58,7 +60,7 @@ public class FictitiousPlayer {
         //this is done for grab/move+grab actions where you may want to just pick a card
         if(cell.isCanGrabCard())
             for(GunCard gunCard:cell.getCell().getWeaponCards())
-                if(gunCard!=null && ActionManager.canAffordCost(this.availableAmmo,gunCard.getAmmoCost(),true))
+                if(gunCard!=null && ActionManager.canAffordCost(player,this.availableAmmo,gunCard.getAmmoCost(),true))
                     this.pickableCards.add(gunCard);
 
         //the "pickable" cards can ALL be added to the cards a player can choose from, if it's noted that
@@ -70,7 +72,7 @@ public class FictitiousPlayer {
             usableCards.addAll(pickableCards);
 
             for (GunCard gunCard : usableCards)
-                this.availableCardActions.add(new SingleCardActions(gunCard,this,usableCards.size()>3));
+                this.availableCardActions.add(new SingleCardActions(currentController, gunCard,this,usableCards.size()>3));
 
             //removal of not usable cards (with no targets)
             try {
@@ -91,14 +93,14 @@ public class FictitiousPlayer {
         ArrayList<GunCard> usableCards=new ArrayList<>();
         //evaluates if the guns are loaded
         for(GunCard gunCard: player.getPlayerBoard().getHand().getGuns()){
-            if(gunCard!=null && (gunCard.isLoaded()||frenzyReload && ActionManager.canAffordCost(player.getPlayerBoard().getAmmo(),gunCard.getAmmoCost(),false)))
+            if(gunCard!=null && (gunCard.isLoaded()||frenzyReload && ActionManager.canAffordCost(player,player.getPlayerBoard().getAmmo(),gunCard.getAmmoCost(),false)))
                 usableCards.add(gunCard);
         }
         return usableCards;
     }
 
     public Player getCorrespondingPlayer(){
-        return AdrenalineServer.getMainController().getMainGameModel().getPlayerList().get(playerId);
+        return this.correspondingPlayer;
     }
 
     public boolean isGrabbedAmmo() {

@@ -1,6 +1,7 @@
 package it.polimi.se2019.model.cards;
 
 import it.polimi.se2019.controller.ActionManager;
+import it.polimi.se2019.controller.Controller;
 import it.polimi.se2019.controller.FictitiousPlayer;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
@@ -47,8 +48,8 @@ public class LockRifle extends GunCardAddEff {
      * Deal 2 damage and 1 mark to 1 target you can see.
      */
     @Override
-    void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        ArrayList<Player> targets=new ArrayList<>(ActionManager.visibleTargets(player));
+    void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+        ArrayList<Player> targets=new ArrayList<>(ActionManager.visibleTargets(currentController,player));
         actions.addToPlayerTargetList(targets);
         actions.setMaxNumPlayerTargets(1);
     }
@@ -57,7 +58,7 @@ public class LockRifle extends GunCardAddEff {
      * Deal 1 mark to a different target you can see.
      */
     @Override
-    void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+    void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         if(actions.getPlayersTargetList().size()<2){
             actions.setOfferableOpt1(false);
         }else
@@ -70,7 +71,7 @@ public class LockRifle extends GunCardAddEff {
         throw new UnsupportedOperationException();
     }
     @Override
-    void targetsOfTertiaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+    void targetsOfTertiaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         throw new UnsupportedOperationException();
     }
 

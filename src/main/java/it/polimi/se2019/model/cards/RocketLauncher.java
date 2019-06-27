@@ -1,7 +1,6 @@
 package it.polimi.se2019.model.cards;
 
 import it.polimi.se2019.controller.*;
-import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
@@ -63,16 +62,16 @@ public class RocketLauncher extends GunCardAddEff {
 
 
     @Override
-    public SingleEffectsCombinationActions buildAvailableActions(ArrayList<String> effectsCombination, FictitiousPlayer player) throws UnavailableEffectCombinationException {
+    public SingleEffectsCombinationActions buildAvailableActions(Controller currentController, FictitiousPlayer player, ArrayList<String> effectsCombination) throws UnavailableEffectCombinationException {
         SingleEffectsCombinationActions actions=new SingleEffectsCombinationActions(effectsCombination.toString());
 
         if(effectsCombination.toString().equals("[Base]")||effectsCombination.toString().equals("[Base, Optional2]"))
-            targetsOfBaseEffect(actions,player);
+            targetsOfBaseEffect(currentController, actions, player);
         else if(effectsCombination.toString().equals("[Base, Optional1]")||effectsCombination.toString().equals("[Base, Optional1, Optional2]")) {
-            targetsOfBaseEffect(actions,player);
-            targetsOfSecondaryEffect(actions,player);
+            targetsOfBaseEffect(currentController, actions, player);
+            targetsOfSecondaryEffect(currentController, actions, player);
         }else if(effectsCombination.toString().equals("[Optional1, Base]")||effectsCombination.toString().equals("[Optional1, Base, Optional2]"))
-                targetsOfTertiaryEffect(actions,player);
+                targetsOfTertiaryEffect(currentController, actions, player);
 
         actions.validate();
         return actions;
@@ -97,15 +96,15 @@ public class RocketLauncher extends GunCardAddEff {
      * Deal 2 damage to 1 target you can see that is not on your square. Then you may move the target 1 square.
      */
     @Override
-    void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        ArrayList<Player> targets=new ArrayList<>(ActionManager.visibleTargets(player));
+    void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+        ArrayList<Player> targets=new ArrayList<>(ActionManager.visibleTargets(currentController,player));
         targets.removeAll(player.getPosition().getPlayers());
 
         actions.addToPlayerTargetList(targets);
         actions.setMaxNumPlayerTargets(1);
 
         actions.setCanMoveOpponent(true);
-        for(NewCell cell: ActionManager.cellsOneMoveAway(player.getPosition()))
+        for(NewCell cell: ActionManager.cellsOneMoveAway(currentController,player.getPosition()))
             actions.addCellsWithTargets(cell,new ArrayList<>(),0,0,false,true);
     }
 
@@ -113,8 +112,8 @@ public class RocketLauncher extends GunCardAddEff {
      * Move 1 or 2 squares. This effect can be used either before or after the basic effect.
      */
     @Override
-    void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        for(NewCell cell:MapManager.squaresInRadius2(player))
+    void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+        for(NewCell cell:MapManager.squaresInRadius2(currentController,player))
             actions.addCellsWithTargets(cell,new ArrayList<>(),0,0,true,false);
         actions.setCanMoveYourself(true);
         actions.setMaxCellToSelect(1);
@@ -127,15 +126,15 @@ public class RocketLauncher extends GunCardAddEff {
      * actually returns: cells where you can move & hit a target + cells where you can move the target after you've hit it
      */
     @Override
-    void targetsOfTertiaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        for(NewCell cell:MapManager.squaresInRadius2(player)){
-            ArrayList<Player> targets = new ArrayList<>(ActionManager.visibleTargets(cell));
+    void targetsOfTertiaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+        for(NewCell cell:MapManager.squaresInRadius2(currentController,player)){
+            ArrayList<Player> targets = new ArrayList<>(ActionManager.visibleTargets(currentController,cell));
             targets.removeAll(cell.getPlayers());
             actions.addCellsWithTargets(cell, targets, 1, 1, true, false);
         }
 
         for(CellWithTargets cellWithTarget: actions.getCellsWithTargets()){
-            for(NewCell cell: ActionManager.cellsOneMoveAway(cellWithTarget.getTargetCell()))
+            for(NewCell cell: ActionManager.cellsOneMoveAway(currentController,cellWithTarget.getTargetCell()))
                 actions.addCellsWithTargets(cell, new ArrayList<>(),0,0,false,true);
         }
         actions.setCanMoveYourself(true);

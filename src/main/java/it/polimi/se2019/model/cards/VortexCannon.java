@@ -1,16 +1,9 @@
 package it.polimi.se2019.model.cards;
 
-import it.polimi.se2019.AdrenalineServer;
-import it.polimi.se2019.controller.ActionManager;
-import it.polimi.se2019.controller.FictitiousPlayer;
-import it.polimi.se2019.controller.MapManager;
-import it.polimi.se2019.enums.CellEdge;
-import it.polimi.se2019.exceptions.OuterWallException;
+import it.polimi.se2019.controller.*;
 import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
-import it.polimi.se2019.controller.SingleEffectsCombinationActions;
-import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
 
 import java.util.ArrayList;
 
@@ -57,8 +50,8 @@ public class VortexCannon extends GunCardAddEff {
      * Choose a target on the vortex or 1 move away from it. Move it onto the vortex and give it 2 damage.
      */
     @Override
-    void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        targetFiller(actions,player,1);
+    void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+        targetFiller(currentController,actions,player,1);
     }
 
     /**
@@ -66,8 +59,8 @@ public class VortexCannon extends GunCardAddEff {
      * Move them onto the vortex and give them each 1 damage.
      */
      @Override
-    void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-         targetFiller(actions,player,3);
+    void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+         targetFiller(currentController,actions,player,3);
          actions.setSameListDifferentTarget(true);
     }
 
@@ -77,13 +70,13 @@ public class VortexCannon extends GunCardAddEff {
      * @param player POV
      * @param maxTargetCell max number of targets on a cell
      */
-    private void targetFiller(SingleEffectsCombinationActions actions, FictitiousPlayer player, int maxTargetCell){
-        for(NewCell cell:ActionManager.visibleSquares(player)){
+    private void targetFiller(Controller currentController,SingleEffectsCombinationActions actions, FictitiousPlayer player, int maxTargetCell){
+        for(NewCell cell:ActionManager.visibleSquares(currentController,player)){
             if (!cell.equals(player.getPosition())){
                 ArrayList<Player> targets=new ArrayList<>(cell.getPlayers());
                 targets.remove(player.getCorrespondingPlayer());
 
-                targets.addAll(ActionManager.targetsOneMoveAway(player));
+                targets.addAll(ActionManager.targetsOneMoveAway(currentController,player));
                 actions.addCellsWithTargets(cell, targets, maxTargetCell, 1,false,false);
             }
         }
@@ -99,7 +92,7 @@ public class VortexCannon extends GunCardAddEff {
         throw new UnsupportedOperationException();
     }
     @Override
-    void targetsOfTertiaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+    void targetsOfTertiaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         throw new UnsupportedOperationException();
     }
 }

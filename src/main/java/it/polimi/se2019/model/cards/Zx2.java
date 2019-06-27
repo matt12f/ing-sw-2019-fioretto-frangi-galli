@@ -1,6 +1,7 @@
 package it.polimi.se2019.model.cards;
 
 import it.polimi.se2019.controller.ActionManager;
+import it.polimi.se2019.controller.Controller;
 import it.polimi.se2019.controller.FictitiousPlayer;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
@@ -40,8 +41,8 @@ public class Zx2 extends GunCardAltEff {
      * Deal 1 damage and 2 marks to 1 target you can see.
      */
     @Override
-    void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        ArrayList<Player> targets = new ArrayList<>(ActionManager.visibleTargets(player));
+    void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+        ArrayList<Player> targets = new ArrayList<>(ActionManager.visibleTargets(currentController,player));
         actions.addToPlayerTargetList(targets);
         actions.setMaxNumPlayerTargets(1);
     }
@@ -50,8 +51,8 @@ public class Zx2 extends GunCardAltEff {
      * Choose up to 3 targets you can see and deal 1 mark to each.
      */
     @Override
-    void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        targetsOfBaseEffect(actions,player);
+    void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+        targetsOfBaseEffect(currentController, actions, player);
         actions.setMaxNumPlayerTargets(3);
     }
 }

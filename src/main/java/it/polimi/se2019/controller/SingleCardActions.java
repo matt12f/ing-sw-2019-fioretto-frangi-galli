@@ -30,7 +30,7 @@ public class SingleCardActions{
     private ArrayList<SingleEffectsCombinationActions> effectsCombinationActions;
     private boolean mustSwap;
 
-    public SingleCardActions(GunCard gunCard, FictitiousPlayer player, boolean mustSwap) {
+    public SingleCardActions(Controller currentController, GunCard gunCard, FictitiousPlayer player, boolean mustSwap) {
         //this part builds the list of combination of the effects a player can afford to use
         this.usableGunCardName=gunCard.getClass().toString();
 
@@ -42,7 +42,7 @@ public class SingleCardActions{
         this.mustSwap=mustSwap;
         for(ArrayList<String> effectsCombination: effectsOrder){
             try{
-            this.effectsCombinationActions.add(gunCard.buildAvailableActions(effectsCombination,player));
+            this.effectsCombinationActions.add(gunCard.buildAvailableActions(currentController,player,effectsCombination));
             this.availableCombinations.add(effectsCombination.toString());
             }
         catch (UnavailableEffectCombinationException e){
@@ -59,11 +59,11 @@ public class SingleCardActions{
             for (String effect : combination)
                 switch (effect) {
                 case "Optional1":{
-                        if(!ActionManager.canAffordCost(player.getAvailableAmmo(),gunCard.getSecondaryEffectCost(),true))
+                        if(!ActionManager.canAffordCost(player.getCorrespondingPlayer(),player.getAvailableAmmo(),gunCard.getSecondaryEffectCost(),true))
                             affordable=false;
                     }break;
                     case "Optional2":{
-                        if(!ActionManager.canAffordCost(player.getAvailableAmmo(),gunCard.getTertiaryEffectCost(),true))
+                        if(!ActionManager.canAffordCost(player.getCorrespondingPlayer(),player.getAvailableAmmo(),gunCard.getTertiaryEffectCost(),true))
                             affordable=false;
                     }break;
                         default: break; //case "Base"

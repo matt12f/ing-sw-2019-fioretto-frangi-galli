@@ -1,13 +1,8 @@
 package it.polimi.se2019.model.cards;
 
-import it.polimi.se2019.AdrenalineServer;
-import it.polimi.se2019.controller.ActionManager;
-import it.polimi.se2019.controller.FictitiousPlayer;
-import it.polimi.se2019.controller.MapManager;
+import it.polimi.se2019.controller.*;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
-import it.polimi.se2019.controller.SingleEffectsCombinationActions;
-import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
 
 import java.util.ArrayList;
 
@@ -37,10 +32,10 @@ public class Whisper extends GunCardAddEff {
      * Deal 3 damage and 1 mark to 1 target you can see. Your target must be at least 2 moves away from you.
      */
     @Override
-    void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+    void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         ArrayList<Player> targets=new ArrayList<>();
-        for(Player target: ActionManager.visibleTargets(player))
-            if(MapManager.distanceBetweenCells(AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix(),player.getPosition(),target.getFigure().getCell())>2)
+        for(Player target: ActionManager.visibleTargets(currentController,player))
+            if(MapManager.distanceBetweenCells(currentController.getMainGameModel().getCurrentMap().getBoardMatrix(),player.getPosition(),target.getFigure().getCell())>2)
                 targets.add(target);
 
         actions.addToPlayerTargetList(targets);
@@ -52,7 +47,7 @@ public class Whisper extends GunCardAddEff {
         throw new UnsupportedOperationException();
     }
     @Override
-    void targetsOfTertiaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+    void targetsOfTertiaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         throw new UnsupportedOperationException();
     }
     @Override
@@ -60,7 +55,7 @@ public class Whisper extends GunCardAddEff {
         throw new UnsupportedOperationException();
     }
     @Override
-    void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+    void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         throw new UnsupportedOperationException();
     }
 }

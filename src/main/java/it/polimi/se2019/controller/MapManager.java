@@ -36,39 +36,38 @@ public class MapManager {
         return "None";
     }
 
-    public static Room getRoom(NewCell cell){
-        for(Room room: AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getRooms())
+    public static Room getRoom(Controller currentController,NewCell cell){
+        for(Room room: currentController.getMainGameModel().getCurrentMap().getRooms())
            if(room.getColor().equals(cell.getColor()))
             return room;
         return null;
     }
 
-    public static void refillEmptiedCells() {
-        NewCell[][] mapMatrixToFill = AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix();
+    public static void refillEmptiedCells(NewCell[][] mapMatrixToFill, Decks decks) {
         for (int i = 0; i < 3; i++)
             for (int j = 0; j < 4; j++)
                 if (mapMatrixToFill[i][j].getCellType().equals(CellType.DROP)) {
                     if (mapMatrixToFill[i][j].needsRefill(false))
-                        refillCell(mapMatrixToFill[i][j]);
+                        refillCell(decks, mapMatrixToFill[i][j]);
                 } else if (mapMatrixToFill[i][j].getCellType().equals(CellType.SPAWN)) {
-                    if (mapMatrixToFill[i][j].needsRefill(AdrenalineServer.getMainController().getMainGameModel().getCurrentDecks().getGunDeck().getActiveDeck().isEmpty()))
-                        refillCell(mapMatrixToFill[i][j]);
+                    if (mapMatrixToFill[i][j].needsRefill(decks.getGunDeck().getActiveDeck().isEmpty()))
+                        refillCell(decks, mapMatrixToFill[i][j]);
                 }
     }
 
-    private static void refillCell(NewCell cell) {
+    private static void refillCell(Decks decks,NewCell cell) {
         try {
             if (cell.getCellType().equals(CellType.DROP))
-                cell.setItem(AdrenalineServer.getMainController().getMainGameModel().getCurrentDecks().getAmmotilesDeck().draw());
+                cell.setItem(decks.getAmmotilesDeck().draw());
             else
-                cell.setItem(AdrenalineServer.getMainController().getMainGameModel().getCurrentDecks().getGunDeck().draw());
+                cell.setItem(decks.getGunDeck().draw());
         } catch (FullException e) {
             LOGGER.log(Level.FINE, "MapManager refill", e);
         }
     }
 
-    public static NewCell cellViewToNewCell(CellView cellView) {
-        return AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix()[cellView.getLineIndex()][cellView.getColumnIndex()];
+    public static NewCell cellViewToNewCell(Controller currentController, CellView cellView) {
+        return currentController.getMainGameModel().getCurrentMap().getBoardMatrix()[cellView.getLineIndex()][cellView.getColumnIndex()];
     }
 
     public static int getLineOrColumnIndex(NewCell[][] board, NewCell referenceCell, boolean lineOrColumn) {
@@ -168,10 +167,10 @@ public class MapManager {
         return minimumDist; //this will never be used
     }
 
-    public static ArrayList<NewCell> squaresInRadius2(FictitiousPlayer player){
-        NewCell [][] board= AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix();
-        ArrayList<NewCell> possibleCells=new ArrayList<>(ActionManager.cellsOneMoveAway(player.getPosition()));
-        for (NewCell cell: ActionManager.cellsOneMoveAway(player.getPosition())){
+    public static ArrayList<NewCell> squaresInRadius2(Controller currentController,FictitiousPlayer player){
+        NewCell [][] board= currentController.getMainGameModel().getCurrentMap().getBoardMatrix();
+        ArrayList<NewCell> possibleCells=new ArrayList<>(ActionManager.cellsOneMoveAway(currentController, player.getPosition()));
+        for (NewCell cell: ActionManager.cellsOneMoveAway(currentController,player.getPosition())){
             for (int i = 0; i < 4; i++) {
                 try{
                     NewCell possibleCell=MapManager.getCellInDirection(board,cell,1,i);
