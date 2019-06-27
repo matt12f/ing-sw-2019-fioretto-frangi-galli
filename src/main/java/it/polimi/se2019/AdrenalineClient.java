@@ -13,6 +13,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AdrenalineClient {
@@ -22,17 +23,21 @@ public class AdrenalineClient {
     private static LocalView localView;
     private static String nickname;
 
-    public static void main(String[] args) throws IOException, AlreadyBoundException, NotBoundException {
+    public static void main(String[] args) throws IOException, AlreadyBoundException, NotBoundException, InterruptedException, ClassNotFoundException {
         Connection connection = new Connection(null, null, false, null, null);
         boolean start = false;
         boolean GUI = false; //Se l'utente sceglierà la GUI piuttosto che la cli sarà true
         clientCallBackClass callBackClass = new clientCallBackClass();
         clientCallBack stubClient = null;
-
+        ArrayList<String> nicknames = new ArrayList<>();
+        ObjectOutputStream outputStream;
+        ObjectInputStream inputStream;
         //Todo finestra per chiedere se CLI o GUI (anche solo un'alert window va bene) cambiando opportunamente il valore di GUI
 
         connectionRequest(GUI, connection);
         ipServerRequest(GUI, connection);
+        if(connection.isSocket())
+            connection.setStream();
         if (!(connection.isSocket())) {
             //export clientCallBack
             stubClient = (clientCallBack) UnicastRemoteObject.exportObject(callBackClass, 0);
@@ -40,8 +45,25 @@ public class AdrenalineClient {
             connection.getRegistry().lookup("");
         }
         nicknameRequest(GUI, connection);
+        inputStream = connection.getInput();
+        outputStream = connection.getOutput();
         while (!start) {
-
+            //chiedi chi è connesso
+            outputStream.writeObject("Players");
+            System.out.print("Attualmente sei in coda con: ");//stampa i nomi di chi è in coda
+            String nickn;
+            nickn = (String) inputStream.readObject();
+            while(!nickn.equals("Finished")){
+                nicknames.add(nickn);
+                outputStream.writeBoolean(true);
+                outputStream.flush();
+                nickn = (String) inputStream.readObject();
+            }
+            for (String nick: nicknames) {
+                System.out.print(nick + ", ");
+            }
+            Thread.sleep(100);
+            //funziona che riorna boolean che scopre se siamo pronti
         }
     }
 
@@ -63,6 +85,7 @@ public class AdrenalineClient {
                 }
             }
         }
+
     }
 
     public static LocalView getLocalView() {
@@ -85,7 +108,7 @@ public class AdrenalineClient {
 
     private static void connectionRequest(boolean GUI, Connection connection) {
         Scanner scanner;
-        int choice = 5;
+        int choice = 5; //inizzializzo a un numero a caso, mi basta sia diverso da 0 o 1
         if (!GUI) {
             scanner = new Scanner(System.in);
             System.out.println("Ciao, benvenuto su Adrenaline");
@@ -110,16 +133,16 @@ public class AdrenalineClient {
     }
 
     private static boolean setNickname(String nickname, Connection connection) throws IOException {
-        ObjectInputStream socketInput = null;
-        ObjectOutputStream socketOutput = null;
         Registry registry = null;
         Status serveStatus;
         RMIInterface stub = null;
         boolean isOk = false;
+        ObjectOutputStream socketOutput = null;
+        ObjectInputStream socketInput = null;
         if (connection.isSocket()) {
-            socketInput = new ObjectInputStream(connection.getSocket().getInputStream());
-            socketOutput = new ObjectOutputStream(connection.getSocket().getOutputStream());
             try {
+                socketInput = connection.getInput();
+                socketOutput = connection.getOutput();
                 System.out.println("Aspettando che il server sia pronto...");
                 isOk = socketInput.readBoolean();
                 System.out.println("Ok, il server è pronto");
@@ -189,13 +212,20 @@ class Connection{
     private Registry registry;
     private Registry localRegistry;
     private String Host;
+    private ObjectOutputStream output = null;
+    private ObjectInputStream input = null;
 
-    public Connection(Socket socket, Registry registry, boolean isSocket, String host, Registry local){
+    public Connection(Socket socket, Registry registry, boolean isSocket, String host, Registry local) throws IOException {
         this.registry = registry;
         this.socket = socket;
         this.isSocket = isSocket;
         this.Host = host;
         this.localRegistry = local;
+    }
+
+    public void setStream() throws IOException {
+        this.input = new ObjectInputStream(this.socket.getInputStream());
+        this.output = new ObjectOutputStream(this.socket.getOutputStream());
     }
 
     public Registry getRegistry() {
@@ -206,11 +236,11 @@ class Connection{
         this.registry = registry;
     }
 
-    public java.net.Socket getSocket() {
+    public Socket getSocket() {
         return this.socket;
     }
 
-    public void setSocket(java.net.Socket socket) {
+    public void setSocket(Socket socket) {
         this.socket = socket;
     }
 
@@ -241,7 +271,15 @@ class Connection{
         return localRegistry;
     }
 
+    public ObjectInputStream getInput() {
+        return this.input;
+    }
+
+    public ObjectOutputStream getOutput() {
+        return this.output;
+    }
 }
+
 
 class clientCallBackClass implements clientCallBack{
 
