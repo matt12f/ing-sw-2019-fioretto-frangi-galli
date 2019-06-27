@@ -1,5 +1,6 @@
 package it.polimi.se2019.model.cards;
 
+import it.polimi.se2019.controller.Controller;
 import it.polimi.se2019.controller.FictitiousPlayer;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
@@ -34,7 +35,7 @@ public class Electroscythe extends GunCardAltEff {
      * Deal 1 damage to every other player on your square.
      */
     @Override
-    void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+    void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         if(player.getPosition().getPlayers().size()==1)
             actions.setOfferableBase(false);
     }
@@ -43,7 +44,7 @@ public class Electroscythe extends GunCardAltEff {
      * Deal 2 damage to every other player on your square.
      */
     @Override
-    void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+    void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         if(player.getPosition().getPlayers().size()==1)
             actions.setOfferableOpt1(false);
     }

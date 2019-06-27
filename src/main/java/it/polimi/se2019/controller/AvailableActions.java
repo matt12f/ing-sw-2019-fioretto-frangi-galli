@@ -1,12 +1,7 @@
 package it.polimi.se2019.controller;
 
-import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.enums.ActionType;
-import it.polimi.se2019.enums.CellEdge;
 import it.polimi.se2019.enums.CellType;
-import it.polimi.se2019.enums.Color;
-import it.polimi.se2019.model.cards.GunCard;
-import it.polimi.se2019.model.game.Map;
 import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ActionRequestView;
@@ -37,17 +32,18 @@ public class AvailableActions {
      * @param playerId player's number (ID)
      * @return available actions depending on the game status
      */
-    public AvailableActions(ActionRequestView macroAction, int playerId) {
-        Player player=AdrenalineServer.getMainController().getMainGameModel().getPlayerList().get(playerId);
+    public AvailableActions(ActionRequestView macroAction, int playerId,Controller currentController) {
+        Player player=currentController.getMainGameModel().getPlayerList().get(playerId);
+
         switch (macroAction.getActionToRequest()){
-            case NORMAL1:  buildActions(player,macroAction,3,false,false,false);break;
-            case NORMAL2:  buildActions(player,macroAction,1,true,false,false);break;
-            case NORMAL3:  buildActions(player,macroAction,0,false,true,false);break;
-            case FRENZY1:  buildActions(player,macroAction,1,false,true,true);break;
-            case FRENZY2:  buildActions(player,macroAction,4,false,false,false);break;
-            case FRENZY3:  buildActions(player,macroAction,2,true,false,false);break;
-            case FRENZY4:  buildActions(player,macroAction,2,false,true,true);break;
-            case FRENZY5:  buildActions(player,macroAction,3,true,false,false);break;
+            case NORMAL1:  buildActions(currentController,player,macroAction,3,false,false,false);break;
+            case NORMAL2:  buildActions(currentController,player,macroAction,1,true,false,false);break;
+            case NORMAL3:  buildActions(currentController,player,macroAction,0,false,true,false);break;
+            case FRENZY1:  buildActions(currentController,player,macroAction,1,false,true,true);break;
+            case FRENZY2:  buildActions(currentController,player,macroAction,4,false,false,false);break;
+            case FRENZY3:  buildActions(currentController,player,macroAction,2,true,false,false);break;
+            case FRENZY4:  buildActions(currentController,player,macroAction,2,false,true,true);break;
+            case FRENZY5:  buildActions(currentController,player,macroAction,3,true,false,false);break;
         }
     }
 
@@ -58,16 +54,16 @@ public class AvailableActions {
      * @param grab: if there is a grab option
      * @param shoot: if there is a shoot option (sometimes it's the only action possible)
      * @param frenzyReload: if there's a frenzy action with the possibility to reload a gun before shooting it must
-     *                    be considered when evaluating which cards the player can use
+     *                      be considered when evaluating which cards the player can use
      * @return available actions object to return to the player (CLIENT)
      */
-    private void buildActions(Player player, ActionRequestView macroAction, int maxMoveDistance, boolean grab, boolean shoot, boolean frenzyReload){
-        NewCell[][] board=AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix();
+    private void buildActions(Controller currentController, Player player, ActionRequestView macroAction, int maxMoveDistance, boolean grab, boolean shoot, boolean frenzyReload){
+        NewCell[][] board=currentController.getMainGameModel().getCurrentMap().getBoardMatrix();
         for (PowerupUse powerupUse : macroAction.getPowerupUse()){
             if(powerupUse.getDirectionOfMove().equals("None"))
-                PowerupManager.teleporterManager(powerupUse.getIndexInHand(),MapManager.cellViewToNewCell(powerupUse.getCellForSelfMovement()));
+                PowerupManager.teleporterManager(currentController,powerupUse.getIndexInHand(),MapManager.cellViewToNewCell(currentController, powerupUse.getCellForSelfMovement()));
             else
-                PowerupManager.newtonManager(powerupUse.getIndexInHand(),AdrenalineServer.getMainController().getMainGameModel().getPlayerList().get(powerupUse.getIdPlayerToMove()),powerupUse.getMovementDistance(),MapManager.getIndexOfMove(powerupUse.getDirectionOfMove()));
+                PowerupManager.newtonManager(currentController,powerupUse.getIndexInHand(),currentController.getMainGameModel().getPlayerList().get(powerupUse.getIdPlayerToMove()),powerupUse.getMovementDistance(),MapManager.getIndexOfMove(powerupUse.getDirectionOfMove()));
         }
 
         //checks for adrenaline modes
@@ -88,7 +84,7 @@ public class AvailableActions {
 
         this.fictitiousPlayers=new ArrayList<>();
         for(CellInfo cell:singleArrivalCells)
-            this.fictitiousPlayers.add(new FictitiousPlayer(player, cell, shoot, frenzyReload));
+            this.fictitiousPlayers.add(new FictitiousPlayer(currentController, player, cell, shoot, frenzyReload));
     }
 
     /**

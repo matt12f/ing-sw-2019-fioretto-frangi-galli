@@ -73,7 +73,7 @@ public class Controller implements Observer {
         while(mainGameModel.getKillshotTrack().getSkulls()>0){
             playRound();
         }
-        PlayerManager.frenzyActivator();
+        PlayerManager.frenzyActivator(this);
         playRound();
         return new GameStats(mainGameModel.getPlayerList(),mainGameModel.getTurn());
     }
@@ -81,7 +81,7 @@ public class Controller implements Observer {
     private void playRound(){
         for(Player player:mainGameModel.getPlayerList()){
             activeTurn.setActivePlayer(player);
-            activeTurn.playTurn();
+            activeTurn.playTurn(this);
         }
     }
     private void setupBoard(){

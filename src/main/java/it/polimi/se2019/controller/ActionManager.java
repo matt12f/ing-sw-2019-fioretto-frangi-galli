@@ -20,7 +20,7 @@ public class ActionManager {
             target = targets.get(i);
             PlayerManager.damageDealer(target, damage);
         }
-        return (PlayerManager.isAlive(AdrenalineServer.getMainController().getActiveTurn().getActivePlayer()));
+        return false;
     }
 
     //TODO rivedere metodo
@@ -38,10 +38,10 @@ public class ActionManager {
      * @param player
      * @param arrivalCell
      */
-    public static void movePlayer(Player player, NewCell arrivalCell) {
+    public static void movePlayer(Controller currentController,Player player, NewCell arrivalCell) {
         if(!player.getFigure().getCell().getColor().equals(arrivalCell.getColor())){
-            MapManager.getRoom(player.getFigure().getCell()).removePlayers(player);
-            MapManager.getRoom(arrivalCell).addPlayers(player);
+            MapManager.getRoom(currentController,player.getFigure().getCell()).removePlayers(player);
+            MapManager.getRoom(currentController,arrivalCell).addPlayers(player);
         }
 
         player.getFigure().getCell().removePlayers(player);
@@ -71,7 +71,7 @@ public class ActionManager {
      * this method evaluates if a player can pay the cost to grab a GunCard from a SpawnCell
      * @param fullOrReload: if true it evaluates the full cost of reloading, if false it evaluates only the buying cost
      */
-    public static boolean canAffordCost(Ammo availableAmmo, char[] ammoCost, boolean fullOrReload) {
+    public static boolean canAffordCost(Player activePlayer, Ammo availableAmmo, char[] ammoCost, boolean fullOrReload) {
         int blue=0;
         int red=0;
         int yellow=0;
@@ -91,7 +91,7 @@ public class ActionManager {
         int availableRed=availableAmmo.getRed();
         int availableYellow=availableAmmo.getYellow();
 
-        for(PowerupCard powerupCard: AdrenalineServer.getMainController().getActiveTurn().getActivePlayer().getPlayerBoard().getHand().getPowerups())
+        for(PowerupCard powerupCard: activePlayer.getPlayerBoard().getHand().getPowerups())
             switch (powerupCard.getCubeColor()){
                 case 'b':availableBlue++;break;
                 case 'y':availableYellow++;break;
@@ -103,23 +103,23 @@ public class ActionManager {
     /**
      *  Returns the targets a certain player can see (doesn't include yourself)
      *  */
-    public static ArrayList<Player> visibleTargets(FictitiousPlayer playersPOV){
-        ArrayList<Player> targets = visibleTargets(playersPOV.getPosition());
+    public static ArrayList<Player> visibleTargets(Controller currentController,FictitiousPlayer playersPOV){
+        ArrayList<Player> targets = visibleTargets(currentController,playersPOV.getPosition());
         //It will finally remove the current player from the target list
         targets.remove(playersPOV.getCorrespondingPlayer());
 
         return targets;
     }
 
-    public static ArrayList<Player> visibleTargets(NewCell playersPosition){
+    public static ArrayList<Player> visibleTargets(Controller currentController,NewCell playersPosition){
         //it will add all of the targets in the room first
-        ArrayList<Player> targets=new ArrayList<>(MapManager.getRoom(playersPosition).getPlayers());
+        ArrayList<Player> targets=new ArrayList<>(MapManager.getRoom(currentController, playersPosition).getPlayers());
 
         //it will then add all of the targets in adjacent rooms (through a door)
         for(int i=0;i<4;i++)
             if(playersPosition.getEdge(i).equals(CellEdge.DOOR))
                 try {
-                    Room roomYouCanSee=MapManager.getRoom(MapManager.getCellInDirection(AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix(),playersPosition,1,i));
+                    Room roomYouCanSee=MapManager.getRoom(currentController, MapManager.getCellInDirection(currentController.getMainGameModel().getCurrentMap().getBoardMatrix(),playersPosition,1,i));
                     if(!roomYouCanSee.isEmpty())
                         targets.addAll(roomYouCanSee.getPlayers());
                 } catch (OuterWallException e){
@@ -128,10 +128,10 @@ public class ActionManager {
         return targets;
     }
 
-    public static ArrayList<Player> notVisibleTargets(FictitiousPlayer playersPOV){
-        ArrayList<Player> allTargets = new ArrayList<>(AdrenalineServer.getMainController().getMainGameModel().getPlayerList());
+    public static ArrayList<Player> notVisibleTargets(Controller currentController,FictitiousPlayer playersPOV){
+        ArrayList<Player> allTargets = new ArrayList<>(currentController.getMainGameModel().getPlayerList());
 
-        allTargets.removeAll(visibleTargets(playersPOV));
+        allTargets.removeAll(visibleTargets(currentController,playersPOV));
 
         allTargets.remove(playersPOV.getCorrespondingPlayer());
 
@@ -141,15 +141,15 @@ public class ActionManager {
     /**
      * returns the squares you can see (including yours)
      * */
-    public static ArrayList<NewCell> visibleSquares(FictitiousPlayer playersPOV){
+    public static ArrayList<NewCell> visibleSquares(Controller currentController, FictitiousPlayer playersPOV){
         //it will add first the squares in your room
-        ArrayList<NewCell> squares=new ArrayList<>(MapManager.getRoom(playersPOV.getPosition()).getCells());
+        ArrayList<NewCell> squares=new ArrayList<>(MapManager.getRoom(currentController, playersPOV.getPosition()).getCells());
 
         //it will then add the squares in adjacent rooms (through a door)
         for(int i=0;i<4;i++)
             if(playersPOV.getPosition().getEdge(i).equals(CellEdge.DOOR))
                 try {
-                    Room roomYouCanSee=MapManager.getRoom(MapManager.getCellInDirection(AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix(),playersPOV.getPosition(),1,i));
+                    Room roomYouCanSee=MapManager.getRoom(currentController, MapManager.getCellInDirection(currentController.getMainGameModel().getCurrentMap().getBoardMatrix(),playersPOV.getPosition(),1,i));
                     squares.addAll(roomYouCanSee.getCells());
                 } catch (OuterWallException e){
                     //Won't ever happen
@@ -161,15 +161,15 @@ public class ActionManager {
     /**
      * This method gives you a list of players one move away
      */
-    public static ArrayList<Player> targetsOneMoveAway(FictitiousPlayer player){
+    public static ArrayList<Player> targetsOneMoveAway(Controller currentController, FictitiousPlayer player){
         ArrayList<Player> targets=new ArrayList<>();
-        for(NewCell cell: cellsOneMoveAway(player.getPosition()))
+        for(NewCell cell: cellsOneMoveAway(currentController,player.getPosition()))
             targets.addAll(cell.getPlayers());
         return targets;
     }
 
-    public static ArrayList<NewCell> cellsOneMoveAway(NewCell position){
-        NewCell[][] board= AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix();
+    public static ArrayList<NewCell> cellsOneMoveAway(Controller currentController,NewCell position){
+        NewCell[][] board= currentController.getMainGameModel().getCurrentMap().getBoardMatrix();
         ArrayList<NewCell> cellsOneMoveAway=new ArrayList<>();
         try {
             for (int i = 0; i < 4 ; i++) {
@@ -180,13 +180,6 @@ public class ActionManager {
             //Won't happen
         }
         return cellsOneMoveAway;
-    }
-
-    /**
-     * returns a list of players different from a given list, effectively removing the players you can’t hurt
-     * */
-    public static void untouchableRemover(ArrayList<Player> targets,ArrayList<Player> targetsToRemove){
-        targets.removeAll(targetsToRemove);
     }
 
 }

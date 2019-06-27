@@ -1,6 +1,7 @@
 package it.polimi.se2019.model.cards;
 
 
+import it.polimi.se2019.controller.Controller;
 import it.polimi.se2019.controller.FictitiousPlayer;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
 import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
@@ -27,13 +28,13 @@ public abstract class GunCardAltEff extends GunCard{
      * @throws UnavailableEffectCombinationException if the effect has no targets
      */
     @Override
-    public SingleEffectsCombinationActions buildAvailableActions(ArrayList<String> effectsCombination, FictitiousPlayer player) throws UnavailableEffectCombinationException {
+    public SingleEffectsCombinationActions buildAvailableActions(Controller currentController, FictitiousPlayer player, ArrayList<String> effectsCombination) throws UnavailableEffectCombinationException {
         SingleEffectsCombinationActions actions=new SingleEffectsCombinationActions(effectsCombination.toString());
         if (effectsCombination.get(0).equals("Base")){
-            targetsOfBaseEffect(actions, player);
+            targetsOfBaseEffect(currentController, actions, player);
         }
         else if (effectsCombination.get(0).equals("Optional1")){
-            targetsOfSecondaryEffect(actions, player);
+            targetsOfSecondaryEffect(currentController, actions, player);
         }
         actions.validate();
         return actions;

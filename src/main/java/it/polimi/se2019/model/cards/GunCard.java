@@ -1,5 +1,6 @@
 package it.polimi.se2019.model.cards;
 
+import it.polimi.se2019.controller.Controller;
 import it.polimi.se2019.controller.FictitiousPlayer;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
@@ -53,7 +54,7 @@ public abstract class GunCard{
     /**
      *This method builds the available actions, returning an exception in case there are no targets
      */
-    public abstract SingleEffectsCombinationActions buildAvailableActions(ArrayList<String> effectsCombination, FictitiousPlayer player) throws UnavailableEffectCombinationException;
+    public abstract SingleEffectsCombinationActions buildAvailableActions(Controller currentController, FictitiousPlayer player, ArrayList<String> effectsCombination) throws UnavailableEffectCombinationException;
 
     /**
      * methods that apply the individual effects, with the selections of the player as inputs
@@ -63,9 +64,7 @@ public abstract class GunCard{
 
     /**
      * Methods to calculate the possible targets that return a SingleEffectAction
-     * @param actions
-     * @param player
      */
-    abstract void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player);
-    abstract void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player);
+    abstract void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player);
+    abstract void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player);
 }

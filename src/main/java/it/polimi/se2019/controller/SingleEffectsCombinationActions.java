@@ -196,19 +196,27 @@ public class SingleEffectsCombinationActions{
         this.maxCellToSelect = maxCellToSelect;
     }
 
-    public void addPlayersWithTargets(Player basePlayer) {
-        this.playersWithTargets.add(new PlayerWithTargets(basePlayer));
+    public void addPlayersWithTargets(Controller currentController, Player basePlayer) {
+        this.playersWithTargets.add(new PlayerWithTargets(currentController, basePlayer));
     }
 }
 
 //Custom class for T.H.O.R. card
 class PlayerWithTargets {
-    Player target;
-    ArrayList<Player> targetsItCanSee;
-    public PlayerWithTargets(Player target) {
+    private Player target;
+    private ArrayList<Player> targetsItCanSee;
+    public PlayerWithTargets(Controller currentController, Player target) {
         this.target = target;
-        this.targetsItCanSee=new ArrayList<>(ActionManager.visibleTargets(new FictitiousPlayer(target,new CellInfo(target.getFigure().getCell(),false,false),false,false)));
-        this.targetsItCanSee.remove(AdrenalineServer.getMainController().getActiveTurn().getActivePlayer());
+        this.targetsItCanSee=new ArrayList<>(ActionManager.visibleTargets(currentController,new FictitiousPlayer(currentController, target,new CellInfo(target.getFigure().getCell(),false,false),false,false)));
+        this.targetsItCanSee.remove(currentController.getActiveTurn().getActivePlayer());
+    }
+
+    public Player getTarget() {
+        return target;
+    }
+
+    public ArrayList<Player> getTargetsItCanSee() {
+        return targetsItCanSee;
     }
 }
 

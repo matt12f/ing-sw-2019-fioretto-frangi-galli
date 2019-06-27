@@ -1,6 +1,7 @@
 package it.polimi.se2019.model.cards;
 
 import it.polimi.se2019.AdrenalineServer;
+import it.polimi.se2019.controller.Controller;
 import it.polimi.se2019.controller.FictitiousPlayer;
 import it.polimi.se2019.controller.MapManager;
 import it.polimi.se2019.enums.CellEdge;
@@ -49,8 +50,8 @@ public class PowerGlove extends GunCardAltEff {
      * Choose 1 target on any square exactly 1 move away. Move onto that square and give the target 1 damage and 2 marks.
      */
     @Override
-    void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        NewCell[][] board = AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix();
+    void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+        NewCell[][] board = currentController.getMainGameModel().getCurrentMap().getBoardMatrix();
         ArrayList<Player> targets = new ArrayList<>();
         try {
             for (int i = 0; i < 4; i++){
@@ -73,9 +74,9 @@ public class PowerGlove extends GunCardAltEff {
      * You may deal 2 damage to 1 target there, as well.
      */
     @Override
-    void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+    void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         //choice of a player to damage in one cell away
-        targetsOfBaseEffect(actions,player);
+        targetsOfBaseEffect(currentController, actions, player);
 
         actions.setOfferableExtra(true); //to be then evaluated in view
     }

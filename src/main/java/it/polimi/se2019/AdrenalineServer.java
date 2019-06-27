@@ -147,8 +147,4 @@ public class AdrenalineServer{
         }
         return connectionNumber;
     }
-
-    public static Controller getMainController() {
-        return mainController;
-    }
 }

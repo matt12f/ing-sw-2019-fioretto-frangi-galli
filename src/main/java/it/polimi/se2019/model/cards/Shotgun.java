@@ -1,15 +1,12 @@
 package it.polimi.se2019.model.cards;
 
 import it.polimi.se2019.AdrenalineServer;
-import it.polimi.se2019.controller.ActionManager;
-import it.polimi.se2019.controller.FictitiousPlayer;
-import it.polimi.se2019.controller.MapManager;
+import it.polimi.se2019.controller.*;
 import it.polimi.se2019.enums.CellEdge;
 import it.polimi.se2019.exceptions.OuterWallException;
 import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
-import it.polimi.se2019.controller.SingleEffectsCombinationActions;
 
 import java.util.ArrayList;
 
@@ -46,14 +43,14 @@ public class Shotgun extends GunCardAltEff {
      * Deal 3 damage to 1 target on your square. If you want, you may then move the target 1 square.
      */
     @Override
-    void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+    void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         ArrayList<Player> targets = new ArrayList<>(player.getPosition().getPlayers());
         targets.remove(player.getCorrespondingPlayer());
 
         actions.addToPlayerTargetList(targets);
         actions.setMaxNumPlayerTargets(1);
 
-        for(NewCell cell: ActionManager.cellsOneMoveAway(player.getPosition()))
+        for(NewCell cell: ActionManager.cellsOneMoveAway(currentController,player.getPosition()))
             actions.addCellsWithTargets(cell,new ArrayList<>(),0,0,false,true);
 
         actions.setCanMoveOpponent(true);
@@ -65,8 +62,8 @@ public class Shotgun extends GunCardAltEff {
      * Deal 2 damage to 1 target on any square exactly one move away.
      */
     @Override
-    void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        NewCell[][] board= AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix();
+    void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+        NewCell[][] board= currentController.getMainGameModel().getCurrentMap().getBoardMatrix();
         ArrayList<Player> targets = new ArrayList<>();
 
         for (int i = 0; i < 4; i++){

@@ -47,7 +47,7 @@ public class PlayerManager {
     /**
      * This method activates the final frenzy mode for the whole game (it's centered around a the active player)
      */
-    public static void frenzyActivator(){
-        AdrenalineServer.getMainController().getMainGameModel().activateFinalFrenzy(AdrenalineServer.getMainController().getActiveTurn().getActivePlayer().getId());
+    public static void frenzyActivator(Controller currentController){
+        currentController.getMainGameModel().activateFinalFrenzy(currentController.getActiveTurn().getActivePlayer().getId());
     }
 }

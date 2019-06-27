@@ -1,5 +1,6 @@
 package it.polimi.se2019.network;
 
+import it.polimi.se2019.controller.AvailableActions;
 import it.polimi.se2019.controller.Controller;
 import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.enums.Status;
@@ -16,6 +17,10 @@ public class GameHandler implements Runnable {
         this.players = players;
     }
 
+
+    public Controller getController() {
+        return controller;
+    }
 
     private ArrayList<String> getPlayersNickname(ArrayList<ClientHandler> clients){
         ArrayList<String> nicknames = new ArrayList<>();
@@ -38,7 +43,7 @@ public class GameHandler implements Runnable {
     }
 
     private Color fromIntToColor(int num){
-        switch (num){
+        switch (num) {
             case 0:
                 return Color.YELLOW;
             case 1:
@@ -49,8 +54,9 @@ public class GameHandler implements Runnable {
                 return Color.BLUE;
             case 4:
                 return Color.VIOLET;
+            default:
+                return Color.RED;
         }
-        return Color.RED; //Mi dava errore altrimenti
     }
 
     private void setClientColor(){
@@ -73,21 +79,22 @@ public class GameHandler implements Runnable {
         //TODO chiedere al primo mappa e numero di teschi
 
 
-        CreateController();
+        createController();
         //gestione dei turni
         while (this.controller.getMainGameModel().getKillshotTrack().getSkulls() > 0){
             i = this.controller.getMainGameModel().getTurn();
             clientTurn = this.players.get(i);
             clientTurn.setStatus(Status.MYTURN);
 
-            //logica del turno
+            //TODO logica del turno
+            //TODO deve ricevere da ClientHandler l'oggetto ActionRequestView per costruire l'oggetto AvailableActions
 
             clientTurn.setStatus(Status.NOTMYTURN);
             nextTurn();
         }
     }
 
-    private void CreateController(){
+    private void createController(){
         ArrayList<Player> players = new ArrayList<>();
         for (ClientHandler client: this.players) {
             players.add(new Player(0, client.getNickname(), client.getColor()));

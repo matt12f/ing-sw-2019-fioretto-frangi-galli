@@ -68,7 +68,11 @@ public class ClientHandler extends Thread implements RMIInterface, Observer {
                 switch (this.status){
                     case MYTURN:
                         //comunicazioni del turno
-                    break;
+                        //TODO deve sapere se è la sua prima mossa del turno o la seconda (finale)
+                        //TODO deve inviare l'oggetto ActionRequestView al GameHandler per poi
+                        //TODO ricevere da GameHandler l'oggetto AvailableActions e
+                        //TODO inviare l'oggetto ChosenActions
+                        break;
                     case NOTMYTURN:
                         while(this.status == Status.NOTMYTURN){
                         }

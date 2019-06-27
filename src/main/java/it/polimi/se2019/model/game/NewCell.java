@@ -139,22 +139,4 @@ public class NewCell {
             default:return CellEdge.WALL;
         }
     }
-
-    /**
-     * this method returns the visual index of the cell on the X axis
-     * @return effective index in the matrix + 1 for improved readability by user
-     */
-    public int getXIndex(){
-        NewCell[][] board=AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix();
-        return MapManager.getLineOrColumnIndex(board,this,true) + 1;
-    }
-
-    /**
-     * this method returns the visual index of the cell on the Y axis
-     * @return effective index in the matrix + 1 for improved readability by user
-     */
-    public int getYIndex(){
-        NewCell[][] board=AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix();
-        return MapManager.getLineOrColumnIndex(board,this,false) + 1;
-    }
 }

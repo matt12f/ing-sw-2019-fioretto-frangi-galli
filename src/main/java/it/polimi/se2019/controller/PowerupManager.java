@@ -16,16 +16,16 @@ public class PowerupManager {
      * 1 or 2 squares in one direction. (You can't use this to move a figure after it respawns at the end of your turn.
      * That would be too late.)
      */
-    public static void newtonManager(int cardIndexInHand, Player player, int distance, int directionIndex){
+    public static void newtonManager(Controller currentController,int cardIndexInHand, Player player, int distance, int directionIndex){
         NewCell cell= null;
         try {
-            cell = MapManager.getCellInDirection(AdrenalineServer.getMainController().getMainGameModel().getCurrentMap().getBoardMatrix(),player.getFigure().getCell(),distance,directionIndex);
+            cell = MapManager.getCellInDirection(currentController.getMainGameModel().getCurrentMap().getBoardMatrix(),player.getFigure().getCell(),distance,directionIndex);
         } catch (OuterWallException e) {
             //TODO loggare eccezione, sarebbe errato riceverla qui
         }
         if(cell!=null){
-            ActionManager.movePlayer(player,cell);
-            removeFromHand(cardIndexInHand);
+            ActionManager.movePlayer(currentController,player,cell);
+            removeFromHand(currentController,cardIndexInHand);
         }
     }
 
@@ -34,9 +34,9 @@ public class PowerupManager {
      * of the board. (You can't use this after you see where someone respawns at the end of your turn. By then it is too
      * late.)
      */
-    public static void teleporterManager(int cardIndexInHand, NewCell destinationCell){
-        ActionManager.movePlayer(AdrenalineServer.getMainController().getActiveTurn().getActivePlayer(),destinationCell);
-        removeFromHand(cardIndexInHand);
+    public static void teleporterManager(Controller currentController, int cardIndexInHand, NewCell destinationCell){
+        ActionManager.movePlayer(currentController,currentController.getActiveTurn().getActivePlayer(),destinationCell);
+        removeFromHand(currentController, cardIndexInHand);
     }
 
     /**
@@ -44,23 +44,23 @@ public class PowerupManager {
      * Choose 1 of those targets and give it an extra point of damage. Note: You cannot use this to do 1 damage to a
      * target that is receiving only marks.
      */
-    public static void targetingScopeManager(int cardIndexInHand) {
+    public static void targetingScopeManager(Controller currentController,int cardIndexInHand) {
         //TODO scrivere metodo
-        removeFromHand(cardIndexInHand);
+        removeFromHand(currentController,cardIndexInHand);
     }
 
 
     /**
      *  You may play this card when you receive damage from a player you can see. Give that player 1 mark.
      */
-    public static void grenadeManager(Player playerDamaged,Player playerGivingDamage, int cardIndexInHand){
+    public static void grenadeManager(Controller currentController, Player playerDamaged,Player playerGivingDamage, int cardIndexInHand){
         char [] marks=new char[1];
         marks[0]=playerGivingDamage.getFigure().getColorChar();
         PlayerManager.markerDealer(playerDamaged,marks);
-        removeFromHand(cardIndexInHand);
+        removeFromHand(currentController,cardIndexInHand);
     }
 
-    private static void removeFromHand(int cardIndexInHand) {
-        AdrenalineServer.getMainController().getActiveTurn().getActivePlayer().getPlayerBoard().getHand().removePowerUp(cardIndexInHand);
+    private static void removeFromHand(Controller currentController,int cardIndexInHand) {
+        currentController.getActiveTurn().getActivePlayer().getPlayerBoard().getHand().removePowerUp(cardIndexInHand);
     }
 }

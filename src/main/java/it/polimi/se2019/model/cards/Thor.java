@@ -2,6 +2,7 @@ package it.polimi.se2019.model.cards;
 
 import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.controller.ActionManager;
+import it.polimi.se2019.controller.Controller;
 import it.polimi.se2019.controller.FictitiousPlayer;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
@@ -63,9 +64,9 @@ public class Thor extends GunCardAddEff {
      * Deal 2 damage to 1 target you can see.
      */
     @Override
-    void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player){
+    void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player){
         //here we'll fill the list of visible players
-        actions.addToPlayerTargetList(ActionManager.visibleTargets(player));
+        actions.addToPlayerTargetList(ActionManager.visibleTargets(currentController,player));
         actions.setMaxNumPlayerTargets(1);
     }
 
@@ -73,17 +74,17 @@ public class Thor extends GunCardAddEff {
      * Deal 1 damage to a second target that your first target can see.
      */
     @Override
-    void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player){
+    void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player){
         //here I'm filling a list with every player and the targets they can see
-        for(Player player1: AdrenalineServer.getMainController().getMainGameModel().getPlayerList())
-            actions.addPlayersWithTargets(player1);
+        for(Player player1: currentController.getMainGameModel().getPlayerList())
+            actions.addPlayersWithTargets(currentController,player1);
     }
 
     /**
      * Deal 2 damage to a third target that your second target can see. You cannot use this effect unless you first use the chain reaction.
      */
     @Override
-    void targetsOfTertiaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+    void targetsOfTertiaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         //custom management in view
     }
 }

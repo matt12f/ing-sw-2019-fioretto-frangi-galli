@@ -58,12 +58,12 @@ public class RemoteView  extends View implements RMIInterface {
 
     @Override
     public LocalView getLocalView(int playerID) throws RemoteException {
-        return AdrenalineServer.getMainController().getPlayerLocalView(playerID);
+        return null; //TODO rivedere
     }
 
     @Override
     public AvailableActions askAction(ActionRequestView codedAction, int playerID) throws RemoteException {
-        return new AvailableActions(codedAction,playerID);
+        return null; //TODO rivedere
     }
 
     @Override

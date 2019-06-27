@@ -1,6 +1,7 @@
 package it.polimi.se2019.model.cards;
 
 import it.polimi.se2019.controller.ActionManager;
+import it.polimi.se2019.controller.Controller;
 import it.polimi.se2019.controller.FictitiousPlayer;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
@@ -64,8 +65,8 @@ public class MachineGun extends GunCardAddEff {
      * Choose 1 or 2 targets you can see and deal 1 damage to each.
      */
     @Override
-    void targetsOfBaseEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        actions.addToPlayerTargetList(new ArrayList<>(ActionManager.visibleTargets(player)));
+    void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+        actions.addToPlayerTargetList(new ArrayList<>(ActionManager.visibleTargets(currentController,player)));
         actions.setMaxNumPlayerTargets(2);
     }
 
@@ -73,7 +74,7 @@ public class MachineGun extends GunCardAddEff {
      * Deal 1 additional damage to one of those targets.
      */
     @Override
-    void targetsOfSecondaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+    void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         if(actions.getPlayersTargetList().isEmpty())
             actions.setOfferableOpt1(false);
     }
@@ -82,7 +83,7 @@ public class MachineGun extends GunCardAddEff {
      * Deal 1 additional damage to the other of those targets and/or deal 1 damage to a different target you can see.
      */
     @Override
-    void targetsOfTertiaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+    void targetsOfTertiaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         actions.setOfferableOpt2(true);
         actions.setSameListDifferentTarget(true); //In this case it's from the original list
 

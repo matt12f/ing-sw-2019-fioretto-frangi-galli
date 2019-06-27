@@ -1,5 +1,6 @@
 package it.polimi.se2019.model.cards;
 
+import it.polimi.se2019.controller.Controller;
 import it.polimi.se2019.controller.FictitiousPlayer;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
 import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
@@ -31,15 +32,15 @@ public abstract class GunCardAddEff extends GunCard{
     }
 
     @Override
-    public SingleEffectsCombinationActions buildAvailableActions(ArrayList<String> effectsCombination, FictitiousPlayer player) throws UnavailableEffectCombinationException {
+    public SingleEffectsCombinationActions buildAvailableActions(Controller currentController, FictitiousPlayer player, ArrayList<String> effectsCombination) throws UnavailableEffectCombinationException {
         SingleEffectsCombinationActions actions=new SingleEffectsCombinationActions(effectsCombination.toString());
         for(String effect: effectsCombination){
             if (effect.equals("Base"))
-                targetsOfBaseEffect(actions, player);
+                targetsOfBaseEffect(currentController, actions, player);
             else if (effect.equals("Optional1"))
-                targetsOfSecondaryEffect(actions, player);
+                targetsOfSecondaryEffect(currentController, actions, player);
             else if(effect.equals("Optional2"))
-                targetsOfTertiaryEffect(actions, player);
+                targetsOfTertiaryEffect(currentController, actions, player);
         }
         actions.validate();
         return actions;
@@ -67,9 +68,7 @@ public abstract class GunCardAddEff extends GunCard{
 
     /**
      * Methods called by available actions builder to calculate the possible targets
-     * @param actions
-     * @param player
      */
-    abstract void targetsOfTertiaryEffect(SingleEffectsCombinationActions actions, FictitiousPlayer player);
+    abstract void targetsOfTertiaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player);
 
 }
