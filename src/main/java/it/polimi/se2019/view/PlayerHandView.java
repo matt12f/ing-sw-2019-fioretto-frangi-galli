@@ -1,7 +1,7 @@
 package it.polimi.se2019.view;
 
 
-public class PlayerHandView{
+public abstract class PlayerHandView{
     private CardTileView[] guns;
     private boolean[] loadedGuns;
     private CardTileView[] powerups;
