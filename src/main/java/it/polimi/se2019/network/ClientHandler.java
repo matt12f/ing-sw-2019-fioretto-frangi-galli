@@ -25,9 +25,12 @@ public class ClientHandler extends Thread implements RMIInterface, Observer {
     private Status status = Status.NOTREADY;
     private Registry registry = null;
     private Color color;
+    private ObjectOutputStream output;
+    private ObjectInputStream input;
 
     @Override
     public void run(){
+        String req;
         try {
             System.out.println("Partito clientHandler della socket: " + this.socket);
             if(this.socket == null){
@@ -37,18 +40,29 @@ public class ClientHandler extends Thread implements RMIInterface, Observer {
                 }
                 //todo Semaforo?
             }else{
-                ObjectOutputStream output = new ObjectOutputStream(this.socket.getOutputStream());
-                ObjectInputStream input = new ObjectInputStream(this.socket.getInputStream());
-                output.writeBoolean(true);
-                output.flush();
+                this.output = new ObjectOutputStream(this.socket.getOutputStream());
+                this.input = new ObjectInputStream(this.socket.getInputStream());
+                this.output.writeBoolean(true);
+                this.output.flush();
                 while (!this.accepted){
                     this.nickname = (String) input.readObject();
                     System.out.println("nick ricevuto: " + this.nickname);
                     AdrenalineServer.nickController(this);
                     System.out.println("Nick controllato");
-                    output.writeBoolean(this.accepted);
-                    output.flush();
+                    this.output.writeBoolean(this.accepted);
+                    this.output.flush();
                 }
+                req = (String) this.input.readObject();
+                System.out.println("invio i giocatori al client");
+                boolean temp;
+                if(req.equals("Players"))
+                    for (String nick: AdrenalineServer.getLobby()) {
+                        this.output.writeObject(nick);
+                        this.output.flush();
+                        temp = this.input.readBoolean();
+                        System.out.println("ho ricevuto boolean con valore: " + temp);
+                    }
+                    output.writeObject("Finished");
             }
             while(!status.equals(Status.FRENZY_START)){
                 switch (this.status){
@@ -90,6 +104,14 @@ public class ClientHandler extends Thread implements RMIInterface, Observer {
 
     public String getNickname() {
         return nickname;
+    }
+
+    public ObjectOutputStream getOutput() {
+        return output;
+    }
+
+    public ObjectInputStream getInput() {
+        return input;
     }
 
     @Override

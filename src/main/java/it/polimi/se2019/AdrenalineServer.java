@@ -6,6 +6,7 @@ import it.polimi.se2019.network.*;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.rmi.*;
 import java.rmi.registry.Registry;
@@ -41,10 +42,6 @@ public class AdrenalineServer{
         threadSocket.start();
         System.out.println("threads partiti");
         while (!start){
-
-            if(lobbyClient.size()==5){
-
-            }
             /*if(!rmiClients.getClients().isEmpty()){
                 System.out.println("controllo rmi");
                 ocio = rmiClients.getClients();
@@ -121,80 +118,33 @@ public class AdrenalineServer{
         }else{
             newPlayer.setAccepted(false);
         }
-
     }
-    private static int clientCounter( SocketClients socketClient, RMIClients rmiClients){
-        int connectionNumber = 0;
-        int index = 0;
-        ArrayList<Socket> sockets;
-        Socket socket;
-        ObjectOutputStream outputStream;
-        if(!socketClient.getClients().isEmpty()){
-            connectionNumber += socketClient.getClients().size();
-            for (int i = 0; i<socketClient.getClients().size(); i++) {
-                socket = socketClient.getSocket().get(i);
-                try {
-                    outputStream = new ObjectOutputStream(socket.getOutputStream());
-                    outputStream.writeObject("SeiConnesso");
+
+    public synchronized static int clientCounter(){
+        int connectionNumber = lobbyClient.size();
+        boolean toDelete = false;
+        ArrayList<Integer> indexToDelete = new ArrayList<>();
+        ArrayList<ClientHandler> clients = lobbyClient;
+        //checking wich connections correctly works
+        for (ClientHandler client: clients) {
+            if(client.getSocket() != null){
+                try{
+                    client.getOutput().writeObject("Test");
                 } catch (IOException e) {
-                    connectionNumber -= 1;
-                    index = socketClient.getSocket().indexOf(socket);
-                    socketClient.getClients().remove(index);
-                    socketClient.getSocket().remove(index);
+                    connectionNumber--;
+                    indexToDelete.add(clients.indexOf(client));
                 }
+            }else{
+                //todo fare controllo tramite RMI
             }
         }
-        if(!rmiClients.getClients().isEmpty()){
-            connectionNumber += rmiClients.getClients().size();
-            for (ClientHandler client: rmiClients.getClients()) {
-                try {
-                    Registry registry = LocateRegistry.getRegistry(client.getHost());
-                    clientCallBack stubClient = (clientCallBack) registry.lookup(("C" + client.getHost()));
-                    stubClient.ClientCallBack();
-                }catch (RemoteException e ){
-                    connectionNumber -= 1;
-                    index = rmiClients.getClients().lastIndexOf(client);
 
-                } catch (NotBoundException e) {
-                    e.printStackTrace();
-                }
-            }
+        //deleting useless ClientHandler from lobbyClient
+
+        for (int i = indexToDelete.size() - 1; i >= 0; i--){
+            clients.remove(indexToDelete.get(i));
+            lobby.remove(indexToDelete.get(i));
         }
         return connectionNumber;
-    }
-
-    /**this method return information about the number of clients connected and which socket are not working
-     *
-     * @param openedConnections
-     * @param client
-     * @return
-     * @throws IOException
-     */
-    private static ArrayList<Integer> socketClientCounter (int openedConnections, ArrayList<Socket> client) throws IOException {
-        ArrayList<Integer> update = new ArrayList<>();
-        int i=0;
-        int count;
-        ObjectOutputStream outputStream = null;
-        update.add(openedConnections);
-        for (Socket connection: client) {
-            outputStream = (ObjectOutputStream) connection.getOutputStream();
-            try {
-                outputStream.writeObject("SeiConnesso");
-            } catch (IOException e) {
-                count = update.get(0) - 1;
-                update.set(0, count);
-                update.add(i); //ATTENZIONE CANCELLA AL CONTRARIO SE NO SMINCHI GLI INDICI
-            }
-            i++;
-        }
-        return update;
-    }
-
-    public static Controller getMainController() {
-        return mainController;
-    }
-
-    private void guiStarter(){
-        //TODO scrivere metodo
     }
 }
