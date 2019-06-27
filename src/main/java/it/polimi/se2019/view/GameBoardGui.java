@@ -38,12 +38,7 @@ public class GameBoardGui implements Observer {
         container.gridheight = 2;
         mainPanel.add(map, container);
 
-        /** container.anchor = GridBagConstraints.NORTHEAST;
-        this.scoreZone = new ScoreViewGUI();
-        container.gridx=1;
-        container.gridy=0;
-        mainPanel.add(scoreZone, container);
-        */
+
 
         //mainPanel.setLayout(new GridBagLayout());
         //container.anchor = GridBagConstraints.EAST;

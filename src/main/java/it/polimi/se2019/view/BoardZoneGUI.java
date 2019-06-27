@@ -14,6 +14,7 @@ public class BoardZoneGUI extends JPanel {
     private PlayerBoardViewGUI board4;
     private JButton score;
 
+
     public BoardZoneGUI(){
 
         GridBagConstraints container = new GridBagConstraints();
