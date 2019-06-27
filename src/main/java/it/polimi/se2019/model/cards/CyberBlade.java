@@ -69,7 +69,7 @@ public class CyberBlade extends GunCardAddEff {
 
     @Override
     public SingleEffectsCombinationActions buildAvailableActions(ArrayList<String> effectsCombination, FictitiousPlayer player) throws UnavailableEffectCombinationException {
-        SingleEffectsCombinationActions actions=new SingleEffectsCombinationActions();
+        SingleEffectsCombinationActions actions=new SingleEffectsCombinationActions(effectsCombination.toString());
 
         switch (effectsCombination.toString()){
             case "[Base]":targetsOfBaseEffect(actions,player);break;

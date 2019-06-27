@@ -32,7 +32,7 @@ public abstract class GunCardAddEff extends GunCard{
 
     @Override
     public SingleEffectsCombinationActions buildAvailableActions(ArrayList<String> effectsCombination, FictitiousPlayer player) throws UnavailableEffectCombinationException {
-        SingleEffectsCombinationActions actions=new SingleEffectsCombinationActions();
+        SingleEffectsCombinationActions actions=new SingleEffectsCombinationActions(effectsCombination.toString());
         for(String effect: effectsCombination){
             if (effect.equals("Base"))
                 targetsOfBaseEffect(actions, player);

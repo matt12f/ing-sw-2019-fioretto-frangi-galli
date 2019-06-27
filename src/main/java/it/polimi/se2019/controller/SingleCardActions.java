@@ -26,19 +26,24 @@ import java.util.ArrayList;
 
 public class SingleCardActions{
     private String usableGunCardName;
-    private ArrayList<ArrayList<String>> effectsOrder; //indicates all of the possible effects order
+    private ArrayList<String> availableCombinations; //For the GUI/CLI to list them efficiently
     private ArrayList<SingleEffectsCombinationActions> effectsCombinationActions;
     private boolean mustSwap;
 
     public SingleCardActions(GunCard gunCard, FictitiousPlayer player, boolean mustSwap) {
         //this part builds the list of combination of the effects a player can afford to use
         this.usableGunCardName=gunCard.getClass().toString();
-        this.effectsOrder=reduceToAvailableEffects(gunCard,gunCard.getEffectsOrder(),player);
+
+        //indicates all of the possible effects order
+        ArrayList<ArrayList<String>> effectsOrder=reduceToAffordableEffects(gunCard,gunCard.getEffectsOrder(),player);
+
         this.effectsCombinationActions =new ArrayList<>();
+        this.availableCombinations=new ArrayList<>();
         this.mustSwap=mustSwap;
-        for(ArrayList<String> effectsCombination:effectsOrder){
+        for(ArrayList<String> effectsCombination: effectsOrder){
             try{
             this.effectsCombinationActions.add(gunCard.buildAvailableActions(effectsCombination,player));
+            this.availableCombinations.add(effectsCombination.toString());
             }
         catch (UnavailableEffectCombinationException e){
                 //it means there are no targets for this combination and it won't be added
@@ -46,24 +51,24 @@ public class SingleCardActions{
         }
     }
 
-    private ArrayList<ArrayList<String>> reduceToAvailableEffects(GunCard gunCard, ArrayList<ArrayList<String>> cardEffects,FictitiousPlayer player) {
+    private ArrayList<ArrayList<String>> reduceToAffordableEffects(GunCard gunCard, ArrayList<ArrayList<String>> cardEffects,FictitiousPlayer player) {
         ArrayList<ArrayList<String>> availableEffectsCombinations=new ArrayList<>();
-        boolean available;
+        boolean affordable;
         for(ArrayList<String> combination:cardEffects) {
-            available=true;
+            affordable=true;
             for (String effect : combination)
                 switch (effect) {
                 case "Optional1":{
                         if(!ActionManager.canAffordCost(player.getAvailableAmmo(),gunCard.getSecondaryEffectCost(),true))
-                            available=false;
+                            affordable=false;
                     }break;
                     case "Optional2":{
                         if(!ActionManager.canAffordCost(player.getAvailableAmmo(),gunCard.getTertiaryEffectCost(),true))
-                            available=false;
+                            affordable=false;
                     }break;
                         default: break; //case "Base"
                 }
-            if(available)
+            if(affordable)
                 availableEffectsCombinations.add(combination);
         }
         return availableEffectsCombinations;
@@ -73,12 +78,12 @@ public class SingleCardActions{
         return usableGunCardName;
     }
 
-    public boolean isMustSwap() {
-        return mustSwap;
+    public ArrayList<String> getAvailableCombinations() {
+        return availableCombinations;
     }
 
-    public ArrayList<ArrayList<String>> getEffectsOrder(){
-        return effectsOrder;
+    public boolean isMustSwap() {
+        return mustSwap;
     }
 
     public ArrayList<SingleEffectsCombinationActions> getEffectsCombinationActions(){

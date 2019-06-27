@@ -64,7 +64,7 @@ public class RocketLauncher extends GunCardAddEff {
 
     @Override
     public SingleEffectsCombinationActions buildAvailableActions(ArrayList<String> effectsCombination, FictitiousPlayer player) throws UnavailableEffectCombinationException {
-        SingleEffectsCombinationActions actions=new SingleEffectsCombinationActions();
+        SingleEffectsCombinationActions actions=new SingleEffectsCombinationActions(effectsCombination.toString());
 
         if(effectsCombination.toString().equals("[Base]")||effectsCombination.toString().equals("[Base, Optional2]"))
             targetsOfBaseEffect(actions,player);

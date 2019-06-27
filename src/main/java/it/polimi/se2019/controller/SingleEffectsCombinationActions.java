@@ -12,6 +12,8 @@ import java.util.ArrayList;
  * This class creates objects that represent the things a player must choose from to use a certain effect
  */
 public class SingleEffectsCombinationActions{
+    private final String effectsCombination;
+
     //these variables are for cards that just need the client to select a certain number of targets for an effect
     private ArrayList<Player> playersTargetList; //To choose from
     private int maxNumPlayerTargets; //For the GUI/CLI
@@ -39,7 +41,9 @@ public class SingleEffectsCombinationActions{
 
     private ArrayList<PlayerWithTargets> playersWithTargets; //for T.H.O.R use only
 
-    public SingleEffectsCombinationActions() {
+    public SingleEffectsCombinationActions(String effectsCombination) {
+        this.effectsCombination=effectsCombination;
+
         this.playersTargetList =new ArrayList<>();
         this.maxNumPlayerTargets=0;
 
