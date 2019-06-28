@@ -8,7 +8,7 @@ public class TestGeneralGui {
     public void TestGeneralGui(){
 
         GameBoardGui board =new GameBoardGui(1);
-        OpenerGUI open = new OpenerGUI();
+        //OpenerGUI open = new OpenerGUI();
 
         while(true){}
     }
