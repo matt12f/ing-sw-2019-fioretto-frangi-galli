@@ -2,12 +2,10 @@ package it.polimi.se2019.view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 
 public class UserInteractionGUI extends UserInteraction {
-
+    public String chosen;
     @Override
     public String actionToRequest(int frenzy) {
         Frame frame = new Frame("Choose the macro action to perform");
@@ -130,24 +128,34 @@ public class UserInteractionGUI extends UserInteraction {
         container.gridy= 1;
         mainPanel.add(send,container);
 
-        frame.addWindowListener(new ActionRequestViewGUI.CloseListener());
+        frame.addWindowListener(new UserInteractionGUI.CloseListener());
         frame.add(mainPanel);
         frame.setSize(400,400);
         frame.setLocation(0,0);
         frame.setVisible(true);
 
-        send.addActionListener(new ActionListener() {
+        /**send.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //a che serve?
+
+                frame.setVisible(false);
             }
 
-        });
-        return "";
+        });*/
+        return chosen;
     }
 
-    public String actionPerformed(ActionEvent e) {
-        return e.getActionCommand();
+    public void actionPerformed(ActionEvent e) {
+        chosen =  e.getActionCommand();
+
     }
+
+
+    public static class CloseListener extends WindowAdapter {
+        public void windowClosing(WindowEvent e) {
+            e.getWindow().setVisible(false);
+
+        } //windowClosing()
+    } //CloseListener
 
 }
