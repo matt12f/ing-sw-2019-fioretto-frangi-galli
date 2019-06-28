@@ -19,8 +19,6 @@ public class UserInteractionGUI extends UserInteraction {
         JRadioButton shoot = new JRadioButton("shoot");
 
 
-
-
         JRadioButton frenzy1 = new JRadioButton("frenzy move 1");
         JRadioButton frenzy2 = new JRadioButton("frenzy move 2");
         JRadioButton frenzy3 = new JRadioButton("frenzy move 3");
@@ -31,21 +29,21 @@ public class UserInteractionGUI extends UserInteraction {
 
 
         ButtonGroup groupNormal = new ButtonGroup();
-        groupNormal.add(grab);
         groupNormal.add(move);
+        groupNormal.add(grab);
         groupNormal.add(shoot);
 
 
 
         ButtonGroup groupFrenzy1 = new ButtonGroup();
-        groupNormal.add(frenzy1);
-        groupNormal.add(frenzy2);
-        groupNormal.add(frenzy3);
+        groupFrenzy1.add(frenzy1);
+        groupFrenzy1.add(frenzy2);
+        groupFrenzy1.add(frenzy3);
 
 
         ButtonGroup groupFrenzy2 = new ButtonGroup();
-        groupNormal.add(frenzy4);
-        groupNormal.add(frenzy5);
+        groupFrenzy2.add(frenzy4);
+        groupFrenzy2.add(frenzy5);
 
 
 
@@ -110,23 +108,19 @@ public class UserInteractionGUI extends UserInteraction {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(frenzy == 0){
-                    if (grab.isSelected()){
-                        chosen = "grab";
-                    } else if (move.isSelected()){
+                    if (move.isSelected()){
                         chosen = "move";
+                    } else if (grab.isSelected()){
+                        chosen = "grab";
                     } else if(shoot.isSelected()){
                         chosen = "shoot";
                     }
                 }
-
-                frame.setVisible(false);
             }
-
         });
+        //Nota: questo return non attende il click del pulsante
         return chosen;
     }
-
-
 
 
     public static class CloseListener extends WindowAdapter {

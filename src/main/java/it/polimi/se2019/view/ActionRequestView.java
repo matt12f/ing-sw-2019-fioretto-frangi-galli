@@ -18,7 +18,7 @@ public class ActionRequestView{
      * when the player must decide wether he wants to use a powerup and/or reload
      */
     public ActionRequestView(boolean turnConclusion){
-        if( true /** TODO AdrenalineClient.isGUI()*/)
+        if( true /* TODO AdrenalineClient.isGUI()*/)
             this.askUser=new UserInteractionGUI();
         else
             this.askUser=new UserInteractionCLI();
@@ -26,7 +26,8 @@ public class ActionRequestView{
         if(!turnConclusion){
         //TODO richiesta di click a video, a seconda del clic invia il tipo di richiesta
             //TODO sotto andrà cambiato con AdrenalineClient.getLocalView().getPersonalPlayerBoardView().getFrenzy()
-        switch (askUser.actionToRequest(0)){
+        String action=this.askUser.actionToRequest(0);
+        switch (action){
             case "move": this.actionToRequest=ActionType.NORMAL1;break;
             case "grab": this.actionToRequest=ActionType.NORMAL2;break;
             case "shoot": this.actionToRequest=ActionType.NORMAL3;break;
@@ -35,7 +36,7 @@ public class ActionRequestView{
             case "frenzy3": this.actionToRequest=ActionType.FRENZY3;break;
             case "frenzy4": this.actionToRequest=ActionType.FRENZY4;break;
             case "frenzy5": this.actionToRequest=ActionType.FRENZY5;break;
-            default:this.actionToRequest=null; break; //won't happen, the player must chose one of the above
+            default: break; //won't happen, the player must chose one of the above
         }
         this.powerupUse=powerupManagerView();
         }

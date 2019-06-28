@@ -71,6 +71,7 @@ public class ChosenActions {
             SingleEffectsCombinationActions combinationActions=chosenCard.getEffectsCombinationActions().get(0);
 
 
+
         }
 
     }
