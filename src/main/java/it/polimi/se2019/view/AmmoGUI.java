@@ -45,6 +45,8 @@ public class AmmoGUI extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 //TODO turnConclusion va cambiato dinamicamente
                 ActionRequestView actions = new ActionRequestView(false);
+                //UserInteractionGUI interact = new UserInteractionGUI();
+                //interact.actionToRequest(0);
             }
 
         });

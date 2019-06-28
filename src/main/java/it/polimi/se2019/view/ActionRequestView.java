@@ -18,7 +18,7 @@ public class ActionRequestView{
      * when the player must decide wether he wants to use a powerup and/or reload
      */
     public ActionRequestView(boolean turnConclusion){
-        if(AdrenalineClient.isGUI())
+        if( true /** TODO AdrenalineClient.isGUI()*/)
             this.askUser=new UserInteractionGUI();
         else
             this.askUser=new UserInteractionCLI();
