@@ -49,7 +49,7 @@ public class AdrenalineClient {
         outputStream = connection.getOutput();
         while (!start) {
             //chiedi chi è connesso
-            outputStream.writeObject("Players");
+            /*outputStream.writeObject("Players");
             System.out.print("Attualmente sei in coda con: ");//stampa i nomi di chi è in coda
             String nickn;
             nickn = (String) inputStream.readObject();
@@ -61,8 +61,11 @@ public class AdrenalineClient {
             }
             for (String nick: nicknames) {
                 System.out.print(nick + ", ");
-            }
+            }*/
             Thread.sleep(100);
+            while(true){
+
+            }
             //funziona che riorna boolean che scopre se siamo pronti
         }
     }
@@ -79,6 +82,8 @@ public class AdrenalineClient {
                 accepted = setNickname(nickname, connection);
                 if (!accepted) {
                     System.out.println("Mi spiace, ma il nick scelto non è disponibile, scegliene un altro");
+                    System.out.println("Inserisci il tuo nickname adesso:");
+                    nickname = scanner.nextLine();
                 } else {
                     System.out.println("Ottimo, ora verrai messo in coda, aspetta che la partita abbia inizio, grazie.");
                     AdrenalineClient.nickname = nickname;
@@ -93,16 +98,24 @@ public class AdrenalineClient {
     }
 
 
-    private static void ipServerRequest(boolean GUI, Connection connection) throws IOException {
+    private static void ipServerRequest(boolean GUI, Connection connection){
         Scanner scanner;
         String ipServer;
+        boolean connected = true;
         if (!GUI) {
             scanner = new Scanner(System.in);
             System.out.println("Inserisci l'indirizzo IP del server: ");
             ipServer = scanner.nextLine();
-            setConnection(ipServer, connection);
-            System.out.println("connessione correttamente stabilita");
-
+            try{
+                setConnection(ipServer, connection);
+            } catch (IOException e) {
+                System.out.println("Connessione fallita, server non attivo o ip sbagliato");
+                connected = false;
+            }
+            if(connected)
+                System.out.println("connessione correttamente stabilita");
+            else
+                System.exit(-1);
         }
     }
 
@@ -140,20 +153,22 @@ public class AdrenalineClient {
         ObjectOutputStream socketOutput = null;
         ObjectInputStream socketInput = null;
         if (connection.isSocket()) {
-            try {
+            //try {
                 socketInput = connection.getInput();
                 socketOutput = connection.getOutput();
+                /*
                 System.out.println("Aspettando che il server sia pronto...");
                 isOk = socketInput.readBoolean();
                 System.out.println("Ok, il server è pronto");
-                if (isOk) {
+                */
+               // if (isOk) {
                     socketOutput.writeObject(nickname);
-                }
+               // }
                 isOk = socketInput.readBoolean();
                 return isOk;
-            } catch (IOException e) {
-                System.out.println("Mi spiace, si è verificato un problema di connessione e sei stato disconnesso dal server");
-            }
+           // } catch (IOException e) {
+             //   System.out.println("Mi spiace, si è verificato un problema di connessione e sei stato disconnesso dal server");
+            //}
         }else{
                 try {
                     registry = connection.getRegistry();

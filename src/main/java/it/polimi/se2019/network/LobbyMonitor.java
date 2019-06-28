@@ -4,7 +4,7 @@ import it.polimi.se2019.AdrenalineServer;
 
 //this class monitors the lobby to check if there are the conditions to start the game
 
-public class LobbyManager implements Runnable{
+public class LobbyMonitor implements Runnable{
     @Override
     public void run(){ //todo pensare se vada sostituito con qualche condizione
         int connectioNumber;

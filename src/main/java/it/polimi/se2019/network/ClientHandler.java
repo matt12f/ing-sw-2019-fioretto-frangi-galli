@@ -42,8 +42,8 @@ public class ClientHandler extends Thread implements RMIInterface, Observer {
             }else{
                 this.output = new ObjectOutputStream(this.socket.getOutputStream());
                 this.input = new ObjectInputStream(this.socket.getInputStream());
-                this.output.writeBoolean(true);
-                this.output.flush();
+            /*    this.output.writeBoolean(true);
+                this.output.flush(); */
                 while (!this.accepted){
                     this.nickname = (String) input.readObject();
                     System.out.println("nick ricevuto: " + this.nickname);
@@ -51,8 +51,12 @@ public class ClientHandler extends Thread implements RMIInterface, Observer {
                     System.out.println("Nick controllato");
                     this.output.writeBoolean(this.accepted);
                     this.output.flush();
+                    if(!this.accepted){
+                        this.output.writeBoolean(true);
+                        this.output.flush();
+                    }
                 }
-                req = (String) this.input.readObject();
+                /*req = (String) this.input.readObject();
                 System.out.println("invio i giocatori al client");
                 boolean temp;
                 if(req.equals("Players"))
@@ -63,6 +67,8 @@ public class ClientHandler extends Thread implements RMIInterface, Observer {
                         System.out.println("ho ricevuto boolean con valore: " + temp);
                     }
                     output.writeObject("Finished");
+
+                 */
             }
             while(!status.equals(Status.FRENZY_START)){
                 switch (this.status){
