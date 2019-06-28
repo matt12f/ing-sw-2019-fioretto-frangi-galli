@@ -12,22 +12,29 @@ public class ActionRequestView{
     private ActionType actionToRequest;
     private boolean [] reload;
     private ArrayList<PowerupUse> powerupUse;
+    private UserInteraction askUser;
 
     /** this constructor manages both the normal request of a macro action and the end of the turn
      * when the player must decide wether he wants to use a powerup and/or reload
      */
     public ActionRequestView(boolean turnConclusion){
+        if(AdrenalineClient.isGUI())
+            this.askUser=new UserInteractionGUI();
+        else
+            this.askUser=new UserInteractionCLI();
+
         if(!turnConclusion){
-        int choice=1;//TODO richiesta di click a video, a seconda del clic invia il tipo di richiesta
-        switch (choice){
-            case 1: this.actionToRequest=ActionType.NORMAL1;break;
-            case 2: this.actionToRequest=ActionType.NORMAL2;break;
-            case 3: this.actionToRequest=ActionType.NORMAL3;break;
-            case 4: this.actionToRequest=ActionType.FRENZY1;break;
-            case 5: this.actionToRequest=ActionType.FRENZY2;break;
-            case 6: this.actionToRequest=ActionType.FRENZY3;break;
-            case 7: this.actionToRequest=ActionType.FRENZY4;break;
-            case 8: this.actionToRequest=ActionType.FRENZY5;break;
+        //TODO richiesta di click a video, a seconda del clic invia il tipo di richiesta
+            //TODO sotto andrà cambiato con AdrenalineClient.getLocalView().getPersonalPlayerBoardView().getFrenzy()
+        switch (askUser.actionToRequest(0)){
+            case "move": this.actionToRequest=ActionType.NORMAL1;break;
+            case "grab": this.actionToRequest=ActionType.NORMAL2;break;
+            case "shoot": this.actionToRequest=ActionType.NORMAL3;break;
+            case "frenzy1": this.actionToRequest=ActionType.FRENZY1;break;
+            case "frenzy2": this.actionToRequest=ActionType.FRENZY2;break;
+            case "frenzy3": this.actionToRequest=ActionType.FRENZY3;break;
+            case "frenzy4": this.actionToRequest=ActionType.FRENZY4;break;
+            case "frenzy5": this.actionToRequest=ActionType.FRENZY5;break;
             default:this.actionToRequest=null; break; //won't happen, the player must chose one of the above
         }
         this.powerupUse=powerupManagerView();

@@ -2,28 +2,24 @@ package it.polimi.se2019.view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
-public class ActionRequestViewGUI {
+public class UserInteractionGUI extends UserInteraction {
 
-    public String chosen;
-
-    public ActionRequestViewGUI(){
-
-    }
-
-    public void actionChooser(int frenzy){
-        Frame frame = new Frame("choose your action");
+    @Override
+    public String actionToRequest(int frenzy) {
+        Frame frame = new Frame("Choose the macro action to perform");
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints container = new GridBagConstraints();
         mainPanel.setLayout(new GridBagLayout());
 
-        this.chosen = new String("nothing");
-
         JRadioButton grab = new JRadioButton("move");
         grab.setMnemonic(KeyEvent.VK_D);
         grab.setActionCommand("move");
+
 
         JRadioButton move = new JRadioButton("grab");
         move.setMnemonic(KeyEvent.VK_D);
@@ -32,7 +28,6 @@ public class ActionRequestViewGUI {
         JRadioButton shoot = new JRadioButton("shoot");
         shoot.setMnemonic(KeyEvent.VK_D);
         shoot.setActionCommand("shoot");
-
 
 
 
@@ -99,9 +94,6 @@ public class ActionRequestViewGUI {
             move.addActionListener(this::actionPerformed);
             shoot.addActionListener(this::actionPerformed);
 
-
-
-
         }else if (frenzy == 1){
             container.gridx=0;
             container.gridy=0;
@@ -119,7 +111,6 @@ public class ActionRequestViewGUI {
             frenzy2.addActionListener(this::actionPerformed);
             frenzy3.addActionListener(this::actionPerformed);
 
-
         }else if (frenzy == 2){
 
             container.gridx= 0;
@@ -134,7 +125,7 @@ public class ActionRequestViewGUI {
             frenzy5.addActionListener(this::actionPerformed);
         }
 
-        JButton send = new JButton("send");
+        JButton send = new JButton("Send action request");
         container.gridx= 1;
         container.gridy= 1;
         mainPanel.add(send,container);
@@ -145,27 +136,18 @@ public class ActionRequestViewGUI {
         frame.setLocation(0,0);
         frame.setVisible(true);
 
-
-
         send.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //send chosen
-
+                //a che serve?
             }
 
         });
+        return "";
     }
 
-    public void actionPerformed(ActionEvent e) {
-                chosen =  e.getActionCommand();
-
+    public String actionPerformed(ActionEvent e) {
+        return e.getActionCommand();
     }
 
-    public static class CloseListener extends WindowAdapter {
-        public void windowClosing(WindowEvent e) {
-            e.getWindow().setVisible(false);
-
-        } //windowClosing()
-    } //CloseListener
 }

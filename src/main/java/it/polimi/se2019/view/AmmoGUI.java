@@ -43,8 +43,8 @@ public class AmmoGUI extends JPanel {
         actionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ActionRequestViewGUI actions = new ActionRequestViewGUI();
-                actions.actionChoser(0);
+                //TODO turnConclusion va cambiato dinamicamente
+                ActionRequestView actions = new ActionRequestView(false);
             }
 
         });

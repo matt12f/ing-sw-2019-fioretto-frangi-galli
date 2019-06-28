@@ -4,10 +4,12 @@ import it.polimi.se2019.AdrenalineClient;
 import it.polimi.se2019.controller.AvailableActions;
 import it.polimi.se2019.controller.FictitiousPlayer;
 import it.polimi.se2019.controller.SingleCardActions;
+import it.polimi.se2019.controller.SingleEffectsCombinationActions;
 import it.polimi.se2019.model.cards.GunCard;
 import it.polimi.se2019.model.game.NewCell;
 
 import java.util.ArrayList;
+import java.util.function.Predicate;
 
 /**
  * this class is going to send back the objects it received to "select" them
@@ -39,10 +41,8 @@ public class ChosenActions {
             }
             if(!choice.getPickableCards().isEmpty()){ //in case this is a grab/move + grab action picking a Gun
                 cardToPick = gunCardManager(choice.getPickableCards());
-
                 if(AdrenalineClient.getLocalView().getPlayerHand().isGunHandFull())
-                    //TODO mostrare le carte della sua hand, per sceglierne una da scartare
-                    this.cardToDiscard=AdrenalineClient.getLocalView().getPlayerHand().getGuns()[1];
+                    this.cardToDiscard=cardDiscardSelector();
             }
 
         }
@@ -50,26 +50,34 @@ public class ChosenActions {
             ArrayList<String> listOfCards=new ArrayList<>();
             ArrayList<String> listOfActionforCards=new ArrayList<>();
 
-            for(SingleCardActions cardActions: choice.getAvailableCardActions())
-                if(!cardActions.getAvailableCombinations().isEmpty()) { //this card is valid to be used
+            //removes cards that have no available combinations
+            Predicate<SingleCardActions> cardActionsPredicate= p-> p.getAvailableCombinations().isEmpty();
+            choice.getAvailableCardActions().removeIf(cardActionsPredicate);
+
+            for(SingleCardActions cardActions: choice.getAvailableCardActions()){ //this card is valid to be used
                     listOfCards.add("Usable card: " + cardActions.getUsableGunCardName() + "; Must swap to use it: " + cardActions.isMustSwap());
-                    listOfActionforCards.add(cardActions.getAvailableCombinations().toString());
-                }
+                    listOfActionforCards.add(cardActions.getAvailableCombinations().toString()); //shows all of the combinations for one card
+            }
             //TODO far scegliere al player una di queste carte (mostrando sia la lista delle carte che le azioni
             // ad essa associate e prelevare l'oggetto corrispondente
-            String cardSelected = listOfCards.get(0); //TODO qui l'indice 0 è quello dell'oggetto scelto
+            String cardSelected = listOfCards.get(0); //TODO qui e sotto l'indice 0 è quello dell'oggetto scelto
+            SingleCardActions chosenCard = choice.getAvailableCardActions().get(0);
 
-            SingleCardActions chosenCard;
-            for(SingleCardActions cardActions:choice.getAvailableCardActions())
-                if(cardSelected.contains(cardActions.getUsableGunCardName())){
-                    chosenCard=cardActions;
-                    break;
-                }
+            if(chosenCard.isMustSwap())
+                this.cardToDiscard=cardDiscardSelector();
 
+            //TODO elencare tutti gli elementi di chosenCard.getAvailableCombinations() e farne scegliere uno
+            //TODO qui sotto 0 è l'indice dell'elemento scelto
+            SingleEffectsCombinationActions combinationActions=chosenCard.getEffectsCombinationActions().get(0);
 
 
         }
 
+    }
+
+    private GunCard cardDiscardSelector() {
+        //TODO mostrare le carte della sua hand, per sceglierne una da scartare
+        return AdrenalineClient.getLocalView().getPlayerHand().getGuns()[1];
     }
 
     private GunCard gunCardManager(ArrayList<GunCard> pickableCards) {

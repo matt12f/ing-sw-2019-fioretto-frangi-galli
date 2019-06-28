@@ -22,12 +22,13 @@ public class AdrenalineClient {
     private static NetworkHandler networkHandler;
     private static LocalView localView;
     private static String nickname;
+    private static boolean GUI; //Se l'utente sceglierà la GUI piuttosto che la cli sarà true
 
     public static void main(String[] args) throws IOException, AlreadyBoundException, NotBoundException, InterruptedException, ClassNotFoundException {
         Connection connection = new Connection(null, null, false, null, null);
         boolean start = false;
-        boolean GUI = false; //Se l'utente sceglierà la GUI piuttosto che la cli sarà true
-        clientCallBackClass callBackClass = new clientCallBackClass();
+        GUI=false;
+        ClientCallBackClass callBackClass = new ClientCallBackClass();
         clientCallBack stubClient = null;
         ArrayList<String> nicknames = new ArrayList<>();
         ObjectOutputStream outputStream;
@@ -219,6 +220,10 @@ public class AdrenalineClient {
                 connection.setRegistry(registry);
             }
     }
+
+    public static boolean isGUI() {
+        return GUI;
+    }
 }
 
 class Connection{
@@ -293,10 +298,10 @@ class Connection{
     public ObjectOutputStream getOutput() {
         return this.output;
     }
+
 }
 
-
-class clientCallBackClass implements clientCallBack{
+class ClientCallBackClass implements clientCallBack{
 
     @Override
 public void ClientCallBack() throws RemoteException {
