@@ -5,144 +5,122 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class UserInteractionGUI extends UserInteraction {
-    public String chosen = "";
+    public String choice;
+
     @Override
-    public String actionToRequest(int frenzy) {
-        Frame frame = new Frame("Choose the macro action to perform");
+    public String actionToRequest(int frenzy){
 
-        JPanel mainPanel = new JPanel(new GridBagLayout());
-        GridBagConstraints container = new GridBagConstraints();
-        mainPanel.setLayout(new GridBagLayout());
+        JLabel label = new JLabel("Che macro azione vuoi fare?");
 
-        JRadioButton grab = new JRadioButton("move");
-        JRadioButton move = new JRadioButton("grab");
-        JRadioButton shoot = new JRadioButton("shoot");
-
-
-        JRadioButton frenzy1 = new JRadioButton("frenzy move 1");
-        JRadioButton frenzy2 = new JRadioButton("frenzy move 2");
-        JRadioButton frenzy3 = new JRadioButton("frenzy move 3");
-
-
-        JRadioButton frenzy4 = new JRadioButton("frenzy move 1");
-        JRadioButton frenzy5 = new JRadioButton("frenzy move 2");
-
-
-        ButtonGroup groupNormal = new ButtonGroup();
-        groupNormal.add(move);
-        groupNormal.add(grab);
-        groupNormal.add(shoot);
-
-
-
-        ButtonGroup groupFrenzy1 = new ButtonGroup();
-        groupFrenzy1.add(frenzy1);
-        groupFrenzy1.add(frenzy2);
-        groupFrenzy1.add(frenzy3);
-
-
-        ButtonGroup groupFrenzy2 = new ButtonGroup();
-        groupFrenzy2.add(frenzy4);
-        groupFrenzy2.add(frenzy5);
-
-
-
-
-
-
-        if(frenzy == 0){
-            container.gridx=0;
-            container.gridy=0;
-            mainPanel.add(grab,container);
-
-            container.gridx=1;
-            container.gridy=0;
-            mainPanel.add(move,container);
-
-            container.gridx=2;
-            container.gridy=0;
-            mainPanel.add(shoot,container);
-
-
-
-        }else if (frenzy == 1){
-            container.gridx=0;
-            container.gridy=0;
-            mainPanel.add(frenzy1,container);
-
-            container.gridx=1;
-            container.gridy=0;
-            mainPanel.add(frenzy2,container);
-
-            container.gridx=2;
-            container.gridy=0;
-            mainPanel.add(frenzy3,container);
-
-
-
-        }else if (frenzy == 2){
-
-            container.gridx= 0;
-            container.gridy= 0;
-            mainPanel.add(frenzy4,container);
-
-            container.gridx= 1;
-            container.gridy=0;
-            mainPanel.add(frenzy5,container);
-
-
-        }
-
-        JButton send = new JButton("Send action request");
-        container.gridx= 1;
-        container.gridy= 1;
-        mainPanel.add(send,container);
-
-        frame.addWindowListener(new UserInteractionGUI.CloseListener());
-        frame.add(mainPanel);
-        frame.setSize(400,400);
-        frame.setLocation(0,0);
-        frame.setVisible(true);
-
-
-
-
-        send.addActionListener(new ActionListener() {
+        JButton moveButton = new JButton("Move");
+        moveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                synchronized (chosen){
-                    if(frenzy == 0){
-                        if (move.isSelected()){
-                            chosen = "move";
-                        } else if (grab.isSelected()){
-                            chosen = "grab";
-                        } else if(shoot.isSelected()){
-                            chosen = "shoot";
-                        }
-                    }
-                    notifyAll();
-                    frame.setVisible(false);
-                }
-
+                choice = "move";
+                JButton button = (JButton)e.getSource();
+                SwingUtilities.getWindowAncestor(button).dispose();
             }
         });
-        //Nota: questo return non attende il click del pulsante
 
-        synchronized ( chosen){
-            while(chosen == ""){
-                try { wait(); } catch(InterruptedException e){}
+        JButton grabButton = new JButton("Grab");
+        grabButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                choice = "grab";
+                JButton button = (JButton)e.getSource();
+                SwingUtilities.getWindowAncestor(button).dispose();
             }
-            return chosen;
+        });
+
+        JButton shootButton = new JButton("Shoot");
+        shootButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                choice = "shoot";
+                JButton button = (JButton)e.getSource();
+                SwingUtilities.getWindowAncestor(button).dispose();
+            }
+        });
+
+        JButton frenzy1Button = new JButton("Frenzy move 1");
+        frenzy1Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                choice = "frenzy1";
+                JButton button = (JButton)e.getSource();
+                SwingUtilities.getWindowAncestor(button).dispose();
+            }
+        });
+
+        JButton frenzy2Button = new JButton("Frenzy move 2");
+        frenzy2Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                choice = "frenzy2";
+                JButton button = (JButton)e.getSource();
+                SwingUtilities.getWindowAncestor(button).dispose();
+            }
+        });
+
+        JButton frenzy3Button = new JButton("Frenzy move 3");
+        frenzy3Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                choice = "frenzy3";
+                JButton button = (JButton)e.getSource();
+                SwingUtilities.getWindowAncestor(button).dispose();
+            }
+        });
+
+        JButton frenzy4Button = new JButton("Frenzy move 4");
+        frenzy4Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                choice = "frenzy4";
+                JButton button = (JButton)e.getSource();
+                SwingUtilities.getWindowAncestor(button).dispose();
+            }
+        });
+
+        JButton frenzy5Button = new JButton("Frenzy move 5");
+        frenzy5Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                choice = "frenzy5";
+                JButton button = (JButton)e.getSource();
+                SwingUtilities.getWindowAncestor(button).dispose();
+            }
+        });
+
+        JPanel buttons = new JPanel();
+        if(frenzy==0){
+            buttons.add(moveButton);
+            buttons.add(grabButton);
+            buttons.add(shootButton);
+        }else if(frenzy==1){
+            buttons.add(frenzy1Button);
+            buttons.add(frenzy2Button);
+        }else {
+            buttons.add(frenzy3Button);
+            buttons.add(frenzy4Button);
+            buttons.add(frenzy5Button);
         }
 
+        JPanel content = new JPanel(new BorderLayout(8, 8));
+        content.add(label, BorderLayout.CENTER);
+        content.add(buttons, BorderLayout.SOUTH);
+
+        JDialog dialog = new JDialog();
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialog.setModal(true);
+        dialog.setTitle("Selettore Mossa");
+        dialog.getContentPane().add(content);
+        dialog.pack();
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+
+        return choice;
+
     }
-
-
-    public static class CloseListener extends WindowAdapter {
-        public void windowClosing(WindowEvent e) {
-            e.getWindow().setVisible(false);
-
-        } //windowClosing()
-    } //CloseListener
 
 }

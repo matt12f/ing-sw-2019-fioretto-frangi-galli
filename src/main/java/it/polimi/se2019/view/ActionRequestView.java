@@ -26,7 +26,7 @@ public class ActionRequestView{
         if(!turnConclusion){
         //TODO richiesta di click a video, a seconda del clic invia il tipo di richiesta
             //TODO sotto andrà cambiato con AdrenalineClient.getLocalView().getPersonalPlayerBoardView().getFrenzy()
-        String action=this.askUser.actionToRequest(0);
+        String action=this.askUser.actionToRequest(1);
         switch (action){
             case "move": this.actionToRequest=ActionType.NORMAL1;break;
             case "grab": this.actionToRequest=ActionType.NORMAL2;break;
