@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class UserInteractionGUI extends UserInteraction {
-    public String chosen;
+    public String chosen = "";
     @Override
     public String actionToRequest(int frenzy) {
         Frame frame = new Frame("Choose the macro action to perform");
@@ -104,22 +104,37 @@ public class UserInteractionGUI extends UserInteraction {
         frame.setLocation(0,0);
         frame.setVisible(true);
 
+
+
+
         send.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(frenzy == 0){
-                    if (move.isSelected()){
-                        chosen = "move";
-                    } else if (grab.isSelected()){
-                        chosen = "grab";
-                    } else if(shoot.isSelected()){
-                        chosen = "shoot";
+                synchronized (chosen){
+                    if(frenzy == 0){
+                        if (move.isSelected()){
+                            chosen = "move";
+                        } else if (grab.isSelected()){
+                            chosen = "grab";
+                        } else if(shoot.isSelected()){
+                            chosen = "shoot";
+                        }
                     }
+                    notifyAll();
+                    frame.setVisible(false);
                 }
+
             }
         });
         //Nota: questo return non attende il click del pulsante
-        return chosen;
+
+        synchronized ( chosen){
+            while(chosen == ""){
+                try { wait(); } catch(InterruptedException e){}
+            }
+            return chosen;
+        }
+
     }
 
 
