@@ -1,5 +1,7 @@
 package it.polimi.se2019.view;
 
+import it.polimi.se2019.enums.Color;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -22,7 +24,7 @@ public class BoardZoneGUI extends JPanel {
 
     //TODO questa roba va poi rifatta in un for dinamicamente
 
-        this.board1 = new PlayerBoardViewGUI('b', 420,109);
+        this.board1 = new PlayerBoardViewGUI(Color.BLUE, 420,109);
 
 
         container.gridx=0;
@@ -32,7 +34,7 @@ public class BoardZoneGUI extends JPanel {
     ///////////////////
 
 
-        this.board2 = new PlayerBoardViewGUI('g',420,109);
+        this.board2 = new PlayerBoardViewGUI(Color.GREEN,420,109);
 
 
         container.gridx=0;
@@ -42,7 +44,7 @@ public class BoardZoneGUI extends JPanel {
 
         ///////////////////
 
-        this.board3 = new PlayerBoardViewGUI('r',420,109);
+        this.board3 = new PlayerBoardViewGUI(Color.RED,420,109);
 
 
         container.gridx=0;
@@ -52,7 +54,7 @@ public class BoardZoneGUI extends JPanel {
 
         ///////////////////
 
-        this.board4 = new PlayerBoardViewGUI('p',420,109);
+        this.board4 = new PlayerBoardViewGUI(Color.VIOLET,420,109);
 
 
         container.gridx=0;

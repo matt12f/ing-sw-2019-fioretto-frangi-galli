@@ -47,41 +47,46 @@ public class AdrenalineServer{
         return AdrenalineServer.lobby;
     }
 
-    public static synchronized void nickController (ClientHandler newPlayer){
+    public static synchronized void nickController (ClientHandler newPlayer) throws IOException {
         String req = newPlayer.getNickname();
+        String reply;
         if(AdrenalineServer.lobby.indexOf(req) == -1){
             newPlayer.setAccepted(true);
             AdrenalineServer.lobby.add(req);
             AdrenalineServer.lobbyClient.add(newPlayer);
+            reply = "true";
         }else{
             newPlayer.setAccepted(false);
+            reply = "false";
+        }
+        if(newPlayer.getSocket() != null){
+            newPlayer.getOutput().writeObject(reply);
         }
     }
 
     public static synchronized int clientCounter(){
         int connectionNumber = lobbyClient.size();
         ArrayList<Integer> indexToDelete = new ArrayList<>();
-        ArrayList<ClientHandler> clients = lobbyClient;
         //checking wich connections correctly works
-        for (ClientHandler client: clients) {
+        for (ClientHandler client: lobbyClient) {
             if(client.getSocket() != null){
                 try{
-                    client.getOutput().writeObject("Test");
+                    if(client.getOutput() != null)
+                        client.getOutput().writeObject("Test");
                 } catch (IOException e) {
                     connectionNumber--;
-                    indexToDelete.add(clients.indexOf(client));
+                    indexToDelete.add(lobbyClient.indexOf(client));
+                    System.out.println("cliente disconnesso");
                 }
             }else{
                 //todo fare controllo tramite RMI
             }
         }
-
         //deleting useless ClientHandler from lobbyClient
-
         if(!indexToDelete.isEmpty() && !lobby.isEmpty())
             for (int i = indexToDelete.size() - 1; i >= 0; i--){
-                clients.remove(indexToDelete.get(i));
-                lobby.remove(indexToDelete.get(i));
+                lobbyClient.remove(indexToDelete.get(i).intValue());
+                lobby.remove(indexToDelete.get(i).intValue());
             }
         return connectionNumber;
     }
@@ -98,7 +103,4 @@ public class AdrenalineServer{
         return AdrenalineServer.lobbyClient;
     }
 
-    public static void addClient(ClientHandler newUser) {
-        lobbyClient.add(newUser);
-    }
 }

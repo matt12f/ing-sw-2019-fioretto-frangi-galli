@@ -22,6 +22,7 @@ public class AdrenalineClient {
     private static NetworkHandler networkHandler;
     private static LocalView localView;
     private static String nickname;
+    private static ArrayList<String> otherPlayers;
     private static boolean GUI; //Se l'utente sceglierà la GUI piuttosto che la cli sarà true
 
     public static void main(String[] args) throws IOException, AlreadyBoundException, NotBoundException, InterruptedException, ClassNotFoundException {
@@ -33,45 +34,78 @@ public class AdrenalineClient {
         ArrayList<String> nicknames = new ArrayList<>();
         ObjectOutputStream outputStream;
         ObjectInputStream inputStream;
-        //Todo finestra per chiedere se CLI o GUI (anche solo un'alert window va bene) cambiando opportunamente il valore di GUI
-
+        //Todo finestra per chiedere se CLI o GUI
         connectionRequest(GUI, connection);
         ipServerRequest(GUI, connection);
         if(connection.isSocket())
             connection.setStream();
-        if (!(connection.isSocket())) {
+        else{
             //export clientCallBack
             stubClient = (clientCallBack) UnicastRemoteObject.exportObject(callBackClass, 0);
             connection.getLocalRegistry().bind(("C" + connection.getHost()), stubClient);
             connection.getRegistry().lookup("");
         }
         nicknameRequest(GUI, connection);
-        inputStream = connection.getInput();
-        outputStream = connection.getOutput();
-        while (!start) {
-            //chiedi chi è connesso
-            /*outputStream.writeObject("Players");
-            System.out.print("Attualmente sei in coda con: ");//stampa i nomi di chi è in coda
-            String nickn;
-            nickn = (String) inputStream.readObject();
-            while(!nickn.equals("Finished")){
-                nicknames.add(nickn);
-                outputStream.writeBoolean(true);
-                outputStream.flush();
-                nickn = (String) inputStream.readObject();
-            }
-            for (String nick: nicknames) {
-                System.out.print(nick + ", ");
-            }*/
-            Thread.sleep(100);
-            while(true){
-
-            }
-            //funziona che riorna boolean che scopre se siamo pronti
+        while(!start){
+            getOtherPlayers(connection);
+            displayQue(GUI);
+            start = waitForUpdate(connection);
         }
     }
 
-    private static void nicknameRequest(boolean GUI, Connection connection) throws IOException {
+    private static Boolean waitForUpdate(Connection connection) throws IOException, ClassNotFoundException {
+        String req;
+        if(connection.isSocket()){
+            req = (String) connection.getInput().readObject();
+            while(req.equals("Test"))
+                req = (String) connection.getInput().readObject();
+            if(req.equals("UPDATE"))
+                return false;
+            else
+                return true;
+        }
+        return false;
+    }
+
+    private static void displayQue(boolean GUI) {
+        if(GUI){
+
+        }else{
+            try {
+                clearScreen();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if(!otherPlayers.isEmpty()){
+                System.out.print("Sei in coda, al momento i giocatori connessi (oltre a te) sono:");
+                for(int i = 0; i<otherPlayers.size(); i++){
+                    System.out.print(" " + otherPlayers.get(i));
+                    if(i == otherPlayers.size() - 1){
+                        System.out.print(".");
+                    }else {
+                        System.out.print(",");
+                    }
+                }
+            }else {
+                System.out.println("Sei il solo in attessa di una nuova partita per ora");
+            }
+        }
+    }
+
+    private static void clearScreen() throws IOException, InterruptedException {
+        new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+    }
+
+    private static void getOtherPlayers(Connection connection) throws IOException, ClassNotFoundException {
+        if(connection.isSocket()){
+            otherPlayers = (ArrayList<String>) connection.getInput().readObject();
+            otherPlayers.remove(nickname);
+        }
+    }
+
+    private static void nicknameRequest(boolean GUI, Connection connection) throws IOException, InterruptedException, ClassNotFoundException {
         Scanner scanner;
         String nickname;
         boolean accepted = false;
@@ -146,48 +180,33 @@ public class AdrenalineClient {
         }
     }
 
-    private static boolean setNickname(String nickname, Connection connection) throws IOException {
+    private static boolean setNickname(String nickname, Connection connection) throws IOException, InterruptedException, ClassNotFoundException {
         Registry registry = null;
         Status serveStatus;
         RMIInterface stub = null;
         boolean isOk = false;
+        String reply;
         ObjectOutputStream socketOutput = null;
         ObjectInputStream socketInput = null;
         if (connection.isSocket()) {
             //try {
                 socketInput = connection.getInput();
                 socketOutput = connection.getOutput();
-                /*
-                System.out.println("Aspettando che il server sia pronto...");
-                isOk = socketInput.readBoolean();
-                System.out.println("Ok, il server è pronto");
-                */
                // if (isOk) {
                     socketOutput.writeObject(nickname);
+                    Thread.sleep(10);
                // }
-                isOk = socketInput.readBoolean();
+                reply = (String) socketInput.readObject();
+                if(reply.equals("true")){
+                    isOk = true;
+                }else
+                    isOk = false;
                 return isOk;
            // } catch (IOException e) {
              //   System.out.println("Mi spiace, si è verificato un problema di connessione e sei stato disconnesso dal server");
             //}
         }else{
-                try {
-                    registry = connection.getRegistry();
-                    stub = (RMIInterface) registry.lookup("");
-                    serveStatus = stub.getStatus();
-                    while (serveStatus == Status.NOTREADY) {
-
-                    }
-                    stub.setNicknameRMI(nickname);
-                } catch (IllegalArgumentException e) {
-                    return false; //per dire che il nick è già stato preso, probabilmente è una cosa rindondante
-                } catch (NotBoundException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-
+            //todo gestione nickname RMI
         }
         return true;
     }
@@ -298,8 +317,9 @@ class Connection{
     public ObjectOutputStream getOutput() {
         return this.output;
     }
-
 }
+
+
 
 class ClientCallBackClass implements clientCallBack{
 

@@ -51,5 +51,15 @@ public class UserInteractionCLI extends UserInteraction {
         return new boolean[0];
     }
 
+    @Override
+    public boolean yesOrNo(String message) {
+        return false;
+    }
+
+    @Override
+    public String stringSelector(String message, ArrayList<String> listToChooseFrom) {
+        return null;
+    }
+
 
 }

@@ -4,6 +4,7 @@ import it.polimi.se2019.AdrenalineClient;
 import it.polimi.se2019.enums.ActionType;
 import it.polimi.se2019.enums.CardName;
 import it.polimi.se2019.enums.CellEdge;
+import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.model.cards.PowerupCard;
 
 import java.util.ArrayList;
@@ -18,15 +19,13 @@ public class ActionRequestView{
      * when the player must decide wether he wants to use a powerup and/or reload
      */
     public ActionRequestView(boolean turnConclusion){
-        if( false /* TODO AdrenalineClient.isGUI()*/)
+        if(AdrenalineClient.isGUI())
             this.askUser=new UserInteractionGUI();
         else
             this.askUser=new UserInteractionCLI();
 
         if(!turnConclusion){
-        //TODO richiesta di click a video, a seconda del clic invia il tipo di richiesta
-            //TODO sotto andrà cambiato con AdrenalineClient.getLocalView().getPersonalPlayerBoardView().getFrenzy()
-        String action=this.askUser.actionToRequest(1);
+        String action=this.askUser.actionToRequest(AdrenalineClient.getLocalView().getPersonalPlayerBoardView().getFrenzy());
         switch (action){
             case "move": this.actionToRequest=ActionType.NORMAL1;break;
             case "grab": this.actionToRequest=ActionType.NORMAL2;break;
@@ -38,37 +37,58 @@ public class ActionRequestView{
             case "frenzy5": this.actionToRequest=ActionType.FRENZY5;break;
             default: break; //won't happen, the player must chose one of the above
         }
-        this.powerupUse=powerupManagerView();
+        this.powerupUse=powerupManagerView(AdrenalineClient.getLocalView());
         }
         else{ //here we are at the end of the turn
             this.actionToRequest=null;
-            this.powerupUse=powerupManagerView();
+            this.powerupUse=powerupManagerView(AdrenalineClient.getLocalView());
             this.reload=this.askUser.cardsToReload(AdrenalineClient.getLocalView().getPlayerHand().getGuns(),AdrenalineClient.getLocalView().getPlayerHand().getLoadedGuns());
-            //TODO richiesta a video se vuole ricaricare, e quali armi, alla fine del turno
         }
     }
 
     /**
      * this method covers the offer of the powerups newton and teleporter before the macro actions
      */
-    private ArrayList<PowerupUse> powerupManagerView() {
+    private ArrayList<PowerupUse> powerupManagerView(LocalView localView) {
         ArrayList<PowerupUse> temp=new ArrayList<>();
 
-        PowerupCard[] cardView=AdrenalineClient.getLocalView().getPlayerHand().getPowerups();
+        PowerupCard[] cardView=localView.getPlayerHand().getPowerups();
 
         for(int i=0;i<cardView.length;i++)
-            if (cardView[i].getPowerupType().equals("Newton")){
-             //TODO messaggi a video: vuoi usarla? se la risposta è no
-                int idPlayerToMove=3;//chi vuoi spostare? vanno bene tutti (tranne se stesso)
-                //TODO check per vedere dove ci si può spostare
-                String direction="Up";//in quale direzione? (attivare celle cliccabili)
-                int distanceOfMovement=1;//di quante celle?
-                temp.add(new PowerupUse(i,idPlayerToMove,distanceOfMovement,direction,null));
+            if (cardView[i].getPowerupType().equals("Newton") && this.askUser.yesOrNo("Vuoi usare un PowerUp Newton?")){
+                ArrayList<String> playerColors = getPlayerColors();
+                String colorString = this.askUser.stringSelector("Quale player vuoi spostare? scegline il colore", playerColors);
+
+                Color color=colorConverter(colorString);
+
+                CellView cellOfTarget = localView.getMapView().getPlayerPosition(color);
+                ArrayList<String> directionsAvailable=getDirection(cellOfTarget);
+                ArrayList<Integer> maxDistanceForDirection=getMaxDistance(directionsAvailable,cellOfTarget);
+
+                String direction=this.askUser.stringSelector("In quale direzione vuoi muoverlo?", directionsAvailable);
+
+                int distance=1;
+                if(maxDistanceForDirection.get(directionsAvailable.indexOf(direction))==2 && this.askUser.yesOrNo("Vuoi muovelo di due (SI) o solo di uno (NO)?"))
+                    distance=2;
+
+                temp.add(new PowerupUse(i,color,distance,direction,null));
             }
-            else if(cardView[i].getPowerupType().equals("Teleporter")){
-                //TODO messaggi a video: vuoi usarla?
-                CellView destCell=AdrenalineClient.getLocalView().getPlayerPosition();//TODO in quale cella ti vuoi spostare? vanno bene tutte (tranne quella dov'è attualmente)
-                temp.add(new PowerupUse(i,AdrenalineClient.getLocalView().getPlayerId(),0,"None",destCell));
+            else if(cardView[i].getPowerupType().equals("Teleporter") && this.askUser.yesOrNo("vuoi usare un PowerUp Teleporter?")){
+
+                CellView yourPosition = localView.getMapView().getPlayerPosition(localView.getPersonalPlayerBoardView().getColor());
+                ArrayList<Coordinates> coordinates = localView.getMapView().availableCoordinates(yourPosition);
+
+                ArrayList<String> coordToChooseFrom=new ArrayList<>();
+                for(Coordinates coord:coordinates)
+                    coordToChooseFrom.add(coord.toString());
+
+                String coordChoosenCell=this.askUser.stringSelector("In quale cella ti vuoi muovere?",coordToChooseFrom);
+
+                Coordinates coordinates1=coordinates.get(coordToChooseFrom.indexOf(coordChoosenCell));
+
+                CellView destCell=localView.getMapView().getCell(coordinates1.getX(),coordinates1.getY());
+
+                temp.add(new PowerupUse(i,localView.getPersonalPlayerBoardView().getColor(),0,"None",destCell));
             }
         return temp;
     }
@@ -84,5 +104,67 @@ public class ActionRequestView{
     public ArrayList<PowerupUse> getPowerupUse() {
         return powerupUse;
     }
+
+    private Color colorConverter(String color){
+        switch (color){
+            case "BLUE": return Color.BLUE;
+            case "YELLOW": return Color.YELLOW;
+            case "VIOLET": return Color.VIOLET;
+            case "GREEN": return Color.GREEN;
+            case "WHITE": return Color.WHITE;
+            default:return Color.RED;
+        }
+    }
+    /**
+     * @return the other player's colors
+     */
+    private ArrayList<String> getPlayerColors(){
+        ArrayList<String> colors=new ArrayList<>();
+        for(PlayerBoardView playerBoard: AdrenalineClient.getLocalView().getPlayerBoardViews())
+            colors.add(playerBoard.getColor().toString());
+
+        colors.remove(AdrenalineClient.getLocalView().getPersonalPlayerBoardView().getColor().toString());
+        return colors;
+    }
+
+    private ArrayList<String> getDirection(CellView position){
+        ArrayList<String> directions=new ArrayList<>();
+        String [] dir={"Up","Down","Left","Right"};
+        for (int i = 0; i < 4; i++) {
+            if(!position.getCorrespondingCell().getEdge(i).equals(CellEdge.WALL))
+                directions.add(dir[i]);
+        }
+        return directions;
+    }
+
+    private ArrayList<Integer> getMaxDistance(ArrayList<String> directionsAvailable,CellView positionOfTarget) {
+        ArrayList<Integer> distances =new ArrayList<>();
+
+        for(int i=0;i<directionsAvailable.size();i++){
+            distances.add(1);
+            //Checks if the next cell in the same direction has a wall or if the player can be moved there
+            switch (directionsAvailable.get(i)){
+                case "Up": {
+                    if (AdrenalineClient.getLocalView().getMapView().getCell(positionOfTarget.getLineIndex() - 1, positionOfTarget.getColumnIndex()).getCorrespondingCell().getEdge(0).equals(CellEdge.WALL))
+                        distances.set(i,2);
+                }break;
+                case "Down": {
+                    if (AdrenalineClient.getLocalView().getMapView().getCell(positionOfTarget.getLineIndex() + 1, positionOfTarget.getColumnIndex()).getCorrespondingCell().getEdge(1).equals(CellEdge.WALL))
+                        distances.set(i,2);
+                }break;
+                case "Left": {
+                    if (AdrenalineClient.getLocalView().getMapView().getCell(positionOfTarget.getLineIndex(), positionOfTarget.getColumnIndex()-1).getCorrespondingCell().getEdge(2).equals(CellEdge.WALL))
+                        distances.set(i,2);
+                }break;
+                case "Right": {
+                    if (AdrenalineClient.getLocalView().getMapView().getCell(positionOfTarget.getLineIndex(), positionOfTarget.getColumnIndex()+1).getCorrespondingCell().getEdge(3).equals(CellEdge.WALL))
+                        distances.set(i,2);
+                }break;
+            }
+
+        }
+        return distances;
+    }
+
 }
 
