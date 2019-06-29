@@ -11,6 +11,7 @@ import java.io.*;
 import java.net.Socket;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -30,7 +31,7 @@ public class ClientHandler extends Thread implements RMIInterface, Observer {
 
     @Override
     public void run(){
-        String req;
+        ArrayList<String> otherPlayers;
         try {
             System.out.println("Partito clientHandler della socket: " + this.socket);
             if(this.socket == null){
@@ -42,39 +43,36 @@ public class ClientHandler extends Thread implements RMIInterface, Observer {
             }else{
                 this.output = new ObjectOutputStream(this.socket.getOutputStream());
                 this.input = new ObjectInputStream(this.socket.getInputStream());
-            /*    this.output.writeBoolean(true);
-                this.output.flush(); */
+                String reply;
                 while (!this.accepted){
                     this.nickname = (String) input.readObject();
                     System.out.println("nick ricevuto: " + this.nickname);
                     AdrenalineServer.nickController(this);
                     System.out.println("Nick controllato");
-                    this.output.writeBoolean(this.accepted);
-                    this.output.flush();
+                    System.out.println("inviato: " + this.accepted);
                     if(!this.accepted){
-                        this.output.writeBoolean(true);
-                        this.output.flush();
+                        System.out.println("nick non valido");
                     }
                 }
-                /*req = (String) this.input.readObject();
-                System.out.println("invio i giocatori al client");
-                boolean temp;
-                if(req.equals("Players"))
-                    for (String nick: AdrenalineServer.getLobby()) {
-                        this.output.writeObject(nick);
-                        this.output.flush();
-                        temp = this.input.readBoolean();
-                        System.out.println("ho ricevuto boolean con valore: " + temp);
-                    }
-                    output.writeObject("Finished");
 
-                 */
+                this.output.writeObject(AdrenalineServer.getLobby());
+                while(!status.equals(Status.START)){
+                    Thread.sleep(100);
+                    if(this.status == Status.UPDATE){
+                        this.output.writeObject("UPDATE");
+                        ArrayList<String> temp = AdrenalineServer.getLobby();
+                        this.output.writeObject(temp);
+                        this.output.reset();
+                        this.status = Status.WAITING;
+                    }
+                }
             }
             while(!status.equals(Status.FRENZY_START)){
                 switch (this.status){
                     case MYTURN:
                         //comunicazioni del turno
                         //TODO deve sapere se è la sua prima mossa del turno o la seconda (finale)
+
                         //TODO deve inviare l'oggetto ActionRequestView al GameHandler per poi
                         //TODO ricevere da GameHandler l'oggetto AvailableActions e
                         //TODO inviare l'oggetto ChosenActions
@@ -86,7 +84,6 @@ public class ClientHandler extends Thread implements RMIInterface, Observer {
                     break;
                 }
             }
-            this.thread.wait(); //todo semaforo su status (START)
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {

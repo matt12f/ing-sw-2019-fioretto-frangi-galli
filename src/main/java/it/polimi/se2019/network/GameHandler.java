@@ -8,8 +8,9 @@ import it.polimi.se2019.model.game.Player;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.TimerTask;
 
-public class GameHandler implements Runnable {
+public class GameHandler extends TimerTask {
     private ArrayList<ClientHandler> players;
     private Controller controller;
 
@@ -71,26 +72,33 @@ public class GameHandler implements Runnable {
     public void run() {
         ClientHandler clientTurn;
         int i;
+        Player playerTurn;
         //scelta rotazione e assegnamento pedina
         setClientColor();
         shuffleClient(this.players);
-
-
+        for (ClientHandler client: this.players) {
+            client.setStatus(Status.NOTMYTURN);
+        }
+        clientTurn = this.players.get(0);
+        clientTurn.setStatus(Status.MAPSKULL);
         //TODO chiedere al primo mappa e numero di teschi
-
 
         createController();
         //gestione dei turni
         while (this.controller.getMainGameModel().getKillshotTrack().getSkulls() > 0){
-            i = this.controller.getMainGameModel().getTurn();
+            i = controller.getMainGameModel().getTurn();
             clientTurn = this.players.get(i);
             clientTurn.setStatus(Status.MYTURN);
-
-            //TODO logica del turno
+            while(clientTurn.getStatus() == Status.WAITING){ //todo sostiurlo con un lock su oggetto di clientHandler?
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
             //TODO deve ricevere da ClientHandler l'oggetto ActionRequestView per costruire l'oggetto AvailableActions
-
             clientTurn.setStatus(Status.NOTMYTURN);
-            nextTurn();
+            controller.getActiveTurn().nextTurn(controller);
         }
     }
 
