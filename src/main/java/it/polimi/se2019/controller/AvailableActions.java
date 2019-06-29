@@ -32,7 +32,7 @@ public class AvailableActions {
      * @param playerId player's number (ID)
      * @return available actions depending on the game status
      */
-    public AvailableActions(ActionRequestView macroAction, int playerId,Controller currentController) {
+    public AvailableActions(ActionRequestView macroAction, int playerId, Controller currentController) {
         Player player=currentController.getMainGameModel().getPlayerList().get(playerId);
 
         switch (macroAction.getActionToRequest()){
@@ -94,6 +94,7 @@ public class AvailableActions {
         ArrayList<CellInfo> singleArrivalCells = new ArrayList<>();
 
         //in case the player is allowed NOT to move from his current cell (all of the macroActions except for Normal1)
+        //this works also for actions without movement but with or without grab
         if(minMoveDistance==0)
             singleArrivalCells.add(new CellInfo(player.getFigure().getCell(),grab,player.getFigure().getCell().getDrop()!=null && grab));
 
@@ -106,10 +107,8 @@ public class AvailableActions {
                     if(!singleCell.getCellType().equals(CellType.OUTSIDEBOARD) && singleCell!=player.getFigure().getCell() && MapManager.distanceBetweenCells(board,referenceCell,singleCell) <= maxMoveDistance)
                         singleArrivalCells.add(new CellInfo(referenceCell, grab,singleCell.getDrop()!=null && grab));
 
-        }else if(grab) //for actions without movement but with grab
-            singleArrivalCells.add(new CellInfo(player.getFigure().getCell(),true, player.getFigure().getCell().getCellType().equals(CellType.DROP) && player.getFigure().getCell().getDrop()!=null));
-        else  //for actions without movement and grab
-            singleArrivalCells.add(new CellInfo(player.getFigure().getCell(),false,false));
+        }
+
         return singleArrivalCells;
     }
 

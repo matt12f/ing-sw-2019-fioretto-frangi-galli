@@ -1,6 +1,5 @@
 package it.polimi.se2019.controller;
 
-import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
 import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
@@ -12,7 +11,8 @@ import java.util.ArrayList;
  * This class creates objects that represent the things a player must choose from to use a certain effect
  */
 public class SingleEffectsCombinationActions{
-    private final String effectsCombination;
+    private final ArrayList<String> effectsCombination;
+    private boolean isAlternative;
 
     //these variables are for cards that just need the client to select a certain number of targets for an effect
     private ArrayList<Player> playersTargetList; //To choose from
@@ -41,7 +41,8 @@ public class SingleEffectsCombinationActions{
 
     private ArrayList<PlayerWithTargets> playersWithTargets; //for T.H.O.R use only
 
-    public SingleEffectsCombinationActions(String effectsCombination) {
+    public SingleEffectsCombinationActions(ArrayList<String> effectsCombination, boolean isAlternative) {
+        this.isAlternative=isAlternative;
         this.effectsCombination=effectsCombination;
 
         this.playersTargetList =new ArrayList<>();
@@ -68,7 +69,7 @@ public class SingleEffectsCombinationActions{
      * this method
      * @throws UnavailableEffectCombinationException when an effect combination has no targets
      */
-    //TODO nuovo check con passaggio della combinazione degli effetti
+    //TODO nuovo check con passaggio della combinazione degli effetti; se nella combinazione c'è un effetto non offribile lo rimuovo
     public void validate() throws UnavailableEffectCombinationException{
         if(!this.offerableBase && !this.offerableOpt1 && !this.offerableOpt2)
             throw new UnavailableEffectCombinationException();
@@ -77,6 +78,14 @@ public class SingleEffectsCombinationActions{
     }
 
     /** ------------- GETTER METHODS ------------- */
+
+    public ArrayList<String> getEffectsCombination() {
+        return effectsCombination;
+    }
+
+    public boolean isAlternative() {
+        return isAlternative;
+    }
 
     public ArrayList<Player> getPlayersTargetList() {
         return playersTargetList;
@@ -200,23 +209,3 @@ public class SingleEffectsCombinationActions{
         this.playersWithTargets.add(new PlayerWithTargets(currentController, basePlayer));
     }
 }
-
-//Custom class for T.H.O.R. card
-class PlayerWithTargets {
-    private Player target;
-    private ArrayList<Player> targetsItCanSee;
-    public PlayerWithTargets(Controller currentController, Player target) {
-        this.target = target;
-        this.targetsItCanSee=new ArrayList<>(ActionManager.visibleTargets(currentController,new FictitiousPlayer(currentController, target,new CellInfo(target.getFigure().getCell(),false,false),false,false)));
-        this.targetsItCanSee.remove(currentController.getActiveTurn().getActivePlayer());
-    }
-
-    public Player getTarget() {
-        return target;
-    }
-
-    public ArrayList<Player> getTargetsItCanSee() {
-        return targetsItCanSee;
-    }
-}
-

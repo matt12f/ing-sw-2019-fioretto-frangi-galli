@@ -105,7 +105,10 @@ public class NewCell {
      *
      */
     public AmmoTileCard getDrop(){
-        return  drop;
+        if(this.getCellType().equals(CellType.DROP))
+            return  drop;
+        else
+            return null;
     }
 
     /**

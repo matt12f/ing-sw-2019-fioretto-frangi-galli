@@ -33,7 +33,7 @@ public class FictitiousPlayer {
     private Ammo availableAmmo;
     private ArrayList<GunCard> pickableCards;
     private ArrayList<SingleCardActions> availableCardActions; //for the actions you can do with one card
-
+    private boolean noTargets;
 
     /**
      * This method creates a fictitious player that has supposedly taken the choices contained in the parameter cell
@@ -74,13 +74,11 @@ public class FictitiousPlayer {
             for (GunCard gunCard : usableCards)
                 this.availableCardActions.add(new SingleCardActions(currentController, gunCard,this,usableCards.size()>3));
 
-            //removal of not usable cards (with no targets)
-            try {
-                this.availableCardActions.removeAll(Collections.singleton(null));
-            }catch(NullPointerException e){
-                LOGGER.log(Level.WARNING,"Fictitious Player unavailable card actions clearing ",e);
-            }
+            //removes cards with no actionsAvailable
+            this.availableCardActions.removeIf(p->p.getEffectsCombinationActions().isEmpty());
 
+            if(this.availableCardActions.isEmpty() && !player.getPlayerBoard().getActionTileNormal().getAdrenalineMode2())
+                this.noTargets=true;
         }
     }
 
@@ -125,6 +123,10 @@ public class FictitiousPlayer {
 
     public Ammo getAvailableAmmo() {
         return availableAmmo;
+    }
+
+    public boolean isNoTargets() {
+        return noTargets;
     }
 
     public ArrayList<SingleCardActions> getAvailableCardActions() {
