@@ -12,7 +12,7 @@ public class UserInteractionGUI extends UserInteraction {
     @Override
     public String actionToRequest(int frenzy){
 
-        JLabel label = new JLabel("Che macro azione vuoi fare?");
+        JLabel label = new JLabel("Which macro action do you want to perform?");
 
         JButton moveButton = new JButton("Move");
         moveButton.addActionListener(new ActionListener() {
@@ -132,8 +132,63 @@ public class UserInteractionGUI extends UserInteraction {
 
         //In particolare scorrere cards, dove se un elemento è null la carta non c'è e abilitare la checkbox se
         // la carta è presente e scarica (lo vedi dall'altro vettore passato)
+        JLabel label = new JLabel("Which weapon do you want to reload?");
+        boolean[] chosen = new boolean[3];
+        JCheckBox weapon1Check = new JCheckBox("weapon 1");
+        JCheckBox weapon2Check = new JCheckBox("weapon 2");
+        JCheckBox weapon3Check = new JCheckBox("weapon 3");
 
-        return new boolean[0];
+
+
+        JButton frenzy5Button = new JButton("Frenzy move 5");
+        frenzy5Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(weapon1Check.isSelected()){
+                    chosen[0]= true;
+                }
+                if(weapon2Check.isSelected()){
+                    chosen[1]= true;
+                }
+                if(weapon3Check.isSelected()){
+                    chosen[2]= true;
+                }
+
+                JButton button = (JButton)e.getSource();
+                SwingUtilities.getWindowAncestor(button).dispose();
+            }
+        });
+
+
+        JPanel buttons = new JPanel();
+        if(cards[0] != null && reloadableCards[0] == true){
+            buttons.add(weapon1Check);
+        }
+        if(cards[1] != null && reloadableCards[1] == true){
+            buttons.add(weapon2Check);
+        }
+        if(cards[2] != null && reloadableCards[2] == true){
+            buttons.add(weapon3Check);
+        }
+
+
+        JPanel content = new JPanel(new BorderLayout(8, 8));
+        content.add(label, BorderLayout.CENTER);
+        content.add(buttons, BorderLayout.SOUTH);
+
+        JDialog dialog = new JDialog();
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialog.setModal(true);
+        dialog.setTitle("Selettore Mossa");
+        dialog.getContentPane().add(content);
+        dialog.pack();
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+
+        return chosen;
     }
+
+
+
 
 }
