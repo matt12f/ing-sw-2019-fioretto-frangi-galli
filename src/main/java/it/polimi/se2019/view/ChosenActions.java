@@ -63,7 +63,7 @@ public class ChosenActions {
 
 
             //asks the user which card it wants to use, listing the combination of effects it can perform
-            boolean finalDecision=false;
+            boolean finalDecision;
             String cardSelected;
             do {
                 cardSelected = this.askUser.stringSelector("Seleziona l'arma che vuoi usare", listOfCards);

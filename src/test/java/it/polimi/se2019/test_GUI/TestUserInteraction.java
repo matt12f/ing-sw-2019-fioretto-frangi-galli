@@ -7,6 +7,9 @@ import it.polimi.se2019.view.UserInteraction;
 import it.polimi.se2019.view.UserInteractionCLI;
 import it.polimi.se2019.view.UserInteractionGUI;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class TestUserInteraction {
     private static UserInteraction askUser;
 
@@ -15,9 +18,21 @@ public class TestUserInteraction {
         askUser=new UserInteractionGUI();
         //askUser=new UserInteractionCLI();
 
-        //testGunReload();
-        //testActionSelection();
+        testGunReload();
+        testActionSelection();
         testYesOrNo();
+        testShowMessage();
+        testSelectionFromList();
+    }
+
+    private static void testSelectionFromList(){
+        ArrayList<String> list= new ArrayList<>(Arrays.asList("mele","pere","meloni","anguria"));
+
+        System.out.println(askUser.stringSelector("prova la frutta",list));
+    }
+
+    private static void testShowMessage(){
+        askUser.showMessage("Provolone affumicato");
     }
 
     private static void testYesOrNo(){
@@ -27,6 +42,7 @@ public class TestUserInteraction {
         else
             System.out.println("Meloni");
     }
+
     private static void testActionSelection() {
         System.out.println(askUser.actionToRequest(0));
         System.out.println(askUser.actionToRequest(1));

@@ -8,8 +8,9 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 public class UserInteractionGUI extends UserInteraction {
-    public String choice, chosedByList;
-    public boolean yesNoChoice;
+    private String choice;
+    private String chosenByList;
+    private boolean yesNoChoice;
 
     @Override
     public String actionToRequest(int frenzy){
@@ -176,27 +177,28 @@ public class UserInteractionGUI extends UserInteraction {
 
     @Override
     public String stringSelector(String message, ArrayList<String> listToChooseFrom) {
-        //TODO Jdialog che mostri il messaggio passato per parametro ed elenchi le stringhe contenute in
-        // listToChooseFrom e ne faccia selezionare una
-
         JComboBox chooseList = new JComboBox(listToChooseFrom.toArray(new String[listToChooseFrom.size()]));
-        chooseList.setSelectedIndex(listToChooseFrom.size());
-
+        chooseList.setSelectedIndex(0);
 
         JLabel label = new JLabel(message);
-        JButton sendButton = new JButton();
+        JButton selectButton = new JButton("Select");
 
-        sendButton.addActionListener(new ActionListener() {
+        selectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                chosedByList = (String)chooseList.getSelectedItem();
-
+                chosenByList = (String)chooseList.getSelectedItem();
+                JButton button = (JButton)e.getSource();
+                SwingUtilities.getWindowAncestor(button).dispose();
             }
         });
+
+        JPanel buttons = new JPanel();
+        buttons.add(selectButton);
 
         JPanel panel = new JPanel(new BorderLayout(8, 8));
         panel.add(label, BorderLayout.CENTER);
         panel.add(chooseList, BorderLayout.SOUTH);
+        panel.add(buttons);
 
         JDialog dialog = new JDialog();
         dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
@@ -207,15 +209,13 @@ public class UserInteractionGUI extends UserInteraction {
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
 
-
-
-        return chosedByList;
+        return chosenByList;
     }
 
     @Override
     public void showMessage(String message) {
         JDialog dialog = new JDialog();
-        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         dialog.setModal(true);
         dialog.setTitle("Finestra di selezione");
         dialog.getContentPane().add(new JLabel(message));
@@ -288,7 +288,5 @@ public class UserInteractionGUI extends UserInteraction {
 
         return chosen;
     }
-
-
 
 }
