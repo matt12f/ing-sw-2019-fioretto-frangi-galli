@@ -8,7 +8,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 public class UserInteractionGUI extends UserInteraction {
-    public String choice;
+    public String choice, chosedByList;
     public boolean yesNoChoice;
 
     @Override
@@ -179,9 +179,38 @@ public class UserInteractionGUI extends UserInteraction {
         //TODO Jdialog che mostri il messaggio passato per parametro ed elenchi le stringhe contenute in
         // listToChooseFrom e ne faccia selezionare una
 
+        String[] content = listToChooseFrom.toArray(new String[listToChooseFrom.size()]);
+        JComboBox chooseList = new JComboBox(content);
+        chooseList.setSelectedIndex(listToChooseFrom.size());
 
 
-        return null;
+        JLabel label = new JLabel(message);
+        JButton sendButton = new JButton();
+
+        sendButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                chosedByList = (String)chooseList.getSelectedItem();
+
+            }
+        });
+
+        JPanel panel = new JPanel(new BorderLayout(8, 8));
+        panel.add(label, BorderLayout.CENTER);
+        panel.add(chooseList, BorderLayout.SOUTH);
+
+        JDialog dialog = new JDialog();
+        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        dialog.setModal(true);
+        dialog.setTitle("Finestra di selezione");
+        dialog.getContentPane().add(panel);
+        dialog.pack();
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+
+
+
+        return chosedByList;
     }
 
     @Override
