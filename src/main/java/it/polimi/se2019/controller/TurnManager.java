@@ -23,4 +23,18 @@ public class TurnManager {
         //TODO scrivere metodo
     }
 
+    public void nextTurn(Controller currentController){
+        int turn = currentController.getMainGameModel().getTurn();
+        turn++;
+        if(turn == currentController.getMainGameModel().getPlayerList().size()){
+            turn = 0;
+        }
+        currentController.getMainGameModel().setTurn(turn);
+        this.setPlayerTurn(turn, currentController);
+    }
+
+    private void setPlayerTurn(int turn, Controller controller){
+        Player playersTurn = controller.getMainGameModel().getPlayerList().get(turn);
+        this.activePlayer = playersTurn;
+    }
 }
