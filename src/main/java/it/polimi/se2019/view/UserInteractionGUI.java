@@ -179,8 +179,7 @@ public class UserInteractionGUI extends UserInteraction {
         //TODO Jdialog che mostri il messaggio passato per parametro ed elenchi le stringhe contenute in
         // listToChooseFrom e ne faccia selezionare una
 
-        String[] content = listToChooseFrom.toArray(new String[listToChooseFrom.size()]);
-        JComboBox chooseList = new JComboBox(content);
+        JComboBox chooseList = new JComboBox(listToChooseFrom.toArray(new String[listToChooseFrom.size()]));
         chooseList.setSelectedIndex(listToChooseFrom.size());
 
 
