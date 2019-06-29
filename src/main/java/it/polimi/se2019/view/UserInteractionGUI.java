@@ -1,5 +1,7 @@
 package it.polimi.se2019.view;
 
+import it.polimi.se2019.model.cards.GunCard;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -121,6 +123,17 @@ public class UserInteractionGUI extends UserInteraction {
 
         return choice;
 
+    }
+
+    @Override
+    public boolean[] cardsToReload(GunCard[] cards, boolean[] reloadableCards) {
+        //TODO Jdialog sullo stesso concetto del metodo di sopra, con 3 checkbox, dove vengono attivate a seconda
+        // se ci sono carte arma che possono essere ricaricate.
+
+        //In particolare scorrere cards, dove se un elemento è null la carta non c'è e abilitare la checkbox se
+        // la carta è presente e scarica (lo vedi dall'altro vettore passato)
+
+        return new boolean[0];
     }
 
 }

@@ -18,7 +18,7 @@ public class ActionRequestView{
      * when the player must decide wether he wants to use a powerup and/or reload
      */
     public ActionRequestView(boolean turnConclusion){
-        if( true /* TODO AdrenalineClient.isGUI()*/)
+        if( false /* TODO AdrenalineClient.isGUI()*/)
             this.askUser=new UserInteractionGUI();
         else
             this.askUser=new UserInteractionCLI();
@@ -40,13 +40,11 @@ public class ActionRequestView{
         }
         this.powerupUse=powerupManagerView();
         }
-        else{
+        else{ //here we are at the end of the turn
             this.actionToRequest=null;
             this.powerupUse=powerupManagerView();
-            this.reload=new boolean[3];
-            for(boolean cardToReload:this.reload) {
-                cardToReload = true; //TODO richiesta a video se vuole ricaricare, e quali armi, alla fine del turno
-            }
+            this.reload=this.askUser.cardsToReload(AdrenalineClient.getLocalView().getPlayerHand().getGuns(),AdrenalineClient.getLocalView().getPlayerHand().getLoadedGuns());
+            //TODO richiesta a video se vuole ricaricare, e quali armi, alla fine del turno
         }
     }
 
