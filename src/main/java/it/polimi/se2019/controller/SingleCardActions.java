@@ -43,7 +43,7 @@ public class SingleCardActions{
         for(ArrayList<String> effectsCombination: effectsOrder){
             try{
             this.effectsCombinationActions.add(gunCard.buildAvailableActions(currentController,player,effectsCombination));
-            this.availableCombinations.add(effectsCombination.toString());
+            this.availableCombinations.add(this.effectsCombinationActions.size()-1 +". "+effectsCombination.toString());
             }
         catch (UnavailableEffectCombinationException e){
                 //it means there are no targets for this combination and it won't be added

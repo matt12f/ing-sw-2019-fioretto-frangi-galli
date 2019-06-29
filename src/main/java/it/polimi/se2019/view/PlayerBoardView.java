@@ -1,11 +1,15 @@
 package it.polimi.se2019.view;
 
-public class PlayerBoardView {
+import it.polimi.se2019.enums.Color;
+
+public abstract class PlayerBoardView {
+    private Color color;
     private AmmoView ammo;
     private boolean front;
     private DamageView damageView;
     private ActionTileView actionTile;
     private int score;
+    private int frenzy; //this value is =0 if frenzy is off; =1 if you can use x2 frenzy actions; =2 if you can use x1 frenzy action
 
     public void setScore(int toSet){
         this.score=toSet;
@@ -19,6 +23,13 @@ public class PlayerBoardView {
         return ammo;
     }
 
+    public int getFrenzy(){
+        return frenzy;
+    }
+
+    public void  setFrenzy(int x){
+        frenzy = x;
+    }
 
     public void setAmmo(AmmoView toSet){
         this.ammo=toSet;
@@ -30,5 +41,9 @@ public class PlayerBoardView {
 
     public ActionTileView getActionTile() {
         return actionTile;
+    }
+
+    public Color getColor() {
+        return color;
     }
 }

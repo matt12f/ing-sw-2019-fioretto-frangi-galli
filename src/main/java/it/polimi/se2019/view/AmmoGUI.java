@@ -2,6 +2,8 @@ package it.polimi.se2019.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class AmmoGUI extends JPanel {
     public JButton actionButton;
@@ -34,5 +36,22 @@ public class AmmoGUI extends JPanel {
         container.gridx = 0;
         container.gridy = 3;
         add(actionButton,container);
+
+
+
+
+        actionButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //TODO turnConclusion va cambiato dinamicamente
+                ActionRequestView actions = new ActionRequestView(false);
+                //UserInteractionGUI interact = new UserInteractionGUI();
+                //interact.actionToRequest(0);
+            }
+
+        });
+
+
+
     }
 }

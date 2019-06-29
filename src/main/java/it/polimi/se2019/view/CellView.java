@@ -1,6 +1,5 @@
 package it.polimi.se2019.view;
 
-import it.polimi.se2019.enums.CellEdge;
 import it.polimi.se2019.model.game.NewCell;
 
 import java.util.ArrayList;
@@ -12,7 +11,7 @@ public class CellView {
     private Square[][] matrix; //TODO sarà 3x3 e ci vanno le figure e le ammotiles
     private ArrayList<FigureView> playerFigures;
 
-    public CellView(int lineIndex, int columnIndex,NewCell playerPosition) {
+    public CellView(int lineIndex, int columnIndex, NewCell playerPosition) {
         this.lineIndex = lineIndex;
         this.columnIndex = columnIndex;
         this.matrix = new Square[3][3];
@@ -47,21 +46,6 @@ public class CellView {
         this.matrix = matrix;
     }
 
-    public boolean isUpWall(){
-        return this.correspondingCell.getEdge(0).equals(CellEdge.WALL);
-    }
-
-    public boolean isDownWall(){
-        return this.correspondingCell.getEdge(1).equals(CellEdge.WALL);
-    }
-
-    public boolean isLeftWall(){
-        return this.correspondingCell.getEdge(2).equals(CellEdge.WALL);
-    }
-
-    public boolean isRightWall(){
-        return this.correspondingCell.getEdge(3).equals(CellEdge.WALL);
-    }
 }
 
 

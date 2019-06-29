@@ -14,6 +14,10 @@ public class CellViewGUI extends JButton {
         this.setIcon(icona);
 
 
+        //TODO ci vanno i player
+
+        //TODO rimuovere il clic della cella a favore di sistemi che indicano la cella con l'indice della riga e colonna
+
     }
 
 }
