@@ -11,6 +11,8 @@ public class CellView {
     private Square[][] matrix; //TODO sarà 3x3 e ci vanno le figure e le ammotiles
     private ArrayList<FigureView> playerFigures;
 
+
+
     public CellView(int lineIndex, int columnIndex, NewCell playerPosition) {
         this.lineIndex = lineIndex;
         this.columnIndex = columnIndex;
