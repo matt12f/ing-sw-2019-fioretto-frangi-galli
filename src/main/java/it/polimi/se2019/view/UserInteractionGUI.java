@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public class UserInteractionGUI extends UserInteraction {
     public String choice;
+    public boolean yesNoChoice;
 
     @Override
     public String actionToRequest(int frenzy){
@@ -128,14 +129,59 @@ public class UserInteractionGUI extends UserInteraction {
 
     @Override
     public boolean yesOrNo(String message, String textYesButton, String textNoButton) {
-        //TODO Jdialog che mostri il messaggio e chieda si o no (c'è la Jdialog apposta predisposta per Yes or no)
-        return false;
+        // Jdialog che mostri il messaggio e chieda si o no (c'è la Jdialog apposta predisposta per Yes or no)
+        JLabel label = new JLabel(message);
+
+        JButton yesButton = new JButton(textYesButton);
+        JButton noButton = new JButton(textYesButton);
+
+        yesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                yesNoChoice = true;
+
+                JButton button = (JButton)e.getSource();
+                SwingUtilities.getWindowAncestor(button).dispose();
+            }
+        });
+
+        noButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                yesNoChoice = false;
+
+                JButton button = (JButton)e.getSource();
+                SwingUtilities.getWindowAncestor(button).dispose();
+            }
+        });
+        JPanel buttons = new JPanel();
+        buttons.add(yesButton);
+        buttons.add(noButton);
+
+        JPanel content = new JPanel(new BorderLayout(8, 8));
+        content.add(label, BorderLayout.CENTER);
+        content.add(buttons, BorderLayout.SOUTH);
+
+        JDialog dialog = new JDialog();
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialog.setModal(true);
+        dialog.setTitle("Selettore carte da ricaricare");
+        dialog.getContentPane().add(content);
+        dialog.pack();
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+
+
+        return yesNoChoice;
     }
 
     @Override
     public String stringSelector(String message, ArrayList<String> listToChooseFrom) {
         //TODO Jdialog che mostri il messaggio passato per parametro ed elenchi le stringhe contenute in
         // listToChooseFrom e ne faccia selezionare una
+
+
+
         return null;
     }
 
@@ -146,7 +192,7 @@ public class UserInteractionGUI extends UserInteraction {
 
     @Override
     public boolean[] cardsToReload(GunCard[] cards, boolean[] reloadableCards) {
-        //TODO Jdialog sullo stesso concetto del metodo di sopra, con 3 checkbox, dove vengono attivate a seconda
+        //n    Jdialog sullo stesso concetto del metodo di sopra, con 3 checkbox, dove vengono attivate a seconda
         // se ci sono carte arma che possono essere ricaricate.
 
         //In particolare scorrere cards, dove se un elemento è null la carta non c'è e abilitare la checkbox se
