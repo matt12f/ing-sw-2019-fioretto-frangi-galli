@@ -1,15 +1,17 @@
 package it.polimi.se2019.view;
 
+import it.polimi.se2019.enums.Color;
+
 public class PowerupUse {
     private int indexInHand;
-    private int idPlayerToMove;
+    private Color colorPlayerToMove;
     private String directionOfMove;
     private int movementDistance;
     private CellView cellForSelfMovement;
 
-    PowerupUse(int indexInHand, int idPlayerToMove, int movementDistance, String directionOfMove, CellView cellForSelfMovement) {
+    PowerupUse(int indexInHand, Color colorPlayerToMove, int movementDistance, String directionOfMove, CellView cellForSelfMovement) {
         this.indexInHand=indexInHand;
-        this.idPlayerToMove = idPlayerToMove;
+        this.colorPlayerToMove = colorPlayerToMove ;
         this.directionOfMove = directionOfMove;
         this.movementDistance = movementDistance;
         this.cellForSelfMovement = cellForSelfMovement;
@@ -19,8 +21,8 @@ public class PowerupUse {
         return indexInHand;
     }
 
-    public int getIdPlayerToMove() {
-        return idPlayerToMove;
+    public Color getColorPlayerToMove() {
+        return colorPlayerToMove;
     }
 
     public String getDirectionOfMove() {

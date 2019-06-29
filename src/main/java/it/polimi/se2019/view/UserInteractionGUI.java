@@ -5,6 +5,7 @@ import it.polimi.se2019.model.cards.GunCard;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class UserInteractionGUI extends UserInteraction {
     public String choice;
@@ -135,5 +136,20 @@ public class UserInteractionGUI extends UserInteraction {
 
         return new boolean[0];
     }
+
+    @Override
+    public boolean yesOrNo(String message) {
+        //TODO Jdialog che mostri il messaggio e chieda si o no (c'è la Jdialog apposta predisposta per Yes or no)
+        return false;
+    }
+
+    @Override
+    public String stringSelector(String message, ArrayList<String> listToChooseFrom) {
+        //TODO Jdialog che mostri il messaggio passato per parametro ed elenchi le stringhe contenute in
+        // listToChooseFrom e ne faccia selezionare una
+        return null;
+    }
+
+
 
 }

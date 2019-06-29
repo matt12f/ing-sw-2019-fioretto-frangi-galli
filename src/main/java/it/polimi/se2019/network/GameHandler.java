@@ -88,6 +88,8 @@ public class GameHandler implements Runnable {
 
             //TODO logica del turno
             //TODO deve ricevere da ClientHandler l'oggetto ActionRequestView per costruire l'oggetto AvailableActions
+            //TODO deve poi ricevere l'oggetto ChosenActions e applicarne gli effetti
+            
 
             clientTurn.setStatus(Status.NOTMYTURN);
             nextTurn();

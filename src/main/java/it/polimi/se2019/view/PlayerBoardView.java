@@ -1,6 +1,9 @@
 package it.polimi.se2019.view;
 
+import it.polimi.se2019.enums.Color;
+
 public abstract class PlayerBoardView {
+    private Color color;
     private AmmoView ammo;
     private boolean front;
     private DamageView damageView;
@@ -38,5 +41,9 @@ public abstract class PlayerBoardView {
 
     public ActionTileView getActionTile() {
         return actionTile;
+    }
+
+    public Color getColor() {
+        return color;
     }
 }

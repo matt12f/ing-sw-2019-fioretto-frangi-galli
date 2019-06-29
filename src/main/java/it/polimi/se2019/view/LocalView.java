@@ -13,7 +13,7 @@ public class LocalView  extends View implements Observer {
     private CellView playerPosition;
     private PlayerHandView playerHand;
 
-    public LocalView(ArrayList<PlayerBoardView> playerBoardViews,int playerId, MapView mapView, PlayerHandView playerHand) {
+    public LocalView(ArrayList<PlayerBoardView> playerBoardViews, int playerId, MapView mapView, PlayerHandView playerHand) {
         //TODO aggiungere la posizione del player
         this.playerBoardViews = playerBoardViews;
         this.playerId=playerId;
