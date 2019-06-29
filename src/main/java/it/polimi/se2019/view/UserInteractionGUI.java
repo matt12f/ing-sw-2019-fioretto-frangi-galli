@@ -151,16 +151,17 @@ public class UserInteractionGUI extends UserInteraction {
 
         //In particolare scorrere cards, dove se un elemento è null la carta non c'è e abilitare la checkbox se
         // la carta è presente e scarica (lo vedi dall'altro vettore passato)
-        JLabel label = new JLabel("Which weapon do you want to reload?");
+
+        JLabel label = new JLabel("Which weapons do you want to reload?");
         boolean[] chosen = new boolean[3];
-        JCheckBox weapon1Check = new JCheckBox("weapon 1");
-        JCheckBox weapon2Check = new JCheckBox("weapon 2");
-        JCheckBox weapon3Check = new JCheckBox("weapon 3");
+        JCheckBox weapon1Check = new JCheckBox("Weapon 1");
+        JCheckBox weapon2Check = new JCheckBox("Weapon 2");
+        JCheckBox weapon3Check = new JCheckBox("Weapon 3");
 
 
 
-        JButton frenzy5Button = new JButton("Frenzy move 5");
-        frenzy5Button.addActionListener(new ActionListener() {
+        JButton buttonToSend = new JButton("Send");
+        buttonToSend.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(weapon1Check.isSelected()){
@@ -180,16 +181,17 @@ public class UserInteractionGUI extends UserInteraction {
 
 
         JPanel buttons = new JPanel();
-        if(cards[0] != null && reloadableCards[0] == true){
+        if(cards[0] != null && reloadableCards[0]){
             buttons.add(weapon1Check);
         }
-        if(cards[1] != null && reloadableCards[1] == true){
+        if(cards[1] != null && reloadableCards[1]){
             buttons.add(weapon2Check);
         }
-        if(cards[2] != null && reloadableCards[2] == true){
+        if(cards[2] != null && reloadableCards[2]){
             buttons.add(weapon3Check);
         }
 
+        buttons.add(buttonToSend);
 
         JPanel content = new JPanel(new BorderLayout(8, 8));
         content.add(label, BorderLayout.CENTER);
@@ -198,7 +200,7 @@ public class UserInteractionGUI extends UserInteraction {
         JDialog dialog = new JDialog();
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         dialog.setModal(true);
-        dialog.setTitle("Selettore Mossa");
+        dialog.setTitle("Selettore carte da ricaricare");
         dialog.getContentPane().add(content);
         dialog.pack();
         dialog.setLocationRelativeTo(null);

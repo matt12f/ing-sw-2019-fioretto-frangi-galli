@@ -1,5 +1,7 @@
 package it.polimi.se2019.view;
 
+import it.polimi.se2019.enums.Color;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -21,7 +23,7 @@ public class PlayerZoneGUI extends JPanel {
         add(hand, container);
 
         setLayout(new GridBagLayout());
-        this.board = new PlayerBoardViewGUI('y',420, 109);
+        this.board = new PlayerBoardViewGUI(Color.YELLOW,420, 109);
         container.gridx=1;
         container.gridy=0;
 
