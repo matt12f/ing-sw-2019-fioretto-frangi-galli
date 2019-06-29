@@ -186,7 +186,14 @@ public class UserInteractionGUI extends UserInteraction {
 
     @Override
     public void showMessage(String message) {
-
+        JDialog dialog = new JDialog();
+        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        dialog.setModal(true);
+        dialog.setTitle("Finestra di selezione");
+        dialog.getContentPane().add(new JLabel(message));
+        dialog.pack();
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
     }
 
     @Override
