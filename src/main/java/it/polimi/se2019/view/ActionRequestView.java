@@ -19,13 +19,14 @@ public class ActionRequestView{
      * when the player must decide wether he wants to use a powerup and/or reload
      */
     public ActionRequestView(boolean turnConclusion){
+        LocalView localView=AdrenalineClient.getLocalView();
         if(AdrenalineClient.isGUI())
             this.askUser=new UserInteractionGUI();
         else
             this.askUser=new UserInteractionCLI();
 
         if(!turnConclusion){
-        String action=this.askUser.actionToRequest(AdrenalineClient.getLocalView().getPersonalPlayerBoardView().getFrenzy());
+        String action=this.askUser.actionToRequest(localView.getPersonalPlayerBoardView().getFrenzy());
         switch (action){
             case "move": this.actionToRequest=ActionType.NORMAL1;break;
             case "grab": this.actionToRequest=ActionType.NORMAL2;break;
@@ -37,12 +38,12 @@ public class ActionRequestView{
             case "frenzy5": this.actionToRequest=ActionType.FRENZY5;break;
             default: break; //won't happen, the player must chose one of the above
         }
-        this.powerupUse=powerupManagerView(AdrenalineClient.getLocalView());
+        this.powerupUse=powerupManagerView(localView);
         }
         else{ //here we are at the end of the turn
             this.actionToRequest=null;
-            this.powerupUse=powerupManagerView(AdrenalineClient.getLocalView());
-            this.reload=this.askUser.cardsToReload(AdrenalineClient.getLocalView().getPlayerHand().getGuns(),AdrenalineClient.getLocalView().getPlayerHand().getLoadedGuns());
+            this.powerupUse=powerupManagerView(localView);
+            this.reload=this.askUser.cardsToReload(localView.getPlayerHand().getGuns(),localView.getPlayerHand().getLoadedGuns());
         }
     }
 

@@ -15,14 +15,22 @@ public class TestUserInteraction {
         askUser=new UserInteractionGUI();
         //askUser=new UserInteractionCLI();
 
-        testGunReload();
-        testActionSelection();
+        //testGunReload();
+        //testActionSelection();
+        testYesOrNo();
     }
 
+    private static void testYesOrNo(){
+        boolean pereOMeloni = askUser.yesOrNo("scegli se vuoi le pere o i meloni","pere","meloni");
+        if(pereOMeloni)
+            System.out.println("Pere");
+        else
+            System.out.println("Meloni");
+    }
     private static void testActionSelection() {
-        askUser.actionToRequest(0);
-        askUser.actionToRequest(1);
-        askUser.actionToRequest(2);
+        System.out.println(askUser.actionToRequest(0));
+        System.out.println(askUser.actionToRequest(1));
+        System.out.println(askUser.actionToRequest(2));
     }
 
     private static void testGunReload(){

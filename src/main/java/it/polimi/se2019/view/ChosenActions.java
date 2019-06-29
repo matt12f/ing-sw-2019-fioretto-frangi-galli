@@ -45,8 +45,8 @@ public class ChosenActions {
 
             if(!choice.getPickableCards().isEmpty()){ //in case this is a grab/move + grab action picking a Gun
                 cardToPick = gunCardManager(choice.getPickableCards());
-                if(AdrenalineClient.getLocalView().getPlayerHand().isGunHandFull())
-                    this.cardToDiscard=cardDiscardSelector();
+                if(localView.getPlayerHand().isGunHandFull())
+                    this.cardToDiscard = cardDiscardSelector(localView);
             }
 
         }
@@ -74,28 +74,34 @@ public class ChosenActions {
             SingleCardActions chosenCard = choice.getAvailableCardActions().get(listOfCards.indexOf(cardSelected));
 
             if(chosenCard.isMustSwap())
-                this.cardToDiscard=cardDiscardSelector();
+                this.cardToDiscard=cardDiscardSelector(localView);
 
+            //choice of the action combination
+            String chosenCombination=this.askUser.stringSelector("Scegliere una combinazione di effetti",chosenCard.getAvailableCombinations());
+            SingleEffectsCombinationActions combinationActions=chosenCard.getEffectsCombinationActions().get(chosenCard.getAvailableCombinations().indexOf(chosenCombination));
 
-            //TODO elencare tutti gli elementi di chosenCard.getAvailableCombinations() e farne scegliere uno
-            //TODO qui sotto 0 è l'indice dell'elemento scelto
-            SingleEffectsCombinationActions combinationActions=chosenCard.getEffectsCombinationActions().get(0);
-
-
+            //TODO scorrere la singola combinazione degli effetti
 
         }
 
     }
 
-    private GunCard cardDiscardSelector() {
+    private GunCard cardDiscardSelector(LocalView localView) {
+        ArrayList<String> listOfGuns=new ArrayList<>();
+        for(GunCard gunCard: localView.getPlayerHand().getGuns())
+            listOfGuns.add(gunCard.getClass().getSimpleName());
+        String selection=this.askUser.stringSelector("Seleziona la carta da scartare",listOfGuns);
 
-        //TODO mostrare le carte della sua hand, per sceglierne una da scartare
-        return AdrenalineClient.getLocalView().getPlayerHand().getGuns()[1];
+        return localView.getPlayerHand().getGuns()[listOfGuns.indexOf(selection)];
     }
 
     private GunCard gunCardManager(ArrayList<GunCard> pickableCards) {
-        //TODO mostra a video l'elenco delle carte nell'array pickableCards e ritorna la carta scelta dall'utente
-        return null;
+        ArrayList<String> listOfGuns=new ArrayList<>();
+        for(GunCard gunCard: pickableCards)
+            listOfGuns.add(gunCard.getClass().getSimpleName());
+        String selection=this.askUser.stringSelector("Seleziona la carta da pescare",listOfGuns);
+
+        return pickableCards.get(listOfGuns.indexOf(selection));
     }
 
     /**

@@ -133,7 +133,7 @@ public class UserInteractionGUI extends UserInteraction {
         JLabel label = new JLabel(message);
 
         JButton yesButton = new JButton(textYesButton);
-        JButton noButton = new JButton(textYesButton);
+        JButton noButton = new JButton(textNoButton);
 
         yesButton.addActionListener(new ActionListener() {
             @Override
@@ -165,7 +165,7 @@ public class UserInteractionGUI extends UserInteraction {
         JDialog dialog = new JDialog();
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         dialog.setModal(true);
-        dialog.setTitle("Selettore carte da ricaricare");
+        dialog.setTitle("Finestra di selezione");
         dialog.getContentPane().add(content);
         dialog.pack();
         dialog.setLocationRelativeTo(null);
