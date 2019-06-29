@@ -63,7 +63,7 @@ public class AvailableActions {
             if(powerupUse.getDirectionOfMove().equals("None"))
                 PowerupManager.teleporterManager(currentController,powerupUse.getIndexInHand(),MapManager.cellViewToNewCell(currentController, powerupUse.getCellForSelfMovement()));
             else
-                PowerupManager.newtonManager(currentController,powerupUse.getIndexInHand(),currentController.getMainGameModel().getPlayerList().get(powerupUse.getIdPlayerToMove()),powerupUse.getMovementDistance(),MapManager.getIndexOfMove(powerupUse.getDirectionOfMove()));
+                PowerupManager.newtonManager(currentController,powerupUse.getIndexInHand(),currentController.getMainGameModel().getPlayerByColor(powerupUse.getColorPlayerToMove()),powerupUse.getMovementDistance(),MapManager.getIndexOfMove(powerupUse.getDirectionOfMove()));
         }
 
         //checks for adrenaline modes

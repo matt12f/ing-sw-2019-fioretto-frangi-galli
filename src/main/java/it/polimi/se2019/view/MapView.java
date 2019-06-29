@@ -1,7 +1,10 @@
 package it.polimi.se2019.view;
 
+import it.polimi.se2019.AdrenalineServer;
+import it.polimi.se2019.controller.MapManager;
 import it.polimi.se2019.enums.CellType;
 import it.polimi.se2019.enums.Color;
+import it.polimi.se2019.model.game.NewCell;
 
 import java.util.ArrayList;
 
@@ -27,6 +30,44 @@ public class MapView {
                         return singleCell;
             }
         return null; //won't happen
+    }
+
+    /**
+     * this method returns the visual index of the cell on the X axis
+     * @return effective index in the matrix + 1 for improved readability by user
+     */
+    public int getXIndex(NewCell cell){
+
+        return getXorYindex(getViewCell(cell),true)+1;
+    }
+
+    /**
+     * this method returns the visual index of the cell on the Y axis
+     * @return effective index in the matrix + 1 for improved readability by user
+     */
+    public int getYIndex(NewCell cell){
+        return getXorYindex(getViewCell(cell),false)+1;
+    }
+
+    private int getXorYindex(CellView position, boolean xOrY){
+        for (int i=0;i<boardMatrix.length;i++)
+            for (int j=0;j<boardMatrix[i].length;j++){
+                if(position.equals(boardMatrix[i][j]))
+                    if(xOrY)
+                        return i;
+                    else
+                        return j;
+            }
+        return -1;
+    }
+
+    private CellView getViewCell(NewCell cell){
+        for (CellView[] row: boardMatrix)
+            for (CellView singleCell: row) {
+                if(singleCell.getCorrespondingCell().equals(cell))
+                    return singleCell;
+            }
+        return null;
     }
 
     /**

@@ -126,11 +126,8 @@ public class UserInteractionGUI extends UserInteraction {
 
     }
 
-
-
-
     @Override
-    public boolean yesOrNo(String message) {
+    public boolean yesOrNo(String message, String textYesButton, String textNoButton) {
         //TODO Jdialog che mostri il messaggio e chieda si o no (c'è la Jdialog apposta predisposta per Yes or no)
         return false;
     }
@@ -141,6 +138,12 @@ public class UserInteractionGUI extends UserInteraction {
         // listToChooseFrom e ne faccia selezionare una
         return null;
     }
+
+    @Override
+    public void showMessage(String message) {
+
+    }
+
     @Override
     public boolean[] cardsToReload(GunCard[] cards, boolean[] reloadableCards) {
         //TODO Jdialog sullo stesso concetto del metodo di sopra, con 3 checkbox, dove vengono attivate a seconda

@@ -3,6 +3,7 @@ package it.polimi.se2019.model.game;
 import com.google.gson.Gson;
 
 import it.polimi.se2019.enums.CellType;
+import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.view.modelChanged;
 
 import java.io.FileReader;
@@ -64,6 +65,13 @@ public class GameModel extends Observable{
 
     public ArrayList<Player> getPlayerList() {
         return playerList;
+    }
+
+    public Player getPlayerByColor(Color color){
+        for(Player player1: this.playerList)
+            if(player1.getFigure().getColor().equals((color)))
+                return player1;
+        return null;
     }
 
     public Map getCurrentMap() {

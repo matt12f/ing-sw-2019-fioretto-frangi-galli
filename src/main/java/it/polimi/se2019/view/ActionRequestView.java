@@ -55,7 +55,7 @@ public class ActionRequestView{
         PowerupCard[] cardView=localView.getPlayerHand().getPowerups();
 
         for(int i=0;i<cardView.length;i++)
-            if (cardView[i].getPowerupType().equals("Newton") && this.askUser.yesOrNo("Vuoi usare un PowerUp Newton?")){
+            if (cardView[i].getPowerupType().equals("Newton") && this.askUser.yesOrNo("Vuoi usare un PowerUp Newton?","Si","No")){
                 ArrayList<String> playerColors = getPlayerColors();
                 String colorString = this.askUser.stringSelector("Quale player vuoi spostare? scegline il colore", playerColors);
 
@@ -68,12 +68,12 @@ public class ActionRequestView{
                 String direction=this.askUser.stringSelector("In quale direzione vuoi muoverlo?", directionsAvailable);
 
                 int distance=1;
-                if(maxDistanceForDirection.get(directionsAvailable.indexOf(direction))==2 && this.askUser.yesOrNo("Vuoi muovelo di due (SI) o solo di uno (NO)?"))
+                if(maxDistanceForDirection.get(directionsAvailable.indexOf(direction))==2 && this.askUser.yesOrNo("Di quante celle vuoi muoverlo?","2 celle","1 cella"))
                     distance=2;
 
                 temp.add(new PowerupUse(i,color,distance,direction,null));
             }
-            else if(cardView[i].getPowerupType().equals("Teleporter") && this.askUser.yesOrNo("vuoi usare un PowerUp Teleporter?")){
+            else if(cardView[i].getPowerupType().equals("Teleporter") && this.askUser.yesOrNo("vuoi usare un PowerUp Teleporter?","Si","No")){
 
                 CellView yourPosition = localView.getMapView().getPlayerPosition(localView.getPersonalPlayerBoardView().getColor());
                 ArrayList<Coordinates> coordinates = localView.getMapView().availableCoordinates(yourPosition);
