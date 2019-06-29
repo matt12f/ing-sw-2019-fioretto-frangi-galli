@@ -115,7 +115,7 @@ public class UserInteractionGUI extends UserInteraction {
         content.add(buttons, BorderLayout.SOUTH);
 
         JDialog dialog = new JDialog();
-        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
         dialog.setModal(true);
         dialog.setTitle("Selettore Mossa");
         dialog.getContentPane().add(content);
@@ -129,7 +129,6 @@ public class UserInteractionGUI extends UserInteraction {
 
     @Override
     public boolean yesOrNo(String message, String textYesButton, String textNoButton) {
-        // Jdialog che mostri il messaggio e chieda si o no (c'è la Jdialog apposta predisposta per Yes or no)
         JLabel label = new JLabel(message);
 
         JButton yesButton = new JButton(textYesButton);
@@ -163,7 +162,7 @@ public class UserInteractionGUI extends UserInteraction {
         content.add(buttons, BorderLayout.SOUTH);
 
         JDialog dialog = new JDialog();
-        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
         dialog.setModal(true);
         dialog.setTitle("Finestra di selezione");
         dialog.getContentPane().add(content);
@@ -244,7 +243,7 @@ public class UserInteractionGUI extends UserInteraction {
         content.add(buttons, BorderLayout.SOUTH);
 
         JDialog dialog = new JDialog();
-        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
         dialog.setModal(true);
         dialog.setTitle("Selettore carte da ricaricare");
         dialog.getContentPane().add(content);
