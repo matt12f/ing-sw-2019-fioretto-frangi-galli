@@ -4,7 +4,11 @@ import it.polimi.se2019.model.game.Player;
 
 import java.util.ArrayList;
 
-//Custom class for T.H.O.R. card
+/**
+ * Custom class for T.H.O.R. card
+ *
+ * returns the list of every player on the board with a list of players it can see
+ */
 public class PlayerWithTargets {
     private Player target;
     private ArrayList<Player> targetsItCanSee;

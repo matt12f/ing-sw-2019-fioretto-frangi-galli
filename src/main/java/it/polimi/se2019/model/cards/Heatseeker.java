@@ -6,6 +6,8 @@ import it.polimi.se2019.controller.FictitiousPlayer;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
 
+import java.util.ArrayList;
+
 public class Heatseeker extends GunCardAddEff {
     /**
      * hard-coded constructor
@@ -52,5 +54,13 @@ public class Heatseeker extends GunCardAddEff {
     @Override
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public GunCard clone() {
+        GunCard gunCard = new Heatseeker();
+        gunCard.setLoaded(this.isLoaded());
+
+        return gunCard;
     }
 }

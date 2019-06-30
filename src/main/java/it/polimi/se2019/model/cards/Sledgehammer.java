@@ -43,7 +43,7 @@ public class Sledgehammer extends GunCardAltEff {
      */
     @Override
     void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        ArrayList<Player> targets =new ArrayList<>(player.getPosition().getPlayers());
+        ArrayList<Player> targets =Player.duplicateList(player.getPosition().getPlayers());
         targets.remove(player.getCorrespondingPlayer());
 
         actions.addToPlayerTargetList(targets);
@@ -79,5 +79,13 @@ public class Sledgehammer extends GunCardAltEff {
         actions.setCanMoveOpponent(true);
         actions.setMinCellToSelect(1);
         actions.setMaxCellToSelect(1);
+    }
+
+    @Override
+    public GunCard clone() {
+        GunCard gunCard = new Sledgehammer();
+        gunCard.setLoaded(this.isLoaded());
+
+        return gunCard;
     }
 }

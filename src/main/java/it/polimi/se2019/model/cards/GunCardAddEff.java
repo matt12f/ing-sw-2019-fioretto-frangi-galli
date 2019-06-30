@@ -56,10 +56,14 @@ public abstract class GunCardAddEff extends GunCard{
             }
     }
 
+    @Override
     public char[] getTertiaryEffectCost() {
         return tertiaryEffectCost;
     }
 
+    protected void setTertiaryEffectCost(char[] tertiaryEffectCost) {
+        this.tertiaryEffectCost = tertiaryEffectCost;
+    }
 
     /**
      * methods that apply the individual effects, with the selections of the player as inputs
@@ -70,5 +74,6 @@ public abstract class GunCardAddEff extends GunCard{
      * Methods called by available actions builder to calculate the possible targets
      */
     abstract void targetsOfTertiaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player);
+
 
 }

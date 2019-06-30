@@ -60,7 +60,7 @@ public class Railgun extends GunCardAltEff {
                     while (inside){
                         distance++;
                         try{
-                        targetsInOneDirection.addAll(temp.getPlayers());
+                        targetsInOneDirection.addAll(Player.duplicateList(temp.getPlayers()));
                         temp=MapManager.getCellInDirection(board, player.getPosition(), distance, i);
                         }
                         catch (OuterWallException e){
@@ -89,4 +89,11 @@ public class Railgun extends GunCardAltEff {
             cell.setMaxTargetsInCell(2);
     }
 
+    @Override
+    public GunCard clone() {
+        GunCard gunCard = new Railgun();
+        gunCard.setLoaded(this.isLoaded());
+
+        return gunCard;
+    }
 }

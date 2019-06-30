@@ -75,4 +75,11 @@ public class LockRifle extends GunCardAddEff {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public GunCard clone() {
+        GunCard gunCard = new LockRifle();
+        gunCard.setLoaded(this.isLoaded());
+
+        return gunCard;
+    }
 }

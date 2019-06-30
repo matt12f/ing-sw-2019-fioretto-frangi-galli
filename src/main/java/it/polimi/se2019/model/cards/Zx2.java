@@ -55,4 +55,12 @@ public class Zx2 extends GunCardAltEff {
         targetsOfBaseEffect(currentController, actions, player);
         actions.setMaxNumPlayerTargets(3);
     }
+
+    @Override
+    public GunCard clone() {
+        GunCard gunCard = new Zx2();
+        gunCard.setLoaded(this.isLoaded());
+
+        return gunCard;
+    }
 }

@@ -75,4 +75,12 @@ public class TractorBeam extends GunCardAltEff {
         actions.addToPlayerTargetList(targets);
         actions.setMaxNumPlayerTargets(1);
     }
+
+    @Override
+    public GunCard clone() {
+        GunCard gunCard = new TractorBeam();
+        gunCard.setLoaded(this.isLoaded());
+
+        return gunCard;
+    }
 }

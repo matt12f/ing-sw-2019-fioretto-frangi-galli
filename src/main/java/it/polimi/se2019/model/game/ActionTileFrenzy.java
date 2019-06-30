@@ -18,4 +18,8 @@ public class ActionTileFrenzy extends ActionTile{
         this.actionCounter = actions;
     }
 
+    @Override
+    public ActionTileFrenzy clone(){
+        return new ActionTileFrenzy(this.actionCounter);
+    }
 }

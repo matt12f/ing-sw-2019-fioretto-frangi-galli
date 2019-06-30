@@ -56,4 +56,12 @@ public class Hellion extends GunCardAltEff{
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         targetsOfBaseEffect(currentController, actions, player);
     }
+
+    @Override
+    public GunCard clone() {
+        GunCard gunCard = new Hellion();
+        gunCard.setLoaded(this.isLoaded());
+
+        return gunCard;
+    }
 }

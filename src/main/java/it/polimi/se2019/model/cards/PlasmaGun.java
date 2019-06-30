@@ -147,8 +147,14 @@ public class PlasmaGun extends GunCardAddEff {
         actions.setCanMoveYourself(true);
         actions.setMinCellToSelect(1);
         actions.setMaxCellToSelect(1);
-        }
+    }
 
+    @Override
+    public GunCard clone() {
+        GunCard gunCard = new PlasmaGun();
+        gunCard.setLoaded(this.isLoaded());
 
+        return gunCard;
+    }
 
 }

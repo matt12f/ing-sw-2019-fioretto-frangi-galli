@@ -56,7 +56,7 @@ public class PowerGlove extends GunCardAltEff {
         try {
             for (int i = 0; i < 4; i++){
                 if(!player.getPosition().getEdge(i).equals(CellEdge.WALL))
-                    targets.addAll(MapManager.getCellInDirection(board,player.getPosition(),1,i).getPlayers());
+                    targets.addAll(Player.duplicateList(MapManager.getCellInDirection(board,player.getPosition(),1,i).getPlayers()));
             }
         }catch (OuterWallException e){
             //Won't ever happen
@@ -79,5 +79,13 @@ public class PowerGlove extends GunCardAltEff {
         targetsOfBaseEffect(currentController, actions, player);
 
         actions.setOfferableExtra(true); //to be then evaluated in view
+    }
+
+    @Override
+    public GunCard clone() {
+        GunCard gunCard = new PowerGlove();
+        gunCard.setLoaded(this.isLoaded());
+
+        return gunCard;
     }
 }

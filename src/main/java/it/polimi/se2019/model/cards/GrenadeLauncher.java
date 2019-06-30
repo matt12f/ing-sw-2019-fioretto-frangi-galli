@@ -83,4 +83,12 @@ public class GrenadeLauncher extends GunCardAddEff {
     void targetsOfTertiaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public GunCard clone() {
+        GunCard gunCard = new GrenadeLauncher();
+        gunCard.setLoaded(this.isLoaded());
+
+        return gunCard;
+    }
 }

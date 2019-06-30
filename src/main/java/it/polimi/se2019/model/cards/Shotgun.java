@@ -44,7 +44,7 @@ public class Shotgun extends GunCardAltEff {
      */
     @Override
     void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        ArrayList<Player> targets = new ArrayList<>(player.getPosition().getPlayers());
+        ArrayList<Player> targets = Player.duplicateList(player.getPosition().getPlayers());
         targets.remove(player.getCorrespondingPlayer());
 
         actions.addToPlayerTargetList(targets);
@@ -69,7 +69,7 @@ public class Shotgun extends GunCardAltEff {
         for (int i = 0; i < 4; i++){
             try{
             if(!player.getPosition().getEdge(i).equals(CellEdge.WALL))
-                targets.addAll(MapManager.getCellInDirection(board,player.getPosition(),1,i).getPlayers());
+                targets.addAll(Player.duplicateList(MapManager.getCellInDirection(board,player.getPosition(),1,i).getPlayers()));
 
             }catch (OuterWallException e){
                 //Won't ever happen
@@ -77,5 +77,13 @@ public class Shotgun extends GunCardAltEff {
         }
         actions.addToPlayerTargetList(targets);
         actions.setMaxNumPlayerTargets(1);
+    }
+
+    @Override
+    public GunCard clone() {
+        GunCard gunCard = new Shotgun();
+        gunCard.setLoaded(this.isLoaded());
+
+        return gunCard;
     }
 }

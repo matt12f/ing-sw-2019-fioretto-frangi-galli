@@ -2,7 +2,10 @@ package it.polimi.se2019.model.cards;
 
 import it.polimi.se2019.controller.*;
 import it.polimi.se2019.model.game.NewCell;
+import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
+
+import java.util.ArrayList;
 
 public class Shockwave extends GunCardAltEff {
     /**
@@ -40,7 +43,7 @@ public class Shockwave extends GunCardAltEff {
         //These are the players that you can move to end up in squares that you can see
         for(NewCell visibleSquare:ActionManager.cellsOneMoveAway(currentController,player.getPosition())){
            if(!visibleSquare.getPlayers().isEmpty())
-               actions.addCellsWithTargets(visibleSquare,visibleSquare.getPlayers(),1,1,false,false);
+               actions.addCellsWithTargets(visibleSquare, Player.duplicateList(visibleSquare.getPlayers()),1,1,false,false);
         }
         actions.setMaxCellToSelect(3);
         actions.setMinCellToSelect(1);
@@ -53,5 +56,13 @@ public class Shockwave extends GunCardAltEff {
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         if(ActionManager.targetsOneMoveAway(currentController,player).isEmpty())
             actions.setOfferableOpt1(false);
+    }
+
+    @Override
+    public GunCard clone() {
+        GunCard gunCard = new Shockwave();
+        gunCard.setLoaded(this.isLoaded());
+
+        return gunCard;
     }
 }

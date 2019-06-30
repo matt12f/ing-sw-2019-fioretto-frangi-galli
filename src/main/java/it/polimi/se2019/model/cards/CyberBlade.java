@@ -140,7 +140,7 @@ public class CyberBlade extends GunCardAddEff {
      */
     @Override
     void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        ArrayList<Player> targets = new ArrayList<>(player.getPosition().getPlayers());
+        ArrayList<Player> targets = new ArrayList<>(Player.duplicateList(player.getPosition().getPlayers()));
         targets.remove(player.getCorrespondingPlayer());
         actions.addToPlayerTargetList(targets);
         actions.setMaxNumPlayerTargets(1);
@@ -154,7 +154,7 @@ public class CyberBlade extends GunCardAddEff {
     @Override
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         for(NewCell cell: ActionManager.cellsOneMoveAway(currentController,player.getPosition())){
-            actions.addCellsWithTargets(cell,cell.getPlayers(),0,0,true,false);
+            actions.addCellsWithTargets(cell,Player.duplicateList(cell.getPlayers()),0,0,true,false);
         }
         actions.setCanMoveYourself(true);
         actions.setMinCellToSelect(1);
@@ -167,10 +167,18 @@ public class CyberBlade extends GunCardAddEff {
     @Override
     void targetsOfTertiaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         for(NewCell cell: ActionManager.cellsOneMoveAway(currentController,player.getPosition())){
-            actions.addCellsWithTargets(cell,cell.getPlayers(),1,1,true,false);
+            actions.addCellsWithTargets(cell,Player.duplicateList(cell.getPlayers()),1,1,true,false);
         }
         actions.setCanMoveYourself(true);
         actions.setMinCellToSelect(1);
         actions.setMaxCellToSelect(1);
+    }
+
+    @Override
+    public GunCard clone() {
+        GunCard gunCard = new CyberBlade();
+        gunCard.setLoaded(this.isLoaded());
+
+        return gunCard;
     }
 }

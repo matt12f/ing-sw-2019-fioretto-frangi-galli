@@ -113,7 +113,7 @@ public class ActionManager {
 
     public static ArrayList<Player> visibleTargets(Controller currentController,NewCell playersPosition){
         //it will add all of the targets in the room first
-        ArrayList<Player> targets=new ArrayList<>(MapManager.getRoom(currentController, playersPosition).getPlayers());
+        ArrayList<Player> targets=new ArrayList<>(Player.duplicateList(MapManager.getRoom(currentController, playersPosition).getPlayers()));
 
         //it will then add all of the targets in adjacent rooms (through a door)
         for(int i=0;i<4;i++)
@@ -129,7 +129,7 @@ public class ActionManager {
     }
 
     public static ArrayList<Player> notVisibleTargets(Controller currentController,FictitiousPlayer playersPOV){
-        ArrayList<Player> allTargets = new ArrayList<>(currentController.getMainGameModel().getPlayerList());
+        ArrayList<Player> allTargets = new ArrayList<>(Player.duplicateList(currentController.getMainGameModel().getPlayerList()));
 
         allTargets.removeAll(visibleTargets(currentController,playersPOV));
 
@@ -143,14 +143,14 @@ public class ActionManager {
      * */
     public static ArrayList<NewCell> visibleSquares(Controller currentController, FictitiousPlayer playersPOV){
         //it will add first the squares in your room
-        ArrayList<NewCell> squares=new ArrayList<>(MapManager.getRoom(currentController, playersPOV.getPosition()).getCells());
+        ArrayList<NewCell> squares=new ArrayList<>(NewCell.duplicateList(MapManager.getRoom(currentController, playersPOV.getPosition()).getCells()));
 
         //it will then add the squares in adjacent rooms (through a door)
         for(int i=0;i<4;i++)
             if(playersPOV.getPosition().getEdge(i).equals(CellEdge.DOOR))
                 try {
                     Room roomYouCanSee=MapManager.getRoom(currentController, MapManager.getCellInDirection(currentController.getMainGameModel().getCurrentMap().getBoardMatrix(),playersPOV.getPosition(),1,i));
-                    squares.addAll(roomYouCanSee.getCells());
+                    squares.addAll(NewCell.duplicateList(roomYouCanSee.getCells()));
                 } catch (OuterWallException e){
                     //Won't ever happen
                 }
@@ -164,7 +164,7 @@ public class ActionManager {
     public static ArrayList<Player> targetsOneMoveAway(Controller currentController, FictitiousPlayer player){
         ArrayList<Player> targets=new ArrayList<>();
         for(NewCell cell: cellsOneMoveAway(currentController,player.getPosition()))
-            targets.addAll(cell.getPlayers());
+            targets.addAll(Player.duplicateList(cell.getPlayers()));
         return targets;
     }
 

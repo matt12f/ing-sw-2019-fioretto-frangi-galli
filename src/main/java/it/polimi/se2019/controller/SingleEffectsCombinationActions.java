@@ -27,6 +27,7 @@ public class SingleEffectsCombinationActions{
     private ArrayList<NewCell> targetCells; //To choose from
     private ArrayList<Room> targetRooms; //To choose from
 
+    //TODO valutazione degli offerable non serve al di fuori della classe stessa: forse isAlternative si può togliere
     private boolean offerableBase; //For the GUI/CLI
     private boolean offerableOpt1; //For the GUI/CLI
     private boolean offerableOpt2; //For the GUI/CLI

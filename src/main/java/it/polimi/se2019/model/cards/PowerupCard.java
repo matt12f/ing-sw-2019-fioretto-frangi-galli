@@ -18,4 +18,9 @@ public class PowerupCard {
     public char getCubeColor() {
         return this.cubeColor;
     }
+
+    @Override
+    public PowerupCard clone(){
+        return new PowerupCard(this.powerupType,this.cubeColor);
+    }
 }

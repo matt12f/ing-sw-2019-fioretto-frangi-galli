@@ -86,6 +86,14 @@ public class Hand {
     public void removePowerUp(int indexInHand){
         this.powerups[indexInHand]=null;
     }
+
+    @Override
+    public Hand clone(){
+        Hand hand=new Hand();
+        hand.guns=this.guns.clone();
+        hand.powerups=this.powerups.clone();
+        return hand;
+    }
 }
 
 

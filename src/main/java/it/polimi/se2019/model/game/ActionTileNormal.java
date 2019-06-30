@@ -40,5 +40,14 @@ public class ActionTileNormal extends ActionTile {
 
     }
 
+    @Override
+    public ActionTileNormal clone(){
+        ActionTileNormal actionTileNormal= new ActionTileNormal();
+        actionTileNormal.adrenalineMode1=this.adrenalineMode1;
+        actionTileNormal.adrenalineMode2=this.adrenalineMode2;
+
+        return actionTileNormal;
+    }
+
 
 }

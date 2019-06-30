@@ -38,4 +38,10 @@ public class Figure {
         this.currentCell = currentCell;
     }
 
+    @Override
+    public Figure clone(){
+        Figure figure=new Figure(this.color);
+        figure.currentCell=this.currentCell.clone();
+        return figure;
+    }
 }

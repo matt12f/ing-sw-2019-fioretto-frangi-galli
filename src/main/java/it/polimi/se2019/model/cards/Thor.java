@@ -1,6 +1,5 @@
 package it.polimi.se2019.model.cards;
 
-import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.controller.ActionManager;
 import it.polimi.se2019.controller.Controller;
 import it.polimi.se2019.controller.FictitiousPlayer;
@@ -78,6 +77,7 @@ public class Thor extends GunCardAddEff {
         //here I'm filling a list with every player and the targets they can see
         for(Player player1: currentController.getMainGameModel().getPlayerList())
             actions.addPlayersWithTargets(currentController,player1);
+
     }
 
     /**
@@ -86,5 +86,13 @@ public class Thor extends GunCardAddEff {
     @Override
     void targetsOfTertiaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         //custom management in view
+    }
+
+    @Override
+    public GunCard clone() {
+        GunCard gunCard = new Thor();
+        gunCard.setLoaded(this.isLoaded());
+
+        return gunCard;
     }
 }

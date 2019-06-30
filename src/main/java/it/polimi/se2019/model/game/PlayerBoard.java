@@ -91,4 +91,26 @@ public class PlayerBoard extends Observable {
         this.notifyObservers();
 
     }
+
+    @Override
+    public PlayerBoard clone(){
+        PlayerBoard playerBoard=new PlayerBoard(this.color);
+        playerBoard.currentBoardValue = this.currentBoardValue;
+        playerBoard.front=this.front;
+        playerBoard.ammo=this.ammo.clone();
+        playerBoard.damageTrack = this.damageTrack.clone();
+
+        if(this.actionTileNormal!=null)
+            playerBoard.actionTileNormal = this.actionTileNormal.clone();
+        else
+            playerBoard.actionTileNormal=null;
+
+        if(this.actionTileFrenzy!=null)
+            playerBoard.actionTileFrenzy = this.actionTileFrenzy.clone();
+        else
+            playerBoard.actionTileFrenzy=null;
+
+        playerBoard.hand =this.hand.clone();
+        return playerBoard;
+    }
 }

@@ -1,7 +1,5 @@
 package it.polimi.se2019.model.game;
 
-import it.polimi.se2019.AdrenalineServer;
-import it.polimi.se2019.controller.MapManager;
 import it.polimi.se2019.enums.CellEdge;
 import it.polimi.se2019.enums.CellType;
 import it.polimi.se2019.enums.Color;
@@ -14,12 +12,12 @@ import java.util.ArrayList;
 public class NewCell {
     private CellType cellType;
     protected Color color;
-    protected ArrayList<Player> players;
     protected CellEdge top;
     protected CellEdge bottom;
     protected CellEdge left;
     protected CellEdge right;
 
+    protected ArrayList<Player> players;
     private AmmoTileCard drop;
     private ArrayList<GunCard> weaponCards;
 
@@ -28,12 +26,14 @@ public class NewCell {
      */
     public NewCell(Color color, CellEdge top, CellEdge bottom, CellEdge left, CellEdge right, CellType cellType) {
         this.color = color;
-        this.players = new ArrayList<>();
         this.top = top;
         this.bottom = bottom;
         this.left = left;
         this.right = right;
         this.cellType=cellType;
+
+        this.players = new ArrayList<>();
+
         if(cellType.equals(CellType.SPAWN)){
             this.drop=null;
             this.weaponCards= new ArrayList<>();
@@ -141,5 +141,50 @@ public class NewCell {
             case 3: return this.right;
             default:return CellEdge.WALL;
         }
+    }
+
+    public static ArrayList<NewCell> duplicateList(ArrayList<NewCell> originalList) {
+        ArrayList<NewCell> clone = new ArrayList<>();
+        for(NewCell cell: originalList)
+            clone.add(cell.clone());
+        return clone;
+    }
+
+    @Override
+    public NewCell clone() {
+        NewCell cell = new NewCell(this.color, this.top, this.bottom, this.left, this.right, this.cellType);
+        cell.players=this.players; //Quick fix to avoid loop (it calls Player, then Figure and then NewCell again)
+
+        if (this.drop != null)
+            cell.drop = this.drop.clone();
+        else cell.drop = null;
+        if (this.weaponCards != null){
+            for (GunCard gunCard : this.weaponCards)
+                cell.weaponCards.add(gunCard.clone());
+        }else
+                cell.weaponCards=null;
+        return cell;
+    }
+
+    @Override
+    public boolean equals(Object item) {
+        if (item == null)
+            return false;
+
+        if (this.getClass() != item.getClass())
+            return false;
+
+        NewCell otherItem = (NewCell) item;
+
+        if(!this.top.equals(otherItem.top)||!this.bottom.equals(otherItem.bottom)||!this.left.equals(otherItem.left)||!this.right.equals(otherItem.right))
+            return false;
+
+        if(!this.cellType.equals(otherItem.cellType)||!this.color.equals(otherItem.color))
+            return false;
+
+        if(this.drop!=null && otherItem.drop!=null && !this.drop.getContent().equals(otherItem.drop.getContent()))
+            return false;
+
+        return true;
     }
 }

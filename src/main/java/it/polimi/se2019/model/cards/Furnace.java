@@ -74,4 +74,11 @@ public class Furnace extends GunCardAltEff {
 
         actions.addToTargetCells(cells);
     }
+    @Override
+    public GunCard clone() {
+        GunCard gunCard = new Furnace();
+        gunCard.setLoaded(this.isLoaded());
+
+        return gunCard;
+    }
 }

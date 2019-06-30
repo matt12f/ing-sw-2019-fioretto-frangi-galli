@@ -5,6 +5,8 @@ import it.polimi.se2019.controller.FictitiousPlayer;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
 
+import java.util.ArrayList;
+
 public class Electroscythe extends GunCardAltEff {
     /**
      * hard-coded constructor
@@ -47,5 +49,14 @@ public class Electroscythe extends GunCardAltEff {
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         if(player.getPosition().getPlayers().size()==1)
             actions.setOfferableOpt1(false);
+    }
+
+
+    @Override
+    public GunCard clone() {
+        GunCard gunCard = new Electroscythe();
+        gunCard.setLoaded(this.isLoaded());
+
+        return gunCard;
     }
 }

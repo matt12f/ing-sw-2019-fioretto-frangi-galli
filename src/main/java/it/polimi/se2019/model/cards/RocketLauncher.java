@@ -142,4 +142,12 @@ public class RocketLauncher extends GunCardAddEff {
         actions.setMinCellToSelect(1);
 
     }
+
+    @Override
+    public GunCard clone() {
+        GunCard gunCard = new RocketLauncher();
+        gunCard.setLoaded(this.isLoaded());
+
+        return gunCard;
+    }
 }

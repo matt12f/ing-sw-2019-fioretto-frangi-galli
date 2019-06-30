@@ -44,7 +44,9 @@ public abstract class GunCard{
     public char[] getSecondaryEffectCost() {
         return secondaryEffectCost;
     }
+
     public abstract char[] getTertiaryEffectCost();
+    protected abstract void setTertiaryEffectCost(char[] tertiaryEffectCost);
 
     /**
      * This method calls the single effects method and applies the player's choices, using the methods below
@@ -67,4 +69,8 @@ public abstract class GunCard{
      */
     abstract void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player);
     abstract void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player);
+
+    @Override
+    public abstract GunCard clone();
+    //TODO portare clone nelle classi arma
 }

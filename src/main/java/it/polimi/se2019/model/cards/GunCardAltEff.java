@@ -40,6 +40,7 @@ public abstract class GunCardAltEff extends GunCard{
         return actions;
     }
 
+    @Override
     public void applyEffects(ChosenActions playersChoice){
         for(int i=0;i<playersChoice.getOrderOfExecution().size();i++)
             switch (playersChoice.getOrderOfExecution().get(i)){
@@ -53,8 +54,13 @@ public abstract class GunCardAltEff extends GunCard{
         return hasAlternativeEffect;
     }
 
+    @Override
     public char[] getTertiaryEffectCost() {
         return null;
     }
 
+    @Override
+    protected void setTertiaryEffectCost(char[] tertiaryEffectCost) {
+
+    }
 }

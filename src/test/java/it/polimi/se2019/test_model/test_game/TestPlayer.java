@@ -3,7 +3,6 @@ package it.polimi.se2019.test_model.test_game;
 import it.polimi.se2019.enums.CellEdge;
 import it.polimi.se2019.enums.CellType;
 import it.polimi.se2019.enums.Color;
-import it.polimi.se2019.exceptions.FullException;
 import it.polimi.se2019.model.cards.CyberBlade;
 import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
@@ -19,8 +18,6 @@ public class TestPlayer {
 
         NewCell position1= new NewCell(Color.BLUE, CellEdge.WALL,CellEdge.DOOR,CellEdge.ROOM,CellEdge.ROOM, CellType.DROP);
 
-        NewCell position2= new NewCell(Color.YELLOW, CellEdge.DOOR,CellEdge.WALL,CellEdge.WALL,CellEdge.ROOM, CellType.SPAWN);
-
         player1.setScore(112);
 
         player1.getFigure().setCell(position1);
@@ -30,7 +27,11 @@ public class TestPlayer {
 
         Player player2=player1.clone();
 
-        assertNotEquals(player2,player1);
+        //it works because we've made a custom equals
+        assertEquals(player2, player1);
+
+        //this is a clone! it's not the same
+        assertNotEquals(player1.getPlayerBoard(),player2.getPlayerBoard());
 
     }
 }

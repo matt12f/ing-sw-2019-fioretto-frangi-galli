@@ -15,4 +15,9 @@
         return content;
     }
 
+    @Override
+    public AmmoTileCard clone(){
+        return new AmmoTileCard(this.content);
+    }
+
 }

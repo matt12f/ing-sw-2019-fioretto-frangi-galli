@@ -66,7 +66,7 @@ public class MachineGun extends GunCardAddEff {
      */
     @Override
     void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        actions.addToPlayerTargetList(new ArrayList<>(ActionManager.visibleTargets(currentController,player)));
+        actions.addToPlayerTargetList(ActionManager.visibleTargets(currentController,player));
         actions.setMaxNumPlayerTargets(2);
     }
 
@@ -88,5 +88,13 @@ public class MachineGun extends GunCardAddEff {
         actions.setSameListDifferentTarget(true); //In this case it's from the original list
 
         actions.setOfferableExtra(true);
+    }
+
+    @Override
+    public GunCard clone() {
+        GunCard gunCard = new MachineGun();
+        gunCard.setLoaded(this.isLoaded());
+
+        return gunCard;
     }
 }

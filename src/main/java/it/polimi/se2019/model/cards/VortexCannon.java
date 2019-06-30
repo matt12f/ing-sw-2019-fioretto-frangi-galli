@@ -73,7 +73,7 @@ public class VortexCannon extends GunCardAddEff {
     private void targetFiller(Controller currentController,SingleEffectsCombinationActions actions, FictitiousPlayer player, int maxTargetCell){
         for(NewCell cell:ActionManager.visibleSquares(currentController,player)){
             if (!cell.equals(player.getPosition())){
-                ArrayList<Player> targets=new ArrayList<>(cell.getPlayers());
+                ArrayList<Player> targets=new ArrayList<>(Player.duplicateList(cell.getPlayers()));
                 targets.remove(player.getCorrespondingPlayer());
 
                 targets.addAll(ActionManager.targetsOneMoveAway(currentController,player));
@@ -94,5 +94,13 @@ public class VortexCannon extends GunCardAddEff {
     @Override
     void targetsOfTertiaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public GunCard clone() {
+        GunCard gunCard = new VortexCannon();
+        gunCard.setLoaded(this.isLoaded());
+
+        return gunCard;
     }
 }

@@ -72,4 +72,13 @@ public class Ammo {
             this.yellow = 3;
         }
     }
+
+    @Override
+    public Ammo clone(){
+        Ammo ammo=new Ammo();
+        ammo.blue=this.blue;
+        ammo.red=this.red;
+        ammo.yellow=this.yellow;
+        return ammo;
+    }
 }

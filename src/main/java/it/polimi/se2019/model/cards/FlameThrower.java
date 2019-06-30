@@ -60,8 +60,8 @@ public class FlameThrower extends GunCardAltEff {
                 cellOneMoveAway= MapManager.getCellInDirection(board, player.getPosition(), 1, i);
 
                 try{
-                    targetsInOneDirection.addAll(cellOneMoveAway.getPlayers());
-                    targetsInOneDirection.addAll(MapManager.getCellInDirection(board, player.getPosition(), 2, i).getPlayers());
+                    targetsInOneDirection.addAll(Player.duplicateList(cellOneMoveAway.getPlayers()));
+                    targetsInOneDirection.addAll(Player.duplicateList(MapManager.getCellInDirection(board, player.getPosition(), 2, i).getPlayers()));
                     }
                     catch (OuterWallException e){
                     actions.addCellsWithTargets(cellOneMoveAway,targetsInOneDirection,1,1,false,false);
@@ -85,5 +85,13 @@ public class FlameThrower extends GunCardAltEff {
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         targetsOfBaseEffect(currentController,actions,player);
         //TODO check se è offerable
+    }
+
+    @Override
+    public GunCard clone() {
+        GunCard gunCard = new FlameThrower();
+        gunCard.setLoaded(this.isLoaded());
+
+        return gunCard;
     }
 }

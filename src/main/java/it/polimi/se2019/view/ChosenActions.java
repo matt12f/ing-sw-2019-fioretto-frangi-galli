@@ -10,7 +10,6 @@ import it.polimi.se2019.model.game.Room;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.function.Predicate;
 
 /**
@@ -103,7 +102,6 @@ public class ChosenActions implements Serializable {
     }
 
 
-    //TODO valutazione degli offerable non serve al di fuori della classe stessa: forse isAlternative si può togliere
     private void selectActions(SingleEffectsCombinationActions combination){
 
         this.orderOfExecution=combination.getEffectsCombination();
@@ -113,15 +111,15 @@ public class ChosenActions implements Serializable {
         if(combination.isOfferableExtra())
             this.useExtra=this.askUser.yesOrNo("vuoi usare la parte extra dell'effetto?","Si", "No");
 
+        //TODO check carte con selezione target samelist different target
 
         if(!combination.getPlayersTargetList().isEmpty())
-            this.targets.addAll(selectTarget(combination.getPlayersTargetList(), 1, combination.getMaxNumPlayerTargets(), null));
+            this.targets.addAll(selectTargets(combination.getPlayersTargetList(), combination.getMaxNumPlayerTargets(), null));
         if(combination.isSameListDifferentTarget())
-            this.targets.addAll(selectTarget(combination.getPlayersTargetList(), 1, 1,this.targets));
-
+            this.targets.addAll(selectTargets(combination.getPlayersTargetList(),  1, this.targets));
 
         if(!combination.getTargetRooms().isEmpty())
-            this.targetRoom=selectRoom(combination.getTargetRooms());
+            this.targetRoom = selectRoom(combination.getTargetRooms());
 
 
         if(!combination.getTargetCells().isEmpty())
@@ -134,28 +132,71 @@ public class ChosenActions implements Serializable {
             this.targets.addAll(selectCellAndThenTargets(this.selectedCells, combination.isCanMoveYourself(), combination.isCanMoveOpponent()));
         }
 
-        if(!combination.getPlayersWithTargets().isEmpty())
-            this.targetsInOrder=selectPlayerAndThenTargets(combination.getPlayersWithTargets());
+        //means this is a THOR card using Optional1 and/or Optional2 on top of the base effect
+        if(!combination.getPlayersWithTargets().isEmpty()){
+            this.targetsInOrder=new ArrayList<>(Player.duplicateList(this.targets)); //this.targets must contain only one target here
+            this.targets.clear();
+            if(combination.getEffectsCombination().contains("Optional2"))
+                selectPlayerAndThenTargets(combination.getPlayersWithTargets(),this.targetsInOrder,2);
+            else
+                selectPlayerAndThenTargets(combination.getPlayersWithTargets(),this.targetsInOrder,1);
+
+        }
     }
 
 
-    private ArrayList<Player> selectTarget(ArrayList<Player> playersTargetList, int minTargets, int maxNumPlayerTargets, ArrayList<Player> previousTargets) {
-        //TODO scrivere metodo
-        return null;
+    private ArrayList<Player> selectTargets(ArrayList<Player> playersTargetList, int maxTargets, ArrayList<Player> previousTargets) {
+        ArrayList<Player> targets=new ArrayList<>();
+
+        if(previousTargets!=null) //selection of target different from the previous list
+        {
+            ArrayList<Player> availTargets = new ArrayList<>(Player.duplicateList(playersTargetList));
+            availTargets.removeAll(previousTargets);
+            targets.add(selectOneTarget(availTargets, "Scegli target da colpire (sarà diverso dal precendente)"));
+        }
+        else { //normal selection of 1 or more targets
+            if (maxTargets == 1)
+                targets.add(selectOneTarget(playersTargetList, "Scegli target da colpire"));
+            else
+                targets.add(selectOneTarget(playersTargetList, "Scegli il 1° target da colpire"));
+
+            //here we're removing the players already selected
+            playersTargetList.remove(targets.get(0));
+
+            int cont = 1;
+            do {
+                cont++;
+                targets.add(selectOneTarget(playersTargetList, "scegli il " + cont + "° target da colpire"));
+            } while (maxTargets > cont);
+
+        }
+        return targets;
     }
 
+    private Player selectOneTarget(ArrayList<Player> playersTargetList,String message){
+        ArrayList<String> playerList;
+
+        playerList=listPlayers(playersTargetList); //it lists in a string array list the players by color
+
+        String choice =this.askUser.stringSelector(message, playerList);
+
+        return playersTargetList.get(playerList.indexOf(choice));
+
+    }
+
+
+    /**
+     * selects a room from the list of rooms sent
+     */
     private Room selectRoom(ArrayList<Room> targetRooms) {
-        //TODO scrivere metodo
-
-        return null;
+        ArrayList<String> roomsToSelect=new ArrayList<>();
+        for(Room room: targetRooms)
+            roomsToSelect.add(room.getColor().toString()+" Room");
+        return targetRooms.get(roomsToSelect.indexOf(this.askUser.stringSelector("Scegli la stanza da colpire",roomsToSelect)));
     }
+
 
     private NewCell selectCell(ArrayList<NewCell> targetCells, int minCellToSelect, int maxCellToSelect) {
-        //TODO scrivere metodo
-        return null;
-    }
-
-    private ArrayList<Player> selectPlayerAndThenTargets(ArrayList<PlayerWithTargets> playersWithTargets) {
         //TODO scrivere metodo
         return null;
     }
@@ -169,6 +210,47 @@ public class ChosenActions implements Serializable {
         //TODO scrivere metodo
         return null;
     }
+
+    /**
+     *
+     * @param playersWithTargets listo of all players with the targets they can see
+     * @param targetList contains one player, which is the target choosen before
+     * @return one target
+     */
+    private void selectPlayerAndThenTargets(ArrayList<PlayerWithTargets> playersWithTargets,ArrayList<Player> targetList,int targetsToAdd) {
+
+        //I'm extracting the previous target with the targets it can see
+        PlayerWithTargets target1 = getPlayerWithTargets(playersWithTargets,targetList.get(0));
+
+        //I'm listing the targets it can see to be chosen from
+        try {
+            targetList.add(selectOneTarget(target1.getTargetsItCanSee(), "scegli il secondo target"));
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
+
+        if(targetsToAdd==2){
+            try {
+                target1 = getPlayerWithTargets(playersWithTargets,targetList.get(1));
+                targetList.add(selectOneTarget(target1.getTargetsItCanSee(), "scegli il terzo target"));
+            }catch (NullPointerException e){
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    private PlayerWithTargets getPlayerWithTargets(ArrayList<PlayerWithTargets> list,Player target){
+        return list.stream().filter(player -> player.getTarget().equals(target)).findFirst().orElse(null);
+    }
+
+    private ArrayList<String> listPlayers(ArrayList<Player> players){
+        ArrayList<String> targetString=new ArrayList<>();
+            players.forEach(player ->
+                    targetString.add("Player of color: " + player.getFigure().getColor().toString()));
+        return targetString;
+    }
+
 
     /**
      * checks if there are no actions available
@@ -218,7 +300,46 @@ public class ChosenActions implements Serializable {
         return builder.toString();
     }
 
+
+    /**--------------- GETTERS -----------------------*/
+
     public ArrayList<String> getOrderOfExecution() {
         return orderOfExecution;
+    }
+
+    public UserInteraction getAskUser() {
+        return askUser;
+    }
+
+    public GunCard getCardToPick() {
+        return cardToPick;
+    }
+
+    public GunCard getCardToDiscard() {
+        return cardToDiscard;
+    }
+
+    public boolean isUseExtra() {
+        return useExtra;
+    }
+
+    public ArrayList<Player> getTargets() {
+        return targets;
+    }
+
+    public NewCell getTargetCell() {
+        return targetCell;
+    }
+
+    public Room getTargetRoom() {
+        return targetRoom;
+    }
+
+    public ArrayList<NewCell> getSelectedCells() {
+        return selectedCells;
+    }
+
+    public ArrayList<Player> getTargetsInOrder() {
+        return targetsInOrder;
     }
 }

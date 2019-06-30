@@ -58,4 +58,12 @@ public class Whisper extends GunCardAddEff {
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public GunCard clone() {
+        GunCard gunCard = new Whisper();
+        gunCard.setLoaded(this.isLoaded());
+
+        return gunCard;
+    }
 }

@@ -76,4 +76,12 @@ public class DamageTracker {
         }
     }
 
+    @Override
+    public DamageTracker clone(){
+        DamageTracker damageTracker=new DamageTracker();
+        damageTracker.damage=this.damage.clone();
+        for(Character character : this.marks)
+            damageTracker.marks.add(character.charValue());
+        return damageTracker;
+    }
 }
