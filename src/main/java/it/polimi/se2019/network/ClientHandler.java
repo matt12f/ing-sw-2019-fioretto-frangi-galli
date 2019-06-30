@@ -7,8 +7,6 @@ import it.polimi.se2019.view.ActionRequestView;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.view.LocalView;
 import it.polimi.se2019.enums.Status;
-import it.polimi.se2019.view.RemoteView;
-
 import java.io.*;
 import java.net.Socket;
 import java.rmi.RemoteException;

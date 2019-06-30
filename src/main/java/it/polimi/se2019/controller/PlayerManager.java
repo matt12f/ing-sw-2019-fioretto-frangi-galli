@@ -2,12 +2,17 @@ package it.polimi.se2019.controller;
 
 import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.model.game.Player;
+import it.polimi.se2019.view.ChosenActions;
 
 
 public class PlayerManager {
 
     public static boolean isAlive(Player player){
         return (player.getPlayerBoard().getDamageTrack().getDamage().length<12);
+    }
+
+    public static void choiceExecutor(ChosenActions actions){
+        //todo scrivere applicazione effetti data la ChosenActions
     }
 
     public static void damageDealer(Player player, char[] damageToDeal){
