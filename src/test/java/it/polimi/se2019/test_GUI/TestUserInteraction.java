@@ -6,7 +6,6 @@ import it.polimi.se2019.model.cards.GunCard;
 import it.polimi.se2019.view.UserInteraction;
 import it.polimi.se2019.view.UserInteractionCLI;
 import it.polimi.se2019.view.UserInteractionGUI;
-import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;

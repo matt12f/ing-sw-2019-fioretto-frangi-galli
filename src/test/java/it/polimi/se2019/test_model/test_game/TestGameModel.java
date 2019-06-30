@@ -22,38 +22,28 @@ public class TestGameModel {
         assertEquals(KillShotTrack.class,testModel.getKillshotTrack().getClass());
         assertEquals(testModel.getKillshotTrack().getSkulls(), 5);
 
-        /*testModel=new GameModel(1,players,"turret",1);
-        assertEquals("turret",testModel.getGameMode());
-        assertEquals(KillShotTrackTurret.class,testModel.getKillshotTrack().getClass());
-        testModel=new GameModel(1,players,"domination",1);
-        assertEquals("domination",testModel.getGameMode());
-        assertEquals(KillShotTrackDomination.class,testModel.getKillshotTrack().getClass());
-        testModel=new GameModel(1,players,"x",1);
-        assertEquals("x",testModel.getGameMode());
-        assertNull(testModel.getKillshotTrack());*/
-
     }
 
-    //@Test
-    /*public void testGetIncrementTurn(){
+    @Test
+    public void testGetIncrementTurn(){
         ArrayList<Player> players = new ArrayList<>();
         Player player1=new Player(1,"george101",Color.YELLOW);
         players.add(player1);
-        GameModel testModel=new GameModel(1,players,"normal",3);
+        GameModel testModel=new GameModel(players,3,3);
 
         int turn=testModel.getTurn();
         assertEquals(0,turn);
 
-        testModel.incrementTurn();
-        assertEquals(1,turn+1);
-    }*/
+        testModel.setTurn(12);
+        assertEquals(12,turn+12);
+    }
 
-    /*@Test
+    @Test
     public void testActivateFinalFrenzy(){
         ArrayList<Player> players = new ArrayList<>();
         Player player1=new Player(1,"george101",Color.YELLOW);
         players.add(player1);
-        GameModel testModel=new GameModel(1,players,"normal",1);
+        GameModel testModel=new GameModel(players,1,3);
 
         assertFalse(testModel.getFinalFrenzy());
         testModel.activateFinalFrenzy(1);
@@ -61,13 +51,13 @@ public class TestGameModel {
 
         //TODO verificare numero di mosse assegnate ai giocatori
 
-        testModel=new GameModel(1,players,"normal",1);
+        testModel=new GameModel(players,1,3);
         assertFalse(testModel.getFinalFrenzy());
         testModel.activateFinalFrenzy(3);
         assertTrue(testModel.getFinalFrenzy());
 
         //TODO verificare numero di mosse assegnate ai giocatori
 
-    }*/
+    }
 
 }
