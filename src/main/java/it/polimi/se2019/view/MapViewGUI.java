@@ -88,7 +88,7 @@ public class MapViewGUI extends JPanel {
         this.weaponyellow3 = new WeaponButtonGUI(80,56);
         this.weaponyellow3.setLocation(518, 375);
 
-
+/**
         ////spazio celle////
 
         /////first line////7
@@ -130,7 +130,7 @@ public class MapViewGUI extends JPanel {
         this.cella34 = new CellViewGUI();
         this.cella34.setLocation(410,305);
 
-
+*/
         ///////add zone////
 
         //labelBackground.add(mainPanel);
@@ -144,6 +144,7 @@ public class MapViewGUI extends JPanel {
         labelBackground.add(weaponyellow2);
         labelBackground.add(weaponyellow3);
 
+        /**
         labelBackground.add(cella11);
         labelBackground.add(cella12);
         labelBackground.add(cella13);
@@ -162,7 +163,7 @@ public class MapViewGUI extends JPanel {
         labelBackground.add(cella32);
         labelBackground.add(cella33);
         labelBackground.add(cella34);
-
+*/
         add(labelBackground);
 
 

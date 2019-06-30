@@ -2,7 +2,7 @@ package it.polimi.se2019.view;
 
 import it.polimi.se2019.enums.Color;
 
-public abstract class PlayerBoardView {
+public  class PlayerBoardView {
     private Color color;
     private AmmoView ammo;
     private boolean front;

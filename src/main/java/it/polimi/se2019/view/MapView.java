@@ -4,6 +4,7 @@ import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.controller.MapManager;
 import it.polimi.se2019.enums.CellType;
 import it.polimi.se2019.enums.Color;
+import it.polimi.se2019.model.game.Figure;
 import it.polimi.se2019.model.game.NewCell;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class MapView {
     public CellView getPlayerPosition(Color playerColor){
         for (CellView[] row: boardMatrix)
             for (CellView singleCell: row) {
-                for(FigureView player: singleCell.getPlayerFigures())
+                for(Figure player: singleCell.getPlayerFigures())
                     if(player.getColor().equals(playerColor))
                         return singleCell;
             }

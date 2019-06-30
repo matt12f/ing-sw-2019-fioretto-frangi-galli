@@ -1,6 +1,8 @@
 package it.polimi.se2019.view;
 
+import it.polimi.se2019.model.game.Figure;
 import it.polimi.se2019.model.game.NewCell;
+import it.polimi.se2019.model.game.Player;
 
 import java.util.ArrayList;
 
@@ -8,28 +10,38 @@ public class CellView {
     private NewCell correspondingCell;
     private int lineIndex;
     private int columnIndex;
-    private Square[][] matrix; //TODO sarà 3x3 e ci vanno le figure e le ammotiles
-    private ArrayList<FigureView> playerFigures;
+
+    private ArrayList<Figure> playerFigures;
 
 
 
     public CellView(int lineIndex, int columnIndex, NewCell playerPosition) {
         this.lineIndex = lineIndex;
         this.columnIndex = columnIndex;
-        this.matrix = new Square[3][3];
         this.playerFigures = new ArrayList<>();
+        setPlayerFigures(playerPosition);
+        setCell(playerPosition);
     }
 
-    public void setPlayerFigures(ArrayList<FigureView> toSet){
-        this.playerFigures = toSet;
+    public void setPlayerFigures(NewCell playerPosition){
+
+        this.playerFigures.clear();
+
+        for (int i = 0; i <= playerPosition.getPlayers().size(); i++){
+            this.playerFigures.add(playerPosition.getPlayers().get(i).getFigure());
+        }
     }
 
-    public ArrayList<FigureView> getPlayerFigures(){
+    public ArrayList<Figure> getPlayerFigures(){
         return this.playerFigures;
     }
 
     public NewCell getCorrespondingCell() {
         return correspondingCell;
+    }
+
+    public void setCell(NewCell playerPosition){
+        this.correspondingCell = playerPosition;
     }
 
     public int getLineIndex() {
@@ -40,13 +52,7 @@ public class CellView {
         return columnIndex;
     }
 
-    public Square[][] getMatrix() {
-        return matrix;
-    }
 
-    public void setMatrix(Square[][] matrix) {
-        this.matrix = matrix;
-    }
 
 
 }
