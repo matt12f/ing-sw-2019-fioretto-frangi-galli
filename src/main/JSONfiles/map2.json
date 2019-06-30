@@ -61,7 +61,7 @@
       },
       {
         "cellType": "OUTSIDEBOARD",
-        "color": "WHITE",
+        "color": "BLUE",
         "players": [],
         "top": "WALL",
         "bottom": "WALL",

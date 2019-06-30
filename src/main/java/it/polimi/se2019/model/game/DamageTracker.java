@@ -81,7 +81,7 @@ public class DamageTracker {
         DamageTracker damageTracker=new DamageTracker();
         damageTracker.damage=this.damage.clone();
         for(Character character : this.marks)
-            damageTracker.marks.add(character.charValue());
+            damageTracker.marks.add(character);
         return damageTracker;
     }
 }
