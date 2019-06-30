@@ -10,19 +10,12 @@ import it.polimi.se2019.view.ChosenActions;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.TimerTask;
 
-import static sun.management.snmp.jvminstr.JvmThreadInstanceEntryImpl.ThreadStateMap.Byte0.waiting;
-
-public class GameHandler extends TimerTask {
+public class GameHandler implements Runnable {
     private ArrayList<ClientHandler> players;
     private Controller controller;
     private int mapNumber;
     private int skullsNumber;
-
-    public GameHandler(ArrayList<ClientHandler> players){
-        this.players = players;
-    }
 
 
     public Controller getController() {
@@ -91,7 +84,7 @@ public class GameHandler extends TimerTask {
         }
         //gestione dei turni
         while (this.controller.getMainGameModel().getKillshotTrack().getSkulls() > 0){
-            TurnPreparation(this.controller.getMainGameModel().getTurn());
+            turnPreparation(this.controller.getMainGameModel().getTurn());
             waitingRequest(clientTurn);
             calculateActions(clientTurn);
             waitingRequest(clientTurn);
@@ -143,12 +136,16 @@ public class GameHandler extends TimerTask {
         this.skullsNumber = skull;
     }
 
-    public synchronized void TurnPreparation (int turn){
+    private synchronized void turnPreparation(int turn){
         ClientHandler clientTurn = this.players.get(turn);
         if(!clientTurn.isAccepted()){
             //todo scelta spawnpoint
         }
         clientTurn.setActionsNumber(controller.getActiveTurn().getActivePlayer().getPlayerBoard().getActionTileNormal().getActionCounter());
         clientTurn.setStatus(Status.MYTURN);
+    }
+
+    public void setPlayers(ArrayList<ClientHandler> players) {
+        this.players = players;
     }
 }

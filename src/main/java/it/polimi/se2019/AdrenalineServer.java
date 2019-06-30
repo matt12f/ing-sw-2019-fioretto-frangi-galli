@@ -1,6 +1,5 @@
 package it.polimi.se2019;
 
-import it.polimi.se2019.controller.Controller;
 import it.polimi.se2019.network.*;
 
 import java.io.IOException;
@@ -31,9 +30,6 @@ public class AdrenalineServer{
         threadSocket.start();
         threadMonitor.start();
         System.out.println("threads partiti");
-
-        //todo non so se ci va qualcosa
-
         try {
             threadRMI.join();
             threadSocket.join();
@@ -91,10 +87,8 @@ public class AdrenalineServer{
         return connectionNumber;
     }
 
-    public static synchronized void newGame(){
-
-        //todo racchiudere i CH nel GH
-
+    public static synchronized void newGame(GameHandler game){
+        games.add(game);
         AdrenalineServer.lobbyClient = new ArrayList<>();
         AdrenalineServer.lobby = new ArrayList<>();
     }
@@ -103,4 +97,9 @@ public class AdrenalineServer{
         return AdrenalineServer.lobbyClient;
     }
 
+    public static synchronized void newGame(GameHandler newGame, ArrayList<ClientHandler> lobbyClients, ArrayList<String> lobbies) {
+        AdrenalineServer.games.add(newGame);
+        AdrenalineServer.lobbyClient = lobbyClients;
+        AdrenalineServer.lobby = lobbies;
+    }
 }
