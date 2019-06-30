@@ -1,8 +1,7 @@
 package it.polimi.se2019.enums;
 
 public enum Status {
-    ACCEPTED,
-    REFUSED,
+    CALCULATED,
     UPDATE,
     MAPSKULL,
     READY,

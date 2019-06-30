@@ -7,6 +7,7 @@ import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ActionRequestView;
 import it.polimi.se2019.view.PowerupUse;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -23,7 +24,7 @@ import java.util.ArrayList;
  * The client will then build an "answer object" containing his selection
  */
 
-public class AvailableActions {
+public class AvailableActions implements Serializable {
     private ArrayList<FictitiousPlayer> fictitiousPlayers; //the player will choose one of these
 
     /**

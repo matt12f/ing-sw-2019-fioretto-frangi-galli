@@ -7,13 +7,14 @@ import it.polimi.se2019.controller.SingleCardActions;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
 import it.polimi.se2019.model.cards.GunCard;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
 /**
  * this class is going to send back the objects it received to "select" them
  */
-public class ChosenActions {
+public class ChosenActions implements Serializable {
     private UserInteraction askUser;
 
     private ArrayList<String> orderOfExecution;

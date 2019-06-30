@@ -5,14 +5,20 @@ import it.polimi.se2019.controller.Controller;
 import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.enums.Status;
 import it.polimi.se2019.model.game.Player;
+import it.polimi.se2019.view.ChosenActions;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.TimerTask;
 
+import static sun.management.snmp.jvminstr.JvmThreadInstanceEntryImpl.ThreadStateMap.Byte0.waiting;
+
 public class GameHandler extends TimerTask {
     private ArrayList<ClientHandler> players;
     private Controller controller;
+    private int mapNumber;
+    private int skullsNumber;
 
     public GameHandler(ArrayList<ClientHandler> players){
         this.players = players;
@@ -29,13 +35,6 @@ public class GameHandler extends TimerTask {
             nicknames.add(client.getNickname());
         }
         return  nicknames;
-    }
-
-    private void nextTurn(){
-        int turn = this.controller.getMainGameModel().getTurn();
-        if(turn == (this.players.size() - 1))
-            turn = 0;
-        this.controller.getMainGameModel().setTurn(turn);
     }
 
     private void shuffleClient(ArrayList<ClientHandler> clients){
@@ -71,8 +70,6 @@ public class GameHandler extends TimerTask {
     @Override
     public void run() {
         ClientHandler clientTurn;
-        int i;
-        Player playerTurn;
         //scelta rotazione e assegnamento pedina
         setClientColor();
         shuffleClient(this.players);
@@ -81,24 +78,52 @@ public class GameHandler extends TimerTask {
         }
         clientTurn = this.players.get(0);
         clientTurn.setStatus(Status.MAPSKULL);
-        //TODO chiedere al primo mappa e numero di teschi
-
+        while(clientTurn.getStatus() == Status.MAPSKULL){
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         createController();
+        for (ClientHandler c: players) {
+            c.setAccepted(false);
+        }
         //gestione dei turni
         while (this.controller.getMainGameModel().getKillshotTrack().getSkulls() > 0){
-            i = controller.getMainGameModel().getTurn();
-            clientTurn = this.players.get(i);
-            clientTurn.setStatus(Status.MYTURN);
-            while(clientTurn.getStatus() == Status.WAITING){ //todo sostiurlo con un lock su oggetto di clientHandler?
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            //TODO deve ricevere da ClientHandler l'oggetto ActionRequestView per costruire l'oggetto AvailableActions
+            TurnPreparation(this.controller.getMainGameModel().getTurn());
+            waitingRequest(clientTurn);
+            calculateActions(clientTurn);
+            waitingRequest(clientTurn);
+            ChosenActions chosenActions = clientTurn.getChosenAction();
+            //todo applico gli effetti della mossa scelta
             clientTurn.setStatus(Status.NOTMYTURN);
             controller.getActiveTurn().nextTurn(controller);
+        }
+        //todo calcolo mosse frenzy e attivazione
+        for (ClientHandler client: players) {
+            try {
+
+                client.getOutput().writeInt(controller.getActiveTurn().getActivePlayer().getPlayerBoard().getActionTileFrenzy().getActionCounter());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private synchronized void calculateActions(ClientHandler clientTurn){
+        clientTurn.setAvailableActions(new AvailableActions(clientTurn.getRequestView(), controller.getActiveTurn().getActivePlayer().getId(), controller));
+        clientTurn.setStatus(Status.CALCULATED);
+        this.notifyAll();
+    }
+
+    private synchronized void waitingRequest(ClientHandler clientTurn){
+        while(clientTurn.getStatus()!= Status.WAITING){
+            try {
+                this.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -107,6 +132,23 @@ public class GameHandler extends TimerTask {
         for (ClientHandler client: this.players) {
             players.add(new Player(0, client.getNickname(), client.getColor()));
         }
-        this.controller = new Controller(players, 0, 5); //todo SONO TEMPORANEI, RIMUOVILI FACENDOLO BENE
+        this.controller = new Controller(players, this.mapNumber, this.skullsNumber);
+    }
+
+    public void setMap(int map) {
+        this.mapNumber = map;
+    }
+
+    void setSkull(int skull) {
+        this.skullsNumber = skull;
+    }
+
+    public synchronized void TurnPreparation (int turn){
+        ClientHandler clientTurn = this.players.get(turn);
+        if(!clientTurn.isAccepted()){
+            //todo scelta spawnpoint
+        }
+        clientTurn.setActionsNumber(controller.getActiveTurn().getActivePlayer().getPlayerBoard().getActionTileNormal().getActionCounter());
+        clientTurn.setStatus(Status.MYTURN);
     }
 }

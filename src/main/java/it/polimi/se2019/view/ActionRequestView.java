@@ -7,9 +7,10 @@ import it.polimi.se2019.enums.CellEdge;
 import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.model.cards.PowerupCard;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ActionRequestView{
+public class ActionRequestView implements Serializable {
     private ActionType actionToRequest;
     private boolean [] reload;
     private ArrayList<PowerupUse> powerupUse;

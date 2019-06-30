@@ -2,11 +2,12 @@ package it.polimi.se2019.view;
 
 import it.polimi.se2019.model.game.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-public class LocalView  extends View implements Observer {
+public class LocalView  extends View implements Observer, Serializable {
     private ArrayList<PlayerBoardView> playerBoardViews;
     private int playerId;
     private MapView mapView;

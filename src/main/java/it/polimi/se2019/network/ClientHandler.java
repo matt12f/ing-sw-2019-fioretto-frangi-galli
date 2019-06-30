@@ -4,8 +4,10 @@ import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.controller.AvailableActions;
 import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.view.ActionRequestView;
+import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.view.LocalView;
 import it.polimi.se2019.enums.Status;
+import it.polimi.se2019.view.RemoteView;
 
 import java.io.*;
 import java.net.Socket;
@@ -28,28 +30,26 @@ public class ClientHandler extends Thread implements RMIInterface, Observer {
     private Color color;
     private ObjectOutputStream output;
     private ObjectInputStream input;
+    private GameHandler game;
+    private ActionRequestView requestView;
+    private AvailableActions availableActions;
+    private int actionsNumber;
+    private ChosenActions chosenAction;
 
     @Override
     public void run(){
-        ArrayList<String> otherPlayers;
         try {
             System.out.println("Partito clientHandler della socket: " + this.socket);
             if(this.socket == null){
-                this.status = Status.READY;
-                while(!this.accepted){
-
-                }
-                //todo Semaforo?
+                //todo RMI
             }else{
                 this.output = new ObjectOutputStream(this.socket.getOutputStream());
                 this.input = new ObjectInputStream(this.socket.getInputStream());
-                String reply;
                 while (!this.accepted){
                     this.nickname = (String) input.readObject();
                     System.out.println("nick ricevuto: " + this.nickname);
                     AdrenalineServer.nickController(this);
                     System.out.println("Nick controllato");
-                    System.out.println("inviato: " + this.accepted);
                     if(!this.accepted){
                         System.out.println("nick non valido");
                     }
@@ -70,11 +70,17 @@ public class ClientHandler extends Thread implements RMIInterface, Observer {
             while(!status.equals(Status.FRENZY_START)){
                 switch (this.status){
                     case MYTURN:
-                        //comunicazioni del turno
-                        //TODO deve sapere se è la sua prima mossa del turno o la seconda (finale)
-
-                        //TODO deve inviare l'oggetto ActionRequestView al GameHandler per poi
-                        //TODO ricevere da GameHandler l'oggetto AvailableActions e
+                        this.output.writeInt(0); //no Frenzy: 0, frenzy : 1
+                        this.input.readBoolean();
+                        this.output.writeObject(this.actionsNumber); //comunica quante azioni può fare il giocatore
+                        //todo ricevere la remoteView
+                        for(int j = 0; j<this.actionsNumber; j++){
+                            requestView = (ActionRequestView) this.input.readObject();
+                            statusChanged();
+                            this.output.writeObject(availableActions); //mi da warning ma non so perchè
+                            this.chosenAction = (ChosenActions) this.input.readObject();
+                            statusChanged();
+                        }
                         //TODO inviare l'oggetto ChosenActions
                         break;
                     case NOTMYTURN:
@@ -82,6 +88,13 @@ public class ClientHandler extends Thread implements RMIInterface, Observer {
                         }
                         //per update client
                     break;
+                    case MAPSKULL:
+                        setMapSkull();
+                        break;
+
+                    default:
+
+                        break;
                 }
             }
         } catch (IOException e) {
@@ -93,6 +106,28 @@ public class ClientHandler extends Thread implements RMIInterface, Observer {
         }
     }
 
+    private synchronized void statusChanged() throws InterruptedException {
+        this.status = Status.WAITING;
+        notifyAll();
+        waiting();
+    }
+
+    private synchronized void setMapSkull() throws IOException, ClassNotFoundException {
+        this.output.writeObject("MAP");
+        int map = (int) this.input.readObject();
+        this.game.setMap(map);
+        this.output.writeObject("SKULL");
+        int skull = (int) this.input.readObject();
+        this.game.setSkull(skull);
+        this.status = Status.NOTMYTURN;
+        notifyAll();
+    }
+
+    private synchronized void waiting() throws InterruptedException {
+        while(this.status == Status.WAITING)
+            wait();
+    }
+
     public Socket getSocket() {
         return socket;
     }
@@ -101,7 +136,7 @@ public class ClientHandler extends Thread implements RMIInterface, Observer {
         return host;
     }
 
-    public void setHost(String host) {
+    void setHost(String host) {
         this.host = host;
     }
 
@@ -133,9 +168,9 @@ public class ClientHandler extends Thread implements RMIInterface, Observer {
     }
 
     @Override
-    public void setNicknameRMI(String nickname) throws RemoteException, IllegalArgumentException, InterruptedException {
+    public void setNicknameRMI(String nickname) throws RemoteException, InterruptedException {
         setNickname(nickname);
-        this.getThread().wait(); //todo forse puoi sostituirli con dei semafori
+        this.getThread().wait();
         if(!this.accepted)
             throw (new IllegalArgumentException());
     }
@@ -149,27 +184,20 @@ public class ClientHandler extends Thread implements RMIInterface, Observer {
         return null;
     }
 
-    public Thread getThread() {
+    private Thread getThread() {
         return thread;
+    }
+
+    boolean isAccepted() {
+        return accepted;
     }
 
     public void setAccepted(boolean accepted) {
         this.accepted = accepted;
     }
 
-    public void setThread(Thread thread) {
+    void setThread(Thread thread) {
         this.thread = thread;
-    }
-
-    public void sendShootPack (String shootPack) throws IOException {
-        ObjectOutputStream output = (ObjectOutputStream) this.socket.getOutputStream();
-        output.writeObject(shootPack);
-    }
-
-    public String reciveShootRequest () throws IOException, ClassNotFoundException {
-        ObjectInputStream input = (ObjectInputStream) this.socket.getInputStream();
-        String choice = (String) input.readObject();
-        return(choice);
     }
 
     public void setRegistry(Registry registry) {
@@ -188,13 +216,33 @@ public class ClientHandler extends Thread implements RMIInterface, Observer {
         this.color = color;
     }
 
+    ActionRequestView getRequestView() {
+        return requestView;
+    }
+
+    public void setGame(GameHandler game) {
+        this.game = game;
+    }
+
+    void setAvailableActions(AvailableActions availableActions) {
+        this.availableActions = availableActions;
+    }
+
     @Override
     public Status getStatus() {
         return this.status;
     }
 
-    public void setStatus(Status status) {
+    void setStatus(Status status) {
         this.status = status;
+    }
+
+    void setActionsNumber(int actionsNumber) {
+        this.actionsNumber = actionsNumber;
+    }
+
+    public ChosenActions getChosenAction() {
+        return chosenAction;
     }
 
     @Override
