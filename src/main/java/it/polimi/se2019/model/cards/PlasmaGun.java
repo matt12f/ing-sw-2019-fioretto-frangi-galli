@@ -63,7 +63,7 @@ public class PlasmaGun extends GunCardAddEff {
      */
     @Override
     public SingleEffectsCombinationActions buildAvailableActions(Controller currentController, FictitiousPlayer player, ArrayList<String> effectsCombination) throws UnavailableEffectCombinationException {
-        SingleEffectsCombinationActions actions=new SingleEffectsCombinationActions(effectsCombination.toString());
+        SingleEffectsCombinationActions actions=new SingleEffectsCombinationActions(effectsCombination,false);
         actions.setOfferableOpt2(false);
 
         switch (effectsCombination.toString()){

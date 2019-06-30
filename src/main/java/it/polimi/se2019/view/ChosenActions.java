@@ -1,14 +1,16 @@
 package it.polimi.se2019.view;
 
 import it.polimi.se2019.AdrenalineClient;
-import it.polimi.se2019.controller.AvailableActions;
-import it.polimi.se2019.controller.FictitiousPlayer;
-import it.polimi.se2019.controller.SingleCardActions;
-import it.polimi.se2019.controller.SingleEffectsCombinationActions;
+import it.polimi.se2019.controller.*;
+import it.polimi.se2019.exceptions.NoActionsException;
 import it.polimi.se2019.model.cards.GunCard;
+import it.polimi.se2019.model.game.NewCell;
+import it.polimi.se2019.model.game.Player;
+import it.polimi.se2019.model.game.Room;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.function.Predicate;
 
 /**
@@ -22,9 +24,23 @@ public class ChosenActions implements Serializable {
     private GunCard cardToPick;
     private GunCard cardToDiscard;
 
+    private boolean useExtra;
 
+    private ArrayList<Player> targets;
+    private NewCell targetCell;
+    private Room targetRoom;
+    private ArrayList<NewCell> selectedCells;
+    private ArrayList<Player> targetsInOrder;
 
-    public ChosenActions(AvailableActions actions) {
+    /**
+     *
+     * @param actions is the package of available actions sent by the controller unit on the server
+     * @throws NoActionsException if there are no actions to be performed
+     */
+    public ChosenActions(AvailableActions actions) throws NoActionsException {
+        if(checkEmptyActions(actions))
+            throw new NoActionsException("no actions available, try again");
+
         if(AdrenalineClient.isGUI())
             this.askUser=new UserInteractionGUI();
         else
@@ -81,10 +97,91 @@ public class ChosenActions implements Serializable {
             String chosenCombination=this.askUser.stringSelector("Scegliere una combinazione di effetti",chosenCard.getAvailableCombinations());
             SingleEffectsCombinationActions combinationActions=chosenCard.getEffectsCombinationActions().get(chosenCard.getAvailableCombinations().indexOf(chosenCombination));
 
-            //TODO scorrere la singola combinazione degli effetti
-
+            selectActions(combinationActions);
         }
 
+    }
+
+
+    //TODO valutazione degli offerable non serve al di fuori della classe stessa: forse isAlternative si può togliere
+    private void selectActions(SingleEffectsCombinationActions combination){
+
+        this.orderOfExecution=combination.getEffectsCombination();
+
+        this.targets=new ArrayList<>();
+
+        if(combination.isOfferableExtra())
+            this.useExtra=this.askUser.yesOrNo("vuoi usare la parte extra dell'effetto?","Si", "No");
+
+
+        if(!combination.getPlayersTargetList().isEmpty())
+            this.targets.addAll(selectTarget(combination.getPlayersTargetList(), 1, combination.getMaxNumPlayerTargets(), null));
+        if(combination.isSameListDifferentTarget())
+            this.targets.addAll(selectTarget(combination.getPlayersTargetList(), 1, 1,this.targets));
+
+
+        if(!combination.getTargetRooms().isEmpty())
+            this.targetRoom=selectRoom(combination.getTargetRooms());
+
+
+        if(!combination.getTargetCells().isEmpty())
+            this.targetCell=selectCell(combination.getTargetCells(), 1, 1);
+
+
+        //TODO rivedere meglio (considerare movimenti propri e altrui)
+        if(!combination.getCellsWithTargets().isEmpty()) {
+            this.selectedCells.addAll(selectCellSpecial(combination.getCellsWithTargets(),combination.getMinCellToSelect(),combination.getMaxCellToSelect()));
+            this.targets.addAll(selectCellAndThenTargets(this.selectedCells, combination.isCanMoveYourself(), combination.isCanMoveOpponent()));
+        }
+
+        if(!combination.getPlayersWithTargets().isEmpty())
+            this.targetsInOrder=selectPlayerAndThenTargets(combination.getPlayersWithTargets());
+    }
+
+
+    private ArrayList<Player> selectTarget(ArrayList<Player> playersTargetList, int minTargets, int maxNumPlayerTargets, ArrayList<Player> previousTargets) {
+        //TODO scrivere metodo
+        return null;
+    }
+
+    private Room selectRoom(ArrayList<Room> targetRooms) {
+        //TODO scrivere metodo
+
+        return null;
+    }
+
+    private NewCell selectCell(ArrayList<NewCell> targetCells, int minCellToSelect, int maxCellToSelect) {
+        //TODO scrivere metodo
+        return null;
+    }
+
+    private ArrayList<Player> selectPlayerAndThenTargets(ArrayList<PlayerWithTargets> playersWithTargets) {
+        //TODO scrivere metodo
+        return null;
+    }
+
+    private ArrayList<Player> selectCellAndThenTargets(ArrayList<NewCell> selectedCells, boolean canMoveYourself, boolean canMoveOpponent) {
+        //TODO scrivere metodo
+        return null;
+    }
+
+    private ArrayList<NewCell> selectCellSpecial(ArrayList<CellWithTargets> cellsWithTargets, int minCellToSelect, int maxCellToSelect) {
+        //TODO scrivere metodo
+        return null;
+    }
+
+    /**
+     * checks if there are no actions available
+     * Cases: shoot with no guns available
+     *        shoot without targets
+     *
+     * They're evaluated inside FictitiousPlayer
+     */
+    private boolean checkEmptyActions(AvailableActions actions) {
+        for(FictitiousPlayer player: actions.getFictitiousPlayers())
+           if(!player.isNoTargets())
+               return false;
+           return true;
     }
 
     private GunCard cardDiscardSelector(LocalView localView) {
