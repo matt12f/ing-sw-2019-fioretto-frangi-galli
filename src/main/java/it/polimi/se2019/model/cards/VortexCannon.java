@@ -38,6 +38,11 @@ public class VortexCannon extends GunCardAddEff {
     @Override
     void applyBaseEffect(ChosenActions playersChoice) {
         //TODO scrivere metodo
+
+       // TODO nota://the move of the opponent must be managed through the name of the class. There will not be "available" squares where to
+        //        // move the player, meaning this is a VortexCannon card and the player that was hit must be moved automatically
+        //        // to the selected vortex
+
     }
 
     @Override
@@ -60,6 +65,7 @@ public class VortexCannon extends GunCardAddEff {
      */
      @Override
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+         actions.getCellsWithTargets().clear();
          targetFiller(currentController,actions,player,3);
          actions.setSameListDifferentTarget(true);
     }
@@ -82,9 +88,6 @@ public class VortexCannon extends GunCardAddEff {
         }
         actions.setMaxCellToSelect(1);
         actions.setMinCellToSelect(1);
-        actions.setCanMoveOpponent(true); //this is going to be true but there will not be "available" squares where to
-        // move the player, meaning this is a vortexCannon card and the player that was hit must be moved automatically
-        // to the selected vortex
     }
 
     @Override

@@ -2,7 +2,6 @@ package it.polimi.se2019.view;
 
 import it.polimi.se2019.model.game.Figure;
 import it.polimi.se2019.model.game.NewCell;
-import it.polimi.se2019.model.game.Player;
 
 import java.util.ArrayList;
 
@@ -26,7 +25,6 @@ public class CellView {
     public void setPlayerFigures(NewCell playerPosition){
 
         this.playerFigures.clear();
-
         for (int i = 0; i <= playerPosition.getPlayers().size(); i++){
             this.playerFigures.add(playerPosition.getPlayers().get(i).getFigure());
         }

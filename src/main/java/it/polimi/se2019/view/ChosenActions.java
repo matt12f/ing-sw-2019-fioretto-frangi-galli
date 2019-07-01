@@ -25,11 +25,16 @@ public class ChosenActions implements Serializable {
 
     private boolean useExtra;
 
-    private ArrayList<Player> targets;
-    private NewCell targetCell;
-    private Room targetRoom;
-    private ArrayList<NewCell> selectedCells;
-    private ArrayList<Player> targetsInOrder;
+    private ArrayList<Player> targetsFromList1;
+
+    private NewCell targetCell; //for damage to all of the players on one Cell
+    private Room targetRoom; //for damage to all of the players in one Room
+    private ArrayList<Player> targetsInOrder; //For THOR card
+
+    private NewCell cellToMoveOpponent;
+    private NewCell cellToMoveYourself;
+
+    private ArrayList<Player> targetsFromCell;
 
     /**
      *
@@ -49,14 +54,14 @@ public class ChosenActions implements Serializable {
         //Section for selection of cells where the fictitious player will be
         ArrayList<String> arrivalCellsIndex=new ArrayList<>();
         for(FictitiousPlayer fictitiousPlayer:actions.getFictitiousPlayers())
-            arrivalCellsIndex.add(actions.getFictitiousPlayers().indexOf(fictitiousPlayer)+". Cell in position ("+localView.getMapView().getXIndex(fictitiousPlayer.getPosition()) +", "+localView.getMapView().getYIndex(fictitiousPlayer.getPosition())+")");
+            arrivalCellsIndex.add(actions.getFictitiousPlayers().indexOf(fictitiousPlayer)+". "+cellToText(localView, fictitiousPlayer.getPosition()));
 
         String chosenArrivalCell=this.askUser.stringSelector("Scegi una cella dove vuoi spostarti",arrivalCellsIndex);
         FictitiousPlayer choice= actions.getFictitiousPlayers().get(arrivalCellsIndex.indexOf(chosenArrivalCell));
 
         //Section for grab/move + grab action picking Ammo/Guns
         if(choice.getAvailableCardActions().isEmpty()) { //this is a grab/move + grab action picking Ammo
-            if(choice.isGrabbedAmmo())
+            if(choice.isGrabbedAmmo()) //TODO cambia con display grafico della ammoTile
                 this.askUser.showMessage("Raccoglierai: "+translatorOfAmmo(choice.getPosition().getDrop().getContent()));
 
             if(!choice.getPickableCards().isEmpty()){ //in case this is a grab/move + grab action picking a Gun
@@ -96,46 +101,49 @@ public class ChosenActions implements Serializable {
             String chosenCombination=this.askUser.stringSelector("Scegliere una combinazione di effetti",chosenCard.getAvailableCombinations());
             SingleEffectsCombinationActions combinationActions=chosenCard.getEffectsCombinationActions().get(chosenCard.getAvailableCombinations().indexOf(chosenCombination));
 
-            selectActions(combinationActions);
+            selectActions(localView, combinationActions,chosenCard.getUsableGunCardName());
         }
 
     }
 
-
-    private void selectActions(SingleEffectsCombinationActions combination){
+    private void selectActions(LocalView localView, SingleEffectsCombinationActions combination,String cardName){
 
         this.orderOfExecution=combination.getEffectsCombination();
 
-        this.targets=new ArrayList<>();
+        this.targetsFromList1 = new ArrayList<>();
+        this.targetsFromCell = new ArrayList<>();
 
         if(combination.isOfferableExtra())
             this.useExtra=this.askUser.yesOrNo("vuoi usare la parte extra dell'effetto?","Si", "No");
 
-        //TODO check carte con selezione target samelist different target
-
+        //selection of normal targets and secondary targets different from the first
         if(!combination.getPlayersTargetList().isEmpty())
-            this.targets.addAll(selectTargets(combination.getPlayersTargetList(), combination.getMaxNumPlayerTargets(), null));
+            this.targetsFromList1.addAll(selectTargets(combination.getPlayersTargetList(), combination.getMaxNumPlayerTargets(), null));
         if(combination.isSameListDifferentTarget())
-            this.targets.addAll(selectTargets(combination.getPlayersTargetList(),  1, this.targets));
+            this.targetsFromList1.addAll(selectTargets(combination.getPlayersTargetList(),  1, this.targetsFromList1));
 
         if(!combination.getTargetRooms().isEmpty())
             this.targetRoom = selectRoom(combination.getTargetRooms());
 
-
         if(!combination.getTargetCells().isEmpty())
-            this.targetCell=selectCell(combination.getTargetCells(), 1, 1);
+            this.targetCell=selectOneCell(localView, combination.getTargetCells());
 
 
-        //TODO rivedere meglio (considerare movimenti propri e altrui)
+        //managing cells with targets (the selected targets are put in targetsFromCell within the method used below)
         if(!combination.getCellsWithTargets().isEmpty()) {
-            this.selectedCells.addAll(selectCellSpecial(combination.getCellsWithTargets(),combination.getMinCellToSelect(),combination.getMaxCellToSelect()));
-            this.targets.addAll(selectCellAndThenTargets(this.selectedCells, combination.isCanMoveYourself(), combination.isCanMoveOpponent()));
+            if(combination.isCanMoveOpponent())
+                this.cellToMoveOpponent=selectCellWithTargets(localView, combination,"MoveOpponent");
+            else if(combination.isCanMoveYourself())
+                this.cellToMoveYourself=selectCellWithTargets(localView, combination,"MoveYourself");
+            else{
+                selectCellWithTargets(localView, combination, cardName);
+            }
         }
 
         //means this is a THOR card using Optional1 and/or Optional2 on top of the base effect
         if(!combination.getPlayersWithTargets().isEmpty()){
-            this.targetsInOrder=new ArrayList<>(Player.duplicateList(this.targets)); //this.targets must contain only one target here
-            this.targets.clear();
+            this.targetsInOrder=new ArrayList<>(Player.duplicateList(this.targetsFromList1)); //this.targets must contain only one target here
+            this.targetsFromList1.clear();
             if(combination.getEffectsCombination().contains("Optional2"))
                 selectPlayerAndThenTargets(combination.getPlayersWithTargets(),this.targetsInOrder,2);
             else
@@ -144,6 +152,91 @@ public class ChosenActions implements Serializable {
         }
     }
 
+    /**
+     * this is used when:
+     *      - you can move yourself;
+     *      - you can move an opponent;
+     *      - vortex, you must select a cell
+     *      - you must choose a square where you will then select targets on
+     *
+     * in this.targetsFromCell  you'll add the targets you select in a cell
+     *
+     * @param combination passing the whole combination reduces the complexity of the method
+     * @return cell to move yourself/a Player in
+     */
+    private NewCell selectCellWithTargets(LocalView localView, SingleEffectsCombinationActions combination, String mode) {
+        int maxCell=combination.getMaxCellToSelect();
+        ArrayList<CellWithTargets> cellList=combination.getCellsWithTargets();
+        CellWithTargets arrivalCell;
+
+        ArrayList<String> stringList;
+        ArrayList<CellWithTargets> possibleCells=new ArrayList<>();
+
+        if(mode.equals("MoveYourself")) {
+            //adds to a secondary list the cells where you can move
+            cellList.forEach(cellWithTargets -> {
+                if(cellWithTargets.isCanMoveYourselfHere())
+                    possibleCells.add(cellWithTargets);
+            });
+
+            //lists as strings the cells for the player to then select one
+            stringList=listCellWithTargets(localView,possibleCells);
+
+            arrivalCell = possibleCells.get(stringList.indexOf(this.askUser.stringSelector("Scegli la cella in cui vuoi spostarti",stringList)));
+            this.targetsFromCell.addAll(targetSelectionFromCell(arrivalCell));
+
+        }else if(mode.equals("MoveOpponent")){
+            //adds to a secondary list the cells where you can move the opponent
+            cellList.forEach(cellWithTargets -> {
+                if(cellWithTargets.isCanMoveOthersHere())
+                    possibleCells.add(cellWithTargets);
+            });
+
+            //lists as strings the cells for the player to then select one
+            stringList=listCellWithTargets(localView,possibleCells);
+
+            arrivalCell = possibleCells.get(stringList.indexOf(this.askUser.stringSelector("Scegli la cella in cui vuoi spostare il target precendente",stringList)));
+            this.targetsFromCell.addAll(targetSelectionFromCell(arrivalCell));
+
+        }else if(mode.equals("VortexCannon")){
+            //lists as strings all of the cells, for the player to then select one to become a vortex
+            stringList=listCellWithTargets(localView,cellList);
+
+            arrivalCell = possibleCells.get(stringList.indexOf(this.askUser.stringSelector("Scegli la cella che diventerà il Vortex",stringList)));
+            this.targetsFromCell.addAll(targetSelectionFromCell(arrivalCell));
+
+        }else{//it's the case where you must select a cell to then choose one target or more on it
+            // (it works for any number of maxTargets). Note that the targets are selected on different cells
+            int cont = 0;
+            do {
+                cont++;
+                //lists as strings all of the cells, for the player to then select one to choose targets on
+                stringList = listCellWithTargets(localView, cellList);
+
+                arrivalCell = possibleCells.get(stringList.indexOf(this.askUser.stringSelector("Scegli la cella in cui poi selezionare il " + cont + "° target da colpire", stringList)));
+                cellList.remove(arrivalCell); //removes cell already selected
+                this.targetsFromCell.addAll(targetSelectionFromCell(arrivalCell));
+            } while (maxCell > cont && this.askUser.yesOrNo("vuoi selezionare altri target? " + "\nTarget restanti: " + (maxCell - cont), "Si", "No"));
+        }
+        return arrivalCell.getTargetCell();
+    }
+
+    private ArrayList<Player> targetSelectionFromCell(CellWithTargets cellWithTargets){
+        ArrayList<Player> targets=new ArrayList<>();
+
+        if(cellWithTargets.getMaxTargetsInCell()==0 && cellWithTargets.getMinTargetsInCell()==0)
+            return targets;
+
+        targets.addAll(selectTargets(cellWithTargets.getTargets(),cellWithTargets.getMaxTargetsInCell(),null));
+
+        return targets;
+    }
+
+    private ArrayList<String> listCellWithTargets(LocalView localView, ArrayList<CellWithTargets> cells){
+        ArrayList<String> stringList=new ArrayList<>();
+        cells.forEach(cell -> stringList.add(cellToText(localView,cell.getTargetCell())+"\ncon player: "+listPlayers(cell.getTargets())));
+        return stringList;
+    }
 
     private ArrayList<Player> selectTargets(ArrayList<Player> playersTargetList, int maxTargets, ArrayList<Player> previousTargets) {
         ArrayList<Player> targets=new ArrayList<>();
@@ -164,10 +257,11 @@ public class ChosenActions implements Serializable {
             playersTargetList.remove(targets.get(0));
 
             int cont = 1;
-            do {
+            while(maxTargets>cont && this.askUser.yesOrNo("vuoi selezionare altri target? "+"\nTarget restanti: "+(maxTargets-cont), "Si", "No")){
                 cont++;
                 targets.add(selectOneTarget(playersTargetList, "scegli il " + cont + "° target da colpire"));
-            } while (maxTargets > cont);
+                playersTargetList.remove(targets.get(targets.size()-1)); //removes the player you just selected to avoid selecting someone twice
+            }
 
         }
         return targets;
@@ -184,7 +278,6 @@ public class ChosenActions implements Serializable {
 
     }
 
-
     /**
      * selects a room from the list of rooms sent
      */
@@ -195,34 +288,27 @@ public class ChosenActions implements Serializable {
         return targetRooms.get(roomsToSelect.indexOf(this.askUser.stringSelector("Scegli la stanza da colpire",roomsToSelect)));
     }
 
-
-    private NewCell selectCell(ArrayList<NewCell> targetCells, int minCellToSelect, int maxCellToSelect) {
-        //TODO scrivere metodo
-        return null;
-    }
-
-    private ArrayList<Player> selectCellAndThenTargets(ArrayList<NewCell> selectedCells, boolean canMoveYourself, boolean canMoveOpponent) {
-        //TODO scrivere metodo
-        return null;
-    }
-
-    private ArrayList<NewCell> selectCellSpecial(ArrayList<CellWithTargets> cellsWithTargets, int minCellToSelect, int maxCellToSelect) {
-        //TODO scrivere metodo
-        return null;
+    /**
+     * selects one and only one cell from a list of cell passed by parameter
+     * @param localView is used for getting the coordinates
+     */
+    private NewCell selectOneCell(LocalView localView, ArrayList<NewCell> targetCells) {
+        ArrayList<String> listedCells=listCells(localView,targetCells);
+        return targetCells.get(listedCells.indexOf(this.askUser.stringSelector("Scegli una cella in cui colpire tutti",listedCells)));
     }
 
     /**
-     *
      * @param playersWithTargets listo of all players with the targets they can see
      * @param targetList contains one player, which is the target choosen before
-     * @return one target
+     * adds one target
      */
     private void selectPlayerAndThenTargets(ArrayList<PlayerWithTargets> playersWithTargets,ArrayList<Player> targetList,int targetsToAdd) {
 
-        //I'm extracting the previous target with the targets it can see
+        //I'm extracting the previous target with the targetsFromList1 it can see
         PlayerWithTargets target1 = getPlayerWithTargets(playersWithTargets,targetList.get(0));
 
-        //I'm listing the targets it can see to be chosen from
+
+        //I'm listing the targetsFromList1 it can see to be chosen from
         try {
             targetList.add(selectOneTarget(target1.getTargetsItCanSee(), "scegli il secondo target"));
         }catch (NullPointerException e){
@@ -246,9 +332,20 @@ public class ChosenActions implements Serializable {
 
     private ArrayList<String> listPlayers(ArrayList<Player> players){
         ArrayList<String> targetString=new ArrayList<>();
-            players.forEach(player ->
-                    targetString.add("Player of color: " + player.getFigure().getColor().toString()));
+        players.forEach(player ->
+                targetString.add("Player di colore: " + player.getFigure().getColor().toString()));
         return targetString;
+    }
+
+    private ArrayList<String> listCells(LocalView localView, ArrayList<NewCell> targetCells){
+        ArrayList<String> listedCells=new ArrayList<>();
+        targetCells.forEach(cell ->
+                listedCells.add(cellToText(localView, cell)));
+        return listedCells;
+    }
+
+    private String cellToText(LocalView localView, NewCell cell) {
+        return ("Cell in position ("+localView.getMapView().getXIndex(cell) +", "+localView.getMapView().getYIndex(cell)+")");
     }
 
 
@@ -323,8 +420,8 @@ public class ChosenActions implements Serializable {
         return useExtra;
     }
 
-    public ArrayList<Player> getTargets() {
-        return targets;
+    public ArrayList<Player> getTargetsFromList1() {
+        return targetsFromList1;
     }
 
     public NewCell getTargetCell() {
@@ -335,11 +432,19 @@ public class ChosenActions implements Serializable {
         return targetRoom;
     }
 
-    public ArrayList<NewCell> getSelectedCells() {
-        return selectedCells;
-    }
-
     public ArrayList<Player> getTargetsInOrder() {
         return targetsInOrder;
+    }
+
+    public NewCell getCellToMoveOpponent() {
+        return cellToMoveOpponent;
+    }
+
+    public NewCell getCellToMoveYourself() {
+        return cellToMoveYourself;
+    }
+
+    public ArrayList<Player> getTargetsFromCell() {
+        return targetsFromCell;
     }
 }
