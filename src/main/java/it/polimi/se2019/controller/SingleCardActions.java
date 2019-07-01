@@ -32,7 +32,7 @@ public class SingleCardActions{
 
     public SingleCardActions(Controller currentController, GunCard gunCard, FictitiousPlayer player, boolean mustSwap) {
         //this part builds the list of combination of the effects a player can afford to use
-        this.usableGunCardName=gunCard.getClass().toString();
+        this.usableGunCardName=gunCard.getClass().getSimpleName();
 
         //indicates all of the possible effects order
         ArrayList<ArrayList<String>> effectsOrder=reduceToAffordableEffects(gunCard,gunCard.getEffectsOrder(),player);
