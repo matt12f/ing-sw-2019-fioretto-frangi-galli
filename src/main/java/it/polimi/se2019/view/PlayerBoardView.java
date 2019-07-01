@@ -15,6 +15,18 @@ public  class PlayerBoardView {
         this.score=toSet;
     }
 
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public void setFront(boolean front) {
+        this.front = front;
+    }
+
+    public void setDamageView(DamageView damageView) {
+        this.damageView = damageView;
+    }
+
     public int getScore(){
         return this.score;
     }
