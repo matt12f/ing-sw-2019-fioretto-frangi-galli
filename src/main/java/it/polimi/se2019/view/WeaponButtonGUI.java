@@ -21,7 +21,7 @@ public class WeaponButtonGUI extends JButton {
     }
 
     public void updateImage(GunCard weapon){
-         this.weaponType = weapon.toString().toLowerCase();
+         this.weaponType = weapon.getClass().getSimpleName().toLowerCase();
          if (weaponType != null){
              pic = new ImageIcon(new ImageIcon("src/main/sprite/cards/weapons/weapons_"+weaponType+".png").getImage().getScaledInstance(sizex,sizey, Image.SCALE_DEFAULT));
          }else{
