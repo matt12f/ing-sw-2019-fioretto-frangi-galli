@@ -2,7 +2,6 @@ package it.polimi.se2019.view;
 
 import it.polimi.se2019.model.game.Figure;
 import it.polimi.se2019.model.game.NewCell;
-import it.polimi.se2019.model.game.Player;
 
 import java.util.ArrayList;
 

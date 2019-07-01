@@ -46,7 +46,6 @@ public class Shotgun extends GunCardAltEff {
     void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         ArrayList<Player> targets = Player.duplicateList(player.getPosition().getPlayers());
         targets.remove(player.getCorrespondingPlayer());
-
         actions.addToPlayerTargetList(targets);
         actions.setMaxNumPlayerTargets(1);
 
