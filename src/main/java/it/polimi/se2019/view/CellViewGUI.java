@@ -1,5 +1,6 @@
 package it.polimi.se2019.view;
 
+import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.model.game.NewCell;
 
 import javax.swing.*;
@@ -7,24 +8,27 @@ import java.awt.*;
 
 public class CellViewGUI extends JPanel {
     private SquareGUI[][] matrixGUI;
-    public CellView dataCell;
 
-    public CellViewGUI(int lineIndex, int columnIndex, NewCell playerPosition){
+
+    public CellViewGUI(CellView cell){
 
         this.matrixGUI = new SquareGUI[3][3];
-        this.dataCell = new CellView(lineIndex, columnIndex, playerPosition);
+
         ////creazione dello square in base al contenuto della cella/////
-        updateCell(playerPosition);
+        updateCell(cell);
 
         setOpaque(false);
+
+
         int x= 0,y = 0;
-        for(int column = 0; column <= 3; column++){
-            for (int row =0 ; row <= 3 ; row++){
+        for(int row = 0; row <= 3; row++){
+            for (int column =0 ; column <= 3 ; column++){
                 matrixGUI[row][column].setLocation(x,y);
 
                 add(matrixGUI[row][column]);
                 x+=30;
             }
+            x= 0;
             y+= 30;
         }
 
@@ -32,19 +36,16 @@ public class CellViewGUI extends JPanel {
 
     }
 
-    public void updateCell(NewCell playerPosition){
-
-        dataCell.setCell(playerPosition);
+    public void updateCell(CellView cell){
 
         int z = 0;
         for (int i = 0; i<=3 ; i++){
             for (int j = 0; j<= 3; j++){
-                if(j==0 && i==0){
-                    matrixGUI[j][i].setContent(null, playerPosition.getDrop());
-                }else if(z <= playerPosition.getPlayers().size()){
-                    matrixGUI[j][i].setContent(dataCell.getPlayerFigures().get(z), null);
+                if(j==0 && i==0 && cell.getDrop() != null){
+                    matrixGUI[j][i].updateImage(Color.BLACK);
+                }else if(z <= cell.getPlayerFigures().size()+1){
+                    matrixGUI[j][i].updateImage(cell.getPlayerFigures().get(z).getColor());
                     z+=1;
-
                 }else {
                     matrixGUI[j][i] = null;
                 }

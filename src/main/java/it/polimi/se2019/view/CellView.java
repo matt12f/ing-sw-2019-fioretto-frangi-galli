@@ -1,5 +1,6 @@
 package it.polimi.se2019.view;
 
+import it.polimi.se2019.model.cards.AmmoTileCard;
 import it.polimi.se2019.model.game.Figure;
 import it.polimi.se2019.model.game.NewCell;
 
@@ -9,6 +10,7 @@ public class CellView {
     private NewCell correspondingCell;
     private int lineIndex;
     private int columnIndex;
+    private String drop;
 
     private ArrayList<Figure> playerFigures;
 
@@ -18,6 +20,7 @@ public class CellView {
         this.lineIndex = lineIndex;
         this.columnIndex = columnIndex;
         this.playerFigures = new ArrayList<>();
+        setDrop(playerPosition.getDrop().toString());
         setPlayerFigures(playerPosition);
         setCell(playerPosition);
     }
@@ -48,6 +51,14 @@ public class CellView {
 
     public int getColumnIndex() {
         return columnIndex;
+    }
+
+    public void setDrop(String string){
+        this.drop = string;
+    }
+
+    public String getDrop(){
+        return drop;
     }
 
 

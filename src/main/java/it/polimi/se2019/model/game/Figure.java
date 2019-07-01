@@ -2,7 +2,8 @@ package it.polimi.se2019.model.game;
 
 import it.polimi.se2019.enums.Color;
 
-public class Figure {
+public class
+Figure {
     private Color color;
     private NewCell currentCell;
 
@@ -16,7 +17,7 @@ public class Figure {
 
     public char getColorChar(){
         switch (this.color){
-            case RED: return 'r';
+            case GREY: return 'r';
             case BLUE:return 'b';
             case GREEN:return 'g';
             case VIOLET:return 'v';
