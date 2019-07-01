@@ -41,22 +41,25 @@ public class TestGameModel {
     @Test
     public void testActivateFinalFrenzy(){
         ArrayList<Player> players = new ArrayList<>();
-        Player player1=new Player(1,"george101",Color.YELLOW);
-        players.add(player1);
-        GameModel testModel=new GameModel(players,1,3);
-
+        Player player=new Player(0,"george000",Color.YELLOW);
+        players.add(player);
+        player=new Player(1,"george001",Color.BLUE);
+        players.add(player);
+        player=new Player(2,"george010",Color.WHITE);
+        players.add(player);
+        player=new Player(3,"george011",Color.GREEN);
+        players.add(player);
+        player=new Player(4,"george100",Color.VIOLET);
+        players.add(player);
+        GameModel testModel=new GameModel(players,1, 5);
         assertFalse(testModel.getFinalFrenzy());
         testModel.activateFinalFrenzy(1);
         assertTrue(testModel.getFinalFrenzy());
-
-        //TODO verificare numero di mosse assegnate ai giocatori
-
-        testModel=new GameModel(players,1,3);
-        assertFalse(testModel.getFinalFrenzy());
-        testModel.activateFinalFrenzy(3);
-        assertTrue(testModel.getFinalFrenzy());
-
-        //TODO verificare numero di mosse assegnate ai giocatori
+        assertEquals(testModel.getPlayerList().get(0).getPlayerBoard().getActionTileFrenzy().getActionCounter(), 1);
+        assertEquals(testModel.getPlayerList().get(1).getPlayerBoard().getActionTileFrenzy().getActionCounter(), 1);
+        assertEquals(testModel.getPlayerList().get(2).getPlayerBoard().getActionTileFrenzy().getActionCounter(), 2);
+        assertEquals(testModel.getPlayerList().get(3).getPlayerBoard().getActionTileFrenzy().getActionCounter(), 2);
+        assertEquals(testModel.getPlayerList().get(4).getPlayerBoard().getActionTileFrenzy().getActionCounter(), 2);
 
     }
 

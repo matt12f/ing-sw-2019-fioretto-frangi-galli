@@ -2,12 +2,12 @@ package it.polimi.se2019.network;
 
 import it.polimi.se2019.controller.AvailableActions;
 import it.polimi.se2019.controller.Controller;
+import it.polimi.se2019.controller.PlayerManager;
 import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.enums.Status;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -20,14 +20,6 @@ public class GameHandler implements Runnable {
 
     public Controller getController() {
         return controller;
-    }
-
-    private ArrayList<String> getPlayersNickname(ArrayList<ClientHandler> clients){
-        ArrayList<String> nicknames = new ArrayList<>();
-        for (ClientHandler client: clients) {
-            nicknames.add(client.getNickname());
-        }
-        return  nicknames;
     }
 
     private void shuffleClient(ArrayList<ClientHandler> clients){
@@ -81,26 +73,36 @@ public class GameHandler implements Runnable {
         createController();
         for (ClientHandler c: players) {
             c.setAccepted(false);
+            c.setStatus(Status.SPAWN);
         }
+        //todo GESTIONE SPAWN
         //gestione dei turni
         while (this.controller.getMainGameModel().getKillshotTrack().getSkulls() > 0){
             turnPreparation(this.controller.getMainGameModel().getTurn());
-            waitingRequest(clientTurn);
-            calculateActions(clientTurn);
-            waitingRequest(clientTurn);
-            ChosenActions chosenActions = clientTurn.getChosenAction();
-            //todo applico gli effetti della mossa scelta
-            clientTurn.setStatus(Status.NOTMYTURN);
+            for(int i = 0; i<controller.getActiveTurn().getActivePlayer().getPlayerBoard().getActionTileNormal().getActionCounter(); i++) {
+                waitingRequest(clientTurn);
+                calculateActions(clientTurn);
+                waitingRequest(clientTurn);
+                PlayerManager.choiceExecutor(clientTurn.getChosenAction());
+                //todo invio LocalView
+                if (this.controller.getMainGameModel().getKillshotTrack().getSkulls() == 0)
+                    break;
+            }
+            clientTurn.setStatus(Status.NOTMYTURN); //valuta se magari ripassare da UPDATE piuttosto
             controller.getActiveTurn().nextTurn(controller);
         }
-        //todo calcolo mosse frenzy e attivazione
-        for (ClientHandler client: players) {
-            try {
-
-                client.getOutput().writeInt(controller.getActiveTurn().getActivePlayer().getPlayerBoard().getActionTileFrenzy().getActionCounter());
-            } catch (IOException e) {
-                e.printStackTrace();
+        for (ClientHandler client: players) { //todo così non va bene perchè non segue l'ordine, cambialo
+            turnPreparation(this.controller.getMainGameModel().getTurn());
+            for (int i = 0; i < controller.getActiveTurn().getActivePlayer().getPlayerBoard().getActionTileFrenzy().getActionCounter(); i ++) {
+                waitingRequest(clientTurn);
+                calculateActions(clientTurn);
+                waitingRequest(clientTurn);
+                ChosenActions chosenActions = clientTurn.getChosenAction();
+                PlayerManager.choiceExecutor(chosenActions);
+                //todo invio LocalView
             }
+            clientTurn.setStatus(Status.NOTMYTURN);
+            controller.getActiveTurn().nextTurn(controller);
         }
     }
 
@@ -137,10 +139,10 @@ public class GameHandler implements Runnable {
     }
 
     private synchronized void turnPreparation(int turn){
-        ClientHandler clientTurn = this.players.get(turn);
-        if(!clientTurn.isAccepted()){
-            //todo scelta spawnpoint
+        for (ClientHandler client: players) {
+            client.setStatus(Status.NOTMYTURN);
         }
+        ClientHandler clientTurn = this.players.get(turn);
         clientTurn.setActionsNumber(controller.getActiveTurn().getActivePlayer().getPlayerBoard().getActionTileNormal().getActionCounter());
         clientTurn.setStatus(Status.MYTURN);
     }
