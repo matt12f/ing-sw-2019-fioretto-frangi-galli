@@ -144,6 +144,7 @@ public class CyberBlade extends GunCardAddEff {
         targets.remove(player.getCorrespondingPlayer());
         actions.addToPlayerTargetList(targets);
         actions.setMaxNumPlayerTargets(1);
+        actions.setMinNumPlayerTargets(1);
     }
 
     /**

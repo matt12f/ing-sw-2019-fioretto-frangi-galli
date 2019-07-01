@@ -52,6 +52,8 @@ public class LockRifle extends GunCardAddEff {
         ArrayList<Player> targets=new ArrayList<>(ActionManager.visibleTargets(currentController,player));
         actions.addToPlayerTargetList(targets);
         actions.setMaxNumPlayerTargets(1);
+        actions.setMinNumPlayerTargets(1);
+
     }
 
     /**
@@ -59,12 +61,11 @@ public class LockRifle extends GunCardAddEff {
      */
     @Override
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        if(actions.getPlayersTargetList().size()<2){
+        if (actions.getPlayersTargetList().size() < 2)
             actions.setOfferableOpt1(false);
-        }else
-            actions.setSameListDifferentTarget(true);
+        else
+            actions.setMaxNumPlayerTargets(2);
     }
-
     //useless methods
     @Override
     void applyTertiaryEffect(ChosenActions playersChoice) {

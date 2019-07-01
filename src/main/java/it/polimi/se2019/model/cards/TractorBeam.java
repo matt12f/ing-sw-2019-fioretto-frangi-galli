@@ -74,6 +74,8 @@ public class TractorBeam extends GunCardAltEff {
 
         actions.addToPlayerTargetList(targets);
         actions.setMaxNumPlayerTargets(1);
+        actions.setMinNumPlayerTargets(1);
+
     }
 
     @Override

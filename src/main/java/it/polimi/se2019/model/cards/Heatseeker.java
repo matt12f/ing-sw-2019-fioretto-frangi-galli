@@ -37,6 +37,7 @@ public class Heatseeker extends GunCardAddEff {
         //adds list of targets you cannot see
         actions.addToPlayerTargetList(ActionManager.notVisibleTargets(currentController,player));
         actions.setMaxNumPlayerTargets(1);
+        actions.setMinNumPlayerTargets(1);
     }
 
     @Override

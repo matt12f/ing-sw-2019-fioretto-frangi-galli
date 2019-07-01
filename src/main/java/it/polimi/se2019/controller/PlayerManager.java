@@ -1,6 +1,7 @@
 package it.polimi.se2019.controller;
 
-import it.polimi.se2019.AdrenalineServer;
+import it.polimi.se2019.exceptions.CardNotFoundException;
+import it.polimi.se2019.model.cards.GunCard;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
 
@@ -11,10 +12,32 @@ public class PlayerManager {
         return (player.getPlayerBoard().getDamageTrack().getDamage().length<12);
     }
 
-    public static void choiceExecutor(ChosenActions actions){
-        //todo scrivere applicazione effetti data la ChosenActions
+    /**
+     * this method applies the player's choices for the Macro Action it requested
+     * @param currentController is the controller of the game
+     * @param actions contains the choices
+     */
+    public static void choiceExecutor(Controller currentController, ChosenActions actions){
+        Player player =actions.getFictitiousPlayer().getCorrespondingPlayer();
+        FictitiousPlayer fictitiousPlayer=actions.getFictitiousPlayer();
+        //moves the player
+        ActionManager.movePlayer(currentController,player,fictitiousPlayer.getPosition());
+
+        //grab management, ammo first, then guncards
+        if(fictitiousPlayer.isGrabbedAmmo())
+            player.getPlayerBoard().getAmmo().addAmmo(player.getFigure().getCell().pickItem().getContent());
+        else if(actions.getCardToPick()!=null) {
+            try {
+                player.getPlayerBoard().getHand().substitutionGunCard(actions.getCardToDiscard(), actions.getCardToPick());
+            } catch (CardNotFoundException e) {
+                //nothing to see here
+            }
+        }
+
+        actions.getChosenGun().applyEffects(actions);
     }
 
+    //TODO rivedere
     public static void damageDealer(Player player, char[] damageToDeal){
         int markNumber = player.getPlayerBoard().getDamageTrack().checkMarks(damageToDeal[0]);
         for (char damage: damageToDeal){

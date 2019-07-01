@@ -48,6 +48,8 @@ public class Shotgun extends GunCardAltEff {
         targets.remove(player.getCorrespondingPlayer());
         actions.addToPlayerTargetList(targets);
         actions.setMaxNumPlayerTargets(1);
+        actions.setMinNumPlayerTargets(1);
+
 
         for(NewCell cell: ActionManager.cellsOneMoveAway(currentController,player.getPosition()))
             actions.addCellsWithTargets(cell,new ArrayList<>(),0,0,false,true);
@@ -76,6 +78,8 @@ public class Shotgun extends GunCardAltEff {
         }
         actions.addToPlayerTargetList(targets);
         actions.setMaxNumPlayerTargets(1);
+        actions.setMinNumPlayerTargets(1);
+
     }
 
     @Override

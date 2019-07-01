@@ -48,6 +48,8 @@ public class Hellion extends GunCardAltEff{
 
         actions.addToPlayerTargetList(targets);
         actions.setMaxNumPlayerTargets(1);
+        actions.setMinNumPlayerTargets(1);
+
     }
     /**
      * Deal 1 damage to 1 target you can see at least 1 move away. Then give 2 marks to that target and everyone else on that square.

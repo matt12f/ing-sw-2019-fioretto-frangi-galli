@@ -83,7 +83,7 @@ public class GameHandler implements Runnable {
                 waitingRequest(clientTurn);
                 calculateActions(clientTurn);
                 waitingRequest(clientTurn);
-                PlayerManager.choiceExecutor(clientTurn.getChosenAction());
+                PlayerManager.choiceExecutor(controller, clientTurn.getChosenAction());
                 //todo invio LocalView
                 if (this.controller.getMainGameModel().getKillshotTrack().getSkulls() == 0)
                     break;
@@ -98,7 +98,7 @@ public class GameHandler implements Runnable {
                 calculateActions(clientTurn);
                 waitingRequest(clientTurn);
                 ChosenActions chosenActions = clientTurn.getChosenAction();
-                PlayerManager.choiceExecutor(chosenActions);
+                PlayerManager.choiceExecutor(controller, chosenActions);
                 //todo invio LocalView
             }
             clientTurn.setStatus(Status.NOTMYTURN);

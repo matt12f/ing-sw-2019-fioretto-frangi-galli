@@ -63,6 +63,8 @@ public class PowerGlove extends GunCardAltEff {
         }
         actions.addToPlayerTargetList(targets);
         actions.setMaxNumPlayerTargets(1);
+        actions.setMinNumPlayerTargets(1);
+
 
         //you will then move to that square automatically
     }

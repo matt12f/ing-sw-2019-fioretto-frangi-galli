@@ -67,7 +67,6 @@ public class VortexCannon extends GunCardAddEff {
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
          actions.getCellsWithTargets().clear();
          targetFiller(currentController,actions,player,3);
-         actions.setSameListDifferentTarget(true);
     }
 
     /**

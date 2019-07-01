@@ -48,16 +48,20 @@ public class MachineGun extends GunCardAddEff {
 
     @Override
     void applyBaseEffect(ChosenActions playersChoice) {
+        //se ricevi uno/due player applichi solo questo
         //TODO scrivere metodo
     }
 
     @Override
     void applySecondaryEffect(ChosenActions playersChoice) {
+        //si applica danno aggiuntivo al primo dei due
         //TODO scrivere metodo
     }
 
     @Override
     void applyTertiaryEffect(ChosenActions playersChoice) {
+        //se ricevo 2 player applico additional damage a entrambi
+        //se ne ricevi 3 applichi additional damage a entrambi + damage al terzo
         //TODO scrivere metodo
     }
 
@@ -68,6 +72,8 @@ public class MachineGun extends GunCardAddEff {
     void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         actions.addToPlayerTargetList(ActionManager.visibleTargets(currentController,player));
         actions.setMaxNumPlayerTargets(2);
+        actions.setMinNumPlayerTargets(1);
+
     }
 
     /**
@@ -84,8 +90,8 @@ public class MachineGun extends GunCardAddEff {
      */
     @Override
     void targetsOfTertiaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        actions.setOfferableOpt2(true);
-        actions.setSameListDifferentTarget(true); //In this case it's from the original list
+        actions.setMaxNumPlayerTargets(3);
+        actions.setMinNumPlayerTargets(2);
 
         actions.setOfferableExtra(true);
     }

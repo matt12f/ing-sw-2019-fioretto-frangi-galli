@@ -17,7 +17,9 @@ public class SingleEffectsCombinationActions{
     //these variables are for cards that just need the client to select a certain number of targets for an effect
     private ArrayList<Player> playersTargetList; //To choose from
     private int maxNumPlayerTargets; //For the GUI/CLI
-    //The minimum is always = 1
+    private int minNumPlayerTargets; //For the GUI/CLI
+
+    //The minimum is always = 1 except in MachineGun
 
     //these variables are for moving an opponent and they inform the client on how they can do that
     private boolean canMoveOpponent; //For the GUI/CLI
@@ -48,6 +50,7 @@ public class SingleEffectsCombinationActions{
 
         this.playersTargetList =new ArrayList<>();
         this.maxNumPlayerTargets=0;
+        this.minNumPlayerTargets=0;
 
         this.canMoveOpponent=false;
         this.targetCells=new ArrayList<>();
@@ -156,6 +159,10 @@ public class SingleEffectsCombinationActions{
 
     public void setMaxNumPlayerTargets(int maxNumberOfTargets) {
         this.maxNumPlayerTargets = maxNumberOfTargets;
+    }
+
+    public void setMinNumPlayerTargets(int minCellToSelect) {
+        this.minNumPlayerTargets = minNumPlayerTargets;
     }
 
     public void addToTargetRooms(ArrayList<Room> targetRooms) {

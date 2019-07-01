@@ -20,9 +20,12 @@ public class ChosenActions implements Serializable {
 
     private ArrayList<String> orderOfExecution;
 
+    private FictitiousPlayer fictitiousPlayer;
+
     private GunCard cardToPick;
     private GunCard cardToDiscard;
 
+    private GunCard chosenGun;
     private boolean useExtra;
 
     private ArrayList<Player> targetsFromList1;
@@ -57,15 +60,16 @@ public class ChosenActions implements Serializable {
             arrivalCellsIndex.add(actions.getFictitiousPlayers().indexOf(fictitiousPlayer)+". "+cellToText(localView, fictitiousPlayer.getPosition()));
 
         String chosenArrivalCell=this.askUser.stringSelector("Scegi una cella dove vuoi spostarti",arrivalCellsIndex);
-        FictitiousPlayer choice= actions.getFictitiousPlayers().get(arrivalCellsIndex.indexOf(chosenArrivalCell));
+        this.fictitiousPlayer = actions.getFictitiousPlayers().get(arrivalCellsIndex.indexOf(chosenArrivalCell));
+
 
         //Section for grab/move + grab action picking Ammo/Guns
-        if(choice.getAvailableCardActions().isEmpty()) { //this is a grab/move + grab action picking Ammo
-            if(choice.isGrabbedAmmo()) //TODO cambia con display grafico della ammoTile
-                this.askUser.showMessage("Raccoglierai: "+translatorOfAmmo(choice.getPosition().getDrop().getContent()));
+        if(this.fictitiousPlayer.getAvailableCardActions().isEmpty()) { //this is a grab/move + grab action picking Ammo
+            if(this.fictitiousPlayer.isGrabbedAmmo())
+                this.askUser.ammoTileViewer(this.fictitiousPlayer.getPosition().getDrop().getContent());
 
-            if(!choice.getPickableCards().isEmpty()){ //in case this is a grab/move + grab action picking a Gun
-                cardToPick = gunCardManager(choice.getPickableCards());
+            if(!this.fictitiousPlayer.getPickableCards().isEmpty()){ //in case this is a grab/move + grab action picking a Gun
+                cardToPick = gunCardManager(this.fictitiousPlayer.getPickableCards());
                 if(localView.getPlayerHand().isGunHandFull())
                     this.cardToDiscard = cardDiscardSelector(localView);
             }
@@ -77,10 +81,10 @@ public class ChosenActions implements Serializable {
 
             //removes cards that have no available combinations
             Predicate<SingleCardActions> cardActionsPredicate= p-> p.getAvailableCombinations().isEmpty();
-            choice.getAvailableCardActions().removeIf(cardActionsPredicate);
+            this.fictitiousPlayer.getAvailableCardActions().removeIf(cardActionsPredicate);
 
-            for(SingleCardActions cardActions: choice.getAvailableCardActions()) //this card is valid to be used
-                    listOfCards.add("Usable card: " + cardActions.getUsableGunCardName() + "; Must swap to use it: " + cardActions.isMustSwap());
+            for(SingleCardActions cardActions: this.fictitiousPlayer.getAvailableCardActions()) //this card is valid to be used
+                    listOfCards.add("Usable card: " + cardActions.getGunCardToUse().getClass().getSimpleName() + "; Must swap to use it: " + cardActions.isMustSwap());
 
 
             //asks the user which card it wants to use, listing the combination of effects it can perform
@@ -88,11 +92,13 @@ public class ChosenActions implements Serializable {
             String cardSelected;
             do {
                 cardSelected = this.askUser.stringSelector("Seleziona l'arma che vuoi usare", listOfCards);
-                finalDecision = this.askUser.yesOrNo("Questa carta ha le seguenti combinazioni degli effetti: "+ choice.getAvailableCardActions().get(listOfCards.indexOf(cardSelected)).getAvailableCombinations().toString(),"Prosegui","Seleziona un'altra carta");
+                finalDecision = this.askUser.yesOrNo("Questa carta ha le seguenti combinazioni degli effetti: "+ this.fictitiousPlayer.getAvailableCardActions().get(listOfCards.indexOf(cardSelected)).getAvailableCombinations().toString(),"Prosegui","Seleziona un'altra carta");
             }while (!finalDecision);
 
             //extracts the single card chosen by the player
-            SingleCardActions chosenCard = choice.getAvailableCardActions().get(listOfCards.indexOf(cardSelected));
+            SingleCardActions chosenCard = this.fictitiousPlayer.getAvailableCardActions().get(listOfCards.indexOf(cardSelected));
+
+            this.chosenGun=chosenCard.getGunCardToUse();
 
             if(chosenCard.isMustSwap())
                 this.cardToDiscard=cardDiscardSelector(localView);
@@ -101,7 +107,7 @@ public class ChosenActions implements Serializable {
             String chosenCombination=this.askUser.stringSelector("Scegliere una combinazione di effetti",chosenCard.getAvailableCombinations());
             SingleEffectsCombinationActions combinationActions=chosenCard.getEffectsCombinationActions().get(chosenCard.getAvailableCombinations().indexOf(chosenCombination));
 
-            selectActions(localView, combinationActions,chosenCard.getUsableGunCardName());
+            selectActions(localView, combinationActions,chosenCard.getGunCardToUse().getClass().getSimpleName());
         }
 
     }
@@ -118,9 +124,7 @@ public class ChosenActions implements Serializable {
 
         //selection of normal targets and secondary targets different from the first
         if(!combination.getPlayersTargetList().isEmpty())
-            this.targetsFromList1.addAll(selectTargets(combination.getPlayersTargetList(), combination.getMaxNumPlayerTargets(), null));
-        if(combination.isSameListDifferentTarget())
-            this.targetsFromList1.addAll(selectTargets(combination.getPlayersTargetList(),  1, this.targetsFromList1));
+            this.targetsFromList1.addAll(selectTargets(combination.getPlayersTargetList(), combination.getMaxNumPlayerTargets()));
 
         if(!combination.getTargetRooms().isEmpty())
             this.targetRoom = selectRoom(combination.getTargetRooms());
@@ -131,13 +135,12 @@ public class ChosenActions implements Serializable {
 
         //managing cells with targets (the selected targets are put in targetsFromCell within the method used below)
         if(!combination.getCellsWithTargets().isEmpty()) {
+            if(combination.isCanMoveYourself())
+                this.cellToMoveYourself=selectCellWithTargets(localView, combination,"MoveYourself");
             if(combination.isCanMoveOpponent())
                 this.cellToMoveOpponent=selectCellWithTargets(localView, combination,"MoveOpponent");
-            else if(combination.isCanMoveYourself())
-                this.cellToMoveYourself=selectCellWithTargets(localView, combination,"MoveYourself");
-            else{
+            if(!combination.isCanMoveOpponent() && !combination.isCanMoveYourself())
                 selectCellWithTargets(localView, combination, cardName);
-            }
         }
 
         //means this is a THOR card using Optional1 and/or Optional2 on top of the base effect
@@ -227,7 +230,7 @@ public class ChosenActions implements Serializable {
         if(cellWithTargets.getMaxTargetsInCell()==0 && cellWithTargets.getMinTargetsInCell()==0)
             return targets;
 
-        targets.addAll(selectTargets(cellWithTargets.getTargets(),cellWithTargets.getMaxTargetsInCell(),null));
+        targets.addAll(selectTargets(cellWithTargets.getTargets(),cellWithTargets.getMaxTargetsInCell()));
 
         return targets;
     }
@@ -238,16 +241,10 @@ public class ChosenActions implements Serializable {
         return stringList;
     }
 
-    private ArrayList<Player> selectTargets(ArrayList<Player> playersTargetList, int maxTargets, ArrayList<Player> previousTargets) {
+    private ArrayList<Player> selectTargets(ArrayList<Player> playersTargetList, int maxTargets) {
         ArrayList<Player> targets=new ArrayList<>();
 
-        if(previousTargets!=null) //selection of target different from the previous list
-        {
-            ArrayList<Player> availTargets = new ArrayList<>(Player.duplicateList(playersTargetList));
-            availTargets.removeAll(previousTargets);
-            targets.add(selectOneTarget(availTargets, "Scegli target da colpire (sarà diverso dal precendente)"));
-        }
-        else { //normal selection of 1 or more targets
+        //normal selection of 1 or more targets
             if (maxTargets == 1)
                 targets.add(selectOneTarget(playersTargetList, "Scegli target da colpire"));
             else
@@ -257,13 +254,13 @@ public class ChosenActions implements Serializable {
             playersTargetList.remove(targets.get(0));
 
             int cont = 1;
-            while(maxTargets>cont && this.askUser.yesOrNo("vuoi selezionare altri target? "+"\nTarget restanti: "+(maxTargets-cont), "Si", "No")){
+            while(maxTargets>cont && !playersTargetList.isEmpty() && this.askUser.yesOrNo("vuoi selezionare altri target? "+"\nTarget restanti: "+(maxTargets-cont), "Si", "No")){
                 cont++;
                 targets.add(selectOneTarget(playersTargetList, "scegli il " + cont + "° target da colpire"));
                 playersTargetList.remove(targets.get(targets.size()-1)); //removes the player you just selected to avoid selecting someone twice
             }
 
-        }
+
         return targets;
     }
 
@@ -302,11 +299,10 @@ public class ChosenActions implements Serializable {
      * @param targetList contains one player, which is the target choosen before
      * adds one target
      */
-    private void selectPlayerAndThenTargets(ArrayList<PlayerWithTargets> playersWithTargets,ArrayList<Player> targetList,int targetsToAdd) {
+    private void selectPlayerAndThenTargets(ArrayList<PlayerWithTargets> playersWithTargets,ArrayList<Player> targetList, int targetsToAdd) {
 
         //I'm extracting the previous target with the targetsFromList1 it can see
         PlayerWithTargets target1 = getPlayerWithTargets(playersWithTargets,targetList.get(0));
-
 
         //I'm listing the targetsFromList1 it can see to be chosen from
         try {
@@ -381,27 +377,14 @@ public class ChosenActions implements Serializable {
         return pickableCards.get(listOfGuns.indexOf(selection));
     }
 
-    /**
-     * Method to easily visualize AmmoTiles content
-     */
-    private String translatorOfAmmo(String sequence){
-        StringBuilder builder=new StringBuilder();
-        for (int i = 0; i < sequence.length(); i++)
-            switch (sequence.charAt(i)){
-                case 'y':builder.append("yellow Ammo");break;
-                case 'b':builder.append("Blue Ammo");break;
-                case 'r': builder.append("Red Ammo");break;
-                case 'p':builder.append("PowerUp");break;
-                default:break;
-            }
-        return builder.toString();
-    }
-
-
     /**--------------- GETTERS -----------------------*/
 
     public ArrayList<String> getOrderOfExecution() {
         return orderOfExecution;
+    }
+
+    public FictitiousPlayer getFictitiousPlayer() {
+        return fictitiousPlayer;
     }
 
     public UserInteraction getAskUser() {
@@ -414,6 +397,10 @@ public class ChosenActions implements Serializable {
 
     public GunCard getCardToDiscard() {
         return cardToDiscard;
+    }
+
+    public GunCard getChosenGun() {
+        return chosenGun;
     }
 
     public boolean isUseExtra() {
@@ -447,4 +434,5 @@ public class ChosenActions implements Serializable {
     public ArrayList<Player> getTargetsFromCell() {
         return targetsFromCell;
     }
+
 }

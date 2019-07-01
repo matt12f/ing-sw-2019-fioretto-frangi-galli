@@ -56,7 +56,6 @@ public class UserInteractionCLI extends UserInteraction {
         return false;
     }
 
-
     @Override
     public String stringSelector(String message, ArrayList<String> listToChooseFrom) {
         return null;
@@ -64,8 +63,20 @@ public class UserInteractionCLI extends UserInteraction {
 
     @Override
     public void showMessage(String message) {
-
+        System.out.println(message);
     }
 
-
+    @Override
+    public void ammoTileViewer(String content) {
+            StringBuilder builder=new StringBuilder("La AmmoTile che hai raccolto contiene: ");
+            for (int i = 0; i < content.length(); i++)
+                switch (content.charAt(i)){
+                    case 'y':builder.append("1 Yellow Ammo");break;
+                    case 'b':builder.append("1 Blue Ammo");break;
+                    case 'r': builder.append("1 Red Ammo");break;
+                    case 'p':builder.append("1 PowerUp");break;
+                    default:break;
+                }
+            System.out.println(builder.toString());
+    }
 }

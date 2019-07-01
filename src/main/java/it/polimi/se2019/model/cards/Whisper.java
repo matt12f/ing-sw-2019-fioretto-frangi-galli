@@ -40,6 +40,8 @@ public class Whisper extends GunCardAddEff {
 
         actions.addToPlayerTargetList(targets);
         actions.setMaxNumPlayerTargets(1);
+        actions.setMinNumPlayerTargets(1);
+
     }
 
     @Override

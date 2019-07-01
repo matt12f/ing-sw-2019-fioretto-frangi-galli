@@ -58,6 +58,7 @@ public class GrenadeLauncher extends GunCardAddEff {
         ArrayList<Player> targets=new ArrayList<>(ActionManager.visibleTargets(currentController,player));
         actions.addToPlayerTargetList(targets);
         actions.setMaxNumPlayerTargets(1);
+        actions.setMinNumPlayerTargets(1);
 
         for(NewCell cell: ActionManager.cellsOneMoveAway(currentController, player.getPosition()))
             actions.addCellsWithTargets(cell,new ArrayList<>(),0,0,false,true);

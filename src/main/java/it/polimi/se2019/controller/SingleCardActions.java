@@ -25,14 +25,14 @@ import java.util.ArrayList;
  */
 
 public class SingleCardActions{
-    private String usableGunCardName;
+    private GunCard gunToUse;
     private ArrayList<String> availableCombinations; //For the GUI/CLI to list them efficiently
     private ArrayList<SingleEffectsCombinationActions> effectsCombinationActions;
     private boolean mustSwap;
 
     public SingleCardActions(Controller currentController, GunCard gunCard, FictitiousPlayer player, boolean mustSwap) {
         //this part builds the list of combination of the effects a player can afford to use
-        this.usableGunCardName=gunCard.getClass().getSimpleName();
+        this.gunToUse=gunCard;
 
         //indicates all of the possible effects order
         ArrayList<ArrayList<String>> effectsOrder=reduceToAffordableEffects(gunCard,gunCard.getEffectsOrder(),player);
@@ -74,8 +74,8 @@ public class SingleCardActions{
         return availableEffectsCombinations;
     }
 
-    public String getUsableGunCardName() {
-        return usableGunCardName;
+    public GunCard getGunCardToUse() {
+        return gunToUse;
     }
 
     public ArrayList<String> getAvailableCombinations() {

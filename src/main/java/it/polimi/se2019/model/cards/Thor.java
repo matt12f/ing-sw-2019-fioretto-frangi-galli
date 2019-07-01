@@ -67,6 +67,8 @@ public class Thor extends GunCardAddEff {
         //here we'll fill the list of visible players
         actions.addToPlayerTargetList(ActionManager.visibleTargets(currentController,player));
         actions.setMaxNumPlayerTargets(1);
+        actions.setMinNumPlayerTargets(1);
+
     }
 
     /**

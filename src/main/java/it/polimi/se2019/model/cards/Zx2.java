@@ -45,6 +45,8 @@ public class Zx2 extends GunCardAltEff {
         ArrayList<Player> targets = new ArrayList<>(ActionManager.visibleTargets(currentController,player));
         actions.addToPlayerTargetList(targets);
         actions.setMaxNumPlayerTargets(1);
+        actions.setMinNumPlayerTargets(1);
+
     }
 
     /**

@@ -102,6 +102,8 @@ public class RocketLauncher extends GunCardAddEff {
 
         actions.addToPlayerTargetList(targets);
         actions.setMaxNumPlayerTargets(1);
+        actions.setMinNumPlayerTargets(1);
+
 
         actions.setCanMoveOpponent(true);
         for(NewCell cell: ActionManager.cellsOneMoveAway(currentController,player.getPosition()))
