@@ -85,10 +85,6 @@ public class MapChooserGUI {
 
 
 
-
-
-
-
         frame.addWindowListener(new MapChooserGUI.CloseListener());
         frame.add(mainPanel);
         frame.setSize(1280,720);

@@ -6,10 +6,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class BoardZoneGUI extends JPanel {
 
-
+    private ArrayList<PlayerBoardViewGUI> boardsGUI;
     private PlayerBoardViewGUI board1;
     private PlayerBoardViewGUI board2;
     private PlayerBoardViewGUI board3;
@@ -17,50 +18,30 @@ public class BoardZoneGUI extends JPanel {
     private JButton score;
 
 
-    public BoardZoneGUI(){
+    public BoardZoneGUI(ArrayList<PlayerBoardView> boards){
 
         GridBagConstraints container = new GridBagConstraints();
        setLayout(new GridBagLayout());
 
-    //TODO questa roba va poi rifatta in un for dinamicamente
-
-        this.board1 = new PlayerBoardViewGUI(Color.BLUE, 420,109);
+      //boards.get(0).setBoard(Color.BLUE, 420,109);
 
 
-        container.gridx=0;
-        container.gridy=0;
+       //////////creazione dinamica della board zone///////
 
-        add(board1, container);
-    ///////////////////
-
-
-        this.board2 = new PlayerBoardViewGUI(Color.GREEN,420,109);
+        for (int i = 0; i<= boards.size();i++){
+            boardsGUI.get(0).setBoard(boards.get(i).getColor(), 420,109);
+        }
 
 
-        container.gridx=0;
-        container.gridy=1;
-
-        add(board2, container);
-
-        ///////////////////
-
-        this.board3 = new PlayerBoardViewGUI(Color.RED,420,109);
+        //////////aggiunta dinamica della board zone///////
+        for (int i = 0; i<= boards.size();i++){
+            container.gridx=0;
+            container.gridy=i;
+            add(boardsGUI.get(i), container);
+        }
 
 
-        container.gridx=0;
-        container.gridy=2;
 
-        add(board3, container);
-
-        ///////////////////
-
-        this.board4 = new PlayerBoardViewGUI(Color.VIOLET,420,109);
-
-
-        container.gridx=0;
-        container.gridy=3;
-
-        add(board4, container);
 
         this.score = new JButton("View Score");
 
@@ -76,6 +57,12 @@ public class BoardZoneGUI extends JPanel {
             }
 
         });
+
+    }
+
+    public void updateBoards(){
+
+
 
     }
 
