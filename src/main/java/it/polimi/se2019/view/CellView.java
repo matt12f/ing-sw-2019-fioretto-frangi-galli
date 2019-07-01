@@ -26,7 +26,6 @@ public class CellView {
     public void setPlayerFigures(NewCell playerPosition){
 
         this.playerFigures.clear();
-
         for (int i = 0; i <= playerPosition.getPlayers().size(); i++){
             this.playerFigures.add(playerPosition.getPlayers().get(i).getFigure());
         }
