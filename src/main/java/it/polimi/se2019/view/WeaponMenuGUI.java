@@ -1,5 +1,7 @@
 package it.polimi.se2019.view;
 
+import it.polimi.se2019.model.cards.GunCard;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -16,12 +18,12 @@ public class WeaponMenuGUI extends JFrame{
     private ImageIcon img;
 
 
-    public WeaponMenuGUI(String weaponType){
+    public WeaponMenuGUI(GunCard weaponType){
 
-        this.weaponName = new Label(weaponType.toUpperCase());
-        this.weaponInfo = new Label("Info");
-        this.weaponCharge = new Label("Loaded");
-        this.img = new ImageIcon(new ImageIcon("src/main/sprite/cards/weapons/weapons_"+ weaponType +".png").getImage().getScaledInstance(120,203,Image.SCALE_DEFAULT));
+        this.weaponName = new Label(weaponType.getClass().getSimpleName().toUpperCase());
+        this.weaponInfo = new Label(weaponType.getDescription());
+        this.weaponCharge = new Label("Loaded:" + weaponType.isLoaded());
+        this.img = new ImageIcon(new ImageIcon("src/main/sprite/cards/weapons/weapons_"+ weaponType.getClass().getSimpleName().toLowerCase() +".png").getImage().getScaledInstance(120,203,Image.SCALE_DEFAULT));
         this.image = new JLabel(img);
         JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints container = new GridBagConstraints();
