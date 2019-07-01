@@ -11,6 +11,8 @@ public class UserInteractionGUI extends UserInteraction {
     private String choice;
     private String chosenByList;
     private boolean yesNoChoice;
+    private int map;
+    private int skull;
 
     @Override
     public String actionToRequest(int frenzy){
@@ -312,6 +314,94 @@ public class UserInteractionGUI extends UserInteraction {
         dialog.pack();
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
+    }
+
+    public int[] mapChooser(){
+
+        JPanel mainPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints container = new GridBagConstraints();
+        mainPanel.setLayout(new GridBagLayout());
+
+
+
+        JButton map1 = new JButton();
+        ImageIcon pic1 = new ImageIcon(new ImageIcon("src/main/sprite/maps/1.png").getImage().getScaledInstance(300,220,Image.SCALE_DEFAULT));
+        map1.setIcon(pic1);
+
+        JButton map2 = new JButton();
+        ImageIcon pic2 = new ImageIcon(new ImageIcon("src/main/sprite/maps/2.png").getImage().getScaledInstance(300,220,Image.SCALE_DEFAULT));
+        map2.setIcon(pic2);
+
+        JButton map3 = new JButton();
+        ImageIcon pic3 = new ImageIcon(new ImageIcon("src/main/sprite/maps/3.png").getImage().getScaledInstance(300,220,Image.SCALE_DEFAULT));
+        map3.setIcon(pic3);
+
+        JButton map4 = new JButton();
+        ImageIcon pic4 = new ImageIcon(new ImageIcon("src/main/sprite/maps/4.png").getImage().getScaledInstance(300,220,Image.SCALE_DEFAULT));
+        map4.setIcon(pic4);
+
+
+        container.gridx = 0;
+        container.gridy = 0;
+        mainPanel.add(new Label("choose your map"), container);
+
+        container.gridx = 0;
+        container.gridy = 1;
+        mainPanel.add(map1, container);
+
+        container.gridx = 1;
+        container.gridy = 1;
+        mainPanel.add(map2, container);
+
+        container.gridx = 0;
+        container.gridy = 2;
+        mainPanel.add(map3, container);
+
+        container.gridx = 1;
+        container.gridy = 2;
+        mainPanel.add(map4, container);
+
+
+        //TODO con quesi bottoni aprire la plancia di gioco passando map
+        map1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                map = 1;
+
+            }});
+
+        map2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                map = 2;
+
+            }});
+        map3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                map = 3;
+
+            }});
+        map4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                map = 4;
+
+            }});
+
+
+        JDialog dialog = new JDialog();
+        dialog.setModal(true);
+        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        dialog.setTitle("map Chooser");
+        dialog.getContentPane().add(mainPanel);
+        dialog.pack();
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+
+
+        int[] ret = {map, skull};
+        return ret ;
     }
 
 }

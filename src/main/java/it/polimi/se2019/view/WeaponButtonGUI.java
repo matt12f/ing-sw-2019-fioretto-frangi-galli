@@ -6,20 +6,28 @@ import javax.swing.*;
 import java.awt.*;
 
 public class WeaponButtonGUI extends JButton {
+    private String weaponType;
+    private int sizex;
+    private int sizey;
+    private ImageIcon pic;
 
     public WeaponButtonGUI(int x, int y){
-        setSize(x,y);
+        sizex=x;
+        sizey=y;
+        setSize(sizex,sizey);
 
-        ImageIcon wpImage1 = new ImageIcon(new ImageIcon("src/main/sprite/cards/weapons/weapons_back.png").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
-        setIcon(wpImage1);
+        pic = new ImageIcon(new ImageIcon("src/main/sprite/cards/weapons/weapons_back.png").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
+        setIcon(pic);
     }
 
     public void updateImage(GunCard weapon){
-        String weaponType = weapon.toString();
-
-        switch (weaponType){
-            case "":
-        }
+         this.weaponType = weapon.toString().toLowerCase();
+         if (weaponType != null){
+             pic = new ImageIcon(new ImageIcon("src/main/sprite/cards/weapons/weapons_"+weaponType+".png").getImage().getScaledInstance(sizex,sizey, Image.SCALE_DEFAULT));
+         }else{
+             pic = new ImageIcon(new ImageIcon("src/main/sprite/cards/weapons/weapons_back.png").getImage().getScaledInstance(sizex,sizey, Image.SCALE_DEFAULT));
+         }
+        setIcon(pic);
 
     }
 }

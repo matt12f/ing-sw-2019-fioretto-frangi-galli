@@ -16,12 +16,12 @@ public class WeaponMenuGUI extends JFrame{
     private ImageIcon img;
 
 
-    public WeaponMenuGUI(){
+    public WeaponMenuGUI(String weaponType){
 
-        this.weaponName = new Label("Name");
+        this.weaponName = new Label(weaponType.toUpperCase());
         this.weaponInfo = new Label("Info");
         this.weaponCharge = new Label("Loaded");
-        this.img = new ImageIcon(new ImageIcon("src/main/sprite/cards/weapons/weapons_cyberblade.png").getImage().getScaledInstance(120,203,Image.SCALE_DEFAULT));
+        this.img = new ImageIcon(new ImageIcon("src/main/sprite/cards/weapons/weapons_"+ weaponType +".png").getImage().getScaledInstance(120,203,Image.SCALE_DEFAULT));
         this.image = new JLabel(img);
         JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints container = new GridBagConstraints();
