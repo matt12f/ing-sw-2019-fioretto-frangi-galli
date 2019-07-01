@@ -47,7 +47,7 @@ public class CellViewGUI extends JPanel {
                     matrixGUI[j][i].updateImage(cell.getPlayerFigures().get(z).getColor());
                     z+=1;
                 }else {
-                    matrixGUI[j][i] = null;
+                    matrixGUI[j][i].updateImage(null);
                 }
 
             }
