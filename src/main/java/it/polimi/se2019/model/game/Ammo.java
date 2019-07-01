@@ -28,7 +28,9 @@ public class Ammo {
         return yellow;
     }
 
-    public void addAmmo(String ammo){
+
+    public boolean addAmmo(String ammo){
+        boolean isTherePwUp=false;
         for(int i=0;i<ammo.length();i++){
             if(ammo.charAt(i)=='b')
                 setBlue(1);
@@ -36,16 +38,19 @@ public class Ammo {
                 setYellow(1);
             else if(ammo.charAt(i)=='r')
                 setRed(1);
+            else if(ammo.charAt(i)=='p')
+                isTherePwUp=true;
         }
+        return isTherePwUp;
     }
 
-    public void subtractAmmo(String ammo){
-        for(int i=0;i<ammo.length();i++){
-            if(ammo.charAt(i)=='b')
+    public void subtractAmmo(char [] ammo){
+        for(int i=0;i<ammo.length;i++){
+            if(ammo[i]=='b')
                 setBlue(-1);
-            else if(ammo.charAt(i)=='y')
+            else if(ammo[i]=='y')
                 setYellow(-1);
-            else if(ammo.charAt(i)=='r')
+            else if(ammo[i]=='r')
                 setRed(-1);
         }
     }

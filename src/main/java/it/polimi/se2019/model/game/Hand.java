@@ -67,10 +67,10 @@ public class Hand {
             }
             else i++;
         }
-        if(!substituted) throw new CardNotFoundException("powerups");
+        if(!substituted) throw new CardNotFoundException("powerup swap");
     }
 
-    public void substitutionGunCard (GunCard discarded, GunCard newGunCard) throws CardNotFoundException{
+    public void substitutionGunCard (NewCell spawnPoint, GunCard discarded, GunCard newGunCard) throws CardNotFoundException{
         int i=0;
         boolean substituted=false;
         while(!substituted && i<MAXCARDS){
@@ -80,7 +80,17 @@ public class Hand {
             }
             else i++;
         }
-        if(!substituted) throw new CardNotFoundException("guns");
+        if(!substituted)
+            throw new CardNotFoundException("gun swap");
+        else {//the cards have beeh swapped in the player's hand, now they must be swapped in the spawn point
+            spawnPoint.pickItem(newGunCard);
+            try {
+                spawnPoint.setItem(discarded);
+            }catch (FullException e){
+                //nothing to see here
+            }
+        }
+
     }
 
     public void removePowerUp(int indexInHand){

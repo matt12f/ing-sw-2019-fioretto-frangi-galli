@@ -24,30 +24,14 @@ public class Controller implements Observer {
     private RemoteView remoteView;
     private TurnManager activeTurn;
 
-    //TODO rivedere costrutture con la nuova modalità di connessione
     /**
-     * This constructor generates one local controller object for one Player
+     * This constructor generates one local controller object for one game
      */
+    //TODO rivedere costrutture con la nuova modalità di connessione
     public Controller(ArrayList<Player> players, int mapNumber, int skulls) {
         this.mainGameModel=new GameModel(players, mapNumber, skulls);
-        this.remoteView=setupRemoteObjExport();
+        this.remoteView=new RemoteView();
         this.activeTurn = new TurnManager();
-    }
-
-    /**
-     * This method offers the object on the LAN
-     * @return
-     */
-    private RemoteView setupRemoteObjExport(){
-        RemoteView virtualView = new RemoteView();
-
-        //bind the object
-        try {
-            Naming.rebind("rmi://localhost/adrenaline", virtualView);
-        } catch (RemoteException | MalformedURLException e){
-            LOGGER.log(Level.FINE,"controller",e);
-        }
-        return virtualView;
     }
 
     public GameModel getMainGameModel() {

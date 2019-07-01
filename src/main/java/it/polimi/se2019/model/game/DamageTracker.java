@@ -30,27 +30,42 @@ public class DamageTracker {
                 found = true;
             }
             i++;
-        }while(!found && i<12);
+        }while(!found && i < 12);
     }
 
     /**
-     * this method adds the mark it receives
-     * @param mark
+     * this method adds the single mark it receives
+     * NOTE: there can only be up to three marks of each color on a player board
      */
-    public void addMark(char mark) {
-        this.marks.add(mark);
+    public void addMark(char mark){
+        if(markCounter(mark)<3)
+            this.marks.add(mark);
     }
 
+    /**
+     * This method counts the amount of marks of a given color
+     * and then removes them from the array
+     * @param color
+     * @return
+     */
     public int checkMarks(char color){
+        int numberOfMarks= markCounter(color);
+        this.marks.removeAll(Collections.singleton(color));
+        return numberOfMarks;
+    }
+
+    /**
+     * This method counts the amount of marks of a given color
+     */
+    private int markCounter(char color){
         sort(this.marks); //this orders the marks in alphabetical order
-        int firstOccurence=this.marks.indexOf(color);
-        if (firstOccurence==-1) //there are no marks of the given color
+        int firstOccurrence=this.marks.indexOf(color);
+        if (firstOccurrence==-1) //there are no marks of the given color
             return 0;
-        int i=firstOccurence;
+        int i=firstOccurrence;
         while (i<this.marks.size() && this.marks.get(i)==color)
             i++;
-        this.marks.removeAll(Collections.singleton(color));
-        return i-firstOccurence;
+        return i-firstOccurrence;
     }
 
     public ArrayList<Character> getMarks() {
@@ -67,6 +82,7 @@ public class DamageTracker {
                 return false;
         return true;
     }
+
     /**
      * this method resets the vector damage
      */
@@ -80,8 +96,7 @@ public class DamageTracker {
     public DamageTracker clone(){
         DamageTracker damageTracker=new DamageTracker();
         damageTracker.damage=this.damage.clone();
-        for(Character character : this.marks)
-            damageTracker.marks.add(character);
+        damageTracker.marks.addAll(this.marks);
         return damageTracker;
     }
 }

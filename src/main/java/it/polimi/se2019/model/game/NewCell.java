@@ -58,19 +58,17 @@ public class NewCell {
         this.players.remove(player);
     }
 
-    /**
-     * methods for SpawnCell
-     *
-     *
-     *
-     */
+
+    /** ------- Methods for SpawnCell ------------ **/
+
     public ArrayList<GunCard> getWeaponCards() {
         return weaponCards;
     }
 
-    /** It fills the first empty slot in weaponCards with the card it receives
+    /** It fills the first empty slot in weaponCards with the card it receives, reloading it
      */
     public void setItem(GunCard card)throws FullException{
+        card.setLoaded(true);
         if(this.weaponCards.size()<3)
             this.weaponCards.add(card);
         else
@@ -89,21 +87,17 @@ public class NewCell {
         return false;
     }
 
-    /** Method that returns the weapon from the pick-numbered slot
+    /** Method that returns the weapon
      **/
-    public GunCard pickItem(int pick){
-        GunCard picked= this.weaponCards.get(pick);
+    public GunCard pickItem(GunCard pick){
+        GunCard picked= this.weaponCards.get(this.weaponCards.indexOf(pick));
         this.weaponCards.remove(pick);
         return picked;
     }
 
 
-    /**
-     * methods for DropCell
-     *
-     *
-     *
-     */
+    /** ------- Methods for DropCell ------------ **/
+
     public AmmoTileCard getDrop(){
         if(this.getCellType().equals(CellType.DROP))
             return  drop;

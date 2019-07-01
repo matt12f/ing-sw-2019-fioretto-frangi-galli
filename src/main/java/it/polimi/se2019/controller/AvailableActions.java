@@ -36,6 +36,7 @@ public class AvailableActions implements Serializable {
     public AvailableActions(ActionRequestView macroAction, int playerId, Controller currentController) {
         Player player=currentController.getMainGameModel().getPlayerList().get(playerId);
 
+        if(macroAction.getActionToRequest()!=null){
         switch (macroAction.getActionToRequest()){
             case NORMAL1:  buildActions(currentController,player,macroAction,3,false,false,false);break;
             case NORMAL2:  buildActions(currentController,player,macroAction,1,true,false,false);break;
@@ -46,6 +47,9 @@ public class AvailableActions implements Serializable {
             case FRENZY4:  buildActions(currentController,player,macroAction,2,false,true,true);break;
             case FRENZY5:  buildActions(currentController,player,macroAction,3,true,false,false);break;
         }
+        }else
+            PlayerManager.reloadManager(player,macroAction.isReload());
+
     }
 
     /**
