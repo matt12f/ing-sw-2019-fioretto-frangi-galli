@@ -322,7 +322,7 @@ public class UserInteractionGUI extends UserInteraction {
         GridBagConstraints container = new GridBagConstraints();
         mainPanel.setLayout(new GridBagLayout());
 
-
+        map = 1; //setting di default
 
         JButton map1 = new JButton();
         ImageIcon pic1 = new ImageIcon(new ImageIcon("src/main/sprite/maps/1.png").getImage().getScaledInstance(300,220,Image.SCALE_DEFAULT));
@@ -339,6 +339,9 @@ public class UserInteractionGUI extends UserInteraction {
         JButton map4 = new JButton();
         ImageIcon pic4 = new ImageIcon(new ImageIcon("src/main/sprite/maps/4.png").getImage().getScaledInstance(300,220,Image.SCALE_DEFAULT));
         map4.setIcon(pic4);
+
+
+
 
 
         container.gridx = 0;
@@ -362,7 +365,36 @@ public class UserInteractionGUI extends UserInteraction {
         mainPanel.add(map4, container);
 
 
-        //TODO con quesi bottoni aprire la plancia di gioco passando map
+
+        JRadioButton n5 = new JRadioButton("5");
+        n5.setSelected(true);
+        JRadioButton n8 = new JRadioButton("8");
+        ButtonGroup group = new ButtonGroup();
+        group.add(n5);
+        group.add(n8);
+
+
+        container.gridx = 0;
+        container.gridy = 3;
+        mainPanel.add(new Label("choose the skull number"), container);
+
+        container.gridx = 0;
+        container.gridy = 4;
+        mainPanel.add(n5, container);
+
+        container.gridx = 1;
+        container.gridy = 4;
+        mainPanel.add(n5, container);
+
+        JButton send = new JButton("send");
+
+        container.gridx = 0;
+        container.gridy = 5;
+        mainPanel.add(send, container);
+
+
+
+
         map1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -388,6 +420,23 @@ public class UserInteractionGUI extends UserInteraction {
                 map = 4;
 
             }});
+        send.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(n5.isSelected()){
+                    skull = 5;
+                }
+                if(n8.isSelected()){
+                    skull = 8;
+                }
+
+                JButton button = (JButton)e.getSource();
+                SwingUtilities.getWindowAncestor(button).dispose();
+            }
+        });
+
+
+
 
 
         JDialog dialog = new JDialog();
