@@ -95,15 +95,10 @@ public class GameModel extends Observable{
         this.finalFrenzy = true;
         int actions, i = activePlayer;
         for (Player player : this.playerList){
-            if(activePlayer != 1 && i >= activePlayer){
+            if(player.getId() > activePlayer){
                 actions = 2;
             }else{
                 actions = 1;
-            }
-            if(i == this.playerList.size()){
-                i=1;
-            }else{
-                i++;
             }
             if(player.getPlayerBoard().getDamageTrack().hasNoDamage()) //All players with no damage switch to final frenzy tiles
                 player.getPlayerBoard().flipPlayerBoard();

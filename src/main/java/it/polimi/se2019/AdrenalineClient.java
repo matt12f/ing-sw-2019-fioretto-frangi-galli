@@ -31,6 +31,7 @@ public class AdrenalineClient {
         Connection connection = new Connection(null, null, false, null, null);
         boolean start = false;
         boolean myturn = false;
+        boolean last = false;
         int frenzy = 0;
         int actionNumber = 0;
         ActionRequestView actionRequested;
@@ -55,22 +56,25 @@ public class AdrenalineClient {
             displayQue(GUI);
             start = waitForUpdate(connection);
         }
+        //todo gestione Spawnpoint
+        //todo Ricevere la prima LocalView
         while(start){
             myturn = receiveServerMessage(connection);
             if(myturn){
-                frenzy = connection.getInput().readInt();
+                last = false;
                 connection.getOutput().reset();
                 connection.getOutput().writeBoolean(true);
                 connection.getOutput().flush();
                 actionNumber = connection.getInput().readInt();
-                //todo inviare la localView
                 while(actionNumber > 0){
                     actionNumber --;
-                    actionRequested = getActionFromUser(frenzy);
+                    if (actionNumber == 0)
+                        last = true;
+                    actionRequested = getActionFromUser(last);
                     actions = askForAction(connection, actionRequested);
+                    //todo presentare le scelte
+                    //todo UpdateLocalView(connection)
                 }
-
-
             }else{
                 UpdateLocalView(connection);
             }
@@ -81,15 +85,8 @@ public class AdrenalineClient {
         //todo scrivere metodo
     }
 
-    private static ActionRequestView getActionFromUser(int frenzy) throws IOException, InterruptedException {
-        ActionRequestView request = null;
-        int choice;
-        if (GUI){
-            //todo prendere in input dalla GUI
-        }else{
-            //todo metodi da UserInteractionCLI
-        }
-        return request;
+    private static ActionRequestView getActionFromUser(boolean lastMove){
+        return new ActionRequestView(lastMove);
     }
 
     private static AvailableActions askForAction(Connection connection, ActionRequestView action) throws IOException, ClassNotFoundException {
@@ -102,32 +99,24 @@ public class AdrenalineClient {
     }
 
     private static boolean receiveServerMessage(Connection connection) throws IOException, ClassNotFoundException {
-        String msg;
-        msg = (String) connection.getInput().readObject();
-        if(msg.equals("MAP"))
-            setMap(connection);
-        else if (msg.equals("YOURTURN"))
-            return true;
-        else 
+            String msg;
+            msg = (String) connection.getInput().readObject();
+            if(msg.equals("MAP"))
+                setMap(connection);
+            else if (msg.equals("YOURTURN"))
+                return true;
+            else
+                return false;
             return false;
-        return false;
     }
 
     private static void setMap(Connection connection) {
-        if(AdrenalineClient.isGUI()){
-            
-        }else{
-            
-        }
+        //todo chiedere scelta mappa
         setSkull(connection);
     }
 
     private static void setSkull(Connection connection) {
-        if (GUI){
-
-        }else{
-
-        }
+        //todo chiedre numero di teschi
     }
 
     private static Boolean waitForUpdate(Connection connection) throws IOException, ClassNotFoundException {

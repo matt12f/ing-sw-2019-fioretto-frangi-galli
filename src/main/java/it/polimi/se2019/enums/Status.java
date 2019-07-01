@@ -10,6 +10,7 @@ public enum Status {
     MYTURN,
     NOTMYTURN,
     WAITING,
-    FRENZY_START
+    FRENZY_START,
+    SPAWN
 }
 

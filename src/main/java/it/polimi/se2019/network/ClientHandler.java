@@ -33,6 +33,7 @@ public class ClientHandler extends Thread implements RMIInterface, Observer {
     private AvailableActions availableActions;
     private int actionsNumber;
     private ChosenActions chosenAction;
+    private LocalView localView;
 
     @Override
     public void run(){
@@ -45,12 +46,7 @@ public class ClientHandler extends Thread implements RMIInterface, Observer {
                 this.input = new ObjectInputStream(this.socket.getInputStream());
                 while (!this.accepted){
                     this.nickname = (String) input.readObject();
-                    System.out.println("nick ricevuto: " + this.nickname);
                     AdrenalineServer.nickController(this);
-                    System.out.println("Nick controllato");
-                    if(!this.accepted){
-                        System.out.println("nick non valido");
-                    }
                 }
 
                 this.output.writeObject(AdrenalineServer.getLobby());
@@ -68,30 +64,30 @@ public class ClientHandler extends Thread implements RMIInterface, Observer {
             while(!status.equals(Status.FRENZY_START)){
                 switch (this.status){
                     case MYTURN:
-                        this.output.writeInt(0); //no Frenzy: 0, frenzy : 1
+                        this.output.writeObject("MYTURN");
                         this.input.readBoolean();
                         this.output.writeObject(this.actionsNumber); //comunica quante azioni può fare il giocatore
-                        //todo ricevere la remoteView
                         for(int j = 0; j<this.actionsNumber; j++){
                             requestView = (ActionRequestView) this.input.readObject();
                             statusChanged();
                             this.output.writeObject(availableActions); //mi da warning ma non so perchè
                             this.chosenAction = (ChosenActions) this.input.readObject();
                             statusChanged();
+                            //todo invia la LocalView;
                         }
-                        //TODO inviare l'oggetto ChosenActions
                         break;
                     case NOTMYTURN:
-                        while(this.status == Status.NOTMYTURN){
+                        this.output.writeObject("NOTMYTURN");
+                        while(this.status == Status.NOTMYTURN){ //todo magari wait e aspoetti la notify
                         }
-                        //per update client
-                    break;
+                        break;
                     case MAPSKULL:
                         setMapSkull();
                         break;
-
+                    case SPAWN:
+                        //todo gestire scelta spawn
+                        break;
                     default:
-
                         break;
                 }
             }
@@ -117,7 +113,7 @@ public class ClientHandler extends Thread implements RMIInterface, Observer {
         this.output.writeObject("SKULL");
         int skull = (int) this.input.readObject();
         this.game.setSkull(skull);
-        this.status = Status.NOTMYTURN;
+        this.status = Status.WAITING;
         notifyAll();
     }
 
