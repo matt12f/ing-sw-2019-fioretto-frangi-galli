@@ -22,6 +22,8 @@ public class MapViewGUI extends JPanel {
     private WeaponButtonGUI weaponyellow2;
     private WeaponButtonGUI weaponyellow3;
 
+    private CellViewGUI[][] boardMatrixGUI;
+
 
     private CellViewGUI cella11;
     private CellViewGUI cella12;
@@ -88,9 +90,11 @@ public class MapViewGUI extends JPanel {
         this.weaponyellow3 = new WeaponButtonGUI(80,56);
         this.weaponyellow3.setLocation(518, 375);
 
-/**
+
         ////spazio celle////
 
+        boardMatrixGUI = new CellViewGUI[4][3];
+ /**
         /////first line////7
          this.cella11 = new CellViewGUI();
          this.cella11.setLocation(95,90);
@@ -144,6 +148,13 @@ public class MapViewGUI extends JPanel {
         labelBackground.add(weaponyellow2);
         labelBackground.add(weaponyellow3);
 
+        for (int row=0;row <= 4;row++) {
+            for (int column = 0; column <= 3; column++) {
+                labelBackground.add(boardMatrixGUI[row][column]);
+            }
+
+        }
+
         /**
         labelBackground.add(cella11);
         labelBackground.add(cella12);
@@ -166,12 +177,20 @@ public class MapViewGUI extends JPanel {
 */
         add(labelBackground);
 
+    }
 
+    public void setBoard(CellView[][] boardMatrix){
+        int x= 95, y= 90;
 
-
-
-
-
+        for (int row=0;row <= 4;row++){
+            for(int column=0;column <= 3;column++){
+                //boardMatrixGUI[row][column].setQualcosa(boardMatrix[row][column]);
+                boardMatrixGUI[row][column].setLocation(x,y);
+                x+=105;
+            }
+            x=95;
+            y+=110;
+        }
 
     }
 
