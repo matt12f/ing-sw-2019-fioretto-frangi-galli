@@ -24,7 +24,7 @@ public class MapViewGUI extends JPanel {
 
     private CellViewGUI[][] boardMatrixGUI;
 
-
+/**
     private CellViewGUI cella11;
     private CellViewGUI cella12;
     private CellViewGUI cella13;
@@ -39,9 +39,9 @@ public class MapViewGUI extends JPanel {
     private CellViewGUI cella32;
     private CellViewGUI cella33;
     private CellViewGUI cella34;
+*/
 
-
-    public MapViewGUI(int config){
+    public MapViewGUI(int config, CellView[][] boardMatrix){
 
 
         switch (config){
