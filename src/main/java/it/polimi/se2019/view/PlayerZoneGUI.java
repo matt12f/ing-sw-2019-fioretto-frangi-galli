@@ -8,9 +8,10 @@ import java.awt.*;
 public class PlayerZoneGUI extends JPanel {
     public PlayerHandViewGUI hand;
     public PlayerBoardViewGUI board;
+    public Color boardColor;
 
 
-    public PlayerZoneGUI (){
+    public PlayerZoneGUI (Color color){
 
         GridBagConstraints container = new GridBagConstraints();
         setLayout(new GridBagLayout());
@@ -24,7 +25,8 @@ public class PlayerZoneGUI extends JPanel {
         add(hand, container);
 
         setLayout(new GridBagLayout());
-        this.board = new PlayerBoardViewGUI(Color.YELLOW,420, 109);
+        this.boardColor = color;
+        this.board = new PlayerBoardViewGUI(boardColor,420, 109);
         container.gridx=1;
         container.gridy=0;
 
@@ -35,9 +37,9 @@ public class PlayerZoneGUI extends JPanel {
     }
     //TODO controllare colore!!!!
     public void setFrenzy(){
-        this.board.setBoard(Color.YELLOW,420, 109, true);
+        this.board.setBoard(boardColor,420, 109, true);
     }
     public void updateBoard(boolean frenzy){
-        this.board.setBoard(Color.YELLOW,420, 109, frenzy);
+        this.board.setBoard(boardColor,420, 109, frenzy);
     }
 }

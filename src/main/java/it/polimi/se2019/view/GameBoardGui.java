@@ -12,13 +12,13 @@ import java.util.Observable;		//for update();
 import java.util.Observer;
 import java.awt.*;
 
-public class GameBoardGui implements Observer {
+public class GameBoardGui  {
     public MapViewGUI map;
     public PlayerZoneGUI playerZone;
     public ScoreViewGUI scoreZone;
     public BoardZoneGUI boardZone;
     public ImageIcon background;
-    public GameBoardGui(int config, ArrayList<PlayerBoardView> opponentBoards, CellView[][] boardMatrix){
+    public GameBoardGui(int config, ArrayList<PlayerBoardView> opponentBoards,PlayerBoardView ownerBoard, CellView[][] boardMatrix){
         Frame frame = new Frame("ADRENALINE");
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
@@ -43,7 +43,7 @@ public class GameBoardGui implements Observer {
 
         //mainPanel.setLayout(new GridBagLayout());
         //container.anchor = GridBagConstraints.EAST;
-        this.boardZone = new BoardZoneGUI(opponentBoards);
+        this.boardZone = new BoardZoneGUI(opponentBoards, ownerBoard, 0);
         container.gridx=1;
         container.gridy=1;
         mainPanel.add(boardZone, container);
@@ -51,7 +51,7 @@ public class GameBoardGui implements Observer {
 
         mainPanel.setLayout(new GridBagLayout());
         container.anchor = GridBagConstraints.SOUTH;
-        this.playerZone = new PlayerZoneGUI();
+        this.playerZone = new PlayerZoneGUI(ownerBoard.getColor());
         container.gridx=0;
         container.gridy=2;
         container.gridwidth = 2;
@@ -66,15 +66,7 @@ public class GameBoardGui implements Observer {
 
     }
 
-    public void update(Observable obs, Object obj) {
 
-
-    } //update()
-
-    public void addController(ActionListener controller){
-
-
-    } //addController()
 
     public static class CloseListener extends WindowAdapter {
         public void windowClosing(WindowEvent e) {
@@ -84,8 +76,14 @@ public class GameBoardGui implements Observer {
     } //CloseListener
 
 
-    public void setFrenzy(ArrayList<PlayerBoardView> opponentBoards){
-        boardZone.updateBoards(opponentBoards, true);
+    public void setFrenzy(ArrayList<PlayerBoardView> opponentBoards,PlayerBoardView ownerBoard){
+        boardZone.updateBoards(opponentBoards, ownerBoard, true, 0);
         playerZone.setFrenzy();
+    }
+
+    public void updateBoardGame(ArrayList<PlayerBoardView> opponentBoards,PlayerBoardView ownerBoard, CellView[][] boardMatrix, KillShotTrackerView kills){
+
+
+
     }
 }
