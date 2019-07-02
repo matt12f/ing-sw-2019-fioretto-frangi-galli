@@ -1,6 +1,5 @@
 package it.polimi.se2019.controller;
 
-import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.enums.CellEdge;
 import it.polimi.se2019.exceptions.OuterWallException;
 import it.polimi.se2019.model.cards.*;
@@ -15,6 +14,7 @@ public class ActionManager {
      * @param arrivalCell
      */
     public static void movePlayer(Controller currentController,Player player, NewCell arrivalCell) {
+        //if the room has changed
         if(!player.getFigure().getCell().getColor().equals(arrivalCell.getColor())){
             MapManager.getRoom(currentController,player.getFigure().getCell()).removePlayers(player);
             MapManager.getRoom(currentController,arrivalCell).addPlayers(player);

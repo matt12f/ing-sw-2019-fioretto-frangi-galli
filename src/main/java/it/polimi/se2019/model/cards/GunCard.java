@@ -51,7 +51,7 @@ public abstract class GunCard{
     /**
      * This method calls the single effects method and applies the player's choices, using the methods below
      */
-    public abstract void applyEffects(ChosenActions playersChoices);
+    public abstract void applyEffects(Controller currentController, ChosenActions playersChoices);
 
     /**
      *This method builds the available actions, returning an exception in case there are no targets

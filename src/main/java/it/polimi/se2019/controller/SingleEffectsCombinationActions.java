@@ -12,13 +12,11 @@ import java.util.ArrayList;
  */
 public class SingleEffectsCombinationActions{
     private final ArrayList<String> effectsCombination;
-    private boolean isAlternative;
 
     //these variables are for cards that just need the client to select a certain number of targets for an effect
     private ArrayList<Player> playersTargetList; //To choose from
     private int maxNumPlayerTargets; //For the GUI/CLI
     private int minNumPlayerTargets; //For the GUI/CLI
-
     //The minimum is always = 1 except in MachineGun
 
     //these variables are for moving an opponent and they inform the client on how they can do that
@@ -29,7 +27,6 @@ public class SingleEffectsCombinationActions{
     private ArrayList<NewCell> targetCells; //To choose from
     private ArrayList<Room> targetRooms; //To choose from
 
-    //TODO valutazione degli offerable non serve al di fuori della classe stessa: forse isAlternative si può togliere
     private boolean offerableBase; //For the GUI/CLI
     private boolean offerableOpt1; //For the GUI/CLI
     private boolean offerableOpt2; //For the GUI/CLI
@@ -37,15 +34,12 @@ public class SingleEffectsCombinationActions{
     private boolean offerableExtra; //For the GUI/CLI; It's used by PowerGlove and MachineGun
 
     private ArrayList<CellWithTargets> cellsWithTargets; //To choose from
-    private int minCellToSelect; //For the GUI/CLI
+    private int minCellToSelect; //For the GUI/CLI //always 1, could be removed
     private int maxCellToSelect; //For the GUI/CLI
-
-    private boolean sameListDifferentTarget; //For the GUI/CLI
 
     private ArrayList<PlayerWithTargets> playersWithTargets; //for T.H.O.R use only
 
-    public SingleEffectsCombinationActions(ArrayList<String> effectsCombination, boolean isAlternative) {
-        this.isAlternative=isAlternative;
+    public SingleEffectsCombinationActions(ArrayList<String> effectsCombination) {
         this.effectsCombination=effectsCombination;
 
         this.playersTargetList =new ArrayList<>();
@@ -63,8 +57,6 @@ public class SingleEffectsCombinationActions{
         this.offerableExtra=false;
 
         this.cellsWithTargets=new ArrayList<>();
-
-        this.sameListDifferentTarget=false;
 
         this.playersWithTargets=new ArrayList<>();
     }
@@ -85,10 +77,6 @@ public class SingleEffectsCombinationActions{
 
     public ArrayList<String> getEffectsCombination() {
         return effectsCombination;
-    }
-
-    public boolean isAlternative() {
-        return isAlternative;
     }
 
     public ArrayList<Player> getPlayersTargetList() {
@@ -115,18 +103,6 @@ public class SingleEffectsCombinationActions{
         return targetRooms;
     }
 
-    public boolean isOfferableBase() {
-        return offerableBase;
-    }
-
-    public boolean isOfferableOpt1() {
-        return offerableOpt1;
-    }
-
-    public boolean isOfferableOpt2() {
-        return offerableOpt2;
-    }
-
     public boolean isOfferableExtra() {
         return offerableExtra;
     }
@@ -141,10 +117,6 @@ public class SingleEffectsCombinationActions{
 
     public int getMaxCellToSelect() {
         return maxCellToSelect;
-    }
-
-    public boolean isSameListDifferentTarget() {
-        return sameListDifferentTarget;
     }
 
     public ArrayList<PlayerWithTargets> getPlayersWithTargets() {
@@ -195,10 +167,6 @@ public class SingleEffectsCombinationActions{
 
     public void setOfferableExtra(boolean offerableExtra) {
         this.offerableExtra = offerableExtra;
-    }
-
-    public void setSameListDifferentTarget(boolean sameListDifferentTarget) {
-        this.sameListDifferentTarget = sameListDifferentTarget;
     }
 
     public void addCellsWithTargets(NewCell targetCell, ArrayList<Player> targets, int maxTargets, int minTargets,boolean canMoveYourSelfHere, boolean canMoveOthersHere) {

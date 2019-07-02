@@ -36,7 +36,7 @@ public class MapManager {
         return "None";
     }
 
-    public static Room getRoom(Controller currentController,NewCell cell){
+    public static Room getRoom(Controller currentController, NewCell cell){
         for(Room room: currentController.getMainGameModel().getCurrentMap().getRooms())
            if(room.getColor().equals(cell.getColor()))
             return room;

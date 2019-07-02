@@ -2,6 +2,7 @@ package it.polimi.se2019.model.game;
 
 import com.google.gson.Gson;
 
+import it.polimi.se2019.controller.MapManager;
 import it.polimi.se2019.enums.CellType;
 import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.view.modelChanged;
@@ -20,6 +21,7 @@ public class GameModel extends Observable{
 
     private Decks currentDecks;
     private ArrayList<Player> playerList;
+    private ArrayList<Player> deadPlayers;
     private Map currentMap;
     private KillShotTrack killshotTrack;
     private boolean finalFrenzy;
@@ -86,6 +88,28 @@ public class GameModel extends Observable{
         return finalFrenzy;
     }
 
+    public ArrayList<Player> getDeadPlayers() {
+        return deadPlayers;
+    }
+
+    /**
+     * this method removes a player from the board and puts it aside to have its board scored at the end of the current
+     * turn
+     * @param deadPlayer the player that has just been killed
+     */
+    public void addDeadPlayer(Player deadPlayer) {
+        for(Room room: this.currentMap.getRooms())
+            if(room.getColor().equals(deadPlayer.getFigure().getCell().getColor()))
+                room.removePlayers(deadPlayer);
+
+        deadPlayer.getFigure().getCell().removePlayers(deadPlayer);
+        this.deadPlayers.add(deadPlayer);
+    }
+
+    public boolean isFinalFrenzy() {
+        return finalFrenzy;
+    }
+
     /**
      * this method builds the action tile frenzy objects for each player
      * and the method checks and sends the right amount of frenzy actions to the constructor.
@@ -93,7 +117,7 @@ public class GameModel extends Observable{
      */
     public void activateFinalFrenzy(int activePlayer) {
         this.finalFrenzy = true;
-        int actions, i = activePlayer;
+        int actions;
         for (Player player : this.playerList){
             if(player.getId() > activePlayer){
                 actions = 2;

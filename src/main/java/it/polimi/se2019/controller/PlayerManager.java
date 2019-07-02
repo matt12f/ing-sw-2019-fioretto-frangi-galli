@@ -12,16 +12,6 @@ import it.polimi.se2019.view.ChosenActions;
 public class PlayerManager {
 
     /**
-     * evaluates if a player is alive or not
-     * @param player
-     * @return
-     */
-    public static boolean isAlive(Player player){
-        //TODO rivedere metodo, serve?
-        return false;
-    }
-
-    /**
      * This method scores all of the boards at the end of a turn
      * Note: a kill happens on the 11th damage given -> 1 token on the KST; -> the board gets scored at the end of the turn
      * Note: an overkill happens on the 12th damage given -> double token on the KST; you get a mark from the player you overkilled
@@ -67,19 +57,22 @@ public class PlayerManager {
                 //nothing to see here
                 }
         }
+
+        //applies shoot actions with the card selected
+        actions.getChosenGun().applyEffects(currentController,actions);
     }
 
     /**
      * This method deals damage to the player it receives as a parameter
      *
      * Note: the damage must be dealt BEFORE the marks
-     * @param target
+     *
      * @param damageToDeal array of chars that contain the damage as characters representing the color of the offender.
      *                     Note that the damage drops "to be dealt" here come from a single player.
      */
-    //TODO rivedere considerando le note sopra
-    public static void damageDealer(Player target, char[] damageToDeal){
-        //Deal the damage first
+    public static void damageDealer(Controller currentController, Player target, char[] damageToDeal){
+
+        //Deal the damage first and if it's still alive deal marks too
         if(target.getPlayerBoard().getDamageTrack().dealDamage(damageToDeal).equals("alive")){
             //here we "pull" the marks this player has left before
             int markNumber = target.getPlayerBoard().getDamageTrack().pullMarks(damageToDeal[0]);
@@ -88,10 +81,12 @@ public class PlayerManager {
             for (int i = 0; i <markNumber ; i++)
                 marks[i]=damageToDeal[0];
 
-            //if(target.getPlayerBoard().getDamageTrack().dealDamage(marks).equals("alive")
-            //TOPPA x pushare
+            //If the player dies after the marks are dealt we put it aside to score his board later
+            if(!target.getPlayerBoard().getDamageTrack().dealDamage(marks).equals("alive"))
+                currentController.getMainGameModel().addDeadPlayer(target);
         }
-        //TODO se player viene killato -> rimosso dalla tavola di gioco e messo in arraylist di player morti
+        else
+            currentController.getMainGameModel().addDeadPlayer(target);
     }
 
     /**
