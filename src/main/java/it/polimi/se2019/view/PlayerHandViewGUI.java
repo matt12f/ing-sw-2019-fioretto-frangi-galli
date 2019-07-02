@@ -1,5 +1,7 @@
 package it.polimi.se2019.view;
 
+import it.polimi.se2019.model.cards.GunCard;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -64,23 +66,27 @@ public class PlayerHandViewGUI extends JPanel {
         weapon1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                WeaponMenuGUI frame =new WeaponMenuGUI();
+                WeaponMenuGUI frame =new WeaponMenuGUI(null);
                 frame.setVisible(true);
             }});
         weapon2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                WeaponMenuGUI frame =new WeaponMenuGUI();
+                WeaponMenuGUI frame =new WeaponMenuGUI(null);
                 frame.setVisible(true);
             }});
         weapon3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                WeaponMenuGUI frame =new WeaponMenuGUI();
+                WeaponMenuGUI frame =new WeaponMenuGUI(null);
                 frame.setVisible(true);
             }});
 
 
+
+    }
+
+    public void updateHand(GunCard[] weapuns){
 
     }
 }
