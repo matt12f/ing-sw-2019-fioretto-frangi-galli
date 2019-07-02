@@ -53,7 +53,7 @@ public class TestDamageTracker {
 
         //then I'll try to add a damage that I expect not to fit
         char previousLastDamage=testDmgTracker.getDamage()[11];
-        testDmgTracker.addDamage('y');
+        assertFalse(testDmgTracker.addDamage('y'));
         assertEquals(previousLastDamage,testDmgTracker.getDamage()[11]);
     }
     @Test
@@ -89,12 +89,12 @@ public class TestDamageTracker {
     @Test
     public void testCheckMarks(){
         DamageTracker testDmgTracker=new DamageTracker();
-        testDmgTracker.addMark('b'); //this adds one blue mark droplet
-        assertTrue(testDmgTracker.getMarks().contains('b'));
+        testDmgTracker.addMark('w'); //this adds one blue mark droplet
+        assertTrue(testDmgTracker.getMarks().contains('w'));
 
         //here I'll fill up the marks list
         testDmgTracker.addMark('y');
-        testDmgTracker.addMark('b');
+        testDmgTracker.addMark('w');
         testDmgTracker.addMark('y');
         for(int i=0;i<3;i++)
             testDmgTracker.addMark('b');
@@ -104,29 +104,33 @@ public class TestDamageTracker {
             testDmgTracker.addMark('r');
 
         //here I'll verify that it's added the right amount of mark droplets
-        int contB=0,contY=0,contR=0,contG=0;
+        int contB=0,contY=0,contR=0,contG=0,contW=0;
         for(int i=0;i<12;i++){
             if(testDmgTracker.getMarks().get(i)=='b')
                 contB++;
             else if(testDmgTracker.getMarks().get(i)=='y')
                 contY++;
+            else if(testDmgTracker.getMarks().get(i)=='w')
+                contW++;
             else if(testDmgTracker.getMarks().get(i)=='r')
                 contR++;
             else if(testDmgTracker.getMarks().get(i)=='g')
                 contG++;
             else fail();
         }
-        assertEquals(5,contB);
+        assertEquals(3,contB);
+        assertEquals(2,contW);
         assertEquals(2,contY);
         assertEquals(3,contG);
         assertEquals(2,contR);
 
         //then I'll extract the marks counting them
-        assertEquals(5,testDmgTracker.checkMarks('b'));
-        assertEquals(0,testDmgTracker.checkMarks('b')); //this will check that they've been removed
-        assertEquals(2,testDmgTracker.checkMarks('y'));
-        assertEquals(3,testDmgTracker.checkMarks('g'));
-        assertEquals(2,testDmgTracker.checkMarks('r'));
+        assertEquals(3,testDmgTracker.pullMarks('b'));
+        assertEquals(2,testDmgTracker.pullMarks('w'));
+        assertEquals(0,testDmgTracker.pullMarks('b')); //this will pull that they've been removed
+        assertEquals(2,testDmgTracker.pullMarks('y'));
+        assertEquals(3,testDmgTracker.pullMarks('g'));
+        assertEquals(2,testDmgTracker.pullMarks('r'));
 
         assertTrue(testDmgTracker.getMarks().isEmpty());
     }

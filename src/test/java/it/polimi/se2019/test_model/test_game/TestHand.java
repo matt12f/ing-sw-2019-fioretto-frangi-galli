@@ -1,10 +1,14 @@
 package it.polimi.se2019.test_model.test_game;
 
+import it.polimi.se2019.enums.CellEdge;
+import it.polimi.se2019.enums.CellType;
+import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.exceptions.CardNotFoundException;
 import it.polimi.se2019.exceptions.FullException;
 import it.polimi.se2019.model.cards.*;
 import it.polimi.se2019.model.game.Hand;
 
+import it.polimi.se2019.model.game.NewCell;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -84,9 +88,14 @@ public class TestHand {
         assertDoesNotThrow(()->testHand.setGun(testGun2));
         assertDoesNotThrow(()->testHand.setGun(testGun3));
 
-        GunCard testGun4;
-        testGun4= new Shockwave();
-        assertDoesNotThrow(()->testHand.substitutionGunCard(testGun2,testGun4)); //case in which the card to substitute is present
+        GunCard testGun4 = new Shockwave();
+        NewCell spawnPoint =new NewCell(Color.BLUE, CellEdge.WALL,CellEdge.WALL,CellEdge.WALL,CellEdge.WALL,CellType.SPAWN);
+        assertDoesNotThrow(()->spawnPoint.setItem(testGun4));
+        assertDoesNotThrow(()->spawnPoint.setItem(testGun1));
+        assertDoesNotThrow(()->spawnPoint.setItem(testGun3));
+
+
+        assertDoesNotThrow(()->testHand.substitutionGunCard(spawnPoint,testGun2,testGun4)); //case in which the card to substitute is present
         boolean present=false;
         for(GunCard gunCard:testHand.getGuns()){ //It verifies that testGun2 has been removed and testGun4 has been added
             assertNotEquals(gunCard,testGun2);
@@ -98,7 +107,7 @@ public class TestHand {
         GunCard [] previousGuns=new GunCard[3];
         for(int i=0;i<3;i++)
             previousGuns[i]=testHand.getGuns()[i];
-        assertThrows(CardNotFoundException.class,()->testHand.substitutionGunCard(testGun2,testGun4),"guns"); //case in which the card to substitute is not present
+        assertThrows(CardNotFoundException.class,()->testHand.substitutionGunCard(spawnPoint,testGun2,testGun4),"guns"); //case in which the card to substitute is not present
 
         for(int i=0;i<3;i++) //it verifies that no changes occurred
             assertEquals(previousGuns[i],testHand.getGuns()[i]);

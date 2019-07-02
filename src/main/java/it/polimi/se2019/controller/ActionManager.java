@@ -9,30 +9,6 @@ import it.polimi.se2019.model.game.*;
 import java.util.ArrayList;
 
 public class ActionManager {
-
-    //TODO scrivere codice; va qui? deve partire quando riceve l'oggetto ChosenActions
-    public static void applyPlayersChoices(){}
-
-    //TODO rivedere metodo
-    public static boolean inflictDamage(ArrayList<Player> targets, char[] damage){
-        Player target;
-        for(int i= 0; i<targets.size(); i++){
-            target = targets.get(i);
-            PlayerManager.damageDealer(target, damage);
-        }
-        return false;
-    }
-
-    //TODO rivedere metodo
-    public static void appointMarker(ArrayList<Player> targets, char [] markers){
-        Player target;
-
-        for(int i= 0; i < targets.size(); i++){
-            target = targets.get(i);
-            PlayerManager.markerDealer(target, markers);
-        }
-    }
-
     /**
      * it moves a player from its current position to an arrival cell sent as a parameter
      * @param player
@@ -46,25 +22,6 @@ public class ActionManager {
 
         player.getFigure().getCell().removePlayers(player);
         arrivalCell.addPlayers(player);
-    }
-
-    /**
-     * this method puts new ammos in the player's ammo vectors and, if there is one, a powerup card,
-     * controlling if it's possible
-     * @param drop
-     */
-    //TODO rivedere metodo
-    public void dropManager(AmmoTileCard drop){
-        //TODO serve questo metodo?
-    }
-
-    /**
-     * this method allows to put a weapon from the spawn slot into the player's hand,
-     * including the controlling cycle about the player's weapon hand
-     */
-    //TODO rivedere metodo
-    public void spawnDropManager(GunCard weapon){
-        //TODO serve questo metodo?
     }
 
     /**

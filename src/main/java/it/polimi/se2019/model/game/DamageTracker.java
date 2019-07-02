@@ -18,19 +18,43 @@ public class DamageTracker {
     }
 
     /**
-     * this method finds the last empty cell in damage and adds the damage to the damage track.
-     * The checking about kill and overkill will be done in the controller
+     * this method finds the first empty cell in damage and adds the damage drop to the damage track.
+     * if it returns false: it's damage over 12, meaning  it's wasted
+     * if it returns true: everything is ok
      */
-    public void addDamage( char damage) {
-        boolean found = false;
+    public boolean addDamage(char damage){
+        boolean spotFound = false;
         int i = 0;
         do{
             if(this.damage[i] == ' '){
                 this.damage[i] = damage;
-                found = true;
+                spotFound = true;
             }
             i++;
-        }while(!found && i < 12);
+        }while(!spotFound && i < 12);
+        return spotFound;
+    }
+
+    /**
+     * this method evaluates if a player is alive, killed or overkilled
+     * @return
+     */
+    public String playerStatus(){
+        if(this.damage[12]!=' ')
+            return "overkill";
+        else if(this.damage[11]!=' ')
+            return "kill";
+        else
+            return "alive";
+    }
+
+
+    public String dealDamage(char [] damageToDeal){
+        for (char damage: damageToDeal)
+            if (addDamage(damage)) //the rest of the damage is wasted
+                return "overkill";
+
+        return "alive";
     }
 
     /**
@@ -48,7 +72,7 @@ public class DamageTracker {
      * @param color
      * @return
      */
-    public int checkMarks(char color){
+    public int pullMarks(char color){
         int numberOfMarks= markCounter(color);
         this.marks.removeAll(Collections.singleton(color));
         return numberOfMarks;

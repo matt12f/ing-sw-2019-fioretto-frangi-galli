@@ -23,6 +23,10 @@ public class PlayerManager {
 
     /**
      * This method scores all of the boards at the end of a turn
+     * Note: a kill happens on the 11th damage given -> 1 token on the KST; -> the board gets scored at the end of the turn
+     * Note: an overkill happens on the 12th damage given -> double token on the KST; you get a mark from the player you overkilled
+     * Note: damage over 12 is wasted
+     * Note: more than one killshot in one turn -> awards you a point
      */
     public static void scoringProcess(){
         //TODO scrivere metodo
@@ -69,31 +73,25 @@ public class PlayerManager {
      * This method deals damage to the player it receives as a parameter
      *
      * Note: the damage must be dealt BEFORE the marks
-     * Note: a kill happens on the 11th damage given -> 1 token on the KST; -> the board gets scored at the end of the turn
-     * Note: an overkill happens on the 12th damage given -> double token on the KST; you get a mark from the player you overkilled
-     * Note: damage over 12 is wasted
-     * Note: more than one killshot in one turn -> awards you a point
-     * @param player
+     * @param target
      * @param damageToDeal array of chars that contain the damage as characters representing the color of the offender.
      *                     Note that the damage drops "to be dealt" here come from a single player.
      */
     //TODO rivedere considerando le note sopra
-    public static void damageDealer(Player player, char[] damageToDeal){
-        //here we "pull" the marks this player has left before
-        int markNumber = player.getPlayerBoard().getDamageTrack().checkMarks(damageToDeal[0]);
+    public static void damageDealer(Player target, char[] damageToDeal){
+        //Deal the damage first
+        if(target.getPlayerBoard().getDamageTrack().dealDamage(damageToDeal).equals("alive")){
+            //here we "pull" the marks this player has left before
+            int markNumber = target.getPlayerBoard().getDamageTrack().pullMarks(damageToDeal[0]);
+            //i'll build the array of chars to deal the marks
+            char[] marks=new char[markNumber];
+            for (int i = 0; i <markNumber ; i++)
+                marks[i]=damageToDeal[0];
 
-        for (char damage: damageToDeal){
-            if (isAlive(player))
-                player.getPlayerBoard().getDamageTrack().addDamage(damage);
-            else{
-                //TODO di Ste: setkill
-                //TODO di Ste: throw eccezione morte
-            }
-
+            //if(target.getPlayerBoard().getDamageTrack().dealDamage(marks).equals("alive")
+            //TOPPA x pushare
         }
-        for (int k=0;k<markNumber;k++)
-            if (isAlive(player))
-                player.getPlayerBoard().getDamageTrack().addDamage(damageToDeal[0]);
+        //TODO se player viene killato -> rimosso dalla tavola di gioco e messo in arraylist di player morti
     }
 
     /**

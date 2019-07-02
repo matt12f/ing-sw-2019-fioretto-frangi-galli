@@ -51,8 +51,11 @@ public class TestSpawnCell {
         assertDoesNotThrow(()->testSpawnCell.setItem(testGun2));
         assertDoesNotThrow(()->testSpawnCell.setItem(testGun3));
 
-        GunCard firstPick=testSpawnCell.pickItem(1);
-        GunCard secondPick=testSpawnCell.pickItem(1);
+        GunCard firstPick=testSpawnCell.pickItem(testGun1);
+        GunCard secondPick=testSpawnCell.pickItem(testGun2);
+        assertEquals(firstPick,testGun1);
+        assertEquals(secondPick,testGun2);
+
         assertNotEquals(firstPick,secondPick);
 
         assertEquals(1,testSpawnCell.getWeaponCards().size());
