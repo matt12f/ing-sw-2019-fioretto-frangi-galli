@@ -22,7 +22,7 @@ public class SquareGUI extends JLabel {
     public void updateImage(Color type){
 
         switch (type){
-            case GREY: color = "grey";
+            case WHITE: color = "white";
             case BLUE:color = "blue";
             case GREEN:color = "green";
             case VIOLET:color = "purple";
