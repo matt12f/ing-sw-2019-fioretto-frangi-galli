@@ -315,7 +315,8 @@ public class ChosenActions implements Serializable {
     }
 
     /**
-     * @param playersWithTargets listo of all players with the targets they can see
+     * THOR manager
+     * @param playersWithTargets list of all players with the targets they can see
      * @param targetList contains one player, which is the target choosen before
      * adds one target
      */

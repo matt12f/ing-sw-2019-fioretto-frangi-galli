@@ -150,6 +150,10 @@ public class SingleEffectsCombinationActions{
         return playersWithTargets;
     }
 
+    public boolean isOfferableOpt1() {
+        return offerableOpt1;
+    }
+
     /** ------------- SETTER METHODS ------------- */
 
     public void addToPlayerTargetList(ArrayList<Player> targetSubList) {
@@ -210,5 +214,8 @@ public class SingleEffectsCombinationActions{
 
     public void addPlayersWithTargets(Controller currentController, Player basePlayer) {
         this.playersWithTargets.add(new PlayerWithTargets(currentController, basePlayer));
+        //if a player can't see any targets it must not be enlisted
+        if(this.playersWithTargets.get(this.playersWithTargets.size()-1).getTargetsItCanSee().isEmpty())
+            this.playersWithTargets.remove(this.playersWithTargets.size()-1);
     }
 }
