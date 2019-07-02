@@ -57,6 +57,19 @@ public class Hand {
         if(!set) throw new FullException("powerups");
     }
 
+    /**
+     * harmlessly checks if the powerups array is full
+     */
+    public boolean isPowerUpHandFull(){
+        Hand handClone=this.clone();
+        try {
+            handClone.setPowerup(new PowerupCard("xxx",'x'));
+        }catch (FullException e){
+            return true;
+        }
+        return false;
+    }
+
     public void substitutionPowerup (PowerupCard discarded,PowerupCard newPowerup) throws CardNotFoundException {
         int i=0;
         boolean substituted=false;
@@ -82,7 +95,7 @@ public class Hand {
         }
         if(!substituted)
             throw new CardNotFoundException("gun swap");
-        else {//the cards have beeh swapped in the player's hand, now they must be swapped in the spawn point
+        else {//the cards have been swapped in the player's hand, now they must be swapped in the spawn point
             spawnPoint.pickItem(newGunCard);
             try {
                 spawnPoint.setItem(discarded);

@@ -8,17 +8,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class PlayerHandViewGUI extends JPanel {
-
+    private WeaponButtonGUI weapon1;
+    private WeaponButtonGUI weapon2;
+    private WeaponButtonGUI weapon3;
+    protected GunCard[] weapons;
     protected AmmoGUI ammo ;
     public PlayerHandViewGUI(){
         //JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints container = new GridBagConstraints();
         setLayout(new GridBagLayout());
 
-
-        WeaponButtonGUI weapon1 = new WeaponButtonGUI(100,163);
-        WeaponButtonGUI weapon2 = new WeaponButtonGUI(100,163);
-        WeaponButtonGUI weapon3 = new WeaponButtonGUI(100,163);
+        weapons = new GunCard[3];
+         weapon1 = new WeaponButtonGUI(100,163);
+         weapon2 = new WeaponButtonGUI(100,163);
+         weapon3 = new WeaponButtonGUI(100,163);
 
         PowerupButtonGUI powerup1 = new PowerupButtonGUI();
         PowerupButtonGUI powerup2 = new PowerupButtonGUI();
@@ -66,19 +69,19 @@ public class PlayerHandViewGUI extends JPanel {
         weapon1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                WeaponMenuGUI frame =new WeaponMenuGUI(null);
+                WeaponMenuGUI frame =new WeaponMenuGUI(weapons[0]);
                 frame.setVisible(true);
             }});
         weapon2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                WeaponMenuGUI frame =new WeaponMenuGUI(null);
+                WeaponMenuGUI frame =new WeaponMenuGUI(weapons[1]);
                 frame.setVisible(true);
             }});
         weapon3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                WeaponMenuGUI frame =new WeaponMenuGUI(null);
+                WeaponMenuGUI frame =new WeaponMenuGUI(weapons[2]);
                 frame.setVisible(true);
             }});
 
@@ -86,7 +89,10 @@ public class PlayerHandViewGUI extends JPanel {
 
     }
 
-    public void updateHand(GunCard[] weapuns){
-
+    public void updateHand(GunCard[] weapons){
+       weapon1.updateImage(weapons[0]);
+       weapon2.updateImage(weapons[0]);
+       weapon3.updateImage(weapons[0]);
+       this.weapons = weapons;
     }
 }
