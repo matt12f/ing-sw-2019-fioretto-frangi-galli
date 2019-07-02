@@ -1,12 +1,16 @@
 package it.polimi.se2019.controller;
 
+import it.polimi.se2019.enums.CellType;
+import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.exceptions.CardNotFoundException;
 import it.polimi.se2019.exceptions.FullException;
 import it.polimi.se2019.model.cards.GunCard;
 import it.polimi.se2019.model.cards.PowerupCard;
+import it.polimi.se2019.model.game.Hand;
 import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
+import it.polimi.se2019.view.LocalView;
 
 
 public class PlayerManager {
@@ -20,6 +24,40 @@ public class PlayerManager {
      */
     public static void scoringProcess(){
         //TODO scrivere metodo
+    }
+
+    public static void spawnPlayers(Controller controller, int id, PowerupCard spawn){
+        NewCell[][] map = controller.getMainGameModel().getCurrentMap().getBoardMatrix();
+        Color cellNeeded;
+        if(spawn.getCubeColor() == 'b')
+            cellNeeded = Color.BLUE;
+        else if(spawn.getCubeColor() == 'r')
+            cellNeeded = Color.RED;
+        else
+            cellNeeded = Color.YELLOW;
+        for (int i = 0; i < map.length - 1; i++) {
+            for (int j = 0; j < map[0].length - 1; j++) {
+                if (map[i][j].getCellType().equals(CellType.SPAWN) && map[i][j].getColor() == cellNeeded)
+                    map[i][j].addPlayers(controller.getMainGameModel().getPlayerList().get(id));
+            }
+        }
+    }
+
+    public static PowerupCard[] getCardsToSpawn(boolean setUpGame, Controller controller, int id) throws FullException {
+        PowerupCard[] cards = new PowerupCard[Hand.getMaxcards()+1];
+        if(setUpGame){
+            PowerupCard card;
+            card = controller.getMainGameModel().getCurrentDecks().getPowerupsDeck().draw();
+            controller.getMainGameModel().getPlayerList().get(id).getPlayerBoard().getHand().setPowerup(card);
+            card= controller.getMainGameModel().getCurrentDecks().getPowerupsDeck().draw();
+            controller.getMainGameModel().getPlayerList().get(id).getPlayerBoard().getHand().setPowerup(card);
+        }else{
+            for (int i = 0; i < Hand.getMaxcards(); i++) {
+                cards[i] = controller.getMainGameModel().getPlayerList().get(id).getPlayerBoard().getHand().getPowerup(i);
+            }
+            cards[Hand.getMaxcards()] = controller.getMainGameModel().getCurrentDecks().getPowerupsDeck().draw();
+        }
+        return cards;
     }
 
     /**

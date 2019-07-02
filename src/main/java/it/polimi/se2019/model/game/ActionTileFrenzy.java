@@ -19,6 +19,11 @@ public class ActionTileFrenzy extends ActionTile{
     }
 
     @Override
+    public int getActionCounter() {
+        return super.getActionCounter();
+    }
+
+    @Override
     public ActionTileFrenzy clone(){
         return new ActionTileFrenzy(this.actionCounter);
     }

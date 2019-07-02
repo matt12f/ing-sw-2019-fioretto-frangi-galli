@@ -4,6 +4,7 @@ import it.polimi.se2019.enums.CellType;
 import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.model.game.Figure;
 import it.polimi.se2019.model.game.GameModel;
+import it.polimi.se2019.model.game.Map;
 import it.polimi.se2019.model.game.NewCell;
 
 import java.util.ArrayList;
@@ -23,6 +24,10 @@ public class MapView {
                 this.boardMatrix[i][j] = new CellView(i, j, model.getCurrentMap().getBoardMatrix()[i][j]);
             }
         }
+    }
+
+    public KillShotTrackerView getKillView() {
+        return killView;
     }
 
     public CellView getCell (int i, int j){
@@ -80,6 +85,16 @@ public class MapView {
                     return singleCell;
             }
         return null;
+    }
+
+    public void uploadBoardMatrix(NewCell[][] boardMatrix){
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 4; j++) {
+                this.getCell(i, j).setPlayerFigures(boardMatrix[i][j]);
+                this.getCell(i, j).setDrop(boardMatrix[i][j].toString());
+                this.getCell(i, j).setCell(boardMatrix[i][j]);
+            }
+        }
     }
 
     /**

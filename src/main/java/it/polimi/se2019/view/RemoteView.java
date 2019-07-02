@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Observer;
 import java.util.Observable;
 
-public class RemoteView  extends View implements RMIInterface {
+public class RemoteView  extends    View implements RMIInterface {
     private ArrayList<PlayerBoardView> playerBoardViews;
     private MapView mapView;
     private ArrayList<PlayerHandView> playerHands;
@@ -44,6 +44,10 @@ public class RemoteView  extends View implements RMIInterface {
         return playerHands;
     }
 
+    public void notifyLocalViews(){
+        setChanged();
+        notifyObservers(this);
+    }
 
     @Override
     public synchronized void addObserver(Observer o) {
@@ -51,23 +55,7 @@ public class RemoteView  extends View implements RMIInterface {
     }
 
     //TODO rivedere con classi della view invece che del model
-    @Override
-    public void update(Observable o, Object arg) {
-        if(arg instanceof PlayerBoard){
-            for(int i=0; i<playerBoardViews.size(); i++){
-                this.playerBoardViews.get(i).setScore(((Player) arg).getScore());
-            }
-        }else if(arg instanceof Map){
-            for (int i=0; i<3; i++) {
-                for(int j=0; j<2; j++){
-                }
-            }
-        }else if(arg instanceof Integer){
-            for (int i=0; i<playerBoardViews.size(); i++){
-                this.playerBoardViews.get(i).setScore((int) arg);
-            }
-        }///todo Frangi rivedi il codice -Fabiano
-    }
+
 
     @Override
     public LocalView getLocalView(int playerID) throws RemoteException {
@@ -92,5 +80,23 @@ public class RemoteView  extends View implements RMIInterface {
     @Override
     public Status getStatus() throws RemoteException {
         return null;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        GameModel model  = (GameModel) arg;
+        boolean[] loaded = new boolean[Hand.getMaxcards()];
+        this.mapView.getKillView().update(model.getKillshotTrack());
+        this.mapView.uploadBoardMatrix(model.getCurrentMap().getBoardMatrix());
+        for (PlayerBoardView player: playerBoardViews) {
+            player.update(model.getPlayerList().get(playerBoardViews.indexOf(player)).getPlayerBoard());
+            this.playerHands.get(playerBoardViews.indexOf(player)).setPowerups(model.getPlayerList().get(playerBoardViews.indexOf(player)).getPlayerBoard().getHand().getPowerups());
+            this.playerHands.get(playerBoardViews.indexOf(player)).setGuns(model.getPlayerList().get(playerBoardViews.indexOf(player)).getPlayerBoard().getHand().getGuns());
+            for (int i = 0; i < Hand.getMaxcards() ; i++) {
+                loaded[i] = model.getPlayerList().get(playerBoardViews.indexOf(player)).getPlayerBoard().getHand().getGuns()[i].isLoaded();
+            }
+            this.playerHands.get(playerBoardViews.indexOf(player)).setLoadedGuns(loaded);
+        }
+        notifyLocalViews();
     }
 }

@@ -1,5 +1,7 @@
 package it.polimi.se2019.view;
 
+import it.polimi.se2019.model.game.KillShotTrack;
+
 public class KillShotTrackerView {
     private int skulls;
     private String [] kills;
@@ -37,5 +39,11 @@ public class KillShotTrackerView {
 
     public void setSkulls(int skulls) {
         this.skulls = skulls;
+    }
+
+    public void update(KillShotTrack killShotTrack){
+        this.skulls = killShotTrack.getSkulls();
+        this.kills = killShotTrack.getKills();
+        this.extraKills = killShotTrack.getExtraKills();
     }
 }

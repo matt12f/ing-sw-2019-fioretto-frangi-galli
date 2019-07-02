@@ -1,6 +1,7 @@
 package it.polimi.se2019.view;
 
 import it.polimi.se2019.enums.Color;
+import it.polimi.se2019.model.game.PlayerBoard;
 
 public  class PlayerBoardView {
     private Color color;
@@ -49,6 +50,28 @@ public  class PlayerBoardView {
 
     public boolean isFront() {
         return front;
+    }
+
+
+    public DamageView getDamageView() {
+        return damageView;
+    }
+
+    public void update(PlayerBoard playerBoard){
+        this.front = playerBoard.isFront();
+        try{
+            if (playerBoard.getActionTileFrenzy().getActionCounter() == 1)
+                this.frenzy = 2;
+            else
+                this.frenzy = 1;
+        }catch (NullPointerException e){
+            this.frenzy = 0;
+        }
+        this.ammo.setBLUE(playerBoard.getAmmo().getBlue());
+        this.ammo.setRED(playerBoard.getAmmo().getRed());
+        this.ammo.setYELLOW(playerBoard.getAmmo().getYellow());
+        this.getDamageView().setDamage(playerBoard.getDamageTrack().getDamage());
+        this.getDamageView().setMarks(playerBoard.getDamageTrack().getMarks());
     }
 
     public Color getColor() {

@@ -15,6 +15,10 @@ public class Hand {
         this.powerups = new PowerupCard[MAXCARDS];
     }
 
+    public static int getMaxcards(){
+        return Hand.MAXCARDS;
+    }
+
     /**this method returns the guns array from the player's hand
      * */
     public GunCard[] getGuns() {
@@ -25,6 +29,14 @@ public class Hand {
      * */
     public PowerupCard[] getPowerups() {
         return powerups;
+    }
+
+    /**
+     * this method returns a single powerup given by the parameter
+     */
+
+    public PowerupCard getPowerup(int i){
+        return this.powerups[i];
     }
 
     /**this method puts a gun in the player's hand
