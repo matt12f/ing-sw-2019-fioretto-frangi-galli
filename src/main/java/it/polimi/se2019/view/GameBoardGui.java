@@ -43,7 +43,7 @@ public class GameBoardGui implements Observer {
 
         //mainPanel.setLayout(new GridBagLayout());
         //container.anchor = GridBagConstraints.EAST;
-        this.boardZone = new BoardZoneGUI(opponentBoards);
+        this.boardZone = new BoardZoneGUI(opponentBoards, ownerBoard);
         container.gridx=1;
         container.gridy=1;
         mainPanel.add(boardZone, container);
@@ -84,8 +84,8 @@ public class GameBoardGui implements Observer {
     } //CloseListener
 
 
-    public void setFrenzy(ArrayList<PlayerBoardView> opponentBoards){
-        boardZone.updateBoards(opponentBoards, true);
+    public void setFrenzy(ArrayList<PlayerBoardView> opponentBoards,PlayerBoardView ownerBoard){
+        boardZone.updateBoards(opponentBoards, ownerBoard, true);
         playerZone.setFrenzy();
     }
 }
