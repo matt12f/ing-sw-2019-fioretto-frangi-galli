@@ -182,8 +182,8 @@ public class MapViewGUI extends JPanel {
     public void setBoard(CellView[][] boardMatrix){
         int x= 95, y= 90;
 
-        for (int row=0;row <= 4;row++){
-            for(int column=0;column <= 3;column++){
+        for (int row=0;row < 3;row++){
+            for(int column=0;column < 4;column++){
                 //boardMatrixGUI[row][column].setQualcosa(boardMatrix[row][column]);
                 boardMatrixGUI[row][column].setLocation(x,y);
                 x+=105;
@@ -191,6 +191,22 @@ public class MapViewGUI extends JPanel {
             x=95;
             y+=110;
         }
+
+        ///////update weapons//////
+        weaponblue1.updateImage(boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(0));
+        weaponblue2.updateImage(boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(1));
+        weaponblue3.updateImage(boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(2));
+
+        weaponred1.updateImage(boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(0));
+        weaponred2.updateImage(boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(1));
+        weaponred3.updateImage(boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(2));
+
+        weaponyellow1.updateImage(boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(0));
+        weaponyellow2.updateImage(boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(1));
+        weaponyellow3.updateImage(boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(2));
+
+
+
 
     }
 

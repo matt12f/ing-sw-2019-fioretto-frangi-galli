@@ -20,17 +20,7 @@ public class CellViewGUI extends JPanel {
         setOpaque(false);
 
 
-        int x= 0,y = 0;
-        for(int row = 0; row <= 3; row++){
-            for (int column =0 ; column <= 3 ; column++){
-                matrixGUI[row][column].setLocation(x,y);
 
-                add(matrixGUI[row][column]);
-                x+=30;
-            }
-            x= 0;
-            y+= 30;
-        }
 
         setSize(100,90);
 
@@ -51,6 +41,21 @@ public class CellViewGUI extends JPanel {
                 }
 
             }
+        }
+
+        ///add on gui interface
+        int x= 0,y = 0;
+        for(int row = 0; row < 3; row++){
+            for (int column =0 ; column < 3 ; column++){
+                matrixGUI[row][column].setLocation(x,y);
+                if(matrixGUI[row][column] != null){
+                    add(matrixGUI[row][column]);
+                }
+
+                x+=30;
+            }
+            x= 0;
+            y+= 30;
         }
     }
 
