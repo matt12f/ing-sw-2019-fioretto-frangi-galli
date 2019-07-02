@@ -34,7 +34,6 @@ public class ChosenActions implements Serializable {
 
     private NewCell targetCell; //for damage to all of the players on one Cell
     private Room targetRoom; //for damage to all of the players in one Room
-    private ArrayList<Player> targetsInOrder; //For THOR card
 
     private NewCell cellToMoveOpponent;
     private NewCell cellToMoveYourself;
@@ -160,12 +159,10 @@ public class ChosenActions implements Serializable {
 
         //means this is a THOR card using Optional1 and/or Optional2 on top of the base effect
         if(!combination.getPlayersWithTargets().isEmpty()){
-            this.targetsInOrder=new ArrayList<>(Player.duplicateList(this.targetsFromList1)); //this.targets must contain only one target here
-            this.targetsFromList1.clear();
             if(combination.getEffectsCombination().contains("Optional2"))
-                selectPlayerAndThenTargets(combination.getPlayersWithTargets(),this.targetsInOrder,2);
+                selectPlayerAndThenTargets(combination.getPlayersWithTargets(),2);
             else
-                selectPlayerAndThenTargets(combination.getPlayersWithTargets(),this.targetsInOrder,1);
+                selectPlayerAndThenTargets(combination.getPlayersWithTargets(),1);
 
         }
     }
@@ -242,6 +239,8 @@ public class ChosenActions implements Serializable {
             return arrivalCell.getTargetCell();
         else
             return null;
+        //TODO rivedere contando che lo spostamento non è opzionale (SledgeHammer)
+
     }
 
     private ArrayList<Player> targetSelectionFromCell(CellWithTargets cellWithTargets){
@@ -317,25 +316,25 @@ public class ChosenActions implements Serializable {
     /**
      * THOR manager
      * @param playersWithTargets list of all players with the targets they can see
-     * @param targetList contains one player, which is the target choosen before
+     * this.targetsFromList1 contains one player, which is the target choosen before
      * adds one target
      */
-    private void selectPlayerAndThenTargets(ArrayList<PlayerWithTargets> playersWithTargets,ArrayList<Player> targetList, int targetsToAdd) {
+    private void selectPlayerAndThenTargets(ArrayList<PlayerWithTargets> playersWithTargets, int targetsToAdd) {
 
         //I'm extracting the previous target with the targetsFromList1 it can see
-        PlayerWithTargets target1 = getPlayerWithTargets(playersWithTargets,targetList.get(0));
+        PlayerWithTargets target1 = getPlayerWithTargets(playersWithTargets,this.targetsFromList1.get(0));
 
         //I'm listing the targetsFromList1 it can see to be chosen from
         try {
-            targetList.add(selectOneTarget(target1.getTargetsItCanSee(), "scegli il secondo target"));
+            this.targetsFromList1.add(selectOneTarget(target1.getTargetsItCanSee(), "scegli il secondo target"));
         }catch (NullPointerException e){
             e.printStackTrace();
         }
 
         if(targetsToAdd==2){
             try {
-                target1 = getPlayerWithTargets(playersWithTargets,targetList.get(1));
-                targetList.add(selectOneTarget(target1.getTargetsItCanSee(), "scegli il terzo target"));
+                target1 = getPlayerWithTargets(playersWithTargets,this.targetsFromList1.get(1));
+                this.targetsFromList1.add(selectOneTarget(target1.getTargetsItCanSee(), "scegli il terzo target"));
             }catch (NullPointerException e){
                 e.printStackTrace();
             }
@@ -440,9 +439,6 @@ public class ChosenActions implements Serializable {
         return targetRoom;
     }
 
-    public ArrayList<Player> getTargetsInOrder() {
-        return targetsInOrder;
-    }
 
     public NewCell getCellToMoveOpponent() {
         return cellToMoveOpponent;

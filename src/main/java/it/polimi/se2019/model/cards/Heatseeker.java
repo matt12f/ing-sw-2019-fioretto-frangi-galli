@@ -24,7 +24,7 @@ public class Heatseeker extends GunCardAddEff {
 
     @Override
     void applyBaseEffect(Controller currentController, ChosenActions playersChoice){
-        //TODO scrivere codice
+        ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,3,0);
     }
 
     /**

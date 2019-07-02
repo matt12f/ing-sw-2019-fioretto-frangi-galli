@@ -18,6 +18,7 @@ public class GameBoardGui  {
     public ScoreViewGUI scoreZone;
     public BoardZoneGUI boardZone;
     public ImageIcon background;
+    public boolean frenzyStatus = false;
     public GameBoardGui(int config, ArrayList<PlayerBoardView> opponentBoards,PlayerBoardView ownerBoard, CellView[][] boardMatrix){
         Frame frame = new Frame("ADRENALINE");
 
@@ -79,10 +80,13 @@ public class GameBoardGui  {
     public void setFrenzy(ArrayList<PlayerBoardView> opponentBoards,PlayerBoardView ownerBoard){
         boardZone.updateBoards(opponentBoards, ownerBoard, true, 0);
         playerZone.setFrenzy();
+        frenzyStatus = true;
     }
 
-    public void updateBoardGame(ArrayList<PlayerBoardView> opponentBoards,PlayerBoardView ownerBoard, CellView[][] boardMatrix, KillShotTrackerView kills){
-
+    public void updateBoardGame(ArrayList<PlayerBoardView> opponentBoards,PlayerBoardView ownerBoard, CellView[][] boardMatrix, KillShotTrackerView kills, PlayerHandView ownerHand){
+        boardZone.updateBoards(opponentBoards, ownerBoard, frenzyStatus, 0);
+        map.setBoard(boardMatrix);
+        playerZone.updateElements(ownerBoard,ownerHand, frenzyStatus);
 
 
     }

@@ -29,12 +29,13 @@ public class Zx2 extends GunCardAltEff {
 
     @Override
     void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
-        //TODO scrivere metodo
+        ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,1,2);
     }
 
     @Override
     void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
-        //TODO scrivere metodo
+        ActionManager.giveDmgandMksToPlayers(currentController,playersChoice.getTargetsFromList1(),playersChoice,0,1);
+
     }
 
     /**

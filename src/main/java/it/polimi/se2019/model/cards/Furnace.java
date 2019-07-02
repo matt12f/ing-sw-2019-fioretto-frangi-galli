@@ -29,12 +29,12 @@ public class Furnace extends GunCardAltEff {
 
     @Override
     void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
-        //TODO scrivere metodo
+        ActionManager.giveDmgandMksToPlayers(currentController,playersChoice.getTargetRoom().getPlayers(),playersChoice,1,0);
     }
 
     @Override
     void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
-        //TODO scrivere metodo
+        ActionManager.giveDmgandMksToPlayers(currentController,playersChoice.getTargetCell().getPlayers(),playersChoice,1,1);
     }
 
     /**

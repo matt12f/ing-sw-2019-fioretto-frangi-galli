@@ -35,11 +35,14 @@ public class PlayerZoneGUI extends JPanel {
 
 
     }
-    //TODO controllare colore!!!!
+
     public void setFrenzy(){
         this.board.setBoard(boardColor,420, 109, true);
     }
-    public void updateBoard(boolean frenzy){
+
+
+    public void updateElements(PlayerBoardView ownerBoard, PlayerHandView handView, boolean frenzy){
         this.board.setBoard(boardColor,420, 109, frenzy);
+        this.hand.updateHand(handView.getGuns(), handView.getPowerups());
     }
 }

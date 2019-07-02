@@ -29,12 +29,13 @@ public class Sledgehammer extends GunCardAltEff {
 
     @Override
     void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
-        //TODO scrivere metodo
+        ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,2,0);
     }
 
     @Override
     void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
-        //TODO scrivere metodo
+        ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,3,0);
+        ActionManager.movePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice.getCellToMoveOpponent());
     }
 
     /**
@@ -49,6 +50,9 @@ public class Sledgehammer extends GunCardAltEff {
         actions.setMaxNumPlayerTargets(1);
         actions.setMinNumPlayerTargets(1);
 
+        if(actions.getPlayersTargetList().isEmpty())
+            actions.setOfferableBase(false);
+
     }
 
     /**
@@ -58,6 +62,9 @@ public class Sledgehammer extends GunCardAltEff {
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         targetsOfBaseEffect(currentController, actions, player);
 
+        if(actions.getPlayersTargetList().isEmpty())
+            actions.setOfferableOpt1(false);
+        else {
         NewCell [][] board= currentController.getMainGameModel().getCurrentMap().getBoardMatrix();
 
         ArrayList<NewCell> cellsToMoveTargetOn=new ArrayList<>();
@@ -80,6 +87,7 @@ public class Sledgehammer extends GunCardAltEff {
         actions.setCanMoveOpponent(true);
         actions.setMinCellToSelect(1);
         actions.setMaxCellToSelect(1);
+        }
     }
 
     @Override
