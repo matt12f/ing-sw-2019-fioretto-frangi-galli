@@ -3,6 +3,7 @@ package it.polimi.se2019.view;
 import it.polimi.se2019.enums.CellType;
 import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.model.game.Figure;
+import it.polimi.se2019.model.game.GameModel;
 import it.polimi.se2019.model.game.NewCell;
 
 import java.util.ArrayList;
@@ -12,6 +13,17 @@ public class MapView {
     private int mapNumber;
     private CellView[][] boardMatrix;
     private KillShotTrackerView killView;
+
+    public MapView(int mapNum, int skulls, GameModel model){
+        this.mapNumber = mapNum;
+        this.killView = new KillShotTrackerView(skulls);
+        this.boardMatrix = new CellView[3][4];
+        for (int i = 0; i <3 ; i++) {
+            for (int j = 0; j <4 ; j++) {
+                this.boardMatrix[i][j] = new CellView(i, j, model.getCurrentMap().getBoardMatrix()[i][j]);
+            }
+        }
+    }
 
     public CellView getCell (int i, int j){
         return boardMatrix[i][j];
@@ -30,6 +42,7 @@ public class MapView {
             }
         return null; //won't happen
     }
+
 
     /**
      * this method returns the visual index of the cell on the X axis

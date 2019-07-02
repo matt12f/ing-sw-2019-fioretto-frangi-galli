@@ -15,11 +15,14 @@ public class LocalView  extends View implements Observer, Serializable {
     private PlayerHandView playerHand;
 
     public LocalView(ArrayList<PlayerBoardView> playerBoardViews, int playerId, MapView mapView, PlayerHandView playerHand) {
-        //TODO aggiungere la posizione del player
         this.playerBoardViews = playerBoardViews;
         this.playerId=playerId;
         this.mapView = mapView;
         this.playerHand = playerHand;
+    }
+
+    public void setPlayerPosition(CellView playerPosition) {
+        this.playerPosition = playerPosition;
     }
 
     public ArrayList<PlayerBoardView> getPlayerBoardViews() {
@@ -44,6 +47,13 @@ public class LocalView  extends View implements Observer, Serializable {
 
     public int getPlayerId() {
         return playerId;
+    }
+
+    public LocalView(int playerId, RemoteView remoteView){
+        this.mapView = remoteView.getMapView();
+        this.playerBoardViews = remoteView.getPlayerBoardViews();
+        this.playerId = playerId;
+        this.playerHand = remoteView.getPlayerHands().get(playerId);
     }
 
     //TODO rivedere update di Hand e Ammo con classi corrette: PlayerHandView e AmmoView

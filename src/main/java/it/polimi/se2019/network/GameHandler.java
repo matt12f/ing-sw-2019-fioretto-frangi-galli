@@ -7,6 +7,7 @@ import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.enums.Status;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
+import it.polimi.se2019.view.LocalView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -61,16 +62,12 @@ public class GameHandler implements Runnable {
         for (ClientHandler client: this.players) {
             client.setStatus(Status.NOTMYTURN);
         }
-        clientTurn = this.players.get(0);
-        clientTurn.setStatus(Status.MAPSKULL);
-        while(clientTurn.getStatus() == Status.MAPSKULL){
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+        getMapSkull(this.players.get(0));
         createController();
+        for (ClientHandler player: this.players) {
+            player.setLocalView(new LocalView(this.players.indexOf(player), this.controller.getRemoteView()));
+            notifyView(player);
+        }
         for (ClientHandler c: players) {
             c.setAccepted(false);
             c.setStatus(Status.SPAWN);
@@ -79,6 +76,7 @@ public class GameHandler implements Runnable {
         //gestione dei turni
         while (this.controller.getMainGameModel().getKillshotTrack().getSkulls() > 0){
             turnPreparation(this.controller.getMainGameModel().getTurn());
+            clientTurn = this.players.get(this.controller.getMainGameModel().getTurn());
             for(int i = 0; i<controller.getActiveTurn().getActivePlayer().getPlayerBoard().getActionTileNormal().getActionCounter(); i++) {
                 waitingRequest(clientTurn);
                 calculateActions(clientTurn);
@@ -91,7 +89,8 @@ public class GameHandler implements Runnable {
             clientTurn.setStatus(Status.NOTMYTURN); //valuta se magari ripassare da UPDATE piuttosto
             controller.getActiveTurn().nextTurn(controller);
         }
-        for (ClientHandler client: players) { //todo così non va bene perchè non segue l'ordine, cambialo
+        for (int j = 0; j<players.size(); j++){
+            clientTurn = players.get(this.controller.getMainGameModel().getTurn());
             turnPreparation(this.controller.getMainGameModel().getTurn());
             for (int i = 0; i < controller.getActiveTurn().getActivePlayer().getPlayerBoard().getActionTileFrenzy().getActionCounter(); i ++) {
                 waitingRequest(clientTurn);
@@ -104,6 +103,24 @@ public class GameHandler implements Runnable {
             clientTurn.setStatus(Status.NOTMYTURN);
             controller.getActiveTurn().nextTurn(controller);
         }
+        //todo gestione fine partita
+    }
+
+    private synchronized void getMapSkull(ClientHandler clientTurn) {
+        clientTurn.setStatus(Status.MAPSKULL);
+        notifyAll();
+        while(clientTurn.getStatus() == Status.MAPSKULL){
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private synchronized void notifyView(ClientHandler player) {
+        player.setStatus(Status.VIEW);
+        notifyAll();
     }
 
     private synchronized void calculateActions(ClientHandler clientTurn){
@@ -124,8 +141,10 @@ public class GameHandler implements Runnable {
 
     private void createController(){
         ArrayList<Player> players = new ArrayList<>();
+        int id = 0;
         for (ClientHandler client: this.players) {
-            players.add(new Player(0, client.getNickname(), client.getColor()));
+            players.add(new Player(id, client.getNickname(), client.getColor()));
+            id++;
         }
         this.controller = new Controller(players, this.mapNumber, this.skullsNumber);
     }

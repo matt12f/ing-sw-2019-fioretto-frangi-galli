@@ -11,6 +11,7 @@ public enum Status {
     NOTMYTURN,
     WAITING,
     FRENZY_START,
-    SPAWN
+    SPAWN,
+    VIEW
 }
 

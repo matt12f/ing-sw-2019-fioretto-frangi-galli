@@ -61,6 +61,10 @@ public class ClientHandler extends Thread implements RMIInterface, Observer {
                     }
                 }
             }
+            waitForView();
+            waitForSpawn();
+            //todo SPAWN
+            //todo localView.setPlayerPosition();
             while(!status.equals(Status.FRENZY_START)){
                 switch (this.status){
                     case MYTURN:
@@ -81,12 +85,6 @@ public class ClientHandler extends Thread implements RMIInterface, Observer {
                         while(this.status == Status.NOTMYTURN){ //todo magari wait e aspoetti la notify
                         }
                         break;
-                    case MAPSKULL:
-                        setMapSkull();
-                        break;
-                    case SPAWN:
-                        //todo gestire scelta spawn
-                        break;
                     default:
                         break;
                 }
@@ -98,6 +96,9 @@ public class ClientHandler extends Thread implements RMIInterface, Observer {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    private void waitForSpawn() {
     }
 
     private synchronized void statusChanged() throws InterruptedException {
@@ -173,6 +174,14 @@ public class ClientHandler extends Thread implements RMIInterface, Observer {
         this.nickname = nickname;
     }
 
+    private synchronized void waitForView() throws InterruptedException, IOException, ClassNotFoundException {
+        while(this.status != Status.VIEW){
+            if(this.status == Status.MAPSKULL)
+                setMapSkull();
+            wait();
+        }
+    }
+
     @Override
     public String actionRequest() throws RemoteException {
         return null;
@@ -235,8 +244,16 @@ public class ClientHandler extends Thread implements RMIInterface, Observer {
         this.actionsNumber = actionsNumber;
     }
 
-    public ChosenActions getChosenAction() {
+    ChosenActions getChosenAction() {
         return chosenAction;
+    }
+
+    public void setLocalView(LocalView localView) {
+        this.localView = localView;
+    }
+
+    public LocalView getLocalView() {
+        return localView;
     }
 
     @Override
