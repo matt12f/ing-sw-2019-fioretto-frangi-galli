@@ -64,11 +64,22 @@ public class PowerupsDeck {
         Collections.shuffle(activeDeck);
     }
 
-    public PowerupCard draw(){
+    /**
+     * @return the card on top of the deck without removing it
+     */
+    public PowerupCard peekCardOnTop(){
         PowerupCard drawn;
         if (this.activeDeck.isEmpty())
             this.setActiveDeck();
-        drawn= this.activeDeck.get(0);
+        drawn = this.activeDeck.get(0);
+        return drawn;
+    }
+
+    /**
+     * @return the card on top of the deck, removing it
+     */
+    public PowerupCard draw(){
+        PowerupCard drawn = peekCardOnTop();
         this.activeDeck.remove(0);
         return drawn;
     }

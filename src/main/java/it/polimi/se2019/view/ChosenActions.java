@@ -2,8 +2,10 @@ package it.polimi.se2019.view;
 
 import it.polimi.se2019.AdrenalineClient;
 import it.polimi.se2019.controller.*;
+import it.polimi.se2019.enums.CellType;
 import it.polimi.se2019.exceptions.NoActionsException;
 import it.polimi.se2019.model.cards.GunCard;
+import it.polimi.se2019.model.cards.PowerupCard;
 import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.model.game.Room;
@@ -56,18 +58,19 @@ public class ChosenActions implements Serializable {
 
         //Section for selection of cells where the fictitious player will be
         ArrayList<String> arrivalCellsIndex=new ArrayList<>();
-        for(FictitiousPlayer fictitiousPlayer:actions.getFictitiousPlayers())
-            arrivalCellsIndex.add(actions.getFictitiousPlayers().indexOf(fictitiousPlayer)+". "+cellToText(localView, fictitiousPlayer.getPosition()));
+        for(FictitiousPlayer fictPlayer:actions.getFictitiousPlayers())
+            arrivalCellsIndex.add(actions.getFictitiousPlayers().indexOf(fictPlayer)+". "+cellToText(localView, fictPlayer.getPosition()));
 
-        String chosenArrivalCell=this.askUser.stringSelector("Scegi una cella dove vuoi spostarti",arrivalCellsIndex);
+        String chosenArrivalCell=this.askUser.stringSelector("Scegli una cella dove vuoi spostarti",arrivalCellsIndex);
         this.fictitiousPlayer = actions.getFictitiousPlayers().get(arrivalCellsIndex.indexOf(chosenArrivalCell));
 
 
         //Section for grab/move + grab action picking Ammo/Guns
         if(this.fictitiousPlayer.getAvailableCardActions().isEmpty()) { //this is a grab/move + grab action picking Ammo
-            if(this.fictitiousPlayer.isGrabbedAmmo())
+            if(this.fictitiousPlayer.isGrabbedAmmo()) {
                 this.askUser.ammoTileViewer(this.fictitiousPlayer.getPosition().getDrop().getContent());
-
+                powerupManagement(this.fictitiousPlayer);
+            }
             if(!this.fictitiousPlayer.getPickableCards().isEmpty()){ //in case this is a grab/move + grab action picking a Gun
                 cardToPick = gunCardManager(this.fictitiousPlayer.getPickableCards());
                 if(localView.getPlayerHand().isGunHandFull())
@@ -110,6 +113,17 @@ public class ChosenActions implements Serializable {
             selectActions(localView, combinationActions,chosenCard.getGunCardToUse().getClass().getSimpleName());
         }
 
+    }
+
+    /**
+     * tells the player if the powerup hand is full and the powerup in the ammo tile is wasted
+     * @param player
+     */
+    private void powerupManagement( FictitiousPlayer player) {
+        //checks if there is a powerup in the Ammo Tile
+        if(player.getPosition().getCellType().equals(CellType.DROP) && player.getPosition().getDrop().getContent().contains("p"))
+            if(player.getCorrespondingPlayer().getPlayerBoard().getHand().isPowerUpHandFull())
+                this.askUser.showMessage("Non puoi pescare questo powerUp, ne hai già 3");
     }
 
     private void selectActions(LocalView localView, SingleEffectsCombinationActions combination,String cardName){

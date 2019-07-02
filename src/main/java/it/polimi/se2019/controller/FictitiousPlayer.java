@@ -4,6 +4,7 @@ import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.enums.CardName;
 import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.model.cards.GunCard;
+import it.polimi.se2019.model.cards.PowerupCard;
 import it.polimi.se2019.model.game.Ammo;
 import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
