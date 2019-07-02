@@ -134,7 +134,12 @@ public class ChosenActions implements Serializable {
         this.targetsFromCell = new ArrayList<>();
 
         if(combination.isOfferableExtra())
-            this.useExtra=this.askUser.yesOrNo("vuoi usare la parte extra dell'effetto?","Si", "No");
+            this.useExtra = this.askUser.yesOrNo("vuoi usare la parte extra dell'effetto?", "Si", "No");
+
+        //disabling the extra for PowerGlove card
+        if(!this.useExtra && cardName.equals("PowerGlove"))
+            combination.getCellsWithTargets().clear();
+
 
         //selection of normal targets and secondary targets different from the first
         if(!combination.getPlayersTargetList().isEmpty())
@@ -152,7 +157,7 @@ public class ChosenActions implements Serializable {
             if(combination.isCanMoveYourself())
                 this.cellToMoveYourself=selectCellWithTargets(localView, combination,"MoveYourself");
             if(combination.isCanMoveOpponent())
-                this.cellToMoveOpponent=selectCellWithTargets(localView, combination,"MoveOpponent");
+                this.cellToMoveOpponent=selectCellWithTargets(localView, combination,cardName);
             if(!combination.isCanMoveOpponent() && !combination.isCanMoveYourself())
                 this.cellFromCellWithTrg=selectCellWithTargets(localView, combination, cardName);
         }
@@ -200,28 +205,57 @@ public class ChosenActions implements Serializable {
             arrivalCell = possibleCells.get(stringList.indexOf(this.askUser.stringSelector("Scegli la cella in cui vuoi spostarti",stringList)));
             this.targetsFromCell.addAll(targetSelectionFromCell(arrivalCell));
 
-        } //here we'll ask if the player wants to move the opponent: it's optional!
-        else if(mode.equals("MoveOpponent") && this.askUser.yesOrNo("Vuoi spostare il player selezionato prima?","Si","No")){
+        } //here we'll divide between the cards that offer opponent's movement as an option or not
+        else if(mode.equals("GrenadeLauncher")||mode.equals("Shotgun")||mode.equals("RocketLauncher")){
+            if(this.askUser.yesOrNo("Vuoi spostare il player selezionato prima?","Si","No")){
+
+                //adds to a secondary list the cells where you can move the opponent
+                cellList.forEach(cellWithTargets -> {
+                    if (cellWithTargets.isCanMoveOthersHere())
+                        possibleCells.add(cellWithTargets);
+                });
+
+                //lists as strings the cells for the player to then select one
+                stringList = listCellWithTargets(localView, possibleCells);
+
+                arrivalCell = possibleCells.get(stringList.indexOf(this.askUser.stringSelector("Scegli la cella in cui vuoi spostare il target precendente", stringList)));
+                this.targetsFromCell.addAll(targetSelectionFromCell(arrivalCell));
+            }else
+                return null;
+        }else if((mode.equals("Sledgehammer")||mode.equals("TractorBeam"))){
             //adds to a secondary list the cells where you can move the opponent
             cellList.forEach(cellWithTargets -> {
-                if(cellWithTargets.isCanMoveOthersHere())
+                if (cellWithTargets.isCanMoveOthersHere())
                     possibleCells.add(cellWithTargets);
             });
 
             //lists as strings the cells for the player to then select one
-            stringList=listCellWithTargets(localView,possibleCells);
+            stringList = listCellWithTargets(localView, possibleCells);
 
-            arrivalCell = possibleCells.get(stringList.indexOf(this.askUser.stringSelector("Scegli la cella in cui vuoi spostare il target precendente",stringList)));
+            arrivalCell = possibleCells.get(stringList.indexOf(this.askUser.stringSelector("Scegli la cella in cui vuoi spostare il target precendente", stringList)));
             this.targetsFromCell.addAll(targetSelectionFromCell(arrivalCell));
 
-        }else if(mode.equals("VortexCannon")){
+        }else if(mode.equals("VortexCannon")||mode.equals("FlameThrower") && combination.getEffectsCombination().contains("Optional1")){
             //lists as strings all of the cells, for the player to then select one to become a vortex
             stringList=listCellWithTargets(localView,cellList);
 
-            arrivalCell = possibleCells.get(stringList.indexOf(this.askUser.stringSelector("Scegli la cella che diventerà il Vortex",stringList)));
+            arrivalCell = possibleCells.get(stringList.indexOf(this.askUser.stringSelector("Scegli la cella per l'effetto",stringList)));
             this.targetsFromCell.addAll(targetSelectionFromCell(arrivalCell));
 
-        }else if(!mode.equals("MoveOpponent")){//it's the case where you must select a cell to then choose one target or more on it
+        }else if(mode.equals("FlameThrower")&&combination.getEffectsCombination().contains("Base")){
+            //lists as strings all of the cells, for the player to then select one to choose targets on
+            stringList = listCellWithTargets(localView, cellList);
+            arrivalCell = possibleCells.get(stringList.indexOf(this.askUser.stringSelector("Scegli la cella in cui poi selezionare i target da colpire", stringList)));
+            arrivalCell.setMaxTargetsInCell(1);
+            this.targetsFromCell.addAll(targetSelectionFromCell(arrivalCell));
+
+             if(this.askUser.yesOrNo("vuoi selezionare un secondo target? ", "Si", "No")){
+                 //It removes the players with the same position as the one selected before
+                 arrivalCell.getTargets().removeIf(p-> p.getFigure().getCell().equals(this.targetsFromCell.get(0).getFigure().getCell()));
+                 this.targetsFromCell.addAll(targetSelectionFromCell(arrivalCell));
+             }
+            return null;
+        }else {//it's the case where you must select a cell to then choose one target or more on it
             // (it works for any number of maxTargets). Note that the targets are selected on different cells
             int cont = 0;
             do {
@@ -233,13 +267,9 @@ public class ChosenActions implements Serializable {
                 cellList.remove(arrivalCell); //removes cell already selected
                 this.targetsFromCell.addAll(targetSelectionFromCell(arrivalCell));
             } while (maxCell > cont && this.askUser.yesOrNo("vuoi selezionare altri target? " + "\nTarget restanti: " + (maxCell - cont), "Si", "No"));
-        arrivalCell=null;
-        }
-        if(arrivalCell!=null)
-            return arrivalCell.getTargetCell();
-        else
             return null;
-        //TODO rivedere contando che lo spostamento non è opzionale (SledgeHammer)
+        }
+        return arrivalCell.getTargetCell();
 
     }
 
@@ -405,10 +435,6 @@ public class ChosenActions implements Serializable {
 
     public FictitiousPlayer getFictitiousPlayer() {
         return fictitiousPlayer;
-    }
-
-    public UserInteraction getAskUser() {
-        return askUser;
     }
 
     public GunCard getCardToPick() {
