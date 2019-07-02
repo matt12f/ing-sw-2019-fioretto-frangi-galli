@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;	//for CloseListener()
 import java.awt.event.WindowAdapter;	//for CloseListener()
 import java.lang.Integer;		//int from Model is passed as an Integer
+import java.util.ArrayList;
 import java.util.Observable;		//for update();
 import java.util.Observer;
 import java.awt.*;
@@ -17,7 +18,7 @@ public class GameBoardGui implements Observer {
     public ScoreViewGUI scoreZone;
     public BoardZoneGUI boardZone;
     public ImageIcon background;
-    public GameBoardGui(int config){
+    public GameBoardGui(int config, ArrayList<PlayerBoardView> opponentBoards){
         Frame frame = new Frame("ADRENALINE");
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
@@ -42,7 +43,7 @@ public class GameBoardGui implements Observer {
 
         //mainPanel.setLayout(new GridBagLayout());
         //container.anchor = GridBagConstraints.EAST;
-        this.boardZone = new BoardZoneGUI();
+        this.boardZone = new BoardZoneGUI(opponentBoards);
         container.gridx=1;
         container.gridy=1;
         mainPanel.add(boardZone, container);

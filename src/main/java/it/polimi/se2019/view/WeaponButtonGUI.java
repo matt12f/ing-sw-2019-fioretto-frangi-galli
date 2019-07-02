@@ -23,11 +23,15 @@ public class WeaponButtonGUI extends JButton {
     public void updateImage(GunCard weapon){
          this.weaponType = weapon.getClass().getSimpleName().toLowerCase();
          if (weaponType != null){
-             pic = new ImageIcon(new ImageIcon("src/main/sprite/cards/weapons/weapons_"+weaponType+".png").getImage().getScaledInstance(sizex,sizey, Image.SCALE_DEFAULT));
+             pic = new ImageIcon(new ImageIcon("src/main/sprite/cards/weapons/weapons_"+ weaponType +".png").getImage().getScaledInstance(sizex,sizey, Image.SCALE_DEFAULT));
          }else{
              pic = new ImageIcon(new ImageIcon("src/main/sprite/cards/weapons/weapons_back.png").getImage().getScaledInstance(sizex,sizey, Image.SCALE_DEFAULT));
          }
         setIcon(pic);
 
+    }
+
+    public String getWeaponType(){
+        return weaponType;
     }
 }
