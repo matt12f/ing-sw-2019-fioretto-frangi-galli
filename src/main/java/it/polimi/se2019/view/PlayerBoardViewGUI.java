@@ -29,7 +29,7 @@ public class PlayerBoardViewGUI extends JPanel{
 
 
 
-        setBoard( color,  x,  y);
+        setBoard( color,  x,  y, false);
         this.board = new JLabel(boardImage);
         board.setIcon(boardImage);
 
@@ -86,20 +86,36 @@ public class PlayerBoardViewGUI extends JPanel{
 
 
     }
-    public void setBoard(Color color, int x, int y){
-        switch (color){
-            case YELLOW: this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/normal/yellow.jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
-                break;
-            case BLUE: this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/normal/blue.jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
-                break;
-            case VIOLET: this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/normal/purple.jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
-                break;
-            case GREEN: this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/normal/green.jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
-                break;
-            case RED: this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/normal/grey.jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
-                break;
+    public void setBoard(Color color, int x, int y, boolean frenzy){
 
+        if (!frenzy){
+            switch (color){
+                case YELLOW: this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/normal/yellow.jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
+                    break;
+                case BLUE: this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/normal/blue.jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
+                    break;
+                case VIOLET: this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/normal/purple.jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
+                    break;
+                case GREEN: this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/normal/green.jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
+                    break;
+                case WHITE: this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/normal/white.jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
+                    break;
+            }
+        }else {
+            switch (color){
+                case YELLOW: this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/frenzy/yellow.jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
+                    break;
+                case BLUE: this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/frenzy/blue.jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
+                    break;
+                case VIOLET: this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/frenzy/purple.jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
+                    break;
+                case GREEN: this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/frenzy/green.jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
+                    break;
+                case WHITE: this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/frenzy/white.jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
+                    break;
+            }
         }
+
     }
 
 }
