@@ -15,6 +15,7 @@ public class UserInteractionGUI extends UserInteraction {
     private int map;
     private int skull;
     PowerupCard chosenPowerup;
+    GunCard chosenWeapon;
 
     @Override
     public String actionToRequest(int frenzy){
@@ -475,6 +476,10 @@ public class UserInteractionGUI extends UserInteraction {
         pw2.setIcon(im2);
 
         container.gridx=0;
+        container.gridy=0;
+        mainPanel.add(new Label("choose the powerup to discard"),container);
+
+        container.gridx=0;
         container.gridy=1;
         mainPanel.add(pw1,container);
 
@@ -539,12 +544,93 @@ public class UserInteractionGUI extends UserInteraction {
         JDialog dialog = new JDialog();
         dialog.setModal(true);
         dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-        dialog.setTitle("map Chooser");
+        dialog.setTitle("powerup Chooser");
         dialog.getContentPane().add(mainPanel);
         dialog.pack();
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
-        return null;
+        return chosenPowerup;
+    }
+
+    public GunCard weaponChoose(GunCard[] list){
+
+        JPanel mainPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints container = new GridBagConstraints();
+        mainPanel.setLayout(new GridBagLayout());
+
+        WeaponButtonGUI w1  = new WeaponButtonGUI(100,160);
+        WeaponButtonGUI w2  = new WeaponButtonGUI(100,160);
+        WeaponButtonGUI w3  = new WeaponButtonGUI(100,160);
+        WeaponButtonGUI w4  = new WeaponButtonGUI(100,160);
+
+        w1.updateImage(list[0]);
+        w2.updateImage(list[1]);
+        w3.updateImage(list[2]);
+        w4.updateImage(list[3]);
+
+        container.gridx=0;
+        container.gridy=0;
+        mainPanel.add(new Label("choose the weapon to discard"),container);
+
+        container.gridx=0;
+        container.gridy=1;
+        mainPanel.add(w1,container);
+        container.gridx=1;
+        container.gridy=1;
+        mainPanel.add(w2,container);
+        container.gridx=2;
+        container.gridy=1;
+        mainPanel.add(w3,container);
+        container.gridx=3;
+        container.gridy=1;
+        mainPanel.add(w4,container);
+
+        w1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                chosenWeapon = list[0];
+
+                JButton button = (JButton)e.getSource();
+                SwingUtilities.getWindowAncestor(button).dispose();
+            }
+        });
+        w2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                chosenWeapon = list[1];
+
+                JButton button = (JButton)e.getSource();
+                SwingUtilities.getWindowAncestor(button).dispose();
+            }
+        });
+        w3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                chosenWeapon = list[2];
+
+                JButton button = (JButton)e.getSource();
+                SwingUtilities.getWindowAncestor(button).dispose();
+            }
+        });
+        w4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                chosenWeapon = list[3];
+
+                JButton button = (JButton)e.getSource();
+                SwingUtilities.getWindowAncestor(button).dispose();
+            }
+        });
+
+        JDialog dialog = new JDialog();
+        dialog.setModal(true);
+        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        dialog.setTitle("weapon Chooser");
+        dialog.getContentPane().add(mainPanel);
+        dialog.pack();
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+        return chosenWeapon;
     }
 
 }
