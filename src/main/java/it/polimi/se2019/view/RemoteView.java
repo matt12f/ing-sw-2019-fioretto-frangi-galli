@@ -15,8 +15,21 @@ public class RemoteView  extends View implements RMIInterface {
     private MapView mapView;
     private ArrayList<PlayerHandView> playerHands;
 
-    public RemoteView (){
-        //TODO da implementare ancora, deve tradurre il gamemodel nella sua controparte view
+    public RemoteView (GameModel model, int mapNum, int skulls){
+        this.playerHands = new ArrayList<>();
+        this.playerBoardViews = new ArrayList<>();
+        for (Player player: model.getPlayerList()) {
+            this.playerBoardViews.add(new PlayerBoardView());
+            this.playerBoardViews.get(this.playerBoardViews.size() - 1).setScore(0);
+            this.playerBoardViews.get(this.playerBoardViews.size() - 1).setColor(player.getPlayerBoard().getColor());
+            this.playerBoardViews.get(this.playerBoardViews.size() - 1).setFrenzy(0);
+            this.playerBoardViews.get(this.playerBoardViews.size() - 1).setFront(true);
+            this.playerBoardViews.get(this.playerBoardViews.size() -1).setAmmo(new AmmoView());
+            this.playerBoardViews.get(this.playerBoardViews.size() -1).setDamageView(new DamageView());
+
+            this.playerHands.add(new PlayerHandView());
+        }
+        this.mapView = new MapView(mapNum, skulls, model);
     }
 
     public ArrayList<PlayerBoardView> getPlayerBoardViews() {

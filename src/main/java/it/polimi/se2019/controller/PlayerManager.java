@@ -1,15 +1,31 @@
 package it.polimi.se2019.controller;
 
 import it.polimi.se2019.exceptions.CardNotFoundException;
+import it.polimi.se2019.exceptions.FullException;
 import it.polimi.se2019.model.cards.GunCard;
+import it.polimi.se2019.model.cards.PowerupCard;
+import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
 
 
 public class PlayerManager {
 
+    /**
+     * evaluates if a player is alive or not
+     * @param player
+     * @return
+     */
     public static boolean isAlive(Player player){
-        return (player.getPlayerBoard().getDamageTrack().getDamage().length<12);
+        //TODO rivedere metodo, serve?
+        return false;
+    }
+
+    /**
+     * This method scores all of the boards at the end of a turn
+     */
+    public static void scoringProcess(){
+        //TODO scrivere metodo
     }
 
     /**
@@ -18,34 +34,60 @@ public class PlayerManager {
      * @param actions contains the choices
      */
     public static void choiceExecutor(Controller currentController, ChosenActions actions){
-        Player player =actions.getFictitiousPlayer().getCorrespondingPlayer();
+        Player player = actions.getFictitiousPlayer().getCorrespondingPlayer();
         FictitiousPlayer fictitiousPlayer=actions.getFictitiousPlayer();
         //moves the player
-        ActionManager.movePlayer(currentController,player,fictitiousPlayer.getPosition());
+        ActionManager.movePlayer(currentController, player, fictitiousPlayer.getPosition());
 
         //grab management, ammo first, then guncards
-        if(fictitiousPlayer.isGrabbedAmmo())
-            player.getPlayerBoard().getAmmo().addAmmo(player.getFigure().getCell().pickItem().getContent());
-        else if(actions.getCardToPick()!=null) {
-            try {
-                player.getPlayerBoard().getHand().substitutionGunCard(actions.getCardToDiscard(), actions.getCardToPick());
-            } catch (CardNotFoundException e) {
-                //nothing to see here
+        GunCard cardToDiscard;
+        if(fictitiousPlayer.isGrabbedAmmo()) {
+            if(player.getPlayerBoard().getAmmo().addAmmo(player.getFigure().getCell().pickItem().getContent())){ //checks if you can draw a powerup
+                try { //tries to place the powerup in your hand and then removing the card from the deck if it succeeded
+                    player.getPlayerBoard().getHand().setPowerup(currentController.getMainGameModel().getCurrentDecks().getPowerupsDeck().peekCardOnTop());
+                    currentController.getMainGameModel().getCurrentDecks().getPowerupsDeck().draw();
+                }catch (FullException e){
+                    //no hard feelings if it fails to place the card in the player's hand
+                }
             }
-        }
 
-        actions.getChosenGun().applyEffects(actions);
+        }else if(actions.getCardToPick()!=null) {
+            if(actions.getCardToDiscard()==null)
+                cardToDiscard = currentController.getMainGameModel().getCurrentDecks().getGunDeck().draw();
+            else
+                cardToDiscard=actions.getCardToDiscard();
+            try {
+                payGunCardCost(player,actions.getCardToPick().getAmmoCost(),true);
+                player.getPlayerBoard().getHand().substitutionGunCard(player.getFigure().getCell(),cardToDiscard, actions.getCardToPick());
+                } catch (CardNotFoundException e) {
+                //nothing to see here
+                }
+        }
     }
 
-    //TODO rivedere
+    /**
+     * This method deals damage to the player it receives as a parameter
+     *
+     * Note: the damage must be dealt BEFORE the marks
+     * Note: a kill happens on the 11th damage given -> 1 token on the KST; -> the board gets scored at the end of the turn
+     * Note: an overkill happens on the 12th damage given -> double token on the KST; you get a mark from the player you overkilled
+     * Note: damage over 12 is wasted
+     * Note: more than one killshot in one turn -> awards you a point
+     * @param player
+     * @param damageToDeal array of chars that contain the damage as characters representing the color of the offender.
+     *                     Note that the damage drops "to be dealt" here come from a single player.
+     */
+    //TODO rivedere considerando le note sopra
     public static void damageDealer(Player player, char[] damageToDeal){
+        //here we "pull" the marks this player has left before
         int markNumber = player.getPlayerBoard().getDamageTrack().checkMarks(damageToDeal[0]);
+
         for (char damage: damageToDeal){
             if (isAlive(player))
                 player.getPlayerBoard().getDamageTrack().addDamage(damage);
             else{
-                //TODO setkill
-                //TODO throw eccezione morte
+                //TODO di Ste: setkill
+                //TODO di Ste: throw eccezione morte
             }
 
         }
@@ -54,7 +96,10 @@ public class PlayerManager {
                 player.getPlayerBoard().getDamageTrack().addDamage(damageToDeal[0]);
     }
 
-   public static void markerDealer(Player player, char[] add) {
+    /**
+     * this method adds new marks to a player's player board
+     */
+    public static void markerDealer(Player player, char[] add) {
         for (char mark: add)
             player.getPlayerBoard().getDamageTrack().addMark(mark);
     }
@@ -68,8 +113,15 @@ public class PlayerManager {
 
     }
 
-    public static void payGunCardCost(boolean fullOrReload){
-
+    public static void payGunCardCost(Player player, char [] cost, boolean fullOrReload){
+        char [] reloadCost=new char[cost.length-1];
+        if(fullOrReload)
+            player.getPlayerBoard().getAmmo().subtractAmmo(cost);
+        else{
+            for (int i = 0; i < cost.length-1; i++)
+                reloadCost[i]=cost[i+1];
+            player.getPlayerBoard().getAmmo().subtractAmmo(reloadCost);
+        }
     }
 
     /**
@@ -77,5 +129,13 @@ public class PlayerManager {
      */
     public static void frenzyActivator(Controller currentController){
         currentController.getMainGameModel().activateFinalFrenzy(currentController.getActiveTurn().getActivePlayer().getId());
+    }
+
+    public static void reloadManager(Player player, boolean[] reload) {
+        for(int i=0;i<player.getPlayerBoard().getHand().getGuns().length;i++)
+            if(player.getPlayerBoard().getHand().getGuns()[i]!=null && reload[i]) {
+                player.getPlayerBoard().getHand().getGuns()[i].setLoaded(true);
+                payGunCardCost(player, player.getPlayerBoard().getHand().getGuns()[i].getAmmoCost(), false);
+            }
     }
 }

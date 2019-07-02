@@ -5,6 +5,8 @@ import it.polimi.se2019.enums.Status;
 import it.polimi.se2019.network.*;
 import it.polimi.se2019.view.ActionRequestView;
 import it.polimi.se2019.view.LocalView;
+import it.polimi.se2019.view.OpenerGUI;
+import it.polimi.se2019.view.UserInteraction;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -34,14 +36,14 @@ public class AdrenalineClient {
         boolean last = false;
         int frenzy = 0;
         int actionNumber = 0;
+        String message = null;
         ActionRequestView actionRequested;
         AvailableActions actions;
-        GUI=false;
         ClientCallBackClass callBackClass = new ClientCallBackClass();
         clientCallBack stubClient = null;
-        //Todo finestra per chiedere se CLI o GUI
+        new OpenerGUI();
         connectionRequest(GUI, connection);
-        ipServerRequest(GUI, connection);
+        ipServerRequest(connection);
         if(connection.isSocket())
             connection.setStream();
         else{
@@ -50,14 +52,24 @@ public class AdrenalineClient {
             connection.getLocalRegistry().bind(("C" + connection.getHost()), stubClient);
             connection.getRegistry().lookup("");
         }
-        nicknameRequest(GUI, connection);
+        nicknameRequest(connection);
         while(!start){
             getOtherPlayers(connection);
-            displayQue(GUI);
+            displayQue();
             start = waitForUpdate(connection);
         }
-        //todo gestione Spawnpoint
-        //todo Ricevere la prima LocalView
+        message = (String) connection.getInput().readObject();
+        if(message.equals("MAP")) {
+            //todo fai partire scelta mappa
+            message = (String) connection.getInput().readObject();
+        }
+        if(message.equals("VIEW")){
+            //todo Ricevere la prima LocalView
+        }
+        message = (String) connection.getInput().readObject();
+        if(message.equals("SPAWN")) {
+            //todo gestione Spawnpoint
+        }
         while(start){
             myturn = receiveServerMessage(connection);
             if(myturn){
@@ -73,12 +85,14 @@ public class AdrenalineClient {
                     actionRequested = getActionFromUser(last);
                     actions = askForAction(connection, actionRequested);
                     //todo presentare le scelte
+                    connection.getOutput().writeObject(actions);
                     //todo UpdateLocalView(connection)
                 }
             }else{
                 UpdateLocalView(connection);
             }
         }
+        //todo gestione fine partita
     }
 
     private static void UpdateLocalView(Connection connection) {
@@ -101,18 +115,11 @@ public class AdrenalineClient {
     private static boolean receiveServerMessage(Connection connection) throws IOException, ClassNotFoundException {
             String msg;
             msg = (String) connection.getInput().readObject();
-            if(msg.equals("MAP"))
-                setMap(connection);
-            else if (msg.equals("YOURTURN"))
-                return true;
-            else
-                return false;
-            return false;
+            return (msg.equals("YOURTURN"));
     }
 
     private static void setMap(Connection connection) {
-        //todo chiedere scelta mappa
-        setSkull(connection);
+
     }
 
     private static void setSkull(Connection connection) {
@@ -133,7 +140,8 @@ public class AdrenalineClient {
         return false;
     }
 
-    private static void displayQue(boolean GUI) {
+    private static void displayQue() {
+        //todo rifai displayQue passando da UserInteraction
         if(GUI){
 
         }else{
@@ -171,7 +179,7 @@ public class AdrenalineClient {
         }
     }
 
-    private static void nicknameRequest(boolean GUI, Connection connection) throws IOException, InterruptedException, ClassNotFoundException {
+    private static void nicknameRequest(Connection connection) throws IOException, InterruptedException, ClassNotFoundException {
         Scanner scanner;
         String nickname;
         boolean accepted = false;
@@ -199,7 +207,7 @@ public class AdrenalineClient {
     }
 
 
-    private static void ipServerRequest(boolean GUI, Connection connection){
+    private static void ipServerRequest(Connection connection){
         Scanner scanner;
         String ipServer;
         boolean connected = true;
@@ -255,22 +263,14 @@ public class AdrenalineClient {
         ObjectOutputStream socketOutput = null;
         ObjectInputStream socketInput = null;
         if (connection.isSocket()) {
-            //try {
-                socketInput = connection.getInput();
-                socketOutput = connection.getOutput();
-               // if (isOk) {
-                    socketOutput.writeObject(nickname);
-                    Thread.sleep(10);
-               // }
-                reply = (String) socketInput.readObject();
-                if(reply.equals("true")){
-                    isOk = true;
-                }else
-                    isOk = false;
-                return isOk;
-           // } catch (IOException e) {
-             //   System.out.println("Mi spiace, si è verificato un problema di connessione e sei stato disconnesso dal server");
-            //}
+            socketInput = connection.getInput();
+            socketOutput = connection.getOutput();
+            socketOutput.writeObject(nickname);
+            Thread.sleep(10);
+            reply = (String) socketInput.readObject();
+            if(reply.equals("true"))
+                isOk = true;
+            return isOk;
         }else{
             //todo gestione nickname RMI
         }
@@ -306,6 +306,10 @@ public class AdrenalineClient {
             }
     }
 
+    public static void setGui(boolean val){
+        AdrenalineClient.GUI=val;
+    }
+
     public static boolean isGUI() {
         return GUI;
     }
@@ -320,7 +324,7 @@ class Connection{
     private ObjectOutputStream output = null;
     private ObjectInputStream input = null;
 
-    public Connection(Socket socket, Registry registry, boolean isSocket, String host, Registry local) throws IOException {
+    Connection(Socket socket, Registry registry, boolean isSocket, String host, Registry local) {
         this.registry = registry;
         this.socket = socket;
         this.isSocket = isSocket;
@@ -328,16 +332,16 @@ class Connection{
         this.localRegistry = local;
     }
 
-    public void setStream() throws IOException {
+    void setStream() throws IOException {
         this.input = new ObjectInputStream(this.socket.getInputStream());
         this.output = new ObjectOutputStream(this.socket.getOutputStream());
     }
 
-    public Registry getRegistry() {
+    Registry getRegistry() {
         return registry;
     }
 
-    public void setRegistry(Registry registry) {
+    void setRegistry(Registry registry) {
         this.registry = registry;
     }
 
@@ -364,23 +368,23 @@ class Connection{
         return this.isSocket;
     }
 
-    public void setHost(String host) {
+    void setHost(String host) {
         Host = host;
     }
 
-    public String getHost() {
+    String getHost() {
         return Host;
     }
 
-    public Registry getLocalRegistry() {
+    Registry getLocalRegistry() {
         return localRegistry;
     }
 
-    public ObjectInputStream getInput() {
+    ObjectInputStream getInput() {
         return this.input;
     }
 
-    public ObjectOutputStream getOutput() {
+    ObjectOutputStream getOutput() {
         return this.output;
     }
 }
