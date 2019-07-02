@@ -28,9 +28,7 @@ public class BoardZoneGUI extends JPanel {
 
        //////////creazione dinamica della board zone///////
 
-        for (int i = 0; i<= boards.size();i++){
-            boardsGUI.get(0).setBoard(boards.get(i).getColor(), 420,109);
-        }
+        updateBoards(boards, false);
 
 
         //////////aggiunta dinamica della board zone///////
@@ -60,9 +58,11 @@ public class BoardZoneGUI extends JPanel {
 
     }
 
-    public void updateBoards(){
+    public void updateBoards(ArrayList<PlayerBoardView> boards, boolean frenzy){
 
-
+        for (int i = 0; i<= boards.size();i++){
+            boardsGUI.get(0).setBoard(boards.get(i).getColor(), 420,109, frenzy);
+        }
 
     }
 

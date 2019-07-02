@@ -9,6 +9,7 @@ public class PlayerZoneGUI extends JPanel {
     public PlayerHandViewGUI hand;
     public PlayerBoardViewGUI board;
 
+
     public PlayerZoneGUI (){
 
         GridBagConstraints container = new GridBagConstraints();
@@ -29,14 +30,14 @@ public class PlayerZoneGUI extends JPanel {
 
         add(board, container);
 
-        /**
-        Frame frame = new Frame("ADRENALINE");
-        frame.addWindowListener(new MainLogGui.CloseListener());
-        frame.add(mainPanel);
 
-        frame.setSize(1280,720);
-        frame.setLocation(0,0);
-        frame.setVisible(true);*/
 
+    }
+    //TODO controllare colore!!!!
+    public void setFrenzy(){
+        this.board.setBoard(Color.YELLOW,420, 109, true);
+    }
+    public void updateBoard(boolean frenzy){
+        this.board.setBoard(Color.YELLOW,420, 109, frenzy);
     }
 }

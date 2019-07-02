@@ -82,4 +82,10 @@ public class GameBoardGui implements Observer {
             System.exit(0);
         } //windowClosing()
     } //CloseListener
+
+
+    public void setFrenzy(ArrayList<PlayerBoardView> opponentBoards){
+        boardZone.updateBoards(opponentBoards, true);
+        playerZone.setFrenzy();
+    }
 }

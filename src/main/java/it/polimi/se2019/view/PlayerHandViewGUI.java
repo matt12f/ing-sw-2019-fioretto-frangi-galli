@@ -1,6 +1,7 @@
 package it.polimi.se2019.view;
 
 import it.polimi.se2019.model.cards.GunCard;
+import it.polimi.se2019.model.cards.PowerupCard;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,20 +14,23 @@ public class PlayerHandViewGUI extends JPanel {
     private WeaponButtonGUI weapon3;
     protected GunCard[] weapons;
     protected AmmoGUI ammo ;
+    PowerupButtonGUI powerup1;
+    PowerupButtonGUI powerup2;
+    PowerupButtonGUI powerup3;
     public PlayerHandViewGUI(){
         //JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints container = new GridBagConstraints();
         setLayout(new GridBagLayout());
 
-        weapons = new GunCard[3];
+         weapons = new GunCard[3];
          weapon1 = new WeaponButtonGUI(100,163);
          weapon2 = new WeaponButtonGUI(100,163);
          weapon3 = new WeaponButtonGUI(100,163);
 
-        PowerupButtonGUI powerup1 = new PowerupButtonGUI();
-        PowerupButtonGUI powerup2 = new PowerupButtonGUI();
-        PowerupButtonGUI powerup3 = new PowerupButtonGUI();
-        this.ammo = new AmmoGUI();
+         powerup1 = new PowerupButtonGUI();
+         powerup2 = new PowerupButtonGUI();
+         powerup3 = new PowerupButtonGUI();
+         this.ammo = new AmmoGUI();
 
 
         //first column//
@@ -89,10 +93,14 @@ public class PlayerHandViewGUI extends JPanel {
 
     }
 
-    public void updateHand(GunCard[] weapons){
+    public void updateHand(GunCard[] weapons, PowerupCard[] powerups){
        weapon1.updateImage(weapons[0]);
        weapon2.updateImage(weapons[0]);
        weapon3.updateImage(weapons[0]);
        this.weapons = weapons;
+       powerup1.updateImage(powerups[0]);
+       powerup2.updateImage(powerups[1]);
+       powerup3.updateImage(powerups[2]);
+
     }
 }
