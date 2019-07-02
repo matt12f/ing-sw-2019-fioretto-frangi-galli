@@ -36,7 +36,7 @@ public abstract class GunCardAltEff extends GunCard{
         else if (effectsCombination.get(0).equals("Optional1")){
             targetsOfSecondaryEffect(currentController, actions, player);
         }
-        actions.validate();
+        actions.validate(effectsCombination);
         return actions;
     }
 
@@ -44,8 +44,8 @@ public abstract class GunCardAltEff extends GunCard{
     public void applyEffects(Controller currentController, ChosenActions playersChoice){
         for(int i=0;i<playersChoice.getOrderOfExecution().size();i++)
             switch (playersChoice.getOrderOfExecution().get(i)){
-                case "Base":applyBaseEffect(playersChoice);break;
-                case "Optional1":applySecondaryEffect(playersChoice);break;
+                case "Base":applyBaseEffect(currentController, playersChoice);break;
+                case "Optional1":applySecondaryEffect(currentController, playersChoice);break;
                 default:break;
             }
     }

@@ -47,22 +47,25 @@ public class MachineGun extends GunCardAddEff {
     }
 
     @Override
-    void applyBaseEffect(ChosenActions playersChoice) {
-        //se ricevi uno/due player applichi solo questo
-        //TODO scrivere metodo
+    void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
+        ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,1,0);
+        if(playersChoice.getTargetsFromList1().size()==2) {
+            ActionManager.giveDmgandMksToOnePlayer(currentController, playersChoice.getTargetsFromList1().get(1), playersChoice, 1, 0);
+        }
     }
 
     @Override
-    void applySecondaryEffect(ChosenActions playersChoice) {
-        //si applica danno aggiuntivo al primo dei due
-        //TODO scrivere metodo
+    void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
+        //always applied to the first target
+        ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,1,0);
     }
 
     @Override
-    void applyTertiaryEffect(ChosenActions playersChoice) {
-        //se ricevo 2 player applico additional damage a entrambi
-        //se ne ricevi 3 applichi additional damage a entrambi + damage al terzo
-        //TODO scrivere metodo
+    void applyTertiaryEffect(Controller currentController, ChosenActions playersChoice) {
+        ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(1),playersChoice,1,0);
+        if(playersChoice.getTargetsFromList1().size()==3) {
+            ActionManager.giveDmgandMksToOnePlayer(currentController, playersChoice.getTargetsFromList1().get(2), playersChoice, 1, 0);
+        }
     }
 
     /**
@@ -81,8 +84,7 @@ public class MachineGun extends GunCardAddEff {
      */
     @Override
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        if(actions.getPlayersTargetList().isEmpty())
-            actions.setOfferableOpt1(false);
+        //nothing to do, the check of its offerability is done in SingleEffectCombinationActions class
     }
 
     /**

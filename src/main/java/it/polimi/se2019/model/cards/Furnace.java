@@ -1,6 +1,5 @@
 package it.polimi.se2019.model.cards;
 
-import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.controller.*;
 import it.polimi.se2019.enums.CellEdge;
 import it.polimi.se2019.exceptions.OuterWallException;
@@ -29,13 +28,13 @@ public class Furnace extends GunCardAltEff {
     }
 
     @Override
-    void applyBaseEffect(ChosenActions playersChoice) {
-        //TODO scrivere metodo
+    void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
+        ActionManager.giveDmgandMksToPlayers(currentController,playersChoice.getTargetRoom().getPlayers(),playersChoice,1,0);
     }
 
     @Override
-    void applySecondaryEffect(ChosenActions playersChoice) {
-        //TODO scrivere metodo
+    void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
+        ActionManager.giveDmgandMksToPlayers(currentController,playersChoice.getTargetCell().getPlayers(),playersChoice,1,1);
     }
 
     /**

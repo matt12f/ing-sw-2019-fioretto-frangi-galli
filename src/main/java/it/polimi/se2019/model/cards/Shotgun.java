@@ -1,6 +1,5 @@
 package it.polimi.se2019.model.cards;
 
-import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.controller.*;
 import it.polimi.se2019.enums.CellEdge;
 import it.polimi.se2019.exceptions.OuterWallException;
@@ -30,13 +29,15 @@ public class Shotgun extends GunCardAltEff {
     }
 
     @Override
-    void applyBaseEffect(ChosenActions playersChoice) {
-        //TODO scrivere metodo
+    void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
+        ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,3,0);
+        if(playersChoice.getCellToMoveOpponent()!=null) //it chose to move the player
+            ActionManager.movePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice.getCellToMoveOpponent());
     }
 
     @Override
-    void applySecondaryEffect(ChosenActions playersChoice) {
-        //TODO scrivere metodo
+    void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
+        ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,2,0);
     }
 
     /**
@@ -50,6 +51,9 @@ public class Shotgun extends GunCardAltEff {
         actions.setMaxNumPlayerTargets(1);
         actions.setMinNumPlayerTargets(1);
 
+        if(actions.getPlayersTargetList().isEmpty()){
+            actions.setOfferableBase(false);
+        }else {
 
         for(NewCell cell: ActionManager.cellsOneMoveAway(currentController,player.getPosition()))
             actions.addCellsWithTargets(cell,new ArrayList<>(),0,0,false,true);
@@ -57,6 +61,7 @@ public class Shotgun extends GunCardAltEff {
         actions.setCanMoveOpponent(true);
         actions.setMaxCellToSelect(1);
         actions.setMinCellToSelect(1);
+        }
     }
 
     /**
@@ -79,6 +84,9 @@ public class Shotgun extends GunCardAltEff {
         actions.addToPlayerTargetList(targets);
         actions.setMaxNumPlayerTargets(1);
         actions.setMinNumPlayerTargets(1);
+
+        if(actions.getPlayersTargetList().isEmpty())
+            actions.setOfferableOpt1(false);
 
     }
 

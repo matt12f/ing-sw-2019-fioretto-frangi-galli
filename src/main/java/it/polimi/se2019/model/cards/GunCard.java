@@ -61,8 +61,8 @@ public abstract class GunCard{
     /**
      * methods that apply the individual effects, with the selections of the player as inputs
      */
-    abstract void applyBaseEffect(ChosenActions playersChoice);  //TODO valutare classe apposita per input al singolo effetto
-    abstract void applySecondaryEffect(ChosenActions playersChoice);  //TODO valutare classe apposita per input al singolo effetto
+    abstract void applyBaseEffect(Controller currentController, ChosenActions playersChoice);
+    abstract void applySecondaryEffect(Controller currentController, ChosenActions playersChoice);
 
     /**
      * Methods to calculate the possible targets that return a SingleEffectAction

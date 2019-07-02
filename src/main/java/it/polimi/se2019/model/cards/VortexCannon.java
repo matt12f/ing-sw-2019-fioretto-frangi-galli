@@ -36,18 +36,26 @@ public class VortexCannon extends GunCardAddEff {
     }
 
     @Override
-    void applyBaseEffect(ChosenActions playersChoice) {
-        //TODO scrivere metodo
+    void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
+        NewCell vortex = playersChoice.getCellFromCellWithTrg();
+        Player target1 = playersChoice.getTargetsFromCell().get(0);
 
-       // TODO nota://the move of the opponent must be managed through the name of the class. There will not be "available" squares where to
-        //        // move the player, meaning this is a VortexCannon card and the player that was hit must be moved automatically
-        //        // to the selected vortex
+        ActionManager.movePlayer(currentController,target1,vortex);
+        ActionManager.giveDmgandMksToOnePlayer(currentController,target1,playersChoice,2,0);
 
+        playersChoice.getTargetsInOrder().remove(0);
     }
 
     @Override
-    void applySecondaryEffect(ChosenActions playersChoice) {
-        //TODO scrivere metodo
+    void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
+        NewCell vortex = playersChoice.getCellFromCellWithTrg();
+
+        //we are assuming there is at least another target in the list
+        for(Player target: playersChoice.getTargetsFromCell()){
+            ActionManager.movePlayer(currentController,target,vortex);
+            ActionManager.giveDmgandMksToOnePlayer(currentController,target,playersChoice,1,0);
+        }
+
     }
 
     /**
@@ -90,7 +98,7 @@ public class VortexCannon extends GunCardAddEff {
     }
 
     @Override
-    void applyTertiaryEffect(ChosenActions playersChoice) {
+    void applyTertiaryEffect(Controller currentController, ChosenActions playersChoice) {
         throw new UnsupportedOperationException();
     }
     @Override

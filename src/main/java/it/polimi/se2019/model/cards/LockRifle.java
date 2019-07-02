@@ -1,11 +1,8 @@
 package it.polimi.se2019.model.cards;
 
-import it.polimi.se2019.controller.ActionManager;
-import it.polimi.se2019.controller.Controller;
-import it.polimi.se2019.controller.FictitiousPlayer;
+import it.polimi.se2019.controller.*;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
-import it.polimi.se2019.controller.SingleEffectsCombinationActions;
 
 import java.util.ArrayList;
 
@@ -35,14 +32,15 @@ public class LockRifle extends GunCardAddEff {
     }
 
     @Override
-    void applyBaseEffect(ChosenActions playersChoice) {
-        //TODO scrivere metodo
+    void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
+        ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,2,1);
     }
 
     @Override
-    void applySecondaryEffect(ChosenActions playersChoice) {
-        //TODO scrivere metodo
+    void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
+        ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(1),playersChoice,0,1);
     }
+
 
     /**
      * Deal 2 damage and 1 mark to 1 target you can see.
@@ -66,9 +64,10 @@ public class LockRifle extends GunCardAddEff {
         else
             actions.setMaxNumPlayerTargets(2);
     }
+
     //useless methods
     @Override
-    void applyTertiaryEffect(ChosenActions playersChoice) {
+    void applyTertiaryEffect(Controller currentController, ChosenActions playersChoice) {
         throw new UnsupportedOperationException();
     }
     @Override

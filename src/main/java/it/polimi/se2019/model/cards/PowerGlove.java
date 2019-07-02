@@ -1,6 +1,5 @@
 package it.polimi.se2019.model.cards;
 
-import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.controller.Controller;
 import it.polimi.se2019.controller.FictitiousPlayer;
 import it.polimi.se2019.controller.MapManager;
@@ -37,12 +36,12 @@ public class PowerGlove extends GunCardAltEff {
     }
 
     @Override
-    void applyBaseEffect(ChosenActions playersChoice) {
+    void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
         //TODO scrivere metodo
     }
 
     @Override
-    void applySecondaryEffect(ChosenActions playersChoice) {
+    void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
         //TODO scrivere metodo
     }
 

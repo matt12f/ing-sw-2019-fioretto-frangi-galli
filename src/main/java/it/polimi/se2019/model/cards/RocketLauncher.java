@@ -73,22 +73,22 @@ public class RocketLauncher extends GunCardAddEff {
         }else if(effectsCombination.toString().equals("[Optional1, Base]")||effectsCombination.toString().equals("[Optional1, Base, Optional2]"))
                 targetsOfTertiaryEffect(currentController, actions, player);
 
-        actions.validate();
+        actions.validate(effectsCombination);
         return actions;
     }
 
     @Override
-    void applyBaseEffect(ChosenActions playersChoice) {
+    void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
         //TODO scrivere metodo
     }
 
     @Override
-    void applySecondaryEffect(ChosenActions playersChoice) {
+    void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
         //TODO scrivere metodo
     }
 
     @Override
-    void applyTertiaryEffect(ChosenActions playersChoice) {
+    void applyTertiaryEffect(Controller currentController, ChosenActions playersChoice) {
         //TODO scrivere metodo
     }
 

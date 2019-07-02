@@ -28,7 +28,7 @@ public class PlayerManager {
      * @param actions contains the choices
      */
     public static void choiceExecutor(Controller currentController, ChosenActions actions){
-        Player player = actions.getFictitiousPlayer().getCorrespondingPlayer();
+        Player player = currentController.getActiveTurn().getActivePlayer();
         FictitiousPlayer fictitiousPlayer=actions.getFictitiousPlayer();
         //moves the player
         ActionManager.movePlayer(currentController, player, fictitiousPlayer.getPosition());

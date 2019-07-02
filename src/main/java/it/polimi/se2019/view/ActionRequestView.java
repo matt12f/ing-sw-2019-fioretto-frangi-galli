@@ -2,7 +2,6 @@ package it.polimi.se2019.view;
 
 import it.polimi.se2019.AdrenalineClient;
 import it.polimi.se2019.enums.ActionType;
-import it.polimi.se2019.enums.CardName;
 import it.polimi.se2019.enums.CellEdge;
 import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.model.cards.PowerupCard;

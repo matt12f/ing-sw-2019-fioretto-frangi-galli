@@ -1,6 +1,5 @@
 package it.polimi.se2019.model.cards;
 
-import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.controller.*;
 import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
@@ -29,13 +28,15 @@ public class TractorBeam extends GunCardAltEff {
 
 
     @Override
-    void applyBaseEffect(ChosenActions playersChoice) {
-        //TODO scrivere metodo
+    void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
+        ActionManager.movePlayer(currentController,playersChoice.getTargetsFromCell().get(0),playersChoice.getFictitiousPlayer().getPosition());
+        ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromCell().get(0),playersChoice,1,0);
     }
 
     @Override
-    void applySecondaryEffect(ChosenActions playersChoice) {
-        //TODO scrivere metodo
+    void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
+        ActionManager.movePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice.getFictitiousPlayer().getPosition());
+        ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,3,0);
     }
 
     /**

@@ -17,7 +17,7 @@ Figure {
 
     public char getColorChar(){
         switch (this.color){
-            case GREY: return 'r';
+            case WHITE: return 'w';
             case BLUE:return 'b';
             case GREEN:return 'g';
             case VIOLET:return 'v';

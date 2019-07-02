@@ -102,7 +102,7 @@ public class CyberBlade extends GunCardAddEff {
             default:break;
         }
 
-        actions.validate();
+        actions.validate(effectsCombination);
         return actions;
     }
 
@@ -119,24 +119,25 @@ public class CyberBlade extends GunCardAddEff {
     }
 
     @Override
-    void applyBaseEffect(ChosenActions playersChoice) {
+    void applyBaseEffect(Controller currentController, ChosenActions playersChoice){
+
         //TODO scrivere metodo
     }
 
     @Override
-    void applySecondaryEffect(ChosenActions playersChoice) {
+    void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
         //TODO scrivere metodo
     }
 
     @Override
-    void applyTertiaryEffect(ChosenActions playersChoice) {
+    void applyTertiaryEffect(Controller currentController, ChosenActions playersChoice) {
         //TODO scrivere metodo
     }
 
     /**
      * Deal 2 damage to 1 target on your square.
      *
-     * returns: a square with the targets there
+     * returns: a list of players you can hit, totally normal, riiight?
      */
     @Override
     void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
@@ -145,6 +146,7 @@ public class CyberBlade extends GunCardAddEff {
         actions.addToPlayerTargetList(targets);
         actions.setMaxNumPlayerTargets(1);
         actions.setMinNumPlayerTargets(1);
+
     }
 
     /**
@@ -155,7 +157,7 @@ public class CyberBlade extends GunCardAddEff {
     @Override
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         for(NewCell cell: ActionManager.cellsOneMoveAway(currentController,player.getPosition())){
-            actions.addCellsWithTargets(cell,Player.duplicateList(cell.getPlayers()),0,0,true,false);
+            actions.addCellsWithTargets(cell,new ArrayList<>(),0,0,true,false);
         }
         actions.setCanMoveYourself(true);
         actions.setMinCellToSelect(1);
@@ -164,6 +166,8 @@ public class CyberBlade extends GunCardAddEff {
 
     /**
      * Deal 2 damage to a different target on your square. The shadowstep may be used before or after this effect.
+     *
+     * returns: squares where you can move with target you can hit
      */
     @Override
     void targetsOfTertiaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {

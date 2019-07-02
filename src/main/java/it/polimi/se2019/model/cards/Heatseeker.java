@@ -6,8 +6,6 @@ import it.polimi.se2019.controller.FictitiousPlayer;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
 
-import java.util.ArrayList;
-
 public class Heatseeker extends GunCardAddEff {
     /**
      * hard-coded constructor
@@ -25,8 +23,8 @@ public class Heatseeker extends GunCardAddEff {
     }
 
     @Override
-    void applyBaseEffect(ChosenActions playersChoice){
-        //TODO scrivere codice
+    void applyBaseEffect(Controller currentController, ChosenActions playersChoice){
+        ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,3,0);
     }
 
     /**
@@ -41,7 +39,7 @@ public class Heatseeker extends GunCardAddEff {
     }
 
     @Override
-    void applyTertiaryEffect(ChosenActions playersChoice) {
+    void applyTertiaryEffect(Controller currentController, ChosenActions playersChoice) {
         throw new UnsupportedOperationException();
     }
     @Override
@@ -49,7 +47,7 @@ public class Heatseeker extends GunCardAddEff {
         throw new UnsupportedOperationException();
     }
     @Override
-    void applySecondaryEffect(ChosenActions playersChoice) {
+    void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
         throw new UnsupportedOperationException();
     }
     @Override

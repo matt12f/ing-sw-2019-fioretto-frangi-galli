@@ -1,11 +1,8 @@
 package it.polimi.se2019.model.cards;
 
-import it.polimi.se2019.controller.ActionManager;
-import it.polimi.se2019.controller.Controller;
-import it.polimi.se2019.controller.FictitiousPlayer;
+import it.polimi.se2019.controller.*;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
-import it.polimi.se2019.controller.SingleEffectsCombinationActions;
 
 import java.util.ArrayList;
 
@@ -45,18 +42,18 @@ public class Thor extends GunCardAddEff {
     }
 
     @Override
-    void applyBaseEffect(ChosenActions playersChoice) {
-        //TODO scrivere metodo
+    void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
+        ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,2,0);
     }
 
     @Override
-    void applySecondaryEffect(ChosenActions playersChoice) {
-        //TODO scrivere metodo
+    void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
+        ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(1),playersChoice,1,0);
     }
 
     @Override
-    void applyTertiaryEffect(ChosenActions playersChoice) {
-        //TODO scrivere metodo
+    void applyTertiaryEffect(Controller currentController, ChosenActions playersChoice) {
+        ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(2),playersChoice,2,0);
     }
 
     /**
@@ -68,6 +65,8 @@ public class Thor extends GunCardAddEff {
         actions.addToPlayerTargetList(ActionManager.visibleTargets(currentController,player));
         actions.setMaxNumPlayerTargets(1);
         actions.setMinNumPlayerTargets(1);
+        if(actions.getPlayersTargetList().isEmpty())
+            actions.setOfferableBase(false);
 
     }
 
@@ -80,6 +79,16 @@ public class Thor extends GunCardAddEff {
         for(Player player1: currentController.getMainGameModel().getPlayerList())
             actions.addPlayersWithTargets(currentController,player1);
 
+        //these are the player with targets available
+        ArrayList<Player> playerWTAvailable=new ArrayList<>();
+        for(PlayerWithTargets target:actions.getPlayersWithTargets())
+            playerWTAvailable.add(target.getTarget());
+
+        //removes the players that can't see other players
+        actions.getPlayersTargetList().removeIf(target ->!playerWTAvailable.contains(target));
+
+        if(actions.getPlayersTargetList().isEmpty())
+            actions.setOfferableOpt1(false);
     }
 
     /**
@@ -87,7 +96,31 @@ public class Thor extends GunCardAddEff {
      */
     @Override
     void targetsOfTertiaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        //custom management in view
+        if(actions.isOfferableOpt1()){ //I already have a two-link chain of targets available
+            ArrayList<PlayerWithTargets> playersToRemove=new ArrayList<>();
+            for(PlayerWithTargets playerWT: actions.getPlayersWithTargets()){
+                for(Player target: playerWT.getTargetsItCanSee())
+                    if(!itIsInTheList(target, actions.getPlayersWithTargets()))
+                        playersToRemove.add(playerWT);
+            }
+            actions.getPlayersWithTargets().removeAll(playersToRemove);
+
+            if(actions.getPlayersWithTargets().isEmpty())
+                actions.setOfferableOpt2(false);
+
+        }else
+            actions.setOfferableOpt2(false);
+    }
+
+    /**
+     * checks if a Player is in the list of targets with targets
+     *
+     */
+    private boolean itIsInTheList(Player target,ArrayList<PlayerWithTargets> list){
+        for(PlayerWithTargets playerWithTargets:list)
+            if(playerWithTargets.getTarget().equals(target))
+                return true;
+        return false;
     }
 
     @Override

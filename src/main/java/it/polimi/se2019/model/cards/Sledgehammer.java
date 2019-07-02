@@ -1,6 +1,5 @@
 package it.polimi.se2019.model.cards;
 
-import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.controller.*;
 import it.polimi.se2019.enums.CellEdge;
 import it.polimi.se2019.exceptions.OuterWallException;
@@ -29,13 +28,14 @@ public class Sledgehammer extends GunCardAltEff {
     }
 
     @Override
-    void applyBaseEffect(ChosenActions playersChoice) {
-        //TODO scrivere metodo
+    void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
+        ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,2,0);
     }
 
     @Override
-    void applySecondaryEffect(ChosenActions playersChoice) {
-        //TODO scrivere metodo
+    void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
+        ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,3,0);
+        ActionManager.movePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice.getCellToMoveOpponent());
     }
 
     /**
@@ -50,6 +50,9 @@ public class Sledgehammer extends GunCardAltEff {
         actions.setMaxNumPlayerTargets(1);
         actions.setMinNumPlayerTargets(1);
 
+        if(actions.getPlayersTargetList().isEmpty())
+            actions.setOfferableBase(false);
+
     }
 
     /**
@@ -59,6 +62,9 @@ public class Sledgehammer extends GunCardAltEff {
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         targetsOfBaseEffect(currentController, actions, player);
 
+        if(actions.getPlayersTargetList().isEmpty())
+            actions.setOfferableOpt1(false);
+        else {
         NewCell [][] board= currentController.getMainGameModel().getCurrentMap().getBoardMatrix();
 
         ArrayList<NewCell> cellsToMoveTargetOn=new ArrayList<>();
@@ -81,6 +87,7 @@ public class Sledgehammer extends GunCardAltEff {
         actions.setCanMoveOpponent(true);
         actions.setMinCellToSelect(1);
         actions.setMaxCellToSelect(1);
+        }
     }
 
     @Override

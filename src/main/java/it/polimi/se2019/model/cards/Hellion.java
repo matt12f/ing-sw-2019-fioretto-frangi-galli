@@ -29,13 +29,15 @@ public class Hellion extends GunCardAltEff{
     }
 
     @Override
-    void applyBaseEffect(ChosenActions playersChoice) {
-        //TODO scrivere metodo
+    void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
+        ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,1,1);
+        ActionManager.giveDmgandMksToPlayers(currentController,playersChoice.getTargetsFromList1().get(0).getFigure().getCell().getPlayers(),playersChoice,0,1);
     }
 
     @Override
-    void applySecondaryEffect(ChosenActions playersChoice) {
-        //TODO scrivere metodo
+    void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
+        ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,1,2);
+        ActionManager.giveDmgandMksToPlayers(currentController,playersChoice.getTargetsFromList1().get(0).getFigure().getCell().getPlayers(),playersChoice,0,2);
     }
 
     /**

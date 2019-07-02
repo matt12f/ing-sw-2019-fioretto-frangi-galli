@@ -6,8 +6,8 @@ public  class PlayerBoardView {
     private Color color;
     private AmmoView ammo;
     private boolean front;
+    private boolean frontActionTile; //if true: show ActionTileNormal; if false: show ActionTileFrenzy
     private DamageView damageView;
-    private ActionTileView actionTile;
     private int score;
     private int frenzy; //this value is =0 if frenzy is off; =1 if you can use x2 frenzy actions; =2 if you can use x1 frenzy action
 
@@ -49,10 +49,6 @@ public  class PlayerBoardView {
 
     public boolean isFront() {
         return front;
-    }
-
-    public ActionTileView getActionTile() {
-        return actionTile;
     }
 
     public Color getColor() {
