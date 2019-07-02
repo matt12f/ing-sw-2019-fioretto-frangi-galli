@@ -12,7 +12,7 @@ import java.util.Observable;		//for update();
 import java.util.Observer;
 import java.awt.*;
 
-public class GameBoardGui implements Observer {
+public class GameBoardGui  {
     public MapViewGUI map;
     public PlayerZoneGUI playerZone;
     public ScoreViewGUI scoreZone;
@@ -43,7 +43,7 @@ public class GameBoardGui implements Observer {
 
         //mainPanel.setLayout(new GridBagLayout());
         //container.anchor = GridBagConstraints.EAST;
-        this.boardZone = new BoardZoneGUI(opponentBoards, ownerBoard);
+        this.boardZone = new BoardZoneGUI(opponentBoards, ownerBoard, 0);
         container.gridx=1;
         container.gridy=1;
         mainPanel.add(boardZone, container);
@@ -66,15 +66,7 @@ public class GameBoardGui implements Observer {
 
     }
 
-    public void update(Observable obs, Object obj) {
 
-
-    } //update()
-
-    public void addController(ActionListener controller){
-
-
-    } //addController()
 
     public static class CloseListener extends WindowAdapter {
         public void windowClosing(WindowEvent e) {
@@ -85,7 +77,13 @@ public class GameBoardGui implements Observer {
 
 
     public void setFrenzy(ArrayList<PlayerBoardView> opponentBoards,PlayerBoardView ownerBoard){
-        boardZone.updateBoards(opponentBoards, ownerBoard, true);
+        boardZone.updateBoards(opponentBoards, ownerBoard, true, 0);
         playerZone.setFrenzy();
+    }
+
+    public void updateBoardGame(ArrayList<PlayerBoardView> opponentBoards,PlayerBoardView ownerBoard, CellView[][] boardMatrix, KillShotTrackerView kills){
+
+
+
     }
 }

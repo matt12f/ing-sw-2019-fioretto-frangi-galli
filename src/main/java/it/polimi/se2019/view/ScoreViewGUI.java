@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class ScoreViewGUI extends JFrame  {
 
-    public ScoreViewGUI(ArrayList<PlayerBoardView> opponentBoards, PlayerBoardView ownerBoard){
+    public ScoreViewGUI(ArrayList<PlayerBoardView> opponentBoards, PlayerBoardView ownerBoard, int kills){
         JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints container = new GridBagConstraints();
         mainPanel.setLayout(new GridBagLayout());
