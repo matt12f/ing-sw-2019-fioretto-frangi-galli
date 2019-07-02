@@ -30,7 +30,7 @@ public class Controller implements Observer {
     //TODO rivedere costrutture con la nuova modalità di connessione
     public Controller(ArrayList<Player> players, int mapNumber, int skulls) {
         this.mainGameModel=new GameModel(players, mapNumber, skulls);
-        this.remoteView=new RemoteView();
+        this.remoteView=new RemoteView(this.mainGameModel, mapNumber, skulls);
         this.activeTurn = new TurnManager();
     }
 

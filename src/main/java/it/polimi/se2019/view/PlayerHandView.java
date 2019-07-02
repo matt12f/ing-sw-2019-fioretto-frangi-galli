@@ -9,6 +9,16 @@ public  class PlayerHandView{
     private boolean[] loadedGuns;
     private PowerupCard[] powerups;
 
+    public PlayerHandView(){
+        this.powerups = new PowerupCard[3];
+        this.loadedGuns = new boolean[3];
+        this.guns = new GunCard[3];
+        for (int i = 0; i <3 ; i++) {
+            this.guns[i] = null;
+            this.powerups[i] = null;
+        }
+    }
+
     public boolean isGunHandFull(){
         for (int i = 0; i <3 ; i++) {
             if (guns[i]==null)

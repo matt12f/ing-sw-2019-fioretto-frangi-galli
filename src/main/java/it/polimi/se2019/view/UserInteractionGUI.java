@@ -1,6 +1,7 @@
 package it.polimi.se2019.view;
 
 import it.polimi.se2019.model.cards.GunCard;
+import it.polimi.se2019.model.cards.PowerupCard;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +14,7 @@ public class UserInteractionGUI extends UserInteraction {
     private boolean yesNoChoice;
     private int map;
     private int skull;
+    PowerupCard chosenPowerup;
 
     @Override
     public String actionToRequest(int frenzy){
@@ -422,18 +424,18 @@ public class UserInteractionGUI extends UserInteraction {
 
             }});
         send.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(n5.isSelected()){
-                    skull = 5;
-                }
-                if(n8.isSelected()){
-                    skull = 8;
-                }
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if(n5.isSelected()){
+                        skull = 5;
+                    }
+                    if(n8.isSelected()){
+                        skull = 8;
+                    }
 
-                JButton button = (JButton)e.getSource();
-                SwingUtilities.getWindowAncestor(button).dispose();
-            }
+                    JButton button = (JButton)e.getSource();
+                    SwingUtilities.getWindowAncestor(button).dispose();
+                }
         });
 
 
@@ -452,6 +454,97 @@ public class UserInteractionGUI extends UserInteraction {
 
         int[] ret = {map, skull};
         return ret ;
+    }
+
+
+    public PowerupCard spawnChooser(PowerupCard[] list){
+
+        JPanel mainPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints container = new GridBagConstraints();
+        mainPanel.setLayout(new GridBagLayout());
+
+
+        JButton pw1 = new JButton();
+        JButton pw2 = new JButton();
+        JButton pw3 = new JButton();
+        JButton pw4 = new JButton();
+
+        ImageIcon im1 = new ImageIcon(new ImageIcon("src/main/sprite/cards/powerups/powerups_   .png").getImage().getScaledInstance(70,92,Image.SCALE_DEFAULT));
+        ImageIcon im2 = new ImageIcon(new ImageIcon("src/main/sprite/cards/powerups/powerups_   .png").getImage().getScaledInstance(70,92,Image.SCALE_DEFAULT));
+        pw1.setIcon(im1);
+        pw2.setIcon(im2);
+
+        container.gridx=0;
+        container.gridy=1;
+        mainPanel.add(pw1,container);
+
+        container.gridx=1;
+        container.gridy=1;
+        mainPanel.add(pw2,container);
+
+        if(list[2]!= null){
+            ImageIcon im3 = new ImageIcon(new ImageIcon("src/main/sprite/cards/powerups/powerups_   .png").getImage().getScaledInstance(70,92,Image.SCALE_DEFAULT));
+            pw3.setIcon(im3);
+            container.gridx=2;
+            container.gridy=1;
+            mainPanel.add(pw3,container);
+        }
+        if (list[3] != null){
+            ImageIcon im4 = new ImageIcon(new ImageIcon("src/main/sprite/cards/powerups/powerups_   .png").getImage().getScaledInstance(70,92,Image.SCALE_DEFAULT));
+            pw4.setIcon(im4);
+            container.gridx=3;
+            container.gridy=1;
+            mainPanel.add(pw4,container);
+        }
+
+        pw1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                chosenPowerup = list[0];
+
+                JButton button = (JButton)e.getSource();
+                SwingUtilities.getWindowAncestor(button).dispose();
+            }
+        });
+        pw2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                chosenPowerup = list[1];
+
+                JButton button = (JButton)e.getSource();
+                SwingUtilities.getWindowAncestor(button).dispose();
+            }
+        });
+        pw3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                chosenPowerup = list[2];
+
+                JButton button = (JButton)e.getSource();
+                SwingUtilities.getWindowAncestor(button).dispose();
+            }
+        });
+        pw4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                chosenPowerup = list[3];
+
+                JButton button = (JButton)e.getSource();
+                SwingUtilities.getWindowAncestor(button).dispose();
+            }
+        });
+
+
+
+        JDialog dialog = new JDialog();
+        dialog.setModal(true);
+        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        dialog.setTitle("map Chooser");
+        dialog.getContentPane().add(mainPanel);
+        dialog.pack();
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+        return null;
     }
 
 }

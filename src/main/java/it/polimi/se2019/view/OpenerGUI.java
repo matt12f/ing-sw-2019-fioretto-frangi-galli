@@ -1,5 +1,7 @@
 package it.polimi.se2019.view;
 
+import it.polimi.se2019.AdrenalineClient;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,7 +12,7 @@ import java.awt.event.WindowEvent;
 public class OpenerGUI {
 
 
-    public OpenerGUI(){
+    public  OpenerGUI(){
 
         Frame frame = new Frame("ADRENALINE");
 
@@ -48,7 +50,7 @@ public class OpenerGUI {
         gui.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ////aggiungere istruzione
+                AdrenalineClient.setGui(true);
             }
 
         });
@@ -56,7 +58,7 @@ public class OpenerGUI {
         cli.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ////aggiungere istruzione
+                AdrenalineClient.setGui(false);
             }
 
         });
