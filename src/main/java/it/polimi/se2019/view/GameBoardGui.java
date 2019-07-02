@@ -18,7 +18,7 @@ public class GameBoardGui implements Observer {
     public ScoreViewGUI scoreZone;
     public BoardZoneGUI boardZone;
     public ImageIcon background;
-    public GameBoardGui(int config, ArrayList<PlayerBoardView> opponentBoards, CellView[][] boardMatrix){
+    public GameBoardGui(int config, ArrayList<PlayerBoardView> opponentBoards,PlayerBoardView ownerBoard, CellView[][] boardMatrix){
         Frame frame = new Frame("ADRENALINE");
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
@@ -51,7 +51,7 @@ public class GameBoardGui implements Observer {
 
         mainPanel.setLayout(new GridBagLayout());
         container.anchor = GridBagConstraints.SOUTH;
-        this.playerZone = new PlayerZoneGUI();
+        this.playerZone = new PlayerZoneGUI(ownerBoard.getColor());
         container.gridx=0;
         container.gridy=2;
         container.gridwidth = 2;
