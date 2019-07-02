@@ -177,7 +177,7 @@ public class MapViewGUI extends JPanel {
 
         for (int row=0;row < 3;row++){
             for(int column=0;column < 4;column++){
-                //boardMatrixGUI[row][column].setQualcosa(boardMatrix[row][column]);
+                boardMatrixGUI[row][column].updateCell(boardMatrix[row][column]);
                 boardMatrixGUI[row][column].setLocation(x,y);
                 x+=105;
             }
