@@ -45,17 +45,17 @@ public class Thor extends GunCardAddEff {
     }
 
     @Override
-    void applyBaseEffect(ChosenActions playersChoice) {
+    void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
         //TODO scrivere metodo
     }
 
     @Override
-    void applySecondaryEffect(ChosenActions playersChoice) {
+    void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
         //TODO scrivere metodo
     }
 
     @Override
-    void applyTertiaryEffect(ChosenActions playersChoice) {
+    void applyTertiaryEffect(Controller currentController, ChosenActions playersChoice) {
         //TODO scrivere metodo
     }
 

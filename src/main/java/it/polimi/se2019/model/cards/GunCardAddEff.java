@@ -42,16 +42,16 @@ public abstract class GunCardAddEff extends GunCard{
             else if(effect.equals("Optional2"))
                 targetsOfTertiaryEffect(currentController, actions, player);
         }
-        actions.validate();
+        actions.validate(effectsCombination);
         return actions;
     }
 
     public void applyEffects(Controller currentController, ChosenActions playersChoice){
         for(int i=0;i<playersChoice.getOrderOfExecution().size();i++)
             switch (playersChoice.getOrderOfExecution().get(i)){
-                case "Base":applyBaseEffect(playersChoice);break;
-                case "Optional1":applySecondaryEffect(playersChoice);break;
-                case "Optional2":applyTertiaryEffect(playersChoice);break;
+                case "Base":applyBaseEffect(currentController, playersChoice);break;
+                case "Optional1":applySecondaryEffect(currentController, playersChoice);break;
+                case "Optional2":applyTertiaryEffect(currentController, playersChoice);break;
                 default:break;
             }
     }
@@ -68,7 +68,7 @@ public abstract class GunCardAddEff extends GunCard{
     /**
      * methods that apply the individual effects, with the selections of the player as inputs
      */
-    abstract void applyTertiaryEffect(ChosenActions playersChoice);
+    abstract void applyTertiaryEffect(Controller currentController, ChosenActions playersChoice);
 
     /**
      * Methods called by available actions builder to calculate the possible targets

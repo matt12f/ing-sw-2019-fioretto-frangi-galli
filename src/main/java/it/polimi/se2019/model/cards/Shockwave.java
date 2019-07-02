@@ -5,8 +5,6 @@ import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
 
-import java.util.ArrayList;
-
 public class Shockwave extends GunCardAltEff {
     /**
      * hard-coded constructor
@@ -26,12 +24,12 @@ public class Shockwave extends GunCardAltEff {
     }
 
     @Override
-    void applyBaseEffect(ChosenActions playersChoice) {
+    void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
         //TODO scrivere metodo
     }
 
     @Override
-    void applySecondaryEffect(ChosenActions playersChoice) {
+    void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
         //TODO scrivere metodo
     }
 

@@ -62,15 +62,42 @@ public class SingleEffectsCombinationActions{
     }
 
     /**
-     * this method
-     * @throws UnavailableEffectCombinationException when an effect combination has no targets
+     * this method checks if the targets calculated are ok by:
+     *  - checking if there are targets
+     *  - checking if the combination selected if fully offerable
+     * @throws UnavailableEffectCombinationException when an effect combination is not ok
      */
-    //TODO nuovo check con passaggio della combinazione degli effetti; se nella combinazione c'è un effetto non offribile lo rimuovo
-    public void validate() throws UnavailableEffectCombinationException{
-        if(!this.offerableBase && !this.offerableOpt1 && !this.offerableOpt2)
-            throw new UnavailableEffectCombinationException();
-        if (this.playersTargetList.isEmpty() && this.targetCells.isEmpty() && this.targetRooms.isEmpty() && this.playersWithTargets.isEmpty() && this.cellsWithTargets.isEmpty())
-            throw new UnavailableEffectCombinationException();
+    public void validate(ArrayList<String> effectsCombination) throws UnavailableEffectCombinationException{
+        //if the combination selected contains an effect that is not offerable
+        if(effectsCombination.contains("Base") && !this.offerableBase)
+            throw new UnavailableEffectCombinationException("Base");
+        else if (effectsCombination.contains("Optional1") && !this.offerableOpt1)
+            throw new UnavailableEffectCombinationException("Optional1");
+        else if (effectsCombination.contains("Optional2") && !this.offerableOpt2)
+            throw new UnavailableEffectCombinationException("Optional2");
+
+        //there are no targets
+        if (this.playersTargetList.isEmpty() && this.targetCells.isEmpty() && this.targetRooms.isEmpty())
+            throw new UnavailableEffectCombinationException("No targets");
+
+        //apposite validation for CellsWithTargets
+        if(!this.cellsWithTargets.isEmpty() && validateCellsWithTargets())
+            throw new UnavailableEffectCombinationException("No targets in cells with targets");
+    }
+
+    /**
+     * if there are no targets on every cell there's something wrong -> it will return true
+     * returns false otherwise
+     */
+    private boolean validateCellsWithTargets(){
+        for(CellWithTargets cellWithTargets: this.cellsWithTargets){
+            //case where the cell is meant to have targets on it
+            if(cellWithTargets.getMinTargetsInCell()!=0 && cellWithTargets.getMaxTargetsInCell()!=0)
+                if(!cellWithTargets.getTargets().isEmpty()) //means there's a list with targets in it
+                    return false;
+        }
+        return true;
+
     }
 
     /** ------------- GETTER METHODS ------------- */

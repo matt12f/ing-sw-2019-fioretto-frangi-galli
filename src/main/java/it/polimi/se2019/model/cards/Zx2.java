@@ -28,12 +28,12 @@ public class Zx2 extends GunCardAltEff {
     }
 
     @Override
-    void applyBaseEffect(ChosenActions playersChoice) {
+    void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
         //TODO scrivere metodo
     }
 
     @Override
-    void applySecondaryEffect(ChosenActions playersChoice) {
+    void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
         //TODO scrivere metodo
     }
 

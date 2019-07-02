@@ -4,10 +4,36 @@ import it.polimi.se2019.enums.CellEdge;
 import it.polimi.se2019.exceptions.OuterWallException;
 import it.polimi.se2019.model.cards.*;
 import it.polimi.se2019.model.game.*;
+import it.polimi.se2019.view.ChosenActions;
 
 import java.util.ArrayList;
 
 public class ActionManager {
+
+    /**
+     * deals a certain amount of damage and marks to a single player
+     */
+    public static void giveDmgandMksToOnePlayer(Controller currentController, Player target, ChosenActions playersChoice, int numDmg, int numMks){
+        if(numDmg!=0)
+            PlayerManager.damageDealer(currentController,target,playersChoice.damageSequence(numDmg));
+        if(numMks!=0)
+            PlayerManager.markerDealer(target,playersChoice.damageSequence(numMks));
+    }
+
+    /**
+     * deals the same amount of damage and marks to more than one player
+     */
+    public static void giveDmgandMksToPlayers(Controller currentController, ArrayList<Player> targetList, ChosenActions playersChoice, int numDmg, int numMks){
+        if(numDmg!=0){
+            for(Player target:targetList)
+                PlayerManager.damageDealer(currentController,target,playersChoice.damageSequence(numDmg));
+        }
+        if(numMks!=0){
+            for(Player target: targetList)
+                PlayerManager.markerDealer(target,playersChoice.damageSequence(numMks));
+        }
+    }
+
     /**
      * it moves a player from its current position to an arrival cell sent as a parameter
      * @param player

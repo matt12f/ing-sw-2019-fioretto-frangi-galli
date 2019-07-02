@@ -5,8 +5,6 @@ import it.polimi.se2019.controller.FictitiousPlayer;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
 
-import java.util.ArrayList;
-
 public class Electroscythe extends GunCardAltEff {
     /**
      * hard-coded constructor
@@ -24,12 +22,12 @@ public class Electroscythe extends GunCardAltEff {
     }
 
     @Override
-    void applyBaseEffect(ChosenActions playersChoice) {
+    void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
 
     }
 
     @Override
-    void applySecondaryEffect(ChosenActions playersChoice) {
+    void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
 
     }
 

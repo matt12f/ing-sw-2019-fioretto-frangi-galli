@@ -1,6 +1,5 @@
 package it.polimi.se2019.model.cards;
 
-import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.controller.*;
 import it.polimi.se2019.enums.CellEdge;
 import it.polimi.se2019.exceptions.OuterWallException;
@@ -29,12 +28,12 @@ public class Sledgehammer extends GunCardAltEff {
     }
 
     @Override
-    void applyBaseEffect(ChosenActions playersChoice) {
+    void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
         //TODO scrivere metodo
     }
 
     @Override
-    void applySecondaryEffect(ChosenActions playersChoice) {
+    void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
         //TODO scrivere metodo
     }
 

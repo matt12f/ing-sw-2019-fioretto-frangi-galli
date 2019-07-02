@@ -24,7 +24,7 @@ public class Whisper extends GunCardAddEff {
     }
 
     @Override
-    void applyBaseEffect(ChosenActions playersChoice) {
+    void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
         //TODO scrivere codice
     }
 
@@ -45,7 +45,7 @@ public class Whisper extends GunCardAddEff {
     }
 
     @Override
-    void applyTertiaryEffect(ChosenActions playersChoice) {
+    void applyTertiaryEffect(Controller currentController, ChosenActions playersChoice) {
         throw new UnsupportedOperationException();
     }
     @Override
@@ -53,7 +53,7 @@ public class Whisper extends GunCardAddEff {
         throw new UnsupportedOperationException();
     }
     @Override
-    void applySecondaryEffect(ChosenActions playersChoice) {
+    void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
         throw new UnsupportedOperationException();
     }
     @Override

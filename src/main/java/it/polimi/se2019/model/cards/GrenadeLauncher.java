@@ -41,13 +41,16 @@ public class GrenadeLauncher extends GunCardAddEff {
     }
 
     @Override
-    void applyBaseEffect(ChosenActions playersChoice) {
-        //TODO scrivere metodo
+    void applyBaseEffect(Controller currentController, ChosenActions playersChoice){
+        Player target=playersChoice.getTargetsFromList1().get(0);
+        ActionManager.giveDmgandMksToOnePlayer(currentController,target,playersChoice,1,0);
+        if(playersChoice.getCellToMoveOpponent()!=null) //it chose to move the player
+            ActionManager.movePlayer(currentController,target,playersChoice.getCellToMoveOpponent());
     }
 
     @Override
-    void applySecondaryEffect(ChosenActions playersChoice) {
-        //TODO scrivere metodo
+    void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
+        ActionManager.giveDmgandMksToPlayers(currentController,playersChoice.getTargetCell().getPlayers(),playersChoice,1,0);
     }
 
     /**
@@ -60,12 +63,15 @@ public class GrenadeLauncher extends GunCardAddEff {
         actions.setMaxNumPlayerTargets(1);
         actions.setMinNumPlayerTargets(1);
 
+        if(!targets.isEmpty()){
         for(NewCell cell: ActionManager.cellsOneMoveAway(currentController, player.getPosition()))
             actions.addCellsWithTargets(cell,new ArrayList<>(),0,0,false,true);
 
         actions.setCanMoveOpponent(true);
         actions.setMaxCellToSelect(1);
         actions.setMinCellToSelect(1);
+        }else
+            actions.setOfferableBase(false);
     }
 
     /**
@@ -74,10 +80,12 @@ public class GrenadeLauncher extends GunCardAddEff {
     @Override
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
        actions.addToTargetCells(new ArrayList<>(ActionManager.visibleSquares(currentController,player)));
+       if(actions.getTargetCells().isEmpty())
+           actions.setOfferableOpt1(false);
     }
 
     @Override
-    void applyTertiaryEffect(ChosenActions playersChoice) {
+    void applyTertiaryEffect(Controller currentController, ChosenActions playersChoice) {
         throw new UnsupportedOperationException();
     }
     @Override

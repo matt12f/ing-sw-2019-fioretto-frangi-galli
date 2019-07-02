@@ -89,22 +89,22 @@ public class PlasmaGun extends GunCardAddEff {
             default:break;
         }
 
-        actions.validate();
+        actions.validate(effectsCombination);
         return actions;
     }
 
     @Override
-    void applyBaseEffect(ChosenActions playersChoice) {
+    void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
         //TODO scrivere metodo
     }
 
     @Override
-    void applySecondaryEffect(ChosenActions playersChoice) {
+    void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
         //TODO scrivere metodo
     }
 
     @Override
-    void applyTertiaryEffect(ChosenActions playersChoice) {
+    void applyTertiaryEffect(Controller currentController, ChosenActions playersChoice) {
         //TODO scrivere metodo
     }
 
