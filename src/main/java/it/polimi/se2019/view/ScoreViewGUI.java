@@ -28,7 +28,7 @@ public class ScoreViewGUI extends JFrame  {
         }
         container.gridx=0;
         container.gridy=x;
-        mainPanel.add(new Label("Total kills: "), container);
+        mainPanel.add(new Label("Total kills: "+ kills), container);
 
 
 
