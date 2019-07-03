@@ -60,21 +60,12 @@ public class ClientHandler extends Thread implements RMIInterface {
                 }
             }
             waitForView();
-            this.output.writeObject("VIEW");
-            this.input.readBoolean();
-            this.output.reset();
-            this.output.writeObject(localView); //invio la view al client
+            sendLocalView(); //invio la view al client
             while(status != Status.START){
                 waitForView();
-                this.output.reset();
-                this.output.writeObject("VIEW");
-                this.input.readBoolean();
-                this.output.writeObject(this.localView);
+                sendLocalView();
             }
-
-            //todo SPAWN
-            //todo localView.setPlayerPosition();
-            while(!status.equals(Status.FRENZY_START)){
+            while(!status.equals(Status.ENDGAME)){
                 switch (this.status){
                     case MYTURN:
                         this.output.writeObject("MYTURN");
@@ -86,18 +77,19 @@ public class ClientHandler extends Thread implements RMIInterface {
                             this.output.writeObject(availableActions); //mi da warning ma non so perchè
                             this.chosenAction = (ChosenActions) this.input.readObject();
                             statusChanged();
-                            //todo invia la LocalView;
+                            sendLocalView();
                         }
                         break;
                     case NOTMYTURN:
                         this.output.writeObject("NOTMYTURN");
-                        while(this.status == Status.NOTMYTURN){ //todo magari wait e aspoetti la notify
-                        }
+                        statusChanged();
+                        sendLocalView();
                         break;
                     default:
                         break;
                 }
             }
+            //todo comunicazione punteggio e chi ha vinto
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -107,13 +99,19 @@ public class ClientHandler extends Thread implements RMIInterface {
         }
     }
 
-    private void waitForSpawn() {
+    private void sendLocalView() throws IOException {
+        this.output.writeObject("VIEW");
+        this.input.readBoolean();
+        this.output.reset();
+        this.output.writeObject(this.localView);
     }
 
     private synchronized void statusChanged() throws InterruptedException {
         this.status = Status.WAITING;
         notifyAll();
-        waiting();
+        while(this.status == Status.WAITING){
+            wait();
+        }
     }
 
     private synchronized void setMapSkull() throws IOException, ClassNotFoundException {
@@ -136,10 +134,6 @@ public class ClientHandler extends Thread implements RMIInterface {
         return socket;
     }
 
-    public String getHost() {
-        return host;
-    }
-
     void setHost(String host) {
         this.host = host;
     }
@@ -156,10 +150,6 @@ public class ClientHandler extends Thread implements RMIInterface {
         return output;
     }
 
-    public ObjectInputStream getInput() {
-        return input;
-    }
-
     @Override
     public LocalView getLocalView(int playerID) throws RemoteException {
 
@@ -172,7 +162,7 @@ public class ClientHandler extends Thread implements RMIInterface {
     }
 
     @Override
-    public void setNicknameRMI(String nickname) throws RemoteException, InterruptedException {
+    public synchronized void setNicknameRMI(String nickname) throws RemoteException, InterruptedException {
         setNickname(nickname);
         this.getThread().wait();
         if(!this.accepted)
@@ -186,13 +176,13 @@ public class ClientHandler extends Thread implements RMIInterface {
     private synchronized void waitForView() throws InterruptedException, IOException, ClassNotFoundException {
         status = Status.WAITING;
         while(this.status != Status.VIEW ){
+            wait();
             if(this.status == Status.MAPSKULL)
                 setMapSkull();
             if(this.status == Status.SPAWN)
                 setSpawn();
             if(this.status == Status.START)
                 break;
-            wait();
         }
     }
 
@@ -262,7 +252,7 @@ public class ClientHandler extends Thread implements RMIInterface {
         return chosenAction;
     }
 
-    public void setLocalView(LocalView localView) {
+    void setLocalView(LocalView localView) {
         this.localView = localView;
     }
 

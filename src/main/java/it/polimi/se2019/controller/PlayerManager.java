@@ -37,10 +37,13 @@ public class PlayerManager {
             cellNeeded = Color.YELLOW;
         for (int i = 0; i < map.length - 1; i++) {
             for (int j = 0; j < map[0].length - 1; j++) {
-                if (map[i][j].getCellType().equals(CellType.SPAWN) && map[i][j].getColor() == cellNeeded)
+                if (map[i][j].getCellType().equals(CellType.SPAWN) && map[i][j].getColor() == cellNeeded) {
                     map[i][j].addPlayers(controller.getMainGameModel().getPlayerList().get(id));
+                    controller.getMainGameModel().getPlayerList().get(id).getFigure().setCell(map[i][j]);
+                }
             }
         }
+        controller.getMainGameModel().notifyRemoteView();
     }
 
     public static PowerupCard[] getCardsToSpawn(boolean setUpGame, Controller controller, int id) throws FullException {

@@ -11,9 +11,9 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class testRemoteView {
+class testRemoteView {
     @Test
-    public  void testGetCardsToSpawn(){
+    void testGetCardsToSpawn(){
         ArrayList<Player> players = new ArrayList<>();
         Player player=new Player(0,"george000", Color.YELLOW);
         players.add(player);
@@ -32,5 +32,21 @@ public class testRemoteView {
             e.printStackTrace();
         }
         assertArrayEquals(controller.getMainGameModel().getPlayerList().get(0).getPlayerBoard().getHand().getPowerups(), controller.getRemoteView().getPlayerHands().get(0).getPowerups());
+    }
+
+    @Test
+    void testUpdateLocalView(){ArrayList<Player> players = new ArrayList<>();
+        Player player=new Player(0,"george000", Color.YELLOW);
+        players.add(player);
+        player=new Player(1,"george001",Color.BLUE);
+        players.add(player);
+        player=new Player(2,"george010",Color.WHITE);
+        players.add(player);
+        player=new Player(3,"george011",Color.GREEN);
+        players.add(player);
+        player=new Player(4,"george100",Color.VIOLET);
+        players.add(player);
+        Controller controller = new Controller(players, 1, 5);
+
     }
 }

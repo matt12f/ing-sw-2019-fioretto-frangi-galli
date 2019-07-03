@@ -7,7 +7,6 @@ import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.enums.Status;
 import it.polimi.se2019.exceptions.FullException;
 import it.polimi.se2019.model.game.Player;
-import it.polimi.se2019.model.game.PlayerBoard;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.view.LocalView;
 
@@ -48,10 +47,13 @@ public class GameHandler implements Runnable {
     }
 
     private void setClientColor(){
-        int i=0;
-        for (ClientHandler client: this.players) {
-            client.setColor(fromIntToColor(i));
-            i++;
+        ArrayList<Color> colors = new ArrayList<>();
+        for (int  i = 0; i < this.players.size(); i++) {
+            colors.add(fromIntToColor(i));
+        }
+        Collections.shuffle(colors);
+        for (int j = 0; j < this.players.size(); j++) {
+            this.players.get(j).setColor(colors.get(j));
         }
     }
 
@@ -61,7 +63,6 @@ public class GameHandler implements Runnable {
         //scelta rotazione e assegnamento pedina
         setClientColor();
         shuffleClient(this.players);
-        char spawnColor;
         for (ClientHandler client: this.players) {
             client.setStatus(Status.NOTMYTURN);
         }
@@ -90,10 +91,7 @@ public class GameHandler implements Runnable {
                 notifyView(player);
             }
         }
-        for (ClientHandler player: players) {
-            player.setStatus(Status.START);
-            notifyAll();
-        }
+        setStart();
         //gestione dei turni
         while (this.controller.getMainGameModel().getKillshotTrack().getSkulls() > 0){
             turnPreparation(this.controller.getMainGameModel().getTurn());
@@ -103,7 +101,7 @@ public class GameHandler implements Runnable {
                 calculateActions(clientTurn);
                 waitingRequest(clientTurn);
                 PlayerManager.choiceExecutor(controller, clientTurn.getChosenAction());
-                //todo invio LocalView
+                notifyView(clientTurn);
                 //todo controlla chi è morto, setta lo stato DEAD e relative aazioni
                 if (this.controller.getMainGameModel().getKillshotTrack().getSkulls() == 0)
                     break;
@@ -120,12 +118,22 @@ public class GameHandler implements Runnable {
                 waitingRequest(clientTurn);
                 ChosenActions chosenActions = clientTurn.getChosenAction();
                 PlayerManager.choiceExecutor(controller, chosenActions);
-                //todo invio LocalView
+                notifyView(clientTurn);
             }
             clientTurn.setStatus(Status.NOTMYTURN);
             controller.getActiveTurn().nextTurn(controller);
         }
-        //todo gestione fine partita
+        for (ClientHandler player: players) {
+            player.setStatus(Status.ENDGAME);
+        }
+        //todo scrivi chi ha vinto (ounteggio più alto)
+    }
+
+    private synchronized void setStart() {
+        for (ClientHandler player: players) {
+            player.setStatus(Status.START);
+            notifyAll();
+        }
     }
 
     private synchronized void getMapSkull(ClientHandler clientTurn) {
