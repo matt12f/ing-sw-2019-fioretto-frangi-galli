@@ -4,11 +4,15 @@ import it.polimi.se2019.enums.Color;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class PlayerBoardViewGUI extends JPanel{
 
     private ImageIcon boardImage;
     protected JLabel board;
+    protected  JButton markerButton;
 
 
     private DamageIconGUI[] damageVector;
@@ -21,6 +25,8 @@ public class PlayerBoardViewGUI extends JPanel{
         setBoard(   x,  y, false, boardView );
         this.board = new JLabel(boardImage);
         board.setIcon(boardImage);
+
+        this.markerButton = new JButton("markers");
 
 
         ///////DAMAGE//////
@@ -59,7 +65,11 @@ public class PlayerBoardViewGUI extends JPanel{
 
         add(board);
 
-
+        markerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               showMarkers(boardView.getDamageView().getMarks());
+            }});
 
 
 
@@ -100,6 +110,30 @@ public class PlayerBoardViewGUI extends JPanel{
         }
 
 
+    }
+
+    public void showMarkers(ArrayList<Character> marks){
+        JPanel mainPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints container = new GridBagConstraints();
+        mainPanel.setLayout(new GridBagLayout());
+
+        for (int i=0 ; i< marks.size();i++){
+            container.gridx=0;
+            container.gridy=i;
+
+            mainPanel.add(new JLabel(i + ": " + marks.get(i)),container);
+        }
+
+
+
+        JDialog dialog = new JDialog();
+        dialog.setModal(true);
+        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        dialog.setTitle("weapon Chooser");
+        dialog.getContentPane().add(mainPanel);
+        dialog.pack();
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
     }
 
 }
