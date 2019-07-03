@@ -77,19 +77,69 @@ public class RocketLauncher extends GunCardAddEff {
         return actions;
     }
 
+    /**
+     * this must be custom made
+     */
+    @Override
+    public void applyEffects(Controller currentController, ChosenActions playersChoice){
+        String combination=playersChoice.getOrderOfExecution().toString();
+        if(combination.equals("[Base]")||combination.equals("[Base, Optional2]"))
+            applyBaseEffect(currentController, playersChoice);
+        else if(combination.equals("[Base, Optional1]")||combination.equals("[Base, Optional1, Optional2]"))
+            applySecondaryEffect(currentController, playersChoice);
+        else if(combination.equals("[Optional1, Base]")||combination.equals("[Optional1, Base, Optional2]"))
+            applyTertiaryEffect(currentController, playersChoice);
+    }
+
+
+    /**
+     * this applies only the base or base + Opt2 effects
+     */
     @Override
     void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
-        //TODO scrivere metodo
+        ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,2,0);
+
+        //this manages the Base + Opt2 combination (you must damage everyone before moving the single target)
+        if(playersChoice.getOrderOfExecution().contains("Optional2"))
+            applyThird(currentController,playersChoice,playersChoice.getTargetsFromList1().get(0).getFigure().getCell());
+
+        if(playersChoice.getCellToMoveOpponent()!=null)
+            ActionManager.movePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice.getCellToMoveOpponent());
     }
 
+    /**
+     * this applies the base/base+Opt2 && moves you after that
+     */
     @Override
     void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
-        //TODO scrivere metodo
+        applyBaseEffect(currentController, playersChoice);
+
+        ActionManager.movePlayer(currentController, currentController.getActiveTurn().getActivePlayer(), playersChoice.getCellToMoveYourself());
     }
 
+    /**
+     * here you must select cells where you want move & hit a target + cells where you can move the target after you've hit it
+     */
     @Override
     void applyTertiaryEffect(Controller currentController, ChosenActions playersChoice) {
-        //TODO scrivere metodo
+        //you first move, then hit a target and then move the target
+        ActionManager.movePlayer(currentController,currentController.getActiveTurn().getActivePlayer(),playersChoice.getCellToMoveYourself());
+        ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromCell().get(0),playersChoice,2,0);
+
+        //this manages the Opt1 + Base + Opt2 combination (you must damage everyone before moving the single target)
+        if(playersChoice.getOrderOfExecution().contains("Optional2"))
+            applyThird(currentController,playersChoice,playersChoice.getTargetsFromCell().get(0).getFigure().getCell());
+
+        if(playersChoice.getCellToMoveOpponent()!=null)
+            ActionManager.movePlayer(currentController,playersChoice.getTargetsFromCell().get(0),playersChoice.getCellToMoveOpponent());
+
+    }
+
+    /**
+     * applies only the third effect
+     */
+    private void applyThird(Controller currentController, ChosenActions playersChoice, NewCell cell) {
+        ActionManager.giveDmgandMksToPlayers(currentController,cell.getPlayers(),playersChoice,1,0);
     }
 
     /**
@@ -97,17 +147,21 @@ public class RocketLauncher extends GunCardAddEff {
      */
     @Override
     void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        ArrayList<Player> targets=new ArrayList<>(ActionManager.visibleTargets(currentController,player));
+        ArrayList<Player> targets = new ArrayList<>(ActionManager.visibleTargets(currentController, player));
         targets.removeAll(player.getPosition().getPlayers());
 
         actions.addToPlayerTargetList(targets);
         actions.setMaxNumPlayerTargets(1);
         actions.setMinNumPlayerTargets(1);
 
+        if (actions.getPlayersTargetList().isEmpty())
+            actions.setOfferableBase(false);
+        else{
+            actions.setCanMoveOpponent(true);
+            for (NewCell cell : ActionManager.cellsOneMoveAway(currentController, player.getPosition()))
+                actions.addCellsWithTargets(cell, new ArrayList<>(), 0, 0, false, true);
 
-        actions.setCanMoveOpponent(true);
-        for(NewCell cell: ActionManager.cellsOneMoveAway(currentController,player.getPosition()))
-            actions.addCellsWithTargets(cell,new ArrayList<>(),0,0,false,true);
+        }
     }
 
     /**

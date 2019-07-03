@@ -175,8 +175,8 @@ public class ChosenActions implements Serializable {
     /**
      * this is used when:
      *      - you can move yourself;
-     *      - you can move an opponent;
-     *      - vortex, you must select a cell
+     *      - you can move an opponent (distinguishing if it's optional of mandatory);
+     *      - vortex/Flamethrower_Optional2, where you must select a cell;
      *      - you must choose a square where you will then select targets on
      *
      * in this.targetsFromCell  you'll add the targets you select in a cell
@@ -187,7 +187,7 @@ public class ChosenActions implements Serializable {
     private NewCell selectCellWithTargets(LocalView localView, SingleEffectsCombinationActions combination, String mode) {
         int maxCell=combination.getMaxCellToSelect();
         ArrayList<CellWithTargets> cellList=combination.getCellsWithTargets();
-        CellWithTargets arrivalCell=null;
+        CellWithTargets arrivalCell;
 
         ArrayList<String> stringList;
         ArrayList<CellWithTargets> possibleCells=new ArrayList<>();

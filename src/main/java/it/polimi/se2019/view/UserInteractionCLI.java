@@ -1,6 +1,7 @@
 package it.polimi.se2019.view;
 
 import it.polimi.se2019.model.cards.GunCard;
+import it.polimi.se2019.model.cards.PowerupCard;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -78,5 +79,15 @@ public class UserInteractionCLI extends UserInteraction {
                     default:break;
                 }
             System.out.println(builder.toString());
+    }
+
+    @Override
+    public int[] mapChooser() {
+        return new int[0];
+    }
+
+    @Override
+    public PowerupCard spawnChooser(PowerupCard[] list) {
+        return null;
     }
 }

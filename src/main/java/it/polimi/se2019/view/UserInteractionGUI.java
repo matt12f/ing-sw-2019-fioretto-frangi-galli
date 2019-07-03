@@ -320,6 +320,7 @@ public class UserInteractionGUI extends UserInteraction {
         dialog.setVisible(true);
     }
 
+    @Override
     public int[] mapChooser(){
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
@@ -457,7 +458,7 @@ public class UserInteractionGUI extends UserInteraction {
         return ret ;
     }
 
-
+    @Override
     public PowerupCard spawnChooser(PowerupCard[] list){
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
@@ -552,6 +553,7 @@ public class UserInteractionGUI extends UserInteraction {
         return chosenPowerup;
     }
 
+    //Not in use at the moment
     public GunCard weaponChoose(GunCard[] list){
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
