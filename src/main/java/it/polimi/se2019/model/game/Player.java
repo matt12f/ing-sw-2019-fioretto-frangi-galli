@@ -37,6 +37,7 @@ public class Player {
     public int getScore() {
         return score;
     }
+
     /**This method adds points to a player
      *
      * */

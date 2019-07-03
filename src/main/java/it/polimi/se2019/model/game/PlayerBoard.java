@@ -96,6 +96,11 @@ public class PlayerBoard extends Observable {
 
     }
 
+    public char getColorChar(){
+        String color=this.color.toString().toLowerCase();
+        return color.charAt(0);
+    }
+
     @Override
     public PlayerBoard clone(){
         PlayerBoard playerBoard=new PlayerBoard(this.color);

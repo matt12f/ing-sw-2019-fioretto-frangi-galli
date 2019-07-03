@@ -16,14 +16,7 @@ Figure {
     }
 
     public char getColorChar(){
-        switch (this.color){
-            case WHITE: return 'w';
-            case BLUE:return 'b';
-            case GREEN:return 'g';
-            case VIOLET:return 'v';
-            case YELLOW:return 'y';
-            default: return ' ';
-        }
+        return this.color.toString().toLowerCase().charAt(0);
     }
 
     public NewCell getCell() {

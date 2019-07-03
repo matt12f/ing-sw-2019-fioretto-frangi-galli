@@ -10,6 +10,7 @@ import it.polimi.se2019.view.UserInteractionGUI;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+//TODO classe da rimuovere
 public class TestUserInteraction {
     private static UserInteraction askUser;
 
