@@ -28,6 +28,8 @@ public  class PlayerBoardView {
         this.damageView = damageView;
     }
 
+
+
     public int getScore(){
         return this.score;
     }

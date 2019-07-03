@@ -8,10 +8,10 @@ import java.awt.*;
 public class PlayerZoneGUI extends JPanel {
     public PlayerHandViewGUI hand;
     public PlayerBoardViewGUI board;
-    public Color boardColor;
 
 
-    public PlayerZoneGUI (Color color){
+
+    public PlayerZoneGUI (PlayerBoardView ownerBoard){
 
         GridBagConstraints container = new GridBagConstraints();
         setLayout(new GridBagLayout());
@@ -25,8 +25,8 @@ public class PlayerZoneGUI extends JPanel {
         add(hand, container);
 
         setLayout(new GridBagLayout());
-        this.boardColor = color;
-        this.board = new PlayerBoardViewGUI(boardColor,420, 109);
+
+        this.board = new PlayerBoardViewGUI(ownerBoard,420, 109);
         container.gridx=1;
         container.gridy=0;
 
@@ -36,13 +36,13 @@ public class PlayerZoneGUI extends JPanel {
 
     }
 
-    public void setFrenzy(){
-        this.board.setBoard(boardColor,420, 109, true);
+    public void setFrenzy(PlayerBoardView ownerBoard){
+        this.board.setBoard(420, 109, true, ownerBoard);
     }
 
 
     public void updateElements(PlayerBoardView ownerBoard, PlayerHandView handView, boolean frenzy){
-        this.board.setBoard(boardColor,420, 109, frenzy);
+        this.board.setBoard(420, 109, frenzy,ownerBoard );
         this.hand.updateHand(handView.getGuns(), handView.getPowerups());
     }
 }
