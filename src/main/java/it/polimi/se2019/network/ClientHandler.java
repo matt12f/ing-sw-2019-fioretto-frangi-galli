@@ -3,6 +3,7 @@ package it.polimi.se2019.network;
 import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.controller.AvailableActions;
 import it.polimi.se2019.enums.Color;
+import it.polimi.se2019.model.cards.PowerupCard;
 import it.polimi.se2019.view.ActionRequestView;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.view.LocalView;
@@ -10,21 +11,17 @@ import it.polimi.se2019.enums.Status;
 import java.io.*;
 import java.net.Socket;
 import java.rmi.RemoteException;
-import java.rmi.registry.Registry;
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 
 
 
-public class ClientHandler extends Thread implements RMIInterface, Observer {
+public class ClientHandler extends Thread implements RMIInterface {
     private String nickname;
     private Thread thread;
     private Socket socket = null;
     private boolean accepted = false; //used in a first moment to verify the nickname's uniqueness
     private String host;
     private Status status = Status.NOTREADY;
-    private Registry registry = null;
     private Color color;
     private ObjectOutputStream output;
     private ObjectInputStream input;
@@ -34,6 +31,7 @@ public class ClientHandler extends Thread implements RMIInterface, Observer {
     private int actionsNumber;
     private ChosenActions chosenAction;
     private LocalView localView;
+    private PowerupCard spawn;
 
     @Override
     public void run(){
@@ -62,7 +60,18 @@ public class ClientHandler extends Thread implements RMIInterface, Observer {
                 }
             }
             waitForView();
-            waitForSpawn();
+            this.output.writeObject("VIEW");
+            this.input.readBoolean();
+            this.output.reset();
+            this.output.writeObject(localView); //invio la view al client
+            while(status != Status.START){
+                waitForView();
+                this.output.reset();
+                this.output.writeObject("VIEW");
+                this.input.readBoolean();
+                this.output.writeObject(this.localView);
+            }
+
             //todo SPAWN
             //todo localView.setPlayerPosition();
             while(!status.equals(Status.FRENZY_START)){
@@ -175,11 +184,24 @@ public class ClientHandler extends Thread implements RMIInterface, Observer {
     }
 
     private synchronized void waitForView() throws InterruptedException, IOException, ClassNotFoundException {
-        while(this.status != Status.VIEW){
+        status = Status.WAITING;
+        while(this.status != Status.VIEW ){
             if(this.status == Status.MAPSKULL)
                 setMapSkull();
+            if(this.status == Status.SPAWN)
+                setSpawn();
+            if(this.status == Status.START)
+                break;
             wait();
         }
+    }
+
+    private void setSpawn() throws IOException, ClassNotFoundException, InterruptedException {
+        output.reset();
+        output.writeObject("SPAWN");
+        spawn = (PowerupCard) input.readObject();
+        this.status = Status.WAITING;
+        waiting();
     }
 
     @Override
@@ -201,14 +223,6 @@ public class ClientHandler extends Thread implements RMIInterface, Observer {
 
     void setThread(Thread thread) {
         this.thread = thread;
-    }
-
-    public void setRegistry(Registry registry) {
-        this.registry = registry;
-    }
-
-    public Registry getRegistry() {
-        return registry;
     }
 
     public Color getColor() {
@@ -256,8 +270,7 @@ public class ClientHandler extends Thread implements RMIInterface, Observer {
         return localView;
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        //todo devi creare l'aggiornamento della remoteView
+    public PowerupCard getSpawn() {
+        return spawn;
     }
 }

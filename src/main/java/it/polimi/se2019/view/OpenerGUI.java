@@ -51,14 +51,15 @@ public class OpenerGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 AdrenalineClient.setGui(true);
+                frame.dispose();
             }
-
         });
 
         cli.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 AdrenalineClient.setGui(false);
+                frame.dispose();
             }
 
         });

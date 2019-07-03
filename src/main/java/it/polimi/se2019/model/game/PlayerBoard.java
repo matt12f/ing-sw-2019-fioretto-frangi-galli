@@ -31,6 +31,10 @@ public class PlayerBoard extends Observable {
         return color;
     }
 
+    public boolean isFront() {
+        return front;
+    }
+
     public ActionTileNormal getActionTileNormal(){
         return actionTileNormal;
     }

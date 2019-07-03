@@ -25,12 +25,13 @@ public class Shockwave extends GunCardAltEff {
 
     @Override
     void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
-        //TODO scrivere metodo
+        ActionManager.giveDmgandMksToPlayers(currentController,playersChoice.getTargetsFromCell(),playersChoice,1,0);
     }
 
     @Override
     void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
-        //TODO scrivere metodo
+        ActionManager.giveDmgandMksToPlayers(currentController,ActionManager.targetsOneMoveAway(currentController,
+                playersChoice.getFictitiousPlayer()),playersChoice,1,0);
     }
 
     /**

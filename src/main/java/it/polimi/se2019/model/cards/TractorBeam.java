@@ -29,7 +29,7 @@ public class TractorBeam extends GunCardAltEff {
 
     @Override
     void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
-        ActionManager.movePlayer(currentController,playersChoice.getTargetsFromCell().get(0),playersChoice.getFictitiousPlayer().getPosition());
+        ActionManager.movePlayer(currentController,playersChoice.getTargetsFromCell().get(0),playersChoice.getCellToMoveOpponent());
         ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromCell().get(0),playersChoice,1,0);
     }
 

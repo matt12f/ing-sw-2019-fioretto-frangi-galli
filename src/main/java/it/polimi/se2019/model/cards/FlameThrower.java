@@ -1,13 +1,11 @@
 package it.polimi.se2019.model.cards;
 
-import it.polimi.se2019.controller.Controller;
-import it.polimi.se2019.controller.FictitiousPlayer;
-import it.polimi.se2019.controller.MapManager;
+import it.polimi.se2019.controller.*;
+import it.polimi.se2019.enums.CellEdge;
 import it.polimi.se2019.exceptions.OuterWallException;
 import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
-import it.polimi.se2019.controller.SingleEffectsCombinationActions;
 
 import java.util.ArrayList;
 
@@ -33,13 +31,44 @@ public class FlameThrower extends GunCardAltEff {
 
     @Override
     void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
-        //TODO scrivere metodo
-        //TODO verifica in view che i target siano su celle diverse
+        ActionManager.giveDmgandMksToPlayers(currentController,playersChoice.getTargetsFromCell(),playersChoice,1,0);
     }
 
     @Override
     void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
-        //TODO scrivere metodo
+        NewCell[][] board =currentController.getMainGameModel().getCurrentMap().getBoardMatrix();
+
+        NewCell cellOneMoveAway=playersChoice.getCellFromCellWithTrg();
+        if(MapManager.distanceBetweenCells(board,playersChoice.getCellFromCellWithTrg(),currentController.getActiveTurn().getActivePlayer().getFigure().getCell())==1)
+          ActionManager.giveDmgandMksToPlayers(currentController,playersChoice.getCellFromCellWithTrg().getPlayers(),playersChoice,2,0);
+        else {
+            ActionManager.giveDmgandMksToPlayers(currentController,playersChoice.getCellFromCellWithTrg().getPlayers(),playersChoice,1,0);
+            int dir= getDirection(board,currentController.getActiveTurn().getActivePlayer().getFigure().getCell(),playersChoice.getCellFromCellWithTrg());
+            try {
+                cellOneMoveAway= MapManager.getCellInDirection(board, currentController.getActiveTurn().getActivePlayer().getFigure().getCell(), 1, dir);
+            }catch (OuterWallException e){
+                //nothing to see here
+            }
+            ActionManager.giveDmgandMksToPlayers(currentController,cellOneMoveAway.getPlayers(),playersChoice,2,0);
+
+        }
+    }
+
+    private int getDirection(NewCell[][]board,NewCell originalCell, NewCell otherCell){
+        int x=MapManager.getLineOrColumnIndex(board,originalCell,true);
+        int y=MapManager.getLineOrColumnIndex(board,originalCell,false);
+        int i=MapManager.getLineOrColumnIndex(board,otherCell,true);
+        int j=MapManager.getLineOrColumnIndex(board,originalCell,false);
+
+        if(x>i &&y==j)//up
+            return 0;
+        if(x<i &&y==j)//down
+            return 1;
+        if(x==i &&y>j)//left
+            return 2;
+        if(x==i &&y<j)//right
+            return 3;
+        return -1;
     }
 
     /**
@@ -56,18 +85,15 @@ public class FlameThrower extends GunCardAltEff {
         for (int i = 0; i < 4 ; i++){ //selects a direction
             targetsInOneDirection.clear();
             try{
-                cellOneMoveAway= MapManager.getCellInDirection(board, player.getPosition(), 1, i);
+                cellOneMoveAway = MapManager.getCellInDirection(board, player.getPosition(), 1, i);
 
-                try{
                     targetsInOneDirection.addAll(Player.duplicateList(cellOneMoveAway.getPlayers()));
-                    targetsInOneDirection.addAll(Player.duplicateList(MapManager.getCellInDirection(board, player.getPosition(), 2, i).getPlayers()));
-                    }
-                    catch (OuterWallException e){
-                    actions.addCellsWithTargets(cellOneMoveAway,targetsInOneDirection,1,1,false,false);
-                        //This happens if you move out of the board while getting the second cell
-                    }
+                    if(!cellOneMoveAway.getEdge(i).equals(CellEdge.WALL)) {
+                        targetsInOneDirection.addAll(Player.duplicateList(MapManager.getCellInDirection(board, player.getPosition(), 2, i).getPlayers()));
+                        actions.addCellsWithTargets(cellOneMoveAway,targetsInOneDirection,2,1,false,false);
+                    }else
+                        actions.addCellsWithTargets(cellOneMoveAway,targetsInOneDirection,1,1,false,false);
 
-            actions.addCellsWithTargets(cellOneMoveAway,targetsInOneDirection,2,1,false,false);
             }catch (OuterWallException e2){
                 //this happens if you are close to an edge and try to move outside of the board
             }
@@ -77,13 +103,16 @@ public class FlameThrower extends GunCardAltEff {
     }
 
     /**
-     *Choose 2 squares as above.
+     *Choose a square 1 move away and possibly a second square 1 more move away in the same direction.
      *Deal 2 damage to everyone on the first square and 1 damage to everyone on the second square.
      */
     @Override
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         targetsOfBaseEffect(currentController,actions,player);
-        //TODO check se è offerable
+        actions.getCellsWithTargets().forEach(p->{
+            p.setMaxTargetsInCell(0);
+            p.setMinTargetsInCell(0);
+        });
     }
 
     @Override

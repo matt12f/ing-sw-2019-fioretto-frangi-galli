@@ -43,7 +43,7 @@ public class VortexCannon extends GunCardAddEff {
         ActionManager.movePlayer(currentController,target1,vortex);
         ActionManager.giveDmgandMksToOnePlayer(currentController,target1,playersChoice,2,0);
 
-        playersChoice.getTargetsInOrder().remove(0);
+        playersChoice.getTargetsFromList1().remove(0);
     }
 
     @Override

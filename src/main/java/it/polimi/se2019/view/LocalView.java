@@ -19,6 +19,7 @@ public class LocalView  extends View implements Observer, Serializable {
         this.playerId=playerId;
         this.mapView = mapView;
         this.playerHand = playerHand;
+        this.playerPosition = null;
     }
 
     public void setPlayerPosition(CellView playerPosition) {
@@ -56,28 +57,12 @@ public class LocalView  extends View implements Observer, Serializable {
         this.playerHand = remoteView.getPlayerHands().get(playerId);
     }
 
-    //TODO rivedere update di Hand e Ammo con classi corrette: PlayerHandView e AmmoView
     @Override
-    public void update(Observable o, Object arg) {
-        if(arg instanceof PlayerBoard){
-            for(int i=0; i<playerBoardViews.size(); i++){
-            }
-        }else if(arg instanceof Map){
-            for (int i=0; i<3; i++) {
-                for(int j=0; j<2; j++){
-                }
-            }
-        }else if(arg instanceof GunDeck){
-
-        }else if(arg instanceof AmmoTilesDeck){
-
-        }else if(arg instanceof PowerupsDeck){
-
-        }else if(arg instanceof Integer){
-            for (int i=0; i<playerBoardViews.size(); i++){
-                this.playerBoardViews.get(i).setScore((int) arg);
-            }
-        }else{
-        }
+    public void update(Observable o, Object remoteView) {
+            RemoteView remote = (RemoteView) remoteView;
+            this.mapView = remote.getMapView();
+            this.playerHand = remote.getPlayerHands().get(this.playerId);
+            this.playerBoardViews = remote.getPlayerBoardViews();
+            this.playerPosition = remote.getMapView().getPlayerPosition(remote.getPlayerBoardViews().get(this.playerId).getColor());
     }
 }

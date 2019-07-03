@@ -1,14 +1,11 @@
 package it.polimi.se2019.model.cards;
 
-import it.polimi.se2019.controller.Controller;
-import it.polimi.se2019.controller.FictitiousPlayer;
-import it.polimi.se2019.controller.MapManager;
+import it.polimi.se2019.controller.*;
 import it.polimi.se2019.enums.CellEdge;
 import it.polimi.se2019.exceptions.OuterWallException;
 import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
-import it.polimi.se2019.controller.SingleEffectsCombinationActions;
 
 import java.util.ArrayList;
 
@@ -37,12 +34,22 @@ public class PowerGlove extends GunCardAltEff {
 
     @Override
     void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
-        //TODO scrivere metodo
+        ActionManager.movePlayer(currentController,currentController.getActiveTurn().getActivePlayer(),playersChoice.getTargetsFromList1().get(0).getFigure().getCell());
+        ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,1,2);
     }
 
     @Override
     void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
-        //TODO scrivere metodo
+
+        if(!playersChoice.isUseExtra())
+            ActionManager.movePlayer(currentController,currentController.getActiveTurn().getActivePlayer(),playersChoice.getTargetsFromList1().get(0).getFigure().getCell());
+        else {
+            ActionManager.movePlayer(currentController,currentController.getActiveTurn().getActivePlayer(),playersChoice.getTargetsFromCell().get(0).getFigure().getCell() );
+            ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromCell().get(0),playersChoice,2,0);
+        }
+        //part of the normal secondary effect (it's important to move first and then hit)
+        ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,2,0);
+
     }
 
     /**
@@ -64,6 +71,8 @@ public class PowerGlove extends GunCardAltEff {
         actions.setMaxNumPlayerTargets(1);
         actions.setMinNumPlayerTargets(1);
 
+        if(actions.getPlayersWithTargets().isEmpty())
+            actions.setOfferableBase(false);
 
         //you will then move to that square automatically
     }
@@ -79,7 +88,34 @@ public class PowerGlove extends GunCardAltEff {
         //choice of a player to damage in one cell away
         targetsOfBaseEffect(currentController, actions, player);
 
-        actions.setOfferableExtra(true); //to be then evaluated in view
+        if(actions.getPlayersWithTargets().isEmpty()){
+            actions.setOfferableOpt1(false);
+        }else{
+        //cells two moves away, with targets to select
+
+        NewCell[][] board = currentController.getMainGameModel().getCurrentMap().getBoardMatrix();
+        ArrayList<NewCell> cellsTwoMovesAway=new ArrayList<>();
+        try {
+            for (int i = 0; i < 4 ; i++) {
+                if (!player.getPosition().getEdge(i).equals(CellEdge.WALL))
+                    if(!MapManager.getCellInDirection(board,player.getPosition(),1,i).getEdge(i).equals(CellEdge.WALL))
+                        cellsTwoMovesAway.add(MapManager.getCellInDirection(board,player.getPosition(),2,i));
+            }
+        }catch (OuterWallException e){
+            //Won't happen
+        }
+
+        for(NewCell cell:cellsTwoMovesAway){
+            if(!cell.getPlayers().isEmpty())
+                actions.addCellsWithTargets(cell, cell.getPlayers(), 1, 1, false, false);
+        }
+        if(actions.getCellsWithTargets().isEmpty())
+            actions.setOfferableExtra(false);
+        else
+            actions.setOfferableExtra(true);
+
+            //you'll then automatically move in the cell of the player you've hit
+        }
     }
 
     @Override

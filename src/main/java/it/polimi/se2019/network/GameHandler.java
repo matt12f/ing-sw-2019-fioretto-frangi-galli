@@ -5,7 +5,9 @@ import it.polimi.se2019.controller.Controller;
 import it.polimi.se2019.controller.PlayerManager;
 import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.enums.Status;
+import it.polimi.se2019.exceptions.FullException;
 import it.polimi.se2019.model.game.Player;
+import it.polimi.se2019.model.game.PlayerBoard;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.view.LocalView;
 
@@ -59,6 +61,7 @@ public class GameHandler implements Runnable {
         //scelta rotazione e assegnamento pedina
         setClientColor();
         shuffleClient(this.players);
+        char spawnColor;
         for (ClientHandler client: this.players) {
             client.setStatus(Status.NOTMYTURN);
         }
@@ -66,13 +69,31 @@ public class GameHandler implements Runnable {
         createController();
         for (ClientHandler player: this.players) {
             player.setLocalView(new LocalView(this.players.indexOf(player), this.controller.getRemoteView()));
+            this.controller.getRemoteView().addObserver(player.getLocalView());
             notifyView(player);
         }
         for (ClientHandler c: players) {
-            c.setAccepted(false);
+            try {
+                PlayerManager.getCardsToSpawn(true, this.controller, c.getLocalView().getPlayerId());
+            } catch (FullException e) {
+                e.printStackTrace();
+            }
             c.setStatus(Status.SPAWN);
+            try {
+                waitForSpawn(c);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            PlayerManager.spawnPlayers(this.controller, c.getLocalView().getPlayerId(), c.getSpawn());
+            for (ClientHandler player: players) {
+                player.setStatus(Status.VIEW);
+                notifyView(player);
+            }
         }
-        //todo GESTIONE SPAWN
+        for (ClientHandler player: players) {
+            player.setStatus(Status.START);
+            notifyAll();
+        }
         //gestione dei turni
         while (this.controller.getMainGameModel().getKillshotTrack().getSkulls() > 0){
             turnPreparation(this.controller.getMainGameModel().getTurn());
@@ -83,6 +104,7 @@ public class GameHandler implements Runnable {
                 waitingRequest(clientTurn);
                 PlayerManager.choiceExecutor(controller, clientTurn.getChosenAction());
                 //todo invio LocalView
+                //todo controlla chi è morto, setta lo stato DEAD e relative aazioni
                 if (this.controller.getMainGameModel().getKillshotTrack().getSkulls() == 0)
                     break;
             }
@@ -164,6 +186,13 @@ public class GameHandler implements Runnable {
         ClientHandler clientTurn = this.players.get(turn);
         clientTurn.setActionsNumber(controller.getActiveTurn().getActivePlayer().getPlayerBoard().getActionTileNormal().getActionCounter());
         clientTurn.setStatus(Status.MYTURN);
+    }
+
+    public synchronized void waitForSpawn(ClientHandler player) throws InterruptedException {
+        notifyAll();
+        while(player.getStatus() == Status.SPAWN){
+            wait();
+        }
     }
 
     public void setPlayers(ArrayList<ClientHandler> players) {

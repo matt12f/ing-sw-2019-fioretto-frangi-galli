@@ -28,9 +28,10 @@ public class AdrenalineClient {
     private static String nickname;
     private static ArrayList<String> otherPlayers;
     private static boolean GUI; //Se l'utente sceglierà la GUI piuttosto che la cli sarà true
+    public static Connection connection;
 
     public static void main(String[] args) throws IOException, AlreadyBoundException, NotBoundException, InterruptedException, ClassNotFoundException {
-        Connection connection = new Connection(null, null, false, null, null);
+        connection = new Connection(null, null, false, null, null);
         boolean start = false;
         boolean myturn = false;
         boolean last = false;
@@ -64,11 +65,14 @@ public class AdrenalineClient {
             message = (String) connection.getInput().readObject();
         }
         if(message.equals("VIEW")){
-            //todo Ricevere la prima LocalView
+            connection.getOutput().reset();
+            connection.getOutput().writeBoolean(true);
+            connection.getOutput().flush();
+            localView = (LocalView) connection.getInput().readObject();
         }
         message = (String) connection.getInput().readObject();
         if(message.equals("SPAWN")) {
-            //todo gestione Spawnpoint
+            //todo far partire la schermata e poi inviare al server
         }
         while(start){
             myturn = receiveServerMessage(connection);
