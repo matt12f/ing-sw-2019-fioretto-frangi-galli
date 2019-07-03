@@ -32,6 +32,7 @@ public class Controller implements Observer {
         this.mainGameModel=new GameModel(players, mapNumber, skulls);
         this.remoteView=new RemoteView(this.mainGameModel, mapNumber, skulls);
         this.activeTurn = new TurnManager();
+        this.mainGameModel.addObserver(this.remoteView);
     }
 
     public GameModel getMainGameModel() {

@@ -57,6 +57,7 @@ public class PlayerManager {
             }
             cards[Hand.getMaxcards()] = controller.getMainGameModel().getCurrentDecks().getPowerupsDeck().draw();
         }
+        controller.getMainGameModel().notifyRemoteView();
         return cards;
     }
 

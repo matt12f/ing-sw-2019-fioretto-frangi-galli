@@ -130,6 +130,11 @@ public class GameModel extends Observable{
         }
     }
 
+    public void notifyRemoteView(){
+        setChanged();
+        notifyObservers(this);
+    }
+
     public int getTurn() {
         return turn;
     }

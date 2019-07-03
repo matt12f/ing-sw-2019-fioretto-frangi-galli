@@ -2,6 +2,7 @@ package it.polimi.se2019.view;
 
 import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.enums.Status;
+import it.polimi.se2019.model.cards.GunCard;
 import it.polimi.se2019.model.game.*;
 import it.polimi.se2019.network.RMIInterface;
 import it.polimi.se2019.controller.AvailableActions;
@@ -54,9 +55,6 @@ public class RemoteView  extends    View implements RMIInterface {
         super.addObserver(o);
     }
 
-    //TODO rivedere con classi della view invece che del model
-
-
     @Override
     public LocalView getLocalView(int playerID) throws RemoteException {
         return null; //TODO rivedere
@@ -86,6 +84,7 @@ public class RemoteView  extends    View implements RMIInterface {
     public void update(Observable o, Object arg) {
         GameModel model  = (GameModel) arg;
         boolean[] loaded = new boolean[Hand.getMaxcards()];
+        GunCard gunCard;
         this.mapView.getKillView().update(model.getKillshotTrack());
         this.mapView.uploadBoardMatrix(model.getCurrentMap().getBoardMatrix());
         for (PlayerBoardView player: playerBoardViews) {
@@ -93,7 +92,9 @@ public class RemoteView  extends    View implements RMIInterface {
             this.playerHands.get(playerBoardViews.indexOf(player)).setPowerups(model.getPlayerList().get(playerBoardViews.indexOf(player)).getPlayerBoard().getHand().getPowerups());
             this.playerHands.get(playerBoardViews.indexOf(player)).setGuns(model.getPlayerList().get(playerBoardViews.indexOf(player)).getPlayerBoard().getHand().getGuns());
             for (int i = 0; i < Hand.getMaxcards() ; i++) {
-                loaded[i] = model.getPlayerList().get(playerBoardViews.indexOf(player)).getPlayerBoard().getHand().getGuns()[i].isLoaded();
+                gunCard = model.getPlayerList().get(playerBoardViews.indexOf(player)).getPlayerBoard().getHand().getGuns()[i];
+                if(gunCard != null)
+                    loaded[i] = gunCard.isLoaded();
             }
             this.playerHands.get(playerBoardViews.indexOf(player)).setLoadedGuns(loaded);
         }

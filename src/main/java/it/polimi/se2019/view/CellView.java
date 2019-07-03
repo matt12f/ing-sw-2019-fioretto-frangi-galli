@@ -20,7 +20,11 @@ public class CellView {
         this.lineIndex = lineIndex;
         this.columnIndex = columnIndex;
         this.playerFigures = new ArrayList<>();
-        setDrop(playerPosition.getDrop().toString());
+        try {
+            setDrop(playerPosition.getDrop().toString());
+        }catch (NullPointerException e){
+            this.drop=null;
+        }
         setPlayerFigures(playerPosition);
         setCell(playerPosition);
     }
@@ -29,7 +33,8 @@ public class CellView {
 
         this.playerFigures.clear();
         for (int i = 0; i <= playerPosition.getPlayers().size(); i++){
-            this.playerFigures.add(playerPosition.getPlayers().get(i).getFigure());
+            if(!playerPosition.getPlayers().isEmpty())
+                this.playerFigures.add(playerPosition.getPlayers().get(i).getFigure());
         }
     }
 
