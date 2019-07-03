@@ -93,31 +93,66 @@ public class PlasmaGun extends GunCardAddEff {
         return actions;
     }
 
+    /**
+     * this must be custom made
+     */
+    @Override
+    public void applyEffects(Controller currentController, ChosenActions playersChoice){
+        String combination=playersChoice.getOrderOfExecution().toString();
+        if(combination.equals("[Base]")||combination.equals("[Base, Optional2]"))
+            applyBaseEffect(currentController, playersChoice);
+        else if(combination.equals("[Base, Optional1]")||combination.equals("[Base, Optional1, Optional2]"))
+            applySecondaryEffect(currentController, playersChoice);
+        else if(combination.equals("[Optional1, Base]")||combination.equals("[Optional1, Base, Optional2]"))
+            applyTertiaryEffect(currentController, playersChoice);
+    }
+
+    /**
+     * manages Base and Base + Opt2 combinations
+     */
     @Override
     void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
-        //TODO scrivere metodo
+        if(playersChoice.getOrderOfExecution().contains("Optional2"))
+            ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,3,0);
+        else
+            ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,2,0);
+
     }
 
+    /**
+     * this applies the base/base+opt2 + opt 1
+     */
     @Override
     void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
-        //TODO scrivere metodo
+        applyBaseEffect(currentController,playersChoice);
+        ActionManager.movePlayer(currentController,currentController.getActiveTurn().getActivePlayer(),playersChoice.getCellToMoveYourself());
     }
 
+    /**
+     * this applies the opt1 + base/base+opt2
+     */
     @Override
     void applyTertiaryEffect(Controller currentController, ChosenActions playersChoice) {
-        //TODO scrivere metodo
+        ActionManager.movePlayer(currentController,currentController.getActiveTurn().getActivePlayer(),playersChoice.getCellToMoveYourself());
+        if(playersChoice.getOrderOfExecution().contains("Optional2"))
+            ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromCell().get(0),playersChoice,3,0);
+        else
+            ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromCell().get(0),playersChoice,2,0);
     }
 
     /**
      * Deal 2 damage to 1 target you can see.
      *
-     * actually returns: 1 square with your position and the targets visible from there
+     * returns: normal list of players you can see
      */
     @Override
     void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player){
         actions.addToPlayerTargetList(ActionManager.visibleTargets(currentController,player));
         actions.setMaxNumPlayerTargets(1);
         actions.setMinNumPlayerTargets(1);
+
+        if(actions.getPlayersTargetList().isEmpty())
+            actions.setOfferableBase(false);
 
     }
 

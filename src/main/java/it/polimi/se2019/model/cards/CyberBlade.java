@@ -73,32 +73,35 @@ public class CyberBlade extends GunCardAddEff {
 
         switch (effectsCombination.toString()){
             case "[Base]":targetsOfBaseEffect(currentController, actions, player);break;
+            case "[Base, Optional2]":{
+                targetsOfBaseEffect(currentController, actions, player);
+                if(actions.getPlayersTargetList().size()<2){
+                    actions.setMaxNumPlayerTargets(2);
+                    actions.setOfferableOpt2(false);
+                }
+            }break;
+            case "[Base, Optional2, Optional1]":{
+                targetsOfBaseEffect(currentController, actions, player);
+                if(actions.getPlayersTargetList().size()<2){
+                    actions.setMaxNumPlayerTargets(2);
+                    actions.setOfferableOpt2(false);
+                }
+                targetsOfSecondaryEffect(currentController, actions, player);
+            }break;
             case "[Base, Optional1]":{
                 targetsOfBaseEffect(currentController,actions, player);
                 targetsOfSecondaryEffect(currentController, actions, player);
             } break;
-            case "[Base, Optional2]":{
-                targetsOfBaseEffect(currentController, actions, player);
-                if(actions.getPlayersTargetList().size()<2)
-                    actions.setOfferableOpt2(false);
-            }break;
-            case "[Base, Optional2, Optional1]":{
-                targetsOfBaseEffect(currentController, actions, player);
-                if(actions.getPlayersTargetList().size()<2)
-                    actions.setOfferableOpt2(false);
-                targetsOfSecondaryEffect(currentController, actions, player);
+            case "[Optional1, Base]":targetsOfTertiaryEffect(currentController, actions, player);break;
+            case "[Optional1, Base, Optional2]":{
+                targetsOfTertiaryEffect(currentController, actions, player);
+                actions.setOfferableOpt2(enabler(actions));
             }break;
             case "[Base, Optional1, Optional2]":{
                 targetsOfBaseEffect(currentController, actions, player);
                 targetsOfSecondaryEffect(currentController, actions, player);
                 actions.setOfferableOpt2(enabler(actions));
             }break;
-            case "[Optional1, Base]":targetsOfTertiaryEffect(currentController, actions, player);break;
-            case "[Optional1, Base, Optional2]":{
-                targetsOfTertiaryEffect(currentController, actions, player);
-                actions.setOfferableOpt2(enabler(actions));
-            }break;
-
             default:break;
         }
 
@@ -118,20 +121,67 @@ public class CyberBlade extends GunCardAddEff {
         return possibleOpt2;
     }
 
+    /**
+     * this must be custom made
+     */
+    @Override
+    public void applyEffects(Controller currentController, ChosenActions playersChoice){
+        String combination=playersChoice.getOrderOfExecution().toString();
+        if(combination.equals("[Base]")||combination.equals("[Base, Optional2]"))
+            applyBaseEffect(currentController, playersChoice);
+        else if(combination.equals("[Base, Optional1]")||combination.equals("[Base, Optional2, Optional1]")){
+            applyBaseEffect(currentController, playersChoice);
+            applySecondaryEffect(currentController,playersChoice);
+        }
+        else if(combination.equals("[Optional1, Base]")||combination.equals("[Optional1, Base, Optional2]"))
+            applyTertiaryEffect(currentController, playersChoice);
+        else if(combination.equals("[Base, Optional1, Optional2]"))
+            applySpecial(currentController,playersChoice);
+    }
+
+    /**
+     * this applies only [Base, Optional1, Optional2]
+     */
+    private void applySpecial(Controller currentController, ChosenActions playersChoice) {
+        //damage one target
+        ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,2,0);
+        //move
+        applySecondaryEffect(currentController,playersChoice);
+        //damage a second target
+        ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromCell().get(0),playersChoice,2,0);
+
+    }
+
+
+    /**
+     * This applies the base/base+opt2 effect
+     */
     @Override
     void applyBaseEffect(Controller currentController, ChosenActions playersChoice){
+        ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,2,0);
 
-        //TODO scrivere metodo
+        if(playersChoice.getOrderOfExecution().contains("Optional2"))
+            ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(1),playersChoice,2,0);
     }
 
+    /**
+     * This applies the Optional1 effect
+     */
     @Override
     void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
-        //TODO scrivere metodo
+        ActionManager.movePlayer(currentController,currentController.getActiveTurn().getActivePlayer(),playersChoice.getCellToMoveYourself());
     }
 
+    /**
+     * This applies the Optional1 + Base/Base+Opt2 effect
+     */
     @Override
     void applyTertiaryEffect(Controller currentController, ChosenActions playersChoice) {
-        //TODO scrivere metodo
+        applySecondaryEffect(currentController,playersChoice);
+        ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromCell().get(0),playersChoice,2,0);
+
+        if(playersChoice.getOrderOfExecution().contains("Optional2"))
+            ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromCell().get(1),playersChoice,2,0);
     }
 
     /**
@@ -147,6 +197,9 @@ public class CyberBlade extends GunCardAddEff {
         actions.setMaxNumPlayerTargets(1);
         actions.setMinNumPlayerTargets(1);
 
+        if(actions.getPlayersTargetList().isEmpty())
+            actions.setOfferableBase(false);
+
     }
 
     /**
@@ -157,7 +210,7 @@ public class CyberBlade extends GunCardAddEff {
     @Override
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         for(NewCell cell: ActionManager.cellsOneMoveAway(currentController,player.getPosition())){
-            actions.addCellsWithTargets(cell,new ArrayList<>(),0,0,true,false);
+            actions.addCellsWithTargets(cell,Player.duplicateList(cell.getPlayers()),0,0,true,false);
         }
         actions.setCanMoveYourself(true);
         actions.setMinCellToSelect(1);
