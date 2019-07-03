@@ -52,7 +52,7 @@ public class GameBoardGui  {
 
         mainPanel.setLayout(new GridBagLayout());
         container.anchor = GridBagConstraints.SOUTH;
-        this.playerZone = new PlayerZoneGUI(ownerBoard.getColor());
+        this.playerZone = new PlayerZoneGUI(ownerBoard);
         container.gridx=0;
         container.gridy=2;
         container.gridwidth = 2;
@@ -79,7 +79,7 @@ public class GameBoardGui  {
 
     public void setFrenzy(ArrayList<PlayerBoardView> opponentBoards,PlayerBoardView ownerBoard){
         boardZone.updateBoards(opponentBoards, ownerBoard, true, 0);
-        playerZone.setFrenzy();
+        playerZone.setFrenzy(ownerBoard);
         frenzyStatus = true;
     }
 

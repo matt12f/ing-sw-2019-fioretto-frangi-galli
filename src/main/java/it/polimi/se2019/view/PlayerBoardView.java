@@ -27,6 +27,8 @@ public  class PlayerBoardView {
         this.damageView = damageView;
     }
 
+    public DamageView getDamageView(){return this.damageView;}
+
     public int getScore(){
         return this.score;
     }
