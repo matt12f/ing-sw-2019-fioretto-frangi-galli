@@ -27,7 +27,7 @@ public class PlayerBoardViewGUI extends JPanel{
         board.setIcon(boardImage);
 
         this.markerButton = new JButton("markers");
-
+        markerButton.setLocation(225, 10);
 
         ///////DAMAGE//////
 
@@ -37,31 +37,31 @@ public class PlayerBoardViewGUI extends JPanel{
 
 
         damageVector[0].setLocation(40, 40);
-        damageVector[0].setLocation(60, 40);
-        damageVector[0].setLocation(85, 40);
-        damageVector[0].setLocation(110, 40);
-        damageVector[0].setLocation(130, 40);
-        damageVector[0].setLocation(160, 40);
-        damageVector[0].setLocation(180, 40);
-        damageVector[0].setLocation(200, 40);
-        damageVector[0].setLocation(225, 40);
-        damageVector[0].setLocation(250, 40);
-        damageVector[0].setLocation(275, 40);
-        damageVector[0].setLocation(295, 40);
+        damageVector[1].setLocation(60, 40);
+        damageVector[2].setLocation(85, 40);
+        damageVector[3].setLocation(110, 40);
+        damageVector[4].setLocation(130, 40);
+        damageVector[5].setLocation(160, 40);
+        damageVector[6].setLocation(180, 40);
+        damageVector[7].setLocation(200, 40);
+        damageVector[8].setLocation(225, 40);
+        damageVector[9].setLocation(250, 40);
+        damageVector[10].setLocation(275, 40);
+        damageVector[11].setLocation(295, 40);
 
 
         board.add(damageVector[0]);
-        board.add(damageVector[0]);
-        board.add(damageVector[0]);
-        board.add(damageVector[0]);
-        board.add(damageVector[0]);
-        board.add(damageVector[0]);
-        board.add(damageVector[0]);
-        board.add(damageVector[0]);
-        board.add(damageVector[0]);
-        board.add(damageVector[0]);
-        board.add(damageVector[0]);
-        board.add(damageVector[0]);
+        board.add(damageVector[1]);
+        board.add(damageVector[2]);
+        board.add(damageVector[3]);
+        board.add(damageVector[4]);
+        board.add(damageVector[5]);
+        board.add(damageVector[6]);
+        board.add(damageVector[7]);
+        board.add(damageVector[8]);
+        board.add(damageVector[9]);
+        board.add(damageVector[10]);
+        board.add(damageVector[11]);
 
         add(board);
 
