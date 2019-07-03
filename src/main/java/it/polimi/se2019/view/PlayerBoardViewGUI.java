@@ -28,6 +28,7 @@ public class PlayerBoardViewGUI extends JPanel{
 
         this.markerButton = new JButton("markers");
         markerButton.setLocation(225, 10);
+        board.add(markerButton);
 
         ///////DAMAGE//////
 
