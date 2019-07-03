@@ -17,6 +17,7 @@ public class UserInteractionGUI extends UserInteraction {
     PowerupCard chosenPowerup;
     GunCard chosenWeapon;
     private JDialog waitingList = new JDialog();
+    private String [] answer = new  String [2];
 
     @Override
     public String actionToRequest(int frenzy){
@@ -645,7 +646,7 @@ public class UserInteractionGUI extends UserInteraction {
         container.gridx = 1;
         container.gridy = 1;
         mainPanel.add(new Label("choose your nickname and start a game"), container);
-        TextField nickTextField = new TextField();
+        TextField nickTextField = new TextField(answer[0]);
         container.fill = GridBagConstraints.HORIZONTAL;
         container.gridx = 1;
         container.gridy = 2;
@@ -656,7 +657,7 @@ public class UserInteractionGUI extends UserInteraction {
         container.gridx = 1;
         container.gridy = 3;
         mainPanel.add(new Label("insert ip address"), container);
-        TextField ipTextField = new TextField();
+        TextField ipTextField = new TextField(answer[1]);
         container.fill = GridBagConstraints.HORIZONTAL;
         container.gridx = 1;
         container.gridy = 4;
@@ -667,12 +668,12 @@ public class UserInteractionGUI extends UserInteraction {
         container.gridy = 5;
         mainPanel.add(startGameButton, container);
 
-        String [] answare = new  String [2];
+
         startGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                answare[0] = nickTextField.getText();
-                answare[1] = ipTextField.getText();;
+                answer[0] = nickTextField.getText();
+                answer[1] = ipTextField.getText();
                 JButton button = (JButton)e.getSource();
                 SwingUtilities.getWindowAncestor(button).dispose();
             }
@@ -688,7 +689,7 @@ public class UserInteractionGUI extends UserInteraction {
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
 
-        return answare;
+        return answer;
     }
 
     public void errorDisplay(String error){
