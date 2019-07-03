@@ -12,6 +12,7 @@ public enum Status {
     WAITING,
     FRENZY_START,
     SPAWN,
+    ENDGAME,
     VIEW
 }
 

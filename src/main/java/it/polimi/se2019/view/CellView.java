@@ -32,7 +32,7 @@ public class CellView {
     public void setPlayerFigures(NewCell playerPosition){
 
         this.playerFigures.clear();
-        for (int i = 0; i <= playerPosition.getPlayers().size(); i++){
+        for (int i = 0; i < playerPosition.getPlayers().size(); i++){
             if(!playerPosition.getPlayers().isEmpty())
                 this.playerFigures.add(playerPosition.getPlayers().get(i).getFigure());
         }
