@@ -118,11 +118,27 @@ public class PlayerBoardViewGUI extends JPanel{
         GridBagConstraints container = new GridBagConstraints();
         mainPanel.setLayout(new GridBagLayout());
 
+        String colorString;
         for (int i=0 ; i< marks.size();i++){
             container.gridx=0;
             container.gridy=i;
 
-            mainPanel.add(new JLabel(i + ": " + marks.get(i)),container);
+            switch(marks.get(i)){
+                case 'y': colorString = "yellow";
+                    break;
+                case 'b': colorString = "blue";
+                    break;
+                case 'w': colorString = "white";
+                    break;
+                case 'g': colorString = "green";
+                    break;
+                case 'v': colorString = "purple";
+                    break;
+                default: colorString = null;
+                    break;
+            }
+
+            mainPanel.add(new JLabel(i + ": " + colorString),container);
         }
 
 
