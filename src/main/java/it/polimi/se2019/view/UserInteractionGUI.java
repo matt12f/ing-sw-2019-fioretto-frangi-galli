@@ -16,6 +16,7 @@ public class UserInteractionGUI extends UserInteraction {
     private int skull;
     PowerupCard chosenPowerup;
     GunCard chosenWeapon;
+    private JDialog waitingList = new JDialog();
 
     @Override
     public String actionToRequest(int frenzy){
@@ -719,6 +720,7 @@ public class UserInteractionGUI extends UserInteraction {
         JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints container = new GridBagConstraints();
         mainPanel.setLayout(new GridBagLayout());
+        waitingList.getContentPane().removeAll();
 
         for (int i=0; i < players.size(); i++){
             container.gridx = 0;
@@ -726,14 +728,14 @@ public class UserInteractionGUI extends UserInteraction {
             mainPanel.add(new JLabel(players.get(i)), container);
         }
 
-            JDialog dialog = new JDialog();
-            dialog.setModal(true);
 
-            dialog.setTitle("wait for other players");
-            dialog.getContentPane().add(mainPanel);
-            dialog.pack();
-            dialog.setLocationRelativeTo(null);
-            dialog.setVisible(true);
+        waitingList.setModal(true);
+
+        waitingList.setTitle("wait for other players");
+        waitingList.getContentPane().add(mainPanel);
+        waitingList.pack();
+        waitingList.setLocationRelativeTo(null);
+        waitingList.setVisible(true);
 
 
 
