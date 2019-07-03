@@ -635,4 +635,86 @@ public class UserInteractionGUI extends UserInteraction {
         return chosenWeapon;
     }
 
+    public String[] mainLogGUI(){
+        JPanel mainPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints container = new GridBagConstraints();
+        mainPanel.setLayout(new GridBagLayout());
+
+
+        container.gridx = 1;
+        container.gridy = 1;
+        mainPanel.add(new Label("choose your nickname and start a game"), container);
+        TextField nickTextField = new TextField();
+        container.fill = GridBagConstraints.HORIZONTAL;
+        container.gridx = 1;
+        container.gridy = 2;
+        mainPanel.add(nickTextField, container);
+
+
+
+        container.gridx = 1;
+        container.gridy = 3;
+        mainPanel.add(new Label("insert ip address"), container);
+        TextField ipTextField = new TextField();
+        container.fill = GridBagConstraints.HORIZONTAL;
+        container.gridx = 1;
+        container.gridy = 4;
+        mainPanel.add(ipTextField, container);
+
+        JButton startGameButton= new JButton("Start");
+        container.gridx = 1;
+        container.gridy = 5;
+        mainPanel.add(startGameButton, container);
+
+        String [] answare = new  String [2];
+        startGameButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                answare[0] = nickTextField.getText();
+                answare[1] = ipTextField.getText();;
+                JButton button = (JButton)e.getSource();
+                SwingUtilities.getWindowAncestor(button).dispose();
+            }
+        });
+
+
+        JDialog dialog = new JDialog();
+        dialog.setModal(true);
+        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        dialog.setTitle("weapon Chooser");
+        dialog.getContentPane().add(mainPanel);
+        dialog.pack();
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+
+        //TODO controllare il return
+        return answare;
+    }
+
+    public void errorDisplay(String error){
+
+        JLabel message= new JLabel();
+        switch(error){
+            case "nick": message.setText("this nickname is already used!");
+            break;
+            case "connection": message.setText("choose the right connection");
+            break;
+        }
+
+
+        JDialog dialog = new JDialog();
+        dialog.setModal(true);
+
+        dialog.setTitle("weapon Chooser");
+        dialog.getContentPane().add(message);
+        dialog.pack();
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+    }
+
+
+    public void openerGUI(){
+
+    }
+
 }
