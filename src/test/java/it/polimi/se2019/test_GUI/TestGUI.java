@@ -1,8 +1,7 @@
 package it.polimi.se2019.test_GUI;
 
-import it.polimi.se2019.view.*;
-import org.junit.jupiter.api.Test;
 
+//TODO classe da rimuovere
 public class TestGUI {
 
 
@@ -11,6 +10,7 @@ public class TestGUI {
         //OpenerGUI open = new OpenerGUI();
 
     }
+
 
     public static void main(String[] args) {
         testGeneralGui();

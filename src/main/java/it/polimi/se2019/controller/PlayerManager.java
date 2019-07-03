@@ -6,24 +6,126 @@ import it.polimi.se2019.exceptions.CardNotFoundException;
 import it.polimi.se2019.exceptions.FullException;
 import it.polimi.se2019.model.cards.GunCard;
 import it.polimi.se2019.model.cards.PowerupCard;
-import it.polimi.se2019.model.game.Hand;
-import it.polimi.se2019.model.game.NewCell;
-import it.polimi.se2019.model.game.Player;
+import it.polimi.se2019.model.game.*;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.view.LocalView;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class PlayerManager {
 
     /**
      * This method scores all of the boards at the end of a turn
-     * Note: a kill happens on the 11th damage given -> 1 token on the KST; -> the board gets scored at the end of the turn
-     * Note: an overkill happens on the 12th damage given -> double token on the KST; you get a mark from the player you overkilled
-     * Note: damage over 12 is wasted
+     *
      * Note: more than one killshot in one turn -> awards you a point
      */
-    public static void scoringProcess(){
-        //TODO scrivere metodo
+    public static void scoringProcess(Controller currentController){
+        //if there are dead players we must score their boards
+        if(!currentController.getMainGameModel().getDeadPlayers().isEmpty()){
+            ArrayList<PlayerBoard> boardsDeadPlayers = new ArrayList<>();
+            for (Player deadPlayer: currentController.getMainGameModel().getDeadPlayers())
+                boardsDeadPlayers.add(deadPlayer.getPlayerBoard());
+
+            //Array to check if someone has dealt a double kill
+            ArrayList<Character> offendersCharColors= new ArrayList<>();
+            char offenderColor;
+            for(PlayerBoard board: boardsDeadPlayers){
+                offenderColor=scoreSingleBoard(currentController, board);
+                offendersCharColors.add(offenderColor);
+                if(Collections.frequency(offendersCharColors,offenderColor)==2) //it's a double kill
+                    currentController.getMainGameModel().getPlayerByColor(offenderColor).setScore(1);
+            }
+
+        }
+
+        //here we'll update the RemoteView
+        currentController.getMainGameModel().notifyRemoteView();
+    }
+
+    /**
+     * this method scores the single PlayerBoard, dealing points
+     * Points dealt:
+     *      - first blood: 1 point
+     *      - (first) player with most damage: boardvalue points
+     *
+     * update of killshot track:
+     *      - 1 damage token of color of player that dealt the killshot; 2 if it dealt also overkill
+     *
+     * Note: a kill happens on the 11th damage given -> 1 token on the KST; -> the board gets scored at the end of the turn
+     * Note: an overkill happens on the 12th damage given -> double token on the KST; you get a mark from the player you overkilled
+     *
+     * @param board is the board to score
+     */
+    private static char scoreSingleBoard(Controller currentController, PlayerBoard board){
+        //gives one point for first blood
+        currentController.getMainGameModel().getPlayerByColor(board.getDamageTrack().getDamage()[0]).setScore(1);
+
+        //section for dealing points
+        //here we extract the current value of the board
+        int value=board.getCurrentBoardValue();
+
+        for(char playerColor: listOffenders(board.getDamageTrack().getDamage())) {
+            currentController.getMainGameModel().getPlayerByColor(playerColor).setScore(value);
+            if(value>1)
+                value = value - 2;
+            else
+                value=1;
+        }
+
+        //we'll then decrease the value of the board after the kill
+        board.decreaseBoardValue();
+
+        //the playerBoard must have a color there, since the player is dead
+        char offenderColor = board.getDamageTrack().getDamage()[10];
+
+        //update killshot track
+        StringBuilder kill=new StringBuilder();
+        kill.append(offenderColor);
+        //it's an overkill if the 12th drop is the same color as the player that killed it
+        if(board.getDamageTrack().getDamage()[11] == offenderColor){
+            kill.append(offenderColor); //double token
+            //gives one mark back
+            currentController.getMainGameModel().getPlayerByColor(offenderColor).getPlayerBoard().getDamageTrack().addMark(board.getColorChar());
+        }
+        currentController.getMainGameModel().getKillshotTrack().setKills(kill.toString());
+
+        return offenderColor;
+    }
+
+    /**
+     * this method builds a list of the players char colors by the number of damage they've given
+     * (See tests for example)
+     *
+     * It also considers the tie breaker in favour of the player that hit first
+     *
+     *  @param damage is the damageTrack
+     */
+    private static char[] listOffenders(char[] damage) {
+        ArrayList<Character> damageList=new ArrayList<>();
+        for(char car: damage)
+            damageList.add(car);
+
+        int numberOfOffenders=0;
+        //here it orders the damage (it's in the order it's given)
+        ArrayList<Character> temp=new ArrayList<>();
+        for(Character character: damageList){
+            if(!temp.contains(character)){
+                numberOfOffenders++;
+                for (int i = 0; i < Collections.frequency(damageList,character); i++)
+                    temp.add(character);
+            }
+        }
+
+        char [] offendersList=new char[numberOfOffenders];
+        for (int i = 0; i < numberOfOffenders; i++)
+            offendersList[i]=temp.stream().distinct().collect(Collectors.toList()).get(i);
+        return offendersList;
+
     }
 
     public static void spawnPlayers(Controller controller, int id, PowerupCard spawn){
@@ -139,6 +241,9 @@ public class PlayerManager {
             player.getPlayerBoard().getDamageTrack().addMark(mark);
     }
 
+    /**
+     * this method enables the adrenaline modes in the player boards of a given player
+     */
     public static void adrenalineManager(Player player){
         if(player.getPlayerBoard().getDamageTrack().getDamage().length >= 3)
             player.getPlayerBoard().getActionTileNormal().setAdrenalineMode1(true);

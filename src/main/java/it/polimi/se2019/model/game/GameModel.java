@@ -70,8 +70,12 @@ public class GameModel extends Observable{
     }
 
     public Player getPlayerByColor(Color color){
+        return getPlayerByColor(color.toString().toLowerCase().charAt(0));
+    }
+
+    public Player getPlayerByColor(char color){
         for(Player player1: this.playerList)
-            if(player1.getFigure().getColor().equals((color)))
+            if(player1.getFigure().getColorChar()==color)
                 return player1;
         return null;
     }
