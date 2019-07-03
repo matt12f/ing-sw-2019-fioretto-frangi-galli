@@ -681,13 +681,12 @@ public class UserInteractionGUI extends UserInteraction {
         JDialog dialog = new JDialog();
         dialog.setModal(true);
         dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-        dialog.setTitle("weapon Chooser");
+        dialog.setTitle("Login");
         dialog.getContentPane().add(mainPanel);
         dialog.pack();
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
 
-        //TODO controllare il return
         return answare;
     }
 
@@ -705,7 +704,7 @@ public class UserInteractionGUI extends UserInteraction {
         JDialog dialog = new JDialog();
         dialog.setModal(true);
 
-        dialog.setTitle("weapon Chooser");
+        dialog.setTitle("error");
         dialog.getContentPane().add(message);
         dialog.pack();
         dialog.setLocationRelativeTo(null);
@@ -713,7 +712,30 @@ public class UserInteractionGUI extends UserInteraction {
     }
 
 
-    public void openerGUI(){
+
+
+
+    public void waitingList (ArrayList<String> players){
+        JPanel mainPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints container = new GridBagConstraints();
+        mainPanel.setLayout(new GridBagLayout());
+
+        for (int i=0; i < players.size(); i++){
+            container.gridx = 0;
+            container.gridy = i;
+            mainPanel.add(new JLabel(players.get(i)), container);
+        }
+
+            JDialog dialog = new JDialog();
+            dialog.setModal(true);
+
+            dialog.setTitle("wait for other players");
+            dialog.getContentPane().add(mainPanel);
+            dialog.pack();
+            dialog.setLocationRelativeTo(null);
+            dialog.setVisible(true);
+
+
 
     }
 
