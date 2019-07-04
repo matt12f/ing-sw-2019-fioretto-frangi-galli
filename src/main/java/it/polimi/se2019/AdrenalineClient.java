@@ -156,16 +156,16 @@ public class AdrenalineClient {
                 setConnection(answer[1]);
                 connection.setStream();
             } catch (IOException e) {
-                userInteractionGUI.errorDisplay("connectionIP");
+                userInteractionGUI.showMessage("An error has occurred trying to connect to the specified server, please check the IP.");
             }
             try {
                 if(setNickname(answer[0])){
                     waitForStart();
                 }else{
-                    userInteractionGUI.errorDisplay("nick");
+                    userInteractionGUI.showMessage("This nickname has been already taken, please chose another nickname.");
                 }
             } catch (ClassNotFoundException | InterruptedException | IOException e ) {
-                userInteractionGUI.errorDisplay("connection");
+                userInteractionGUI.showMessage("An internal error has occurred, please restart the game and try again");
             }
         }else{
             connected = false;
@@ -176,7 +176,7 @@ public class AdrenalineClient {
                     connection.setStream();
                     connected = true;
                 } catch (IOException e) {
-                    userInteractionCLI.connectionError();
+                    userInteractionCLI.showMessage("Si è verificato un errore di connessione, spiacente riprova più tardi.");
                     connected = false;
                 }
             }
@@ -312,7 +312,7 @@ public class AdrenalineClient {
 
     private static void connectionRequest(boolean GUI, Connection connection) {
         Scanner scanner;
-        int choice = 5; //inizzializzo a un numero a caso, mi basta sia diverso da 0 o 1
+        int choice = 5; //inizializzo a un numero a caso, mi basta sia diverso da 0 o 1
         if (!GUI) {
             scanner = new Scanner(System.in);
             System.out.println("Ciao, benvenuto su Adrenaline");

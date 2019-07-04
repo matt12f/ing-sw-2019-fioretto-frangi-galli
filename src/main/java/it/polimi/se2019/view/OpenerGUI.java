@@ -27,7 +27,7 @@ public class OpenerGUI {
         container.gridx=0;
         container.gridy=0;
         container.gridwidth = 2;
-        mainPanel.add(new JLabel("choose you interface"), container);
+        mainPanel.add(new JLabel("choose your interface"), container);
 
 
         container.gridx=0;

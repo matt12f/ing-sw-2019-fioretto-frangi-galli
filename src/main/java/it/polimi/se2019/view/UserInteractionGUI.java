@@ -692,38 +692,6 @@ public class UserInteractionGUI extends UserInteraction {
         return answer;
     }
 
-    public void errorDisplay(String error){
-
-        JLabel message= new JLabel();
-        switch(error){
-            case "nick":
-                message.setText("This nickname has been already taken, please chose another nickname.");
-                mainLogGUI();
-                break;
-            case "connectionIP":
-                message.setText("An error has occurred trying to connect to the specified server, please check the ip.");
-                mainLogGUI();
-                break;
-            case "connection":
-                message.setText("An internal error has occurred, please restart the game and try again");
-                break;
-        }
-
-
-        JDialog dialog = new JDialog();
-        dialog.setModal(true);
-
-        dialog.setTitle("error");
-        dialog.getContentPane().add(message);
-        dialog.pack();
-        dialog.setLocationRelativeTo(null);
-        dialog.setVisible(true);
-    }
-
-
-
-
-
     public void waitingList (ArrayList<String> players){
         JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints container = new GridBagConstraints();
