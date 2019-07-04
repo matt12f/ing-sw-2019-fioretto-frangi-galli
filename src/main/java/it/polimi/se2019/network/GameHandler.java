@@ -95,7 +95,6 @@ public class GameHandler implements Runnable {
         }
         setStart();
         //gestione dei turni
-        PowerupCard[] respawn;
         while (this.controller.getMainGameModel().getKillshotTrack().getSkulls() > 0){
             turnPreparation(this.controller.getMainGameModel().getTurn());
             clientTurn = this.players.get(this.controller.getMainGameModel().getTurn());
@@ -259,7 +258,7 @@ public class GameHandler implements Runnable {
         clientTurn.setStatus(Status.MYTURN);
     }
 
-    public synchronized void waitForSpawn(ClientHandler player) throws InterruptedException {
+    private synchronized void waitForSpawn(ClientHandler player) throws InterruptedException {
         notifyAll();
         while(player.getStatus() == Status.SPAWN){
             wait();

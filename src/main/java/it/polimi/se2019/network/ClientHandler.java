@@ -104,11 +104,7 @@ public class ClientHandler extends Thread implements RMIInterface {
             }
             waitForWinner();
             this.output.writeObject(winnerNick);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (InterruptedException | IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -223,10 +219,6 @@ public class ClientHandler extends Thread implements RMIInterface {
         return thread;
     }
 
-    boolean isAccepted() {
-        return accepted;
-    }
-
     public void setAccepted(boolean accepted) {
         this.accepted = accepted;
     }
@@ -284,11 +276,11 @@ public class ClientHandler extends Thread implements RMIInterface {
         return spawn;
     }
 
-    public void setDeadsPlayer(int deadsPlayer) {
+    void setDeadsPlayer(int deadsPlayer) {
         this.deadsPlayer = deadsPlayer;
     }
 
-    public void setWinnerNick(String winnerNick) {
+    void setWinnerNick(String winnerNick) {
         this.winnerNick = winnerNick;
     }
 }

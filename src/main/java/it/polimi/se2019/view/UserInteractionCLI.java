@@ -100,6 +100,10 @@ public class UserInteractionCLI extends UserInteraction {
         return ipServer;
     }
 
+    public void connectionError(){
+        System.out.println("Si è verificato un errore di connessione, spiacente riprova più tardi.");
+    }
+
     public String nicknameRequest(boolean FirstTime){
         if(!FirstTime)
             System.out.println("Mi spiace, il nick che hai inserito non è disponibile, scegline un altro");

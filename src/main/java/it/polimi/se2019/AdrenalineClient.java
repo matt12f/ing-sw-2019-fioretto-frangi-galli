@@ -14,7 +14,6 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -108,10 +107,7 @@ public class AdrenalineClient {
             req = (String) connection.getInput().readObject();
             while(req.equals("Test"))
                 req = (String) connection.getInput().readObject();
-            if(req.equals("UPDATE"))
-                return false;
-            else
-                return true;
+            return req.equals("UPDATE");
         }
         return false;
     }
@@ -132,7 +128,6 @@ public class AdrenalineClient {
     }
 
     private static void nicknameRequest() throws IOException, InterruptedException, ClassNotFoundException {
-        Scanner scanner;
         String nickname;
         boolean accepted = false;
         nickname = userInteractionCLI.nicknameRequest(true);
@@ -173,25 +168,23 @@ public class AdrenalineClient {
                 userInteractionGUI.errorDisplay("connection");
             }
         }else{
-            ipServer = userInteractionCLI.ipRequest();
-            try{
-                setConnection(ipServer);
-                connection.setStream();
-            } catch (IOException e) {
-                System.out.println("Connessione fallita, server non attivo o ip sbagliato");
-                connected = false;
+            connected = false;
+            while(!connected) {
+                ipServer = userInteractionCLI.ipRequest();
+                try {
+                    setConnection(ipServer);
+                    connection.setStream();
+                    connected = true;
+                } catch (IOException e) {
+                    userInteractionCLI.connectionError();
+                    connected = false;
+                }
             }
-            if(connected)
-                System.out.println("connessione correttamente stabilita");
-            else
-                System.exit(-1);
             try {
                 nicknameRequest();
             } catch (IOException e) {
                 e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
+            } catch (ClassNotFoundException | InterruptedException e) {
                 e.printStackTrace();
             }
         }
@@ -203,9 +196,7 @@ public class AdrenalineClient {
             displayQue();
             try {
                 start = waitForUpdate(connection);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
+            } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }
