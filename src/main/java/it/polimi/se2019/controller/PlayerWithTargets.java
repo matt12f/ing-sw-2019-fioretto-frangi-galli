@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class PlayerWithTargets {
     private Player target;
     private ArrayList<Player> targetsItCanSee;
-    public PlayerWithTargets(Controller currentController, Player target) {
+    PlayerWithTargets(Controller currentController, Player target) {
         this.target = target;
         this.targetsItCanSee=new ArrayList<>(ActionManager.visibleTargets(currentController,new FictitiousPlayer(currentController, target,new CellInfo(target.getFigure().getCell(),false,false),false,false)));
         this.targetsItCanSee.remove(currentController.getActiveTurn().getActivePlayer());

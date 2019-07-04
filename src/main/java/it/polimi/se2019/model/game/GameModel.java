@@ -111,10 +111,6 @@ public class GameModel extends Observable{
         this.deadPlayers.add(deadPlayer);
     }
 
-    public boolean isFinalFrenzy() {
-        return finalFrenzy;
-    }
-
     /**
      * this method builds the action tile frenzy objects for each player
      * and the method checks and sends the right amount of frenzy actions to the constructor.

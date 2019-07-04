@@ -25,6 +25,8 @@ public class PlayerManager {
      * Note: more than one killshot in one turn -> awards you a point
      */
     public static void scoringProcess(Controller currentController){
+        //TODO usare adrenaline manager sugli altri player
+
         //if there are dead players we must score their boards
         if(!currentController.getMainGameModel().getDeadPlayers().isEmpty()){
             ArrayList<PlayerBoard> boardsDeadPlayers = new ArrayList<>();

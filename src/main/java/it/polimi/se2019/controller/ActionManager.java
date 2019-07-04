@@ -36,8 +36,8 @@ public class ActionManager {
 
     /**
      * it moves a player from its current position to an arrival cell sent as a parameter
-     * @param player
-     * @param arrivalCell
+     * @param player is the player to move
+     * @param arrivalCell is the cell to move the player into
      */
     public static void movePlayer(Controller currentController,Player player, NewCell arrivalCell) {
         //if the room has changed
@@ -68,6 +68,7 @@ public class ActionManager {
                 case 'b':blue++;break;
                 case 'y':yellow++;break;
                 case 'r':red++;break;
+                default:break;
             }
         }
         int availableBlue=availableAmmo.getBlue();
@@ -79,6 +80,7 @@ public class ActionManager {
                 case 'b':availableBlue++;break;
                 case 'y':availableYellow++;break;
                 case 'r':availableRed++;break;
+                default:break;
             }
         return availableBlue>=blue&&availableRed>=red&&availableYellow>=yellow;
     }

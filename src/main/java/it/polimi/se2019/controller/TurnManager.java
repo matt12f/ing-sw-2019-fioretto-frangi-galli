@@ -10,6 +10,7 @@ public class TurnManager {
         return activePlayer;
     }
 
+    @Deprecated
     public void setActivePlayer(Player activePlayer) {
         this.activePlayer = activePlayer;
     }

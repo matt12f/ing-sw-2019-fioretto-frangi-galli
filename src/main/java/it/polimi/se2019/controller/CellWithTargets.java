@@ -13,7 +13,7 @@ public class CellWithTargets{
     private boolean canMoveYourselfHere; //to indicate if this is a cell where you could move yourself
     private boolean canMoveOthersHere; //to indicate if this is a cell where you could move another player in
 
-    public CellWithTargets(NewCell targetCell, ArrayList<Player> targets, int maxTargetsInCell, int minTargetsInCell, boolean canMoveYourselfHere, boolean canMoveOthersHere) {
+    CellWithTargets(NewCell targetCell, ArrayList<Player> targets, int maxTargetsInCell, int minTargetsInCell, boolean canMoveYourselfHere, boolean canMoveOthersHere) {
         this.targetCell = targetCell;
         this.targets = targets;
         this.maxTargetsInCell = maxTargetsInCell;

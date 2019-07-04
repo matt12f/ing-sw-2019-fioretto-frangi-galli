@@ -1,6 +1,5 @@
 package it.polimi.se2019.controller;
 
-import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.enums.CellEdge;
 import it.polimi.se2019.enums.CellType;
 import it.polimi.se2019.exceptions.FullException;

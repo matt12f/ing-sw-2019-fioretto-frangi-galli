@@ -114,6 +114,10 @@ public class SingleEffectsCombinationActions{
         return maxNumPlayerTargets;
     }
 
+    public int getMinNumPlayerTargets() {
+        return minNumPlayerTargets;
+    }
+
     public boolean isCanMoveOpponent() {
         return canMoveOpponent;
     }
@@ -138,10 +142,6 @@ public class SingleEffectsCombinationActions{
         return cellsWithTargets;
     }
 
-    public int getMinCellToSelect() {
-        return minCellToSelect;
-    }
-
     public int getMaxCellToSelect() {
         return maxCellToSelect;
     }
@@ -164,7 +164,7 @@ public class SingleEffectsCombinationActions{
         this.maxNumPlayerTargets = maxNumberOfTargets;
     }
 
-    public void setMinNumPlayerTargets(int minCellToSelect) {
+    public void setMinNumPlayerTargets(int minNumPlayerTargets) {
         this.minNumPlayerTargets = minNumPlayerTargets;
     }
 

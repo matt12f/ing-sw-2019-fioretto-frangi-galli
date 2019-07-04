@@ -144,6 +144,7 @@ public class ChosenActions implements Serializable {
         //selection of normal targets and secondary targets different from the first
         if(!combination.getPlayersTargetList().isEmpty())
             this.targetsFromList1.addAll(selectTargets(combination.getPlayersTargetList(), combination.getMaxNumPlayerTargets()));
+            //TODO selezione secondo target per MachineGUN
 
         if(!combination.getTargetRooms().isEmpty())
             this.targetRoom = selectRoom(combination.getTargetRooms());

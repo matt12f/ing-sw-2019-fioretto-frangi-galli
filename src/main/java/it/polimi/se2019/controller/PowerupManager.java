@@ -54,6 +54,7 @@ public class PowerupManager {
      *  You may play this card when you receive damage from a player you can see. Give that player 1 mark.
      */
     public static void grenadeManager(Controller currentController, Player playerDamaged,Player playerGivingDamage, int cardIndexInHand){
+        //TODO quando viene richiamato??
         char [] marks=new char[1];
         marks[0]=playerGivingDamage.getFigure().getColorChar();
         PlayerManager.markerDealer(playerDamaged,marks);
