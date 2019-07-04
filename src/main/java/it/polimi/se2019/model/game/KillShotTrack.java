@@ -1,10 +1,12 @@
 package it.polimi.se2019.model.game;
 
+import java.util.ArrayList;
+
 public class KillShotTrack {
 
     private int skulls;
     private String [] kills;
-    private char extraKills;
+    private ArrayList<Character> extraKills;
 
     /**
      * Default constructor
@@ -19,10 +21,9 @@ public class KillShotTrack {
         return skulls;
     }
 
-    public void subtractSkulls() {
-        this.skulls--;
-    }
-
+    /**
+     * this method adds kills to the killshot track and extra kills during frenzy
+     */
     public void setKills( String kill) {
         boolean found = false;
         int i = 0;
@@ -32,18 +33,20 @@ public class KillShotTrack {
                 found = true;
             }
             i++;
-        }while(!found &&i<8);
+        }while(!found &&i<this.skulls);
+        this.skulls--;
+
+        if(!found){
+            this.extraKills.add(kill.charAt(0));
+        }
+
     }
 
     public String[] getKills() {
         return this.kills;
     }
 
-    public void setExtraKills(char kill) {
-        this.extraKills = kill;
-    }
-
-    public char getExtraKills() {
+    public ArrayList<Character> getExtraKills() {
         return extraKills;
     }
 }

@@ -29,7 +29,6 @@ public class PlayerManager {
         for(Player player:playersAlive)
             adrenalineManager(player);
 
-
         //scoring section
         //if there are dead players we must score their boards
         if(!currentController.getMainGameModel().getDeadPlayers().isEmpty()){
@@ -78,7 +77,7 @@ public class PlayerManager {
 
         //section for dealing points
         //here we extract the current value of the board
-        dealPoints(currentController,board);
+        dealPoints(currentController,board.getCurrentBoardValue(),listOffenders(board.getDamageTrack().getDamage()));
 
         //we'll then decrease the value of the board after the kill
         board.decreaseBoardValue();
@@ -102,21 +101,19 @@ public class PlayerManager {
 
     /**
      * this deals the points on a board (no killshot and or overkill management)
-     * @param board is the board to score
+     * @param boardValue is the value of the board to score
+     * @param offendersList is the list of offenders ordered by number of damages inflicted
      */
-    private static void dealPoints(Controller currentController, PlayerBoard board){
-        int value=board.getCurrentBoardValue();
-        ArrayList<Character> offendersList=listOffenders(board.getDamageTrack().getDamage());
-
+    static void dealPoints(Controller currentController, int boardValue, ArrayList<Character> offendersList){
         //It removes blanks, which may happen if you try to score a damage track at the end of the game (no kills)
         offendersList.removeIf(character -> character.equals(' '));
 
         for(Character playerColor: offendersList) {
-            currentController.getMainGameModel().getPlayerByColor(playerColor).setScore(value);
-            if(value>1)
-                value = value - 2;
+            currentController.getMainGameModel().getPlayerByColor(playerColor).setScore(boardValue);
+            if(boardValue>1)
+                boardValue = boardValue - 2;
             else
-                value=1;
+                boardValue=1;
         }
     }
 
@@ -128,7 +125,7 @@ public class PlayerManager {
      *
      *  @param damage is the damageTrack
      */
-    private static ArrayList<Character> listOffenders(char[] damage) {
+    static ArrayList<Character> listOffenders(char[] damage) {
         ArrayList<Character> damageList=new ArrayList<>();
         for(char car: damage)
             damageList.add(car);
@@ -142,7 +139,7 @@ public class PlayerManager {
                 occurrencesOf.put(character,Collections.frequency(damageList,character));
 
         ArrayList<Character> temp = new ArrayList<>();
-
+        //here I'll sort the occurrences by order of appearance and amount
         occurrencesOf.entrySet().stream()
                 .sorted((entry1, entry2) -> - entry1.getValue().compareTo(entry2.getValue()))
                 .forEach(character -> temp.add(character.getKey()));

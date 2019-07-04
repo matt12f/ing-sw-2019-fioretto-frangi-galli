@@ -2,10 +2,12 @@ package it.polimi.se2019.view;
 
 import it.polimi.se2019.model.game.KillShotTrack;
 
+import java.util.ArrayList;
+
 public class KillShotTrackerView {
     private int skulls;
     private String [] kills;
-    private char extraKills;
+    private ArrayList<Character> extraKills;
 
     public KillShotTrackerView(int skulls){
         this.skulls = skulls;
@@ -13,11 +15,10 @@ public class KillShotTrackerView {
 
         for (int i = 0; i < skulls; i++) {
             this.kills[i] = null;
-
         }
     }
 
-    public char getExtraKills() {
+    public ArrayList<Character> getExtraKills() {
         return extraKills;
     }
 
@@ -27,10 +28,6 @@ public class KillShotTrackerView {
 
     public int getSkulls() {
         return skulls;
-    }
-
-    public void setExtraKills(char extraKills) {
-        this.extraKills = extraKills;
     }
 
     public void setKills(String[] kills) {

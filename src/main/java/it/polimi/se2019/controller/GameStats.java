@@ -1,6 +1,8 @@
 package it.polimi.se2019.controller;
 
+import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.model.game.Player;
+import it.polimi.se2019.model.game.PlayerBoard;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,10 +15,11 @@ public class GameStats {
     public GameStats(Controller currentController, int numberOfTurns){
         ArrayList<Player> players=currentController.getMainGameModel().getPlayerList();
 
-        Player killshotTrackWinner= finalScoring(players);
+        ArrayList<Character> killshotTrackScoring= finalScoring(currentController,players);
         this.numberOfTurns = numberOfTurns;
         Collections.sort(players, new IntegerComparator());
         this.ranking = players;
+
 
         //section for TIE BREAKING
         //if there's a tie, it will break in favor of the player that has the highest score on the killshot track
@@ -34,10 +37,29 @@ public class GameStats {
      * @param players are all of the players in the game
      * @return the player that has the highest score on the killshot track
      */
-    private Player finalScoring(ArrayList<Player> players){
+    private ArrayList<Character> finalScoring(Controller currentController, ArrayList<Player> players){
+        //scores the boards
+        players.forEach(player -> PlayerManager.dealPoints(currentController,
+                player.getPlayerBoard().getCurrentBoardValue(),
+                PlayerManager.listOffenders(player.getPlayerBoard().getDamageTrack().getDamage())));
 
-        //TODO scrivere metodo
-        return null;
+        //here we "translate" the tokens to a single string, and then we process it as
+        ArrayList<Character> tokens=new ArrayList<>();
+        for(String token: currentController.getMainGameModel().getKillshotTrack().getKills())
+            for(int i=0;i<token.length();i++)
+                tokens.add(token.charAt(i));
+
+        char [] tokensArray=new char[tokens.size()];
+        for (int i = 0; i < tokensArray.length; i++)
+            tokensArray[i]=tokens.get(i);
+
+        ArrayList<Character> killShotTrackOffenders = PlayerManager.listOffenders(tokensArray);
+
+        //deals the points
+        PlayerManager.dealPoints(currentController,8, killShotTrackOffenders);
+
+        //returns the ranking of players in terms of killshot track points
+        return killShotTrackOffenders;
     }
 
     public ArrayList<Player> getRanking() {
