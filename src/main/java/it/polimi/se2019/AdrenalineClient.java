@@ -30,7 +30,7 @@ public class AdrenalineClient {
     private  static UserInteractionCLI userInteractionCLI = new UserInteractionCLI();
     private static boolean start = false;
     private static GameBoardGui gameBoardGui;
-
+    private static ArrayList<PlayerBoardView> opponentsBoards = new ArrayList<>() ;
     private static boolean connected = false;
     private static String[] answer;
 
@@ -265,6 +265,7 @@ public class AdrenalineClient {
     private static void displayBoard() {
         if(isGUI()){
             //todo Ste qui per rappresentare le informazioni ricevute dalla LocalView
+            //gameBoardGui.updateBoardGame(getLocalView().getMapView().getMapNumber(),opponentsBoards,getLocalView().getPersonalPlayerBoardView(),getLocalView().getMapView().getBoardMatrix(),     ,getLocalView().getPlayerHand());
         }
     }
 
@@ -388,7 +389,7 @@ public class AdrenalineClient {
 
     private void guiStarter () {
         //TODO scrivere metodo (fatto)
-        ArrayList<PlayerBoardView> opponentsBoards = new ArrayList<>() ;
+
 
         for(int i = 0; i< getLocalView().getPlayerBoardViews().size();i++){
             if (i != getLocalView().getPlayerId()){
