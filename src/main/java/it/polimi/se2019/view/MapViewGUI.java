@@ -141,6 +141,8 @@ public class MapViewGUI extends JPanel {
         labelBackground.add(weaponyellow2);
         labelBackground.add(weaponyellow3);
 
+        setBoard(boardMatrix);
+
         for (int row=0;row <= 4;row++) {
             for (int column = 0; column <= 3; column++) {
                 labelBackground.add(boardMatrixGUI[row][column]);
