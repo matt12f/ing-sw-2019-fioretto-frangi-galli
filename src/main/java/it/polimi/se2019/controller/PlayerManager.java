@@ -192,7 +192,7 @@ public class PlayerManager {
      * @param actions contains the choices
      * @return list of IDs of players that received damage
      */
-    public static int [] choiceExecutor(Controller currentController, ChosenActions actions){
+    public static ArrayList<Player> choiceExecutor(Controller currentController, ChosenActions actions){
         Player player = currentController.getActiveTurn().getActivePlayer();
         FictitiousPlayer fictitiousPlayer=actions.getFictitiousPlayer();
         //moves the player
@@ -237,21 +237,17 @@ public class PlayerManager {
     /**
      * returns a list of the players damaged during this macroaction
      */
-    private static int[] checkForDamage(ArrayList<Player> playersBefore, ArrayList<Player> playersAfter) {
-        ArrayList<Integer> idsToReturn=new ArrayList<>();
+    private static ArrayList<Player> checkForDamage(ArrayList<Player> playersBefore, ArrayList<Player> playersAfter) {
+        ArrayList<Player> playersToReturn=new ArrayList<>();
 
         playersBefore.forEach(player -> {
             if(!Arrays.equals(
                     playersAfter.get(playersAfter.indexOf(player)).getPlayerBoard().getDamageTrack().getDamage(),
                     player.getPlayerBoard().getDamageTrack().getDamage()))
-                idsToReturn.add(player.getId());
+                playersToReturn.add(player);
         });
 
-        int [] temp = new int[idsToReturn.size()];
-        for (int i = 0; i < idsToReturn.size(); i++)
-            temp[i]=idsToReturn.get(i);
-
-        return temp;
+        return playersToReturn;
     }
 
     /**

@@ -1,12 +1,13 @@
 package it.polimi.se2019.model.cards;
 
+
 import java.io.Serializable;
 
 public class PowerupCard implements Serializable {
     private String powerupType;
     private char cubeColor;
     /**
-     * Available Types: Targetting Scope, Newton, Tagback Grenade, Teleporter
+     * Available Types: TargettingScope, Newton, TagbackGrenade, Teleporter
      */
     public PowerupCard(String type, char color) {
         this.cubeColor=color;
@@ -25,4 +26,5 @@ public class PowerupCard implements Serializable {
     public PowerupCard clone(){
         return new PowerupCard(this.powerupType,this.cubeColor);
     }
+
 }

@@ -110,6 +110,7 @@ public class GameHandler implements Runnable {
                 waitingRequest(clientTurn);
                 PlayerManager.choiceExecutor(controller, clientTurn.getChosenAction());
                 notifyView(clientTurn);
+
                 //rileggi il codice
                 for (ClientHandler client : players) {
                     client.setDeadsPlayer(this.controller.getMainGameModel().getDeadPlayers().size());
@@ -155,7 +156,7 @@ public class GameHandler implements Runnable {
                 calculateActions(clientTurn);
                 waitingRequest(clientTurn);
                 ChosenActions chosenActions = clientTurn.getChosenAction();
-                PlayerManager.choiceExecutor(controller, chosenActions);
+                managePowerUps(PlayerManager.choiceExecutor(controller, chosenActions));
                 notifyView(clientTurn);
             }
             clientTurn.setStatus(Status.NOTMYTURN);
@@ -168,6 +169,48 @@ public class GameHandler implements Runnable {
         PlayerManager.scoringProcess(controller); //last scoring of the game (after the final frenzy round)
         winnerIs();
     }
+
+    /**
+     * this method manages powerups tagback grenade and targetting scope
+     * @param playersHit are the players that received damage during this turn
+     */
+    private void managePowerUps(ArrayList<Player> playersHit) {
+        if(!playersHit.isEmpty()){
+
+            Player activePlayer=this.controller.getActiveTurn().getActivePlayer();
+
+            //offering tag back grenade to players hit
+            for(Player player:playersHit){
+               for(int i=0;i< player.getPlayerBoard().getHand().getPowerups().length;i++)
+                   if(player.getPlayerBoard().getHand().getPowerups()[i].getPowerupType().equals("TagbackGrenade")){
+
+                       //TODO chiedi al client se vuole usarla
+
+                       PowerupManager.grenadeManager(this.controller,activePlayer,player,i);
+                       break;
+                   }
+            }
+
+
+            //offering targetting scope to current player
+            for(int i=0;i< activePlayer.getPlayerBoard().getHand().getPowerups().length;i++)
+                if(activePlayer.getPlayerBoard().getHand().getPowerups()[i].getPowerupType().equals("TargettingScope") &&
+                        (activePlayer.getPlayerBoard().getAmmo().getBlue()>0||
+                                activePlayer.getPlayerBoard().getAmmo().getRed()>0||
+                                activePlayer.getPlayerBoard().getAmmo().getYellow()>0)){
+
+                    //TODO chiedi il colore del cubo che vuole usare e il colore del player che vuole colpire
+                    //quale cubo vuoi pagare? mostrare quelli disponibili
+
+                    Player target=new Player(1,"xx", Color.BLUE);//chi vuoi colpire ulteriormente?
+
+                    PowerupManager.targetingScopeManager(this.controller,target,i);
+                    break;
+            }
+
+        }
+    }
+
 
     private synchronized void notifyGameHandlerStart() {
         for (ClientHandler client: players) {
