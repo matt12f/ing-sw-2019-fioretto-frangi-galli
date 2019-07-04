@@ -1,6 +1,8 @@
 package it.polimi.se2019.model.cards;
 
-public class PowerupCard {
+import java.io.Serializable;
+
+public class PowerupCard implements Serializable {
     private String powerupType;
     private char cubeColor;
     /**

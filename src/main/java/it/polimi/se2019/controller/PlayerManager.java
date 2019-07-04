@@ -148,7 +148,7 @@ public class PlayerManager {
         controller.getMainGameModel().notifyRemoteView();
     }
 
-    public static PowerupCard[] getCardsToSpawn(boolean setUpGame, Controller controller, int id) throws FullException {
+    public static void getCardsToSpawn(boolean setUpGame, Controller controller, int id) throws FullException {
         PowerupCard[] cards = new PowerupCard[Hand.getMaxcards()+1];
         if(setUpGame){
             PowerupCard card;
@@ -162,8 +162,8 @@ public class PlayerManager {
             }
             cards[Hand.getMaxcards()] = controller.getMainGameModel().getCurrentDecks().getPowerupsDeck().draw();
         }
-        controller.getMainGameModel().notifyRemoteView();
-        return cards;
+        controller.getRemoteView().getPlayerHands().get(id).setPowerups(cards);
+        controller.getRemoteView().notifyLocalViews();
     }
 
     /**

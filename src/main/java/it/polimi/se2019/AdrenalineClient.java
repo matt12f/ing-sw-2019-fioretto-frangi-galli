@@ -2,11 +2,9 @@ package it.polimi.se2019;
 
 import it.polimi.se2019.controller.AvailableActions;
 import it.polimi.se2019.enums.Status;
+import it.polimi.se2019.model.cards.PowerupCard;
 import it.polimi.se2019.network.*;
-import it.polimi.se2019.view.ActionRequestView;
-import it.polimi.se2019.view.LocalView;
-import it.polimi.se2019.view.OpenerGUI;
-import it.polimi.se2019.view.UserInteraction;
+import it.polimi.se2019.view.*;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -28,10 +26,13 @@ public class AdrenalineClient {
     private static String nickname;
     private static ArrayList<String> otherPlayers;
     private static boolean GUI; //Se l'utente sceglierà la GUI piuttosto che la cli sarà true
-    public static Connection connection;
+    private static Connection connection;
+    private static UserInteractionGUI userInteractionGUI = new UserInteractionGUI();
+    private  static UserInteractionCLI userInteractionCLI = new UserInteractionCLI();
+    private static boolean start = false;
 
     public static void main(String[] args) throws IOException, AlreadyBoundException, NotBoundException, InterruptedException, ClassNotFoundException {
-        connection = new Connection(null, null, false, null, null);
+        connection = new Connection(null, null, true, null, null);
         boolean start = false;
         boolean myturn = false;
         boolean last = false;
@@ -43,17 +44,15 @@ public class AdrenalineClient {
         ClientCallBackClass callBackClass = new ClientCallBackClass();
         clientCallBack stubClient = null;
         new OpenerGUI();
-        connectionRequest(GUI, connection);
-        ipServerRequest(connection);
-        if(connection.isSocket())
-            connection.setStream();
-        else{
+        Thread.sleep(1000*120);
+        /*else{
             //export clientCallBack
             stubClient = (clientCallBack) UnicastRemoteObject.exportObject(callBackClass, 0);
             connection.getLocalRegistry().bind(("C" + connection.getHost()), stubClient);
             connection.getRegistry().lookup("");
-        }
-        nicknameRequest(connection);
+        }*/
+
+
         while(!start){
             getOtherPlayers(connection);
             displayQue();
@@ -74,33 +73,6 @@ public class AdrenalineClient {
         if(message.equals("SPAWN")) {
             //todo far partire la schermata e poi inviare al server
         }
-        while(start){
-            myturn = receiveServerMessage(connection);
-            if(myturn){
-                last = false;
-                connection.getOutput().reset();
-                connection.getOutput().writeBoolean(true);
-                connection.getOutput().flush();
-                actionNumber = connection.getInput().readInt();
-                while(actionNumber > 0){
-                    actionNumber --;
-                    if (actionNumber == 0)
-                        last = true;
-                    actionRequested = getActionFromUser(last);
-                    actions = askForAction(connection, actionRequested);
-                    //todo presentare le scelte
-                    connection.getOutput().writeObject(actions);
-                    //todo UpdateLocalView(connection)
-                }
-            }else{
-                UpdateLocalView(connection);
-            }
-        }
-        //todo gestione fine partita
-    }
-
-    private static void UpdateLocalView(Connection connection) {
-        //todo scrivere metodo
     }
 
     private static ActionRequestView getActionFromUser(boolean lastMove){
@@ -122,12 +94,12 @@ public class AdrenalineClient {
             return (msg.equals("YOURTURN"));
     }
 
-    private static void setMap(Connection connection) {
-
+    private static void setMap(int map) throws IOException {
+        connection.getOutput().writeObject(map);
     }
 
-    private static void setSkull(Connection connection) {
-        //todo chiedre numero di teschi
+    private static void setSkull(int skull) throws IOException {
+        connection.getOutput().writeObject(skull);
     }
 
     private static Boolean waitForUpdate(Connection connection) throws IOException, ClassNotFoundException {
@@ -145,35 +117,11 @@ public class AdrenalineClient {
     }
 
     private static void displayQue() {
-        //todo rifai displayQue passando da UserInteraction
         if(GUI){
-
+            userInteractionGUI.waitingList(otherPlayers);
         }else{
-            try {
-                clearScreen();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            if(!otherPlayers.isEmpty()){
-                System.out.print("Sei in coda, al momento i giocatori connessi (oltre a te) sono:");
-                for(int i = 0; i<otherPlayers.size(); i++){
-                    System.out.print(" " + otherPlayers.get(i));
-                    if(i == otherPlayers.size() - 1){
-                        System.out.print(".");
-                    }else {
-                        System.out.print(",");
-                    }
-                }
-            }else {
-                System.out.println("Sei il solo in attessa di una nuova partita per ora");
-            }
+            userInteractionCLI.displayQue(otherPlayers);
         }
-    }
-
-    private static void clearScreen() throws IOException, InterruptedException {
-        new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
     }
 
     private static void getOtherPlayers(Connection connection) throws IOException, ClassNotFoundException {
@@ -183,27 +131,18 @@ public class AdrenalineClient {
         }
     }
 
-    private static void nicknameRequest(Connection connection) throws IOException, InterruptedException, ClassNotFoundException {
+    private static void nicknameRequest() throws IOException, InterruptedException, ClassNotFoundException {
         Scanner scanner;
         String nickname;
         boolean accepted = false;
-        if (!GUI) {
-            scanner = new Scanner(System.in);
-            System.out.println("Inserisci il tuo nickname adesso:");
-            nickname = scanner.nextLine();
-            while (!accepted) {
-                accepted = setNickname(nickname, connection);
-                if (!accepted) {
-                    System.out.println("Mi spiace, ma il nick scelto non è disponibile, scegliene un altro");
-                    System.out.println("Inserisci il tuo nickname adesso:");
-                    nickname = scanner.nextLine();
-                } else {
-                    System.out.println("Ottimo, ora verrai messo in coda, aspetta che la partita abbia inizio, grazie.");
-                    AdrenalineClient.nickname = nickname;
-                }
-            }
+        nickname = userInteractionCLI.nicknameRequest(true);
+        accepted = setNickname(nickname);
+        while (!accepted) {
+            nickname = userInteractionCLI.nicknameRequest(false);
+            accepted = setNickname(nickname);
         }
-
+        AdrenalineClient.nickname = nickname;
+        waitForStart();
     }
 
     public static LocalView getLocalView() {
@@ -211,16 +150,33 @@ public class AdrenalineClient {
     }
 
 
-    private static void ipServerRequest(Connection connection){
+    public static void ipServerRequest() {
         Scanner scanner;
         String ipServer;
+        String[] answer;
         boolean connected = true;
-        if (!GUI) {
-            scanner = new Scanner(System.in);
-            System.out.println("Inserisci l'indirizzo IP del server: ");
-            ipServer = scanner.nextLine();
+        if (GUI) {
+            answer = userInteractionGUI.mainLogGUI();
+            try {
+                setConnection(answer[1]);
+                connection.setStream();
+            } catch (IOException e) {
+                userInteractionGUI.errorDisplay("connectionIP");
+            }
+            try {
+                if(setNickname(answer[0])){
+                    waitForStart();
+                }else{
+                    userInteractionGUI.errorDisplay("nick");
+                }
+            } catch (ClassNotFoundException | InterruptedException | IOException e ) {
+                userInteractionGUI.errorDisplay("connection");
+            }
+        }else{
+            ipServer = userInteractionCLI.ipRequest();
             try{
-                setConnection(ipServer, connection);
+                setConnection(ipServer);
+                connection.setStream();
             } catch (IOException e) {
                 System.out.println("Connessione fallita, server non attivo o ip sbagliato");
                 connected = false;
@@ -229,7 +185,138 @@ public class AdrenalineClient {
                 System.out.println("connessione correttamente stabilita");
             else
                 System.exit(-1);
+            try {
+                nicknameRequest();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
+    }
+
+    private static void waitForStart() throws IOException, ClassNotFoundException {
+        while(!start){
+            getOtherPlayers(connection);
+            displayQue();
+            try {
+                start = waitForUpdate(connection);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        gamePreparation();
+    }
+
+    private static void gamePreparation() throws IOException, ClassNotFoundException {
+        while(!start){
+            String message = (String) connection.getInput().readObject();
+            int[] mapSkull;
+            if(message.equals("MAP")) {
+                if (isGUI()){
+                    mapSkull = userInteractionGUI.mapChooser();
+                }else{
+                    mapSkull = userInteractionCLI.mapChooser();
+                }
+                setMap(mapSkull[0]);
+                setSkull(mapSkull[1]);
+                message = (String) connection.getInput().readObject();
+            }
+            if(message.equals("VIEW")){
+                connection.getOutput().reset();
+                connection.getOutput().writeBoolean(true);
+                connection.getOutput().flush();
+                localView = (LocalView) connection.getInput().readObject();
+            }
+            message = (String) connection.getInput().readObject();
+            if(message.equals("SPAWN")) {
+                localView = (LocalView) connection.getInput().readObject();
+                if(isGUI()){
+                    PowerupCard cardForSpawn = userInteractionGUI.spawnChooser(localView.getPlayerHand().getPowerups());
+                    sendSpawnChoice(cardForSpawn);
+                    updateLocalView();
+                }
+            }
+            if(message.equals("START")){
+                start = true;
+                matchPhase();
+            }
+        }
+    }
+
+    private static void matchPhase() throws IOException, ClassNotFoundException {
+        boolean myturn;
+        boolean last;
+        int deadPlayers;
+        int actionNumber;
+        String status;
+        ActionRequestView actionRequested;
+        AvailableActions actions;
+        ChosenActions chosen;
+        while(start){
+            myturn = receiveServerMessage(connection);
+            if(myturn){
+                last = false;
+                connection.getOutput().reset();
+                connection.getOutput().writeBoolean(true);
+                connection.getOutput().flush();
+                actionNumber = connection.getInput().readInt();
+                while(actionNumber > 0){
+                    actionNumber --;
+                    if (actionNumber == 0)
+                        last = true;
+                    actionRequested = getActionFromUser(last);
+                    actions = askForAction(connection, actionRequested);
+                    chosen = presentActions(actions);
+                    connection.getOutput().writeObject(chosen);
+                    updateLocalView();
+                }
+            }else{
+                updateLocalView();
+
+            }
+            deadPlayers = (int) connection.getInput().readObject();
+            status = (String) connection.getInput().readObject();
+            if (!status.equals("ALIVE")){
+                reSpawn();
+                deadPlayers -= 1;
+            }
+            for (int i = 0; i < deadPlayers; i++) {
+                localView = (LocalView) connection.getInput().readObject();
+                //todo stampare la LocalView
+            }
+        }
+        //todo gestione fine partita
+    }
+
+    private static void reSpawn() throws IOException, ClassNotFoundException {
+        PowerupCard[] cards = (PowerupCard[]) connection.getInput().readObject();
+        PowerupCard card = null;
+        if(isGUI())
+            card = userInteractionGUI.spawnChooser(cards);
+        connection.getInput().reset();
+        connection.getOutput().writeObject(card);
+    }
+
+    private static ChosenActions presentActions(AvailableActions actions) {
+        if(isGUI()){
+
+        }
+        return null;
+    }
+
+    private static void updateLocalView() throws IOException, ClassNotFoundException {
+        localView = (LocalView) connection.getInput().readObject();
+    }
+
+    private static void sendSpawnChoice(PowerupCard cardForSpawn) throws IOException, ClassNotFoundException {
+        connection.getOutput().reset();
+        connection.getOutput().writeObject(cardForSpawn);
+        localView = (LocalView) connection.getInput().readObject();
     }
 
     private static void connectionRequest(boolean GUI, Connection connection) {
@@ -258,7 +345,7 @@ public class AdrenalineClient {
         }
     }
 
-    private static boolean setNickname(String nickname, Connection connection) throws IOException, InterruptedException, ClassNotFoundException {
+    private static boolean setNickname(String nickname) throws IOException, InterruptedException, ClassNotFoundException {
         Registry registry = null;
         Status serveStatus;
         RMIInterface stub = null;
@@ -272,9 +359,7 @@ public class AdrenalineClient {
             socketOutput.writeObject(nickname);
             Thread.sleep(10);
             reply = (String) socketInput.readObject();
-            if(reply.equals("true"))
-                isOk = true;
-            return isOk;
+            return reply.equals("true");
         }else{
             //todo gestione nickname RMI
         }
@@ -297,7 +382,7 @@ public class AdrenalineClient {
          *
          *
          */
-    private static void setConnection (String ipServer, Connection connection) throws IOException {
+    private static void setConnection (String ipServer) throws IOException {
             int serverPort = 9000; //todo caricamento da file configurazione/definisci costante porta del server
             InetAddress address = InetAddress.getLocalHost();
             String host = address.toString();

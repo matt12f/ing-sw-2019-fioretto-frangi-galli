@@ -13,6 +13,7 @@ public enum Status {
     FRENZY_START,
     SPAWN,
     ENDGAME,
-    VIEW
+    DEAD,
+    WINNERIS, VIEW
 }
 

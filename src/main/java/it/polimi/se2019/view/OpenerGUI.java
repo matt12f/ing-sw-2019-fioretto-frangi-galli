@@ -52,6 +52,7 @@ public class OpenerGUI {
             public void actionPerformed(ActionEvent e) {
                 AdrenalineClient.setGui(true);
                 frame.dispose();
+                AdrenalineClient.ipServerRequest();
             }
         });
 
@@ -60,6 +61,7 @@ public class OpenerGUI {
             public void actionPerformed(ActionEvent e) {
                 AdrenalineClient.setGui(false);
                 frame.dispose();
+                AdrenalineClient.ipServerRequest();
             }
 
         });

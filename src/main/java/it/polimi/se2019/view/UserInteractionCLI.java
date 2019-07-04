@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class UserInteractionCLI extends UserInteraction {
 
@@ -89,5 +90,39 @@ public class UserInteractionCLI extends UserInteraction {
     @Override
     public PowerupCard spawnChooser(PowerupCard[] list) {
         return null;
+    }
+
+    public String ipRequest(){
+        String ipServer;
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Inserisci l'indirizzo IP del server: ");
+        ipServer = scanner.nextLine();
+        return ipServer;
+    }
+
+    public String nicknameRequest(boolean FirstTime){
+        if(!FirstTime)
+            System.out.println("Mi spiace, il nick che hai inserito non è disponibile, scegline un altro");
+        String nickname;
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Inserisci il tuo nickname adesso:");
+        nickname = scanner.nextLine();
+        return nickname;
+    }
+
+    public void displayQue(ArrayList<String> otherPlayers) {
+        if(!otherPlayers.isEmpty()){
+            System.out.print("Sei in coda, al momento i giocatori connessi (oltre a te) sono:");
+            for(int i = 0; i<otherPlayers.size(); i++){
+                System.out.print(" " + otherPlayers.get(i));
+                if(i == otherPlayers.size() - 1){
+                    System.out.print(".");
+                }else {
+                    System.out.print(",");
+                }
+            }
+        }else {
+            System.out.println("Sei il solo in attessa di una nuova partita per ora");
+        }
     }
 }

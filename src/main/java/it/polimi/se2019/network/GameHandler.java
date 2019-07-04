@@ -6,10 +6,12 @@ import it.polimi.se2019.controller.PlayerManager;
 import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.enums.Status;
 import it.polimi.se2019.exceptions.FullException;
+import it.polimi.se2019.model.cards.PowerupCard;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.view.LocalView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -93,6 +95,7 @@ public class GameHandler implements Runnable {
         }
         setStart();
         //gestione dei turni
+        PowerupCard[] respawn;
         while (this.controller.getMainGameModel().getKillshotTrack().getSkulls() > 0){
             turnPreparation(this.controller.getMainGameModel().getTurn());
             clientTurn = this.players.get(this.controller.getMainGameModel().getTurn());
@@ -102,12 +105,41 @@ public class GameHandler implements Runnable {
                 waitingRequest(clientTurn);
                 PlayerManager.choiceExecutor(controller, clientTurn.getChosenAction());
                 notifyView(clientTurn);
-                //todo controlla chi è morto, setta lo stato DEAD e relative aazioni
+
+                //rileggi il codice
+                for (ClientHandler client : players) {
+                    client.setDeadsPlayer(this.controller.getMainGameModel().getDeadPlayers().size());
+                }
+                for (Player player: this.controller.getMainGameModel().getDeadPlayers()) {
+                    for (ClientHandler client: this.players) {
+                        if(player.getNickname().equals(client.getNickname())){
+                            client.setStatus(Status.DEAD);
+                            try {
+                                 PlayerManager.getCardsToSpawn(false, controller, player.getId());
+                                 waitForReSpawn(client);
+                                 PlayerManager.spawnPlayers(controller, client.getLocalView().getPlayerId(), client.getSpawn());
+                                 setSpawn(client);
+                            } catch (FullException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    }
+                    for (ClientHandler client: players) {
+                        try {
+                            client.sendLocalView();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
                 if (this.controller.getMainGameModel().getKillshotTrack().getSkulls() == 0)
                     break;
             }
             clientTurn.setStatus(Status.NOTMYTURN); //valuta se magari ripassare da UPDATE piuttosto
             controller.getActiveTurn().nextTurn(controller);
+            controller.getMainGameModel().getDeadPlayers().removeAll(controller.getMainGameModel().getDeadPlayers());
+            PlayerManager.scoringProcess(controller);
         }
         for (int j = 0; j<players.size(); j++){
             clientTurn = players.get(this.controller.getMainGameModel().getTurn());
@@ -126,7 +158,38 @@ public class GameHandler implements Runnable {
         for (ClientHandler player: players) {
             player.setStatus(Status.ENDGAME);
         }
-        //todo scrivi chi ha vinto (ounteggio più alto)
+        PlayerManager.scoringProcess(controller);
+        winnerIs();
+    }
+
+    private synchronized void winnerIs() {
+        int max = 0;
+        String winnerNick = "";
+        for (ClientHandler client : players) {
+            if(client.getLocalView().getPersonalPlayerBoardView().getScore() > max)
+                max = client.getLocalView().getPersonalPlayerBoardView().getScore();
+        }
+        for (ClientHandler client: players) {
+            client.setWinnerNick(winnerNick);
+            client.setStatus(Status.WINNERIS);
+            notifyAll();
+        }
+    }
+
+    private synchronized void waitForReSpawn(ClientHandler c) {
+        while(c.getStatus() == Status.DEAD){
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    private synchronized void setSpawn(ClientHandler clientHandler){
+        clientHandler.setStatus(Status.NOTMYTURN);
+        notifyAll();
     }
 
     private synchronized void setStart() {

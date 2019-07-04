@@ -32,6 +32,8 @@ public class ClientHandler extends Thread implements RMIInterface {
     private ChosenActions chosenAction;
     private LocalView localView;
     private PowerupCard spawn;
+    private String winnerNick;
+    private int deadsPlayer;
 
     @Override
     public void run(){
@@ -74,7 +76,7 @@ public class ClientHandler extends Thread implements RMIInterface {
                         for(int j = 0; j<this.actionsNumber; j++){
                             requestView = (ActionRequestView) this.input.readObject();
                             statusChanged();
-                            this.output.writeObject(availableActions); //mi da warning ma non so perchè
+                            this.output.writeObject(availableActions);
                             this.chosenAction = (ChosenActions) this.input.readObject();
                             statusChanged();
                             sendLocalView();
@@ -88,8 +90,20 @@ public class ClientHandler extends Thread implements RMIInterface {
                     default:
                         break;
                 }
+                this.output.writeObject(deadsPlayer);
+                if (status.equals(Status.DEAD)){
+                    this.output.writeObject("DEAD");
+                    this.output.reset();
+                    this.output.writeObject(this.localView.getPlayerHand().getPowerups());
+                    this.spawn = (PowerupCard) this.input.readObject();
+                    this.status = Status.WAITING;
+                }else{
+                    this.output.writeObject("ALIVE");
+                }
+
             }
-            //todo comunicazione punteggio e chi ha vinto
+            waitForWinner();
+            this.output.writeObject(winnerNick);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -99,7 +113,12 @@ public class ClientHandler extends Thread implements RMIInterface {
         }
     }
 
-    private void sendLocalView() throws IOException {
+    private synchronized void waitForWinner() throws InterruptedException {
+        while(this.status != Status.WINNERIS)
+            wait();
+    }
+
+    void sendLocalView() throws IOException {
         this.output.writeObject("VIEW");
         this.input.readBoolean();
         this.output.reset();
@@ -118,14 +137,14 @@ public class ClientHandler extends Thread implements RMIInterface {
         this.output.writeObject("MAP");
         int map = (int) this.input.readObject();
         this.game.setMap(map);
-        this.output.writeObject("SKULL");
         int skull = (int) this.input.readObject();
         this.game.setSkull(skull);
         this.status = Status.WAITING;
         notifyAll();
     }
 
-    private synchronized void waiting() throws InterruptedException {
+    private synchronized void waiting() throws InterruptedException
+    {
         while(this.status == Status.WAITING)
             wait();
     }
@@ -186,9 +205,10 @@ public class ClientHandler extends Thread implements RMIInterface {
         }
     }
 
-    private void setSpawn() throws IOException, ClassNotFoundException, InterruptedException {
+    private synchronized void setSpawn() throws IOException, ClassNotFoundException, InterruptedException {
         output.reset();
         output.writeObject("SPAWN");
+        output.writeObject(this.localView);
         spawn = (PowerupCard) input.readObject();
         this.status = Status.WAITING;
         waiting();
@@ -262,5 +282,13 @@ public class ClientHandler extends Thread implements RMIInterface {
 
     public PowerupCard getSpawn() {
         return spawn;
+    }
+
+    public void setDeadsPlayer(int deadsPlayer) {
+        this.deadsPlayer = deadsPlayer;
+    }
+
+    public void setWinnerNick(String winnerNick) {
+        this.winnerNick = winnerNick;
     }
 }

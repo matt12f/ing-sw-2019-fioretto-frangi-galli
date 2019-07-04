@@ -696,10 +696,17 @@ public class UserInteractionGUI extends UserInteraction {
 
         JLabel message= new JLabel();
         switch(error){
-            case "nick": message.setText("this nickname is already used!");
-            break;
-            case "connection": message.setText("choose the right connection");
-            break;
+            case "nick":
+                message.setText("This nickname has been already taken, please chose another nickname.");
+                mainLogGUI();
+                break;
+            case "connectionIP":
+                message.setText("An error has occurred trying to connect to the specified server, please check the ip.");
+                mainLogGUI();
+                break;
+            case "connection":
+                message.setText("An internal error has occurred, please restart the game and try again");
+                break;
         }
 
 
