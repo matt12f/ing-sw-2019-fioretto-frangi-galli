@@ -14,7 +14,6 @@ public class GameStats {
         this.numberOfTurns = numberOfTurns;
         Collections.sort(ranking, new IntegerComparator());
         this.ranking = ranking;
-
     }
 
     public ArrayList<Player> getRanking() {
@@ -23,6 +22,12 @@ public class GameStats {
 
     public int getNumberOfTurns() {
         return numberOfTurns;
+    }
+
+    @Override
+    public String toString() {
+        //TODO scrivere metodo to String custom
+        return null;
     }
 }
 

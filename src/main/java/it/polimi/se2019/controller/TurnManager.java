@@ -14,13 +14,11 @@ public class TurnManager {
         this.activePlayer = activePlayer;
     }
 
-    public void playTurn(Controller currentController) {
-        PlayerManager.adrenalineManager(activePlayer);
-        //TODO scrivere metodo
-        MapManager.refillEmptiedCells(currentController.getMainGameModel().getCurrentMap().getBoardMatrix(),currentController.getMainGameModel().getCurrentDecks());
-    }
     private void gameStatsUpdate(){
-        //TODO scrivere metodo
+        //TODO creazione e visualizzazione di quello, usa il metodo showMessage e passagli l'oggetto
+        // gameStats creato .toString() che lo creo custom
+
+        //TODO scrivere
     }
 
     public void nextTurn(Controller currentController){
@@ -37,4 +35,12 @@ public class TurnManager {
         Player playersTurn = controller.getMainGameModel().getPlayerList().get(turn);
         this.activePlayer = playersTurn;
     }
+
+    /**
+     * This method activates the final frenzy mode for the whole game (it's centered around a the active player)
+     */
+    public static void frenzyActivator(Controller currentController){
+        currentController.getMainGameModel().activateFinalFrenzy(currentController.getActiveTurn().getActivePlayer().getId());
+    }
+
 }

@@ -1,6 +1,5 @@
 package it.polimi.se2019.view;
 
-import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.enums.Status;
 import it.polimi.se2019.model.cards.GunCard;
 import it.polimi.se2019.model.game.*;

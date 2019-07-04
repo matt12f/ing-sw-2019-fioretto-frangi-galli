@@ -30,7 +30,7 @@ public class TestGameStats {
 
         GameStats testRanking=new GameStats(players,25);
 
-        assertEquals(25,testRanking.getNumberOfTurns());
+        assertEquals(25, testRanking.getNumberOfTurns());
         assertEquals(player2,testRanking.getRanking().get(0));
         assertEquals(player4,testRanking.getRanking().get(1));
         assertEquals(player1,testRanking.getRanking().get(2));

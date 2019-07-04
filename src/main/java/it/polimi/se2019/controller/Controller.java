@@ -31,6 +31,11 @@ public class Controller{
         this.mainGameModel=new GameModel(players, mapNumber, skulls);
         this.remoteView=new RemoteView(this.mainGameModel, mapNumber, skulls);
         this.activeTurn = new TurnManager();
+        setupBoard();
+    }
+
+    public TurnManager getActiveTurn() {
+        return activeTurn;
     }
 
     public GameModel getMainGameModel() {
@@ -41,33 +46,10 @@ public class Controller{
         return remoteView;
     }
 
-    public LocalView getPlayerLocalView(int playerId){
+    @Deprecated
+    public LocalView getPlayerLocalView(int playerId) {
         return new LocalView(remoteView.getPlayerBoardViews(),playerId,remoteView.getMapView(),remoteView.getPlayerHands().get(playerId));
     }
-
-    public TurnManager getActiveTurn() {
-        return activeTurn;
-    }
-
-    //TODO Work in progress
-    public GameStats playGame() {
-        setupBoard();
-        //TODO ciclo provvisorio che gioca il turno
-        while(mainGameModel.getKillshotTrack().getSkulls()>0){
-            playRound();
-        }
-        PlayerManager.frenzyActivator(this);
-        playRound();
-        return new GameStats(mainGameModel.getPlayerList(),mainGameModel.getTurn());
-    }
-
-    private void playRound(){
-        for(Player player:mainGameModel.getPlayerList()){
-            activeTurn.setActivePlayer(player);
-            activeTurn.playTurn(this);
-        }
-    }
-
     private void setupBoard(){
         NewCell[][] mapMatrixToFill=mainGameModel.getCurrentMap().getBoardMatrix();
         try {

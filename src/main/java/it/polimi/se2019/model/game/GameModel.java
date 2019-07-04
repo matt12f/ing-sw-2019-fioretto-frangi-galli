@@ -35,6 +35,7 @@ public class GameModel extends Observable{
     public GameModel(ArrayList<Player> playerList, int mapNumber, int skulls){
         this.currentDecks=new Decks();
         this.playerList = playerList;
+        this.deadPlayers=new ArrayList<>();
 
         //Map setup
         Gson gson = new Gson();
