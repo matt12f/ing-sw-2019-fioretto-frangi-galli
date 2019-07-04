@@ -391,7 +391,7 @@ public class UserInteractionGUI extends UserInteraction {
 
         container.gridx = 1;
         container.gridy = 4;
-        mainPanel.add(n5, container);
+        mainPanel.add(n8, container);
 
         JButton send = new JButton("send");
 
