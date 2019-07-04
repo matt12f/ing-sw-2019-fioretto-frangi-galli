@@ -78,4 +78,18 @@ public class Player {
         return true;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder=new StringBuilder();
+        stringBuilder.append(this.figure.getColor().toString());
+        stringBuilder.append(" Player with id: ");
+        stringBuilder.append(this.id);
+        stringBuilder.append("; with nickname: ");
+        stringBuilder.append(this.nickname);
+        stringBuilder.append("; Scored ");
+        stringBuilder.append(this.score);
+        stringBuilder.append(" points!");
+
+        return stringBuilder.toString();
+    }
 }

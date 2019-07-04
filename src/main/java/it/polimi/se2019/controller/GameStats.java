@@ -1,30 +1,44 @@
 package it.polimi.se2019.controller;
 
-import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.model.game.Player;
-import it.polimi.se2019.model.game.PlayerBoard;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 public class GameStats {
     private ArrayList<Player> ranking;
     private int numberOfTurns; //it's the number of turns it took to end the game
+    private boolean singleWinner;
 
     public GameStats(Controller currentController, int numberOfTurns){
         ArrayList<Player> players=currentController.getMainGameModel().getPlayerList();
 
-        ArrayList<Character> killshotTrackScoring= finalScoring(currentController,players);
+        ArrayList<Character> killshotTrackScoring = finalScoring(currentController, players);
         this.numberOfTurns = numberOfTurns;
-        Collections.sort(players, new IntegerComparator());
         this.ranking = players;
-
 
         //section for TIE BREAKING
         //if there's a tie, it will break in favor of the player that has the highest score on the killshot track
         //if it's still a tie, they both win
-        //TODO gestione delle parità
+        players.stream()
+                .sorted((Player entry1, Player entry2) -> -compare(entry1,entry2,killshotTrackScoring))
+                .forEach(player -> this.ranking.add(player));
+
+
+        //the first if determines if there's a TIE between the first two players
+        //the second if evaluates if both of the player have scores on the killshot track (so it's already been considered they're tied)
+        if(this.ranking.get(0).getScore()==this.ranking.get(1).getScore())
+            if(killshotTrackScoring.contains(this.ranking.get(0).getPlayerBoard().getColorChar()) &&
+                    killshotTrackScoring.contains(this.ranking.get(1).getPlayerBoard().getColorChar()))
+                this.singleWinner=true;
+            else
+                this.singleWinner=false;
+    }
+
+    public int compare(Player o1, Player o2, ArrayList<Character> secondaryRanking){
+        int result=Integer.compare(o1.getScore(), o2.getScore());
+        if(result==0)
+            return Integer.compare(secondaryRanking.indexOf(o2.getPlayerBoard().getColorChar()), secondaryRanking.indexOf(o1.getPlayerBoard().getColorChar()));
+        return result;
     }
 
     /**
@@ -72,14 +86,31 @@ public class GameStats {
 
     @Override
     public String toString() {
-        //TODO scrivere metodo to String custom
-        return null;
-    }
-}
+        StringBuilder gameStats= new StringBuilder("Game results\n");
 
-class IntegerComparator implements Comparator<Player> {
-    @Override
-    public int compare(Player o1, Player o2) {
-        return Integer.compare(o1.getScore(), o2.getScore());
+        gameStats.append("The game was ");
+        gameStats.append(this.numberOfTurns);
+        gameStats.append(" turns long\n");
+
+        if(this.singleWinner) {
+            gameStats.append("There's a single winner: ");
+            gameStats.append(this.ranking.get(0).toString());
+        }
+        else{
+            gameStats.append("There's a tie between Player: ");
+            gameStats.append(this.ranking.get(0).toString());
+            gameStats.append("\n");
+            gameStats.append(this.ranking.get(1).toString());
+        }
+        gameStats.append("\n full playerList: \n");
+
+        //listing players
+        for(Player player:this.ranking){
+            gameStats.append(this.ranking.indexOf(player)+1);
+            gameStats.append("° place: ");
+            gameStats.append(player.toString());
+            gameStats.append("\n");
+        }
+        return gameStats.toString();
     }
 }
