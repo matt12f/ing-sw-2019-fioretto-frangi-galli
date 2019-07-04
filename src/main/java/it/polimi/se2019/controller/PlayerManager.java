@@ -32,6 +32,7 @@ public class PlayerManager {
         for(Player player:playersAlive)
             adrenalineManager(player);
 
+
         //scoring section
         //if there are dead players we must score their boards
         if(!currentController.getMainGameModel().getDeadPlayers().isEmpty()){
@@ -48,11 +49,7 @@ public class PlayerManager {
                 if(Collections.frequency(offendersCharColors,offenderColor)==2) //it's a double kill
                     currentController.getMainGameModel().getPlayerByColor(offenderColor).setScore(1);
             }
-
         }
-
-        //TODO considera scoring quando c'è il frenzy attivo
-        //in frenzy: no killshot, boards in frenzy mode do not offer first blood points
 
         //adrenaline and damage track reset
         for (Player deadPlayer: currentController.getMainGameModel().getDeadPlayers())
@@ -73,12 +70,14 @@ public class PlayerManager {
      *
      * Note: a kill happens on the 11th damage given -> 1 token on the KST; -> the board gets scored at the end of the turn
      * Note: an overkill happens on the 12th damage given -> double token on the KST; you get a mark from the player you overkilled
+     * Note: in frenzy, boards in frenzy mode do not offer first blood points
      *
      * @param board is the board to score
      */
     private static char scoreSingleBoard(Controller currentController, PlayerBoard board){
-        //gives one point for first blood
-        currentController.getMainGameModel().getPlayerByColor(board.getDamageTrack().getDamage()[0]).setScore(1);
+        //gives one point for first blood (in frenzy there's no reward for first blood)
+        if(!currentController.getMainGameModel().getFinalFrenzy())
+            currentController.getMainGameModel().getPlayerByColor(board.getDamageTrack().getDamage()[0]).setScore(1);
 
         //section for dealing points
         //here we extract the current value of the board
