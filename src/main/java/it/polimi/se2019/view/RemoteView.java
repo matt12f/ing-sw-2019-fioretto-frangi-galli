@@ -80,6 +80,10 @@ public class RemoteView  extends    View implements RMIInterface {
         return null;
     }
 
+    /**
+     * This method updates the Remote View (the one on the Server) when it's changed by the choices of a player
+     * at the end of the turn.
+     */
     @Override
     public void update(Observable o, Object arg) {
         GameModel model  = (GameModel) arg;

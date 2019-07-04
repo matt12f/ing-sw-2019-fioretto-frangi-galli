@@ -18,7 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class Controller implements Observer {
+public class Controller{
     private static final Logger LOGGER = Logger.getLogger(Controller.class.getName());
     private GameModel mainGameModel;
     private RemoteView remoteView;
@@ -27,12 +27,10 @@ public class Controller implements Observer {
     /**
      * This constructor generates one local controller object for one game
      */
-    //TODO rivedere costrutture con la nuova modalità di connessione
     public Controller(ArrayList<Player> players, int mapNumber, int skulls) {
         this.mainGameModel=new GameModel(players, mapNumber, skulls);
         this.remoteView=new RemoteView(this.mainGameModel, mapNumber, skulls);
         this.activeTurn = new TurnManager();
-        this.mainGameModel.addObserver(this.remoteView);
     }
 
     public GameModel getMainGameModel() {
@@ -69,6 +67,7 @@ public class Controller implements Observer {
             activeTurn.playTurn(this);
         }
     }
+
     private void setupBoard(){
         NewCell[][] mapMatrixToFill=mainGameModel.getCurrentMap().getBoardMatrix();
         try {
@@ -89,8 +88,4 @@ public class Controller implements Observer {
         }
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        //TODO scrivere metodo
-    }
 }

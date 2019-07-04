@@ -14,8 +14,11 @@ import it.polimi.se2019.view.LocalView;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GameHandler implements Runnable {
+    private static final Logger LOGGER = Logger.getLogger(GameHandler.class.getName());
     private ArrayList<ClientHandler> players;
     private Controller controller;
     private int mapNumber;
@@ -79,13 +82,13 @@ public class GameHandler implements Runnable {
             try {
                 PlayerManager.getCardsToSpawn(true, this.controller, c.getLocalView().getPlayerId());
             } catch (FullException e) {
-                e.printStackTrace();
+                LOGGER.log(Level.FINE,"1st exception",e);
             }
             c.setStatus(Status.SPAWN);
             try {
                 waitForSpawn(c);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                LOGGER.log(Level.FINE,"2nd exception",e);
             }
             PlayerManager.spawnPlayers(this.controller, c.getLocalView().getPlayerId(), c.getSpawn());
             for (ClientHandler player: players) {
@@ -119,7 +122,7 @@ public class GameHandler implements Runnable {
                                  PlayerManager.spawnPlayers(controller, client.getLocalView().getPlayerId(), client.getSpawn());
                                  setSpawn(client);
                             } catch (FullException e) {
-                                e.printStackTrace();
+                                LOGGER.log(Level.FINE,"3rd exception",e);
                             }
 
                         }
@@ -128,7 +131,7 @@ public class GameHandler implements Runnable {
                         try {
                             client.sendLocalView();
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            LOGGER.log(Level.FINE,"4th exception",e);
                         }
                     }
                 }
@@ -180,7 +183,7 @@ public class GameHandler implements Runnable {
             try {
                 wait();
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                LOGGER.log(Level.FINE,"wait for respawn",e);
             }
 
         }
@@ -205,7 +208,7 @@ public class GameHandler implements Runnable {
             try {
                 wait();
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                LOGGER.log(Level.FINE,"get map skull",e);
             }
         }
     }
@@ -226,7 +229,7 @@ public class GameHandler implements Runnable {
             try {
                 this.wait();
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                LOGGER.log(Level.FINE,"waiting request",e);
             }
         }
     }

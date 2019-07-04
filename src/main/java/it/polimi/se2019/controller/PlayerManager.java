@@ -42,6 +42,9 @@ public class PlayerManager {
             }
 
         }
+        //TODO svuota la board dalle drop presenti
+
+        //TODO considera scoring quando c'è il frenzy attivo
 
         //here we'll update the RemoteView
         currentController.getMainGameModel().notifyRemoteView();
