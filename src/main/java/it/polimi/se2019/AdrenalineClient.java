@@ -338,32 +338,6 @@ public class AdrenalineClient {
         localView = (LocalView) connection.getInput().readObject();
     }
 
-    private static void connectionRequest(boolean GUI, Connection connection) {
-        Scanner scanner;
-        int choice = 5; //inizializzo a un numero a caso, mi basta sia diverso da 0 o 1
-        if (!GUI) {
-            scanner = new Scanner(System.in);
-            System.out.println("Ciao, benvenuto su Adrenaline");
-            while (choice != 1 && choice != 0) {
-                System.out.println("Che connessione vuoi usare? digita 0 per Socket, 1 per RMI:   ");
-                choice = scanner.nextInt();
-                if (choice != 1 && choice != 0)
-                    System.out.println("Mi spiace, hai inserito: " + choice + ", puoi inserire solo 0 o 1, riprova.");
-            }
-            switch (choice) {
-                case 0:
-                    connection.setSocket(true);
-                    break;
-                case 1:
-                    connection.setSocket(false);
-                    break;
-                default:
-                    connection.setSocket(true);
-                    break;
-            }
-        }
-    }
-
     private static boolean setNickname(String nickname) throws IOException, InterruptedException, ClassNotFoundException {
         Registry registry = null;
         Status serveStatus;
@@ -407,7 +381,7 @@ public class AdrenalineClient {
             String host = address.toString();
             connection.setHost(host);
             if (connection.isSocket()) {
-                connection.setSocket(new Socket(ipServer, serverPort));
+                connection.setSocket(new Socket(InetAddress.getByName(ipServer), serverPort));
             } else {
                 Registry registry = LocateRegistry.getRegistry(ipServer, serverPort);
                 connection.setRegistry(registry);
