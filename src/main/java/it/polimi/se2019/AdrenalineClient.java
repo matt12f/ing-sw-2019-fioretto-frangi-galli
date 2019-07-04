@@ -29,6 +29,11 @@ public class AdrenalineClient {
     private static UserInteractionGUI userInteractionGUI = new UserInteractionGUI();
     private  static UserInteractionCLI userInteractionCLI = new UserInteractionCLI();
     private static boolean start = false;
+    private static PlayerBoardViewGUI playerBoardViewGUI;
+    private static PlayerHandViewGUI playerHandViewGUI;
+    private static PlayerZoneGUI playerZoneGUI;
+    private static boolean connected = false;
+    private static String[] answer;
 
     public static void main(String[] args) throws IOException, AlreadyBoundException, NotBoundException, InterruptedException, ClassNotFoundException {
         connection = new Connection(null, null, true, null, null);
@@ -105,14 +110,17 @@ public class AdrenalineClient {
             req = (String) connection.getInput().readObject();
             while(req.equals("Test"))
                 req = (String) connection.getInput().readObject();
-            return req.equals("UPDATE");
+            return !req.equals("UPDATE");
         }
         return false;
     }
 
-    private static void displayQue() {
+    private static void displayQue(boolean firstTime) {
         if(GUI){
-            userInteractionGUI.waitingList(otherPlayers);
+            if(firstTime)
+                userInteractionGUI.waitingListCreation(otherPlayers);
+            else
+                userInteractionGUI.waitingListUpdate(otherPlayers);
         }else{
             userInteractionCLI.displayQue(otherPlayers);
         }
@@ -144,28 +152,39 @@ public class AdrenalineClient {
 
 
     public static void ipServerRequest() {
-        Scanner scanner;
         String ipServer;
-        String[] answer;
-        boolean connected = true;
+        String[] temp;
+        boolean accepted;
         if (GUI) {
             answer = userInteractionGUI.mainLogGUI();
-            try {
-                if(connection.getSocket() == null) {
+            while(!connected) {
+                try {
                     setConnection(answer[1]);
                     connection.setStream();
+                    connected = true;
+
+                } catch (IOException e) {
+                    userInteractionGUI.errorDisplay("connectionIP");
                 }
-            } catch (IOException e) {
-                userInteractionGUI.showMessage("An error has occurred trying to connect to the specified server, please check the IP.");
+                if(!connected)
+                    answer = userInteractionGUI.mainLogGUI();
             }
             try {
-                if(setNickname(answer[0])){
+                accepted = setNickname(answer[0]);
+                if(!accepted)
+                    userInteractionGUI.errorDisplay("nick");
+                else
                     waitForStart();
-                }else{
-                    userInteractionGUI.showMessage("This nickname has been already taken, please chose another nickname.");
+                while(!accepted) {
+                    accepted =  setNickname(answer[0]);
+                    if (accepted) {
+                        waitForStart();
+                    } else {
+                        userInteractionGUI.errorDisplay("nick");
+                    }
                 }
             } catch (ClassNotFoundException | InterruptedException | IOException e ) {
-                userInteractionGUI.showMessage("An internal error has occurred, please restart the game and try again");
+                userInteractionGUI.errorDisplay("connection");
             }
         }else{
             connected = false;
@@ -191,14 +210,16 @@ public class AdrenalineClient {
     }
 
     private static void waitForStart() throws IOException, ClassNotFoundException {
+        boolean firstTime = true;
         while(!start){
             getOtherPlayers(connection);
-            displayQue();
+            displayQue(firstTime);
             try {
                 start = waitForUpdate(connection);
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
+            firstTime = false;
         }
         gamePreparation();
     }
@@ -230,12 +251,19 @@ public class AdrenalineClient {
                     PowerupCard cardForSpawn = userInteractionGUI.spawnChooser(localView.getPlayerHand().getPowerups());
                     sendSpawnChoice(cardForSpawn);
                     updateLocalView();
+                    displayBoard();
                 }
             }
             if(message.equals("START")){
                 start = true;
                 matchPhase();
             }
+        }
+    }
+
+    private static void displayBoard() {
+        if(isGUI()){
+            //playerBoardViewGUI = new PlayerBoardViewGUI();
         }
     }
 
@@ -392,6 +420,10 @@ public class AdrenalineClient {
 
     public static boolean isGUI() {
         return GUI;
+    }
+
+    public static void setAnswer(String[] answer) {
+        AdrenalineClient.answer = answer;
     }
 }
 

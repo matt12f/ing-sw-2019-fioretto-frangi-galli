@@ -145,6 +145,7 @@ public class GameHandler implements Runnable {
             controller.getMainGameModel().getDeadPlayers().removeAll(controller.getMainGameModel().getDeadPlayers());
             PlayerManager.scoringProcess(controller);
         }
+        this.controller.getActiveTurn().frenzyActivator(controller);
         for (int j = 0; j<players.size(); j++){
             clientTurn = players.get(this.controller.getMainGameModel().getTurn());
             turnPreparation(this.controller.getMainGameModel().getTurn());
@@ -237,7 +238,7 @@ public class GameHandler implements Runnable {
         }
     }
 
-    private void createController(){
+    public void createController(){
         ArrayList<Player> players = new ArrayList<>();
         int id = 0;
         for (ClientHandler client: this.players) {
@@ -251,7 +252,7 @@ public class GameHandler implements Runnable {
         this.mapNumber = map;
     }
 
-    void setSkull(int skull) {
+     public void setSkull(int skull) {
         this.skullsNumber = skull;
     }
 

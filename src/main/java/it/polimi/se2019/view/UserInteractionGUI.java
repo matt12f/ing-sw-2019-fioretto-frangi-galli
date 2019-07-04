@@ -17,7 +17,7 @@ public class UserInteractionGUI extends UserInteraction {
     PowerupCard chosenPowerup;
     GunCard chosenWeapon;
     private JDialog waitingList = new JDialog();
-    private String [] answer = new  String [2];
+    private String[] answer = new String[2];
 
     @Override
     public String actionToRequest(int frenzy){
@@ -663,7 +663,7 @@ public class UserInteractionGUI extends UserInteraction {
         container.gridy = 4;
         mainPanel.add(ipTextField, container);
 
-        JButton startGameButton= new JButton("Start");
+        JButton startGameButton = new JButton("Start");
         container.gridx = 1;
         container.gridy = 5;
         mainPanel.add(startGameButton, container);
@@ -674,7 +674,7 @@ public class UserInteractionGUI extends UserInteraction {
             public void actionPerformed(ActionEvent e) {
                 answer[0] = nickTextField.getText();
                 answer[1] = ipTextField.getText();
-                JButton button = (JButton)e.getSource();
+                JButton button = (JButton) e.getSource();
                 SwingUtilities.getWindowAncestor(button).dispose();
             }
         });
@@ -754,7 +754,6 @@ public class UserInteractionGUI extends UserInteraction {
 
 
 
-    public void waitingList (ArrayList<String> players){
     public void waitingListCreation (ArrayList<String> players){
         JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints container = new GridBagConstraints();

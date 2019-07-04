@@ -11,7 +11,7 @@ public class AdrenalineServer{
 
     private static ArrayList<String> lobby;
     private static ArrayList<ClientHandler> lobbyClient;
-    private static ArrayList<GameHandler> games;
+    private static ArrayList<GameHandler> games = new ArrayList<>();
 
     public static void main( String[] args) throws InterruptedException {
         SocketClients socketClient;

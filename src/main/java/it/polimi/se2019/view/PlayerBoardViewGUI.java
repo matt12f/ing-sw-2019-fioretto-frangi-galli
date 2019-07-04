@@ -8,7 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class PlayerBoardViewGUI extends JPanel{
+public class
+PlayerBoardViewGUI extends JPanel{
 
     private ImageIcon boardImage;
     protected JLabel board;
