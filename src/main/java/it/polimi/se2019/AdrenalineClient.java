@@ -103,6 +103,8 @@ public class AdrenalineClient {
         connection.getOutput().writeObject(skull);
     }
 
+
+
     private static void waitForUpdate(Connection connection) throws IOException, ClassNotFoundException {
         String req;
         if(connection.isSocket()){

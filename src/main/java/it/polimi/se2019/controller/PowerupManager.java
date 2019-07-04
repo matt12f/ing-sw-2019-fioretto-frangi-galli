@@ -47,10 +47,14 @@ public class PowerupManager {
      * Choose 1 of those targets and give it an extra point of damage. Note: You cannot use this to do 1 damage to a
      * target that is receiving only marks.
      */
-    public static void targetingScopeManager(Controller currentController, Player playerDamaged, int cardIndexInHand) {
-        //TODO scrivere metodo
-        //scorri player colpiti, chiedendo se vuoi dare danno ulteriore e a chi
+    public static void targetingScopeManager(Controller currentController, Player playerDamaged, int cardIndexInHand,char ammoToPay) {
+        char [] cost=new char[1];
+        cost [0]=ammoToPay;
+        currentController.getActiveTurn().getActivePlayer().getPlayerBoard().getAmmo().subtractAmmo(cost);
 
+        char [] dmg=new char[1];
+        dmg[0]=currentController.getActiveTurn().getActivePlayer().getFigure().getColorChar();
+        PlayerManager.damageDealer(currentController,playerDamaged,dmg);
         removeFromHand(currentController, cardIndexInHand);
     }
 
@@ -59,8 +63,6 @@ public class PowerupManager {
      *  You may play this card when you receive damage from a player you can see. Give that player 1 mark.
      */
     public static void grenadeManager(Controller currentController, Player playerDamaged, Player playerGivingDamage, int cardIndexInHand){
-        //TODO quando viene richiamato??
-        //todo check che sia visibile quello che ti ha colpito (si prende il colore dalle ultime drop aggiunte)
         char [] marks=new char[1];
         marks[0]=playerGivingDamage.getFigure().getColorChar();
         PlayerManager.markerDealer(playerDamaged,marks);

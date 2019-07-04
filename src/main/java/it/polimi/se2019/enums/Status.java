@@ -4,6 +4,8 @@ public enum Status {
     CALCULATED,
     UPDATE,
     MAPSKULL,
+    TAGBACKUSAGE,
+    TRGSCOPE,
     READY,
     NOTREADY,
     START,
@@ -14,6 +16,7 @@ public enum Status {
     SPAWN,
     ENDGAME,
     DEAD,
-    WINNERIS, VIEW
+    WINNERIS,
+    VIEW
 }
 

@@ -144,6 +144,24 @@ public class ClientHandler extends Thread implements RMIInterface {
         }
     }
 
+    //TODO frangi controlla
+    private synchronized void setTagBackUsage() throws IOException, ClassNotFoundException {
+        this.output.writeObject("TAGBACKUSAGE");
+        boolean useTagBack = (boolean) this.input.readObject();
+        this.game.setUseTagBack(useTagBack);
+        this.status = Status.WAITING;
+        notifyAll();
+    }
+
+    //TODO frangi controlla
+    private synchronized void setTargettingUsage() throws IOException, ClassNotFoundException {
+        this.output.writeObject("TAGBACKUSAGE");
+        String useTagBack = (String) this.input.readObject();
+        this.game.setColorReceived(useTagBack);
+        this.status = Status.WAITING;
+        notifyAll();
+    }
+
     private synchronized void setMapSkull() throws IOException, ClassNotFoundException {
         this.output.writeObject("MAP");
         int map = (int) this.input.readObject();
@@ -154,8 +172,7 @@ public class ClientHandler extends Thread implements RMIInterface {
         notifyAll();
     }
 
-    private void waiting() throws InterruptedException
-    {
+    private void waiting() throws InterruptedException {
         while(this.status == Status.WAITING)
             sleep(1);
     }
