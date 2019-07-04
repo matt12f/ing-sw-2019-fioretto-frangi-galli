@@ -25,7 +25,9 @@ public class MapView {
             }
         }
     }
-
+    public int getMapNumber(){
+        return mapNumber;
+    }
     public KillShotTrackerView getKillView() {
         return killView;
     }

@@ -29,9 +29,8 @@ public class AdrenalineClient {
     private static UserInteractionGUI userInteractionGUI = new UserInteractionGUI();
     private  static UserInteractionCLI userInteractionCLI = new UserInteractionCLI();
     private static boolean start = false;
-    private static PlayerBoardViewGUI playerBoardViewGUI;
-    private static PlayerHandViewGUI playerHandViewGUI;
-    private static PlayerZoneGUI playerZoneGUI;
+    private static GameBoardGui gameBoardGui;
+
     private static boolean connected = false;
     private static String[] answer;
 
@@ -388,7 +387,16 @@ public class AdrenalineClient {
     }
 
     private void guiStarter () {
-        //TODO scrivere metodo
+        //TODO scrivere metodo (fatto)
+        ArrayList<PlayerBoardView> opponentsBoards = new ArrayList<>() ;
+
+        for(int i = 0; i< getLocalView().getPlayerBoardViews().size();i++){
+            if (i != getLocalView().getPlayerId()){
+                opponentsBoards.add(getLocalView().getPlayerBoardViews().get(i));
+            }
+        }
+
+        gameBoardGui = new GameBoardGui(getLocalView().getMapView().getMapNumber(),opponentsBoards,getLocalView().getPersonalPlayerBoardView(),getLocalView().getMapView().getBoardMatrix() );
     }
 
     private static void networkStarterClient ( boolean rmi){
