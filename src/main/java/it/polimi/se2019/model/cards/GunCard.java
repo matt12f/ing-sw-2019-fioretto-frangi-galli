@@ -72,5 +72,4 @@ public abstract class GunCard{
 
     @Override
     public abstract GunCard clone();
-    //TODO portare clone nelle classi arma
 }

@@ -7,9 +7,10 @@ import it.polimi.se2019.exceptions.FullException;
 import it.polimi.se2019.model.cards.AmmoTileCard;
 import it.polimi.se2019.model.cards.GunCard;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class NewCell {
+public class NewCell implements Serializable {
     private CellType cellType;
     protected Color color;
     protected CellEdge top;

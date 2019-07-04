@@ -1,9 +1,6 @@
 package it.polimi.se2019.network;
 
-import it.polimi.se2019.controller.AvailableActions;
-import it.polimi.se2019.controller.Controller;
-import it.polimi.se2019.controller.MapManager;
-import it.polimi.se2019.controller.PlayerManager;
+import it.polimi.se2019.controller.*;
 import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.enums.Status;
 import it.polimi.se2019.exceptions.FullException;
@@ -145,7 +142,7 @@ public class GameHandler implements Runnable {
             controller.getMainGameModel().getDeadPlayers().removeAll(controller.getMainGameModel().getDeadPlayers());
             PlayerManager.scoringProcess(controller);
         }
-        this.controller.getActiveTurn().frenzyActivator(controller);
+        TurnManager.frenzyActivator(controller);
         for (int j = 0; j<players.size(); j++){
             clientTurn = players.get(this.controller.getMainGameModel().getTurn());
             turnPreparation(this.controller.getMainGameModel().getTurn());
@@ -164,7 +161,7 @@ public class GameHandler implements Runnable {
         for (ClientHandler player: players) {
             player.setStatus(Status.ENDGAME);
         }
-        PlayerManager.scoringProcess(controller);
+        PlayerManager.scoringProcess(controller); //last scoring of the game (after the final frenzy round)
         winnerIs();
     }
 

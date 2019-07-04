@@ -2,9 +2,10 @@ package it.polimi.se2019.model.game;
 
 import it.polimi.se2019.enums.Color;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Room {
+public class Room implements Serializable {
     private Color color;
     private ArrayList<Player> players;
     private ArrayList<NewCell> cells;

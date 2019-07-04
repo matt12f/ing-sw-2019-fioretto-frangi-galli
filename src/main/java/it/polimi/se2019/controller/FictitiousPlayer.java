@@ -6,6 +6,7 @@ import it.polimi.se2019.model.game.Ammo;
 import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -19,7 +20,7 @@ import java.util.logging.Logger;
  * - In conclusion the evaluation for the individual guncards must be done on the single FictitiousPlayer
  *
  */
-public class FictitiousPlayer {
+public class FictitiousPlayer implements Serializable {
     private Player correspondingPlayer;
     private static final Logger LOGGER = Logger.getLogger(FictitiousPlayer.class.getName());
     private int playerId;
