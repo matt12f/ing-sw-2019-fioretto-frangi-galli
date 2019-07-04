@@ -1,15 +1,18 @@
 package it.polimi.se2019.controller;
 
-import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.exceptions.OuterWallException;
 import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * The methods in this class will be called to perform the actions of the corresponding powerups
  * calling methods from other managers
  */
 public class PowerupManager {
+    private static final Logger LOGGER = Logger.getLogger(PowerupManager.class.getName());
 
     /**
      * You may play this card on your turn before or after any action. Choose any other player's figure and move it
@@ -21,7 +24,7 @@ public class PowerupManager {
         try {
             cell = MapManager.getCellInDirection(currentController.getMainGameModel().getCurrentMap().getBoardMatrix(),player.getFigure().getCell(),distance,directionIndex);
         } catch (OuterWallException e) {
-            //TODO loggare eccezione, sarebbe errato riceverla qui
+            LOGGER.log(Level.WARNING,"newtonManager", e);
         }
         if(cell!=null){
             ActionManager.movePlayer(currentController,player,cell);
@@ -44,7 +47,7 @@ public class PowerupManager {
      * Choose 1 of those targets and give it an extra point of damage. Note: You cannot use this to do 1 damage to a
      * target that is receiving only marks.
      */
-    public static void targetingScopeManager(Controller currentController,int cardIndexInHand) {
+    public static void targetingScopeManager(Controller currentController, int cardIndexInHand) {
         //TODO scrivere metodo
         removeFromHand(currentController,cardIndexInHand);
     }

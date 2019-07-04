@@ -755,10 +755,11 @@ public class UserInteractionGUI extends UserInteraction {
 
 
     public void waitingList (ArrayList<String> players){
+    public void waitingListCreation (ArrayList<String> players){
         JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints container = new GridBagConstraints();
         mainPanel.setLayout(new GridBagLayout());
-        waitingList.getContentPane().removeAll();
+
 
         for (int i=0; i < players.size(); i++){
             container.gridx = 0;
@@ -776,6 +777,22 @@ public class UserInteractionGUI extends UserInteraction {
         waitingList.setVisible(true);
 
 
+
+    }
+    public void waitingListUpdate(ArrayList<String> players){
+        waitingList.getContentPane().removeAll();
+        JPanel mainPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints container = new GridBagConstraints();
+        mainPanel.setLayout(new GridBagLayout());
+
+
+        for (int i=0; i < players.size(); i++){
+            container.gridx = 0;
+            container.gridy = i;
+            mainPanel.add(new JLabel(players.get(i)), container);
+        }
+
+        waitingList.getContentPane().add(mainPanel);
 
     }
 

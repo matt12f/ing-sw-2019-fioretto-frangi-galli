@@ -10,10 +10,31 @@ public class GameStats {
     private ArrayList<Player> ranking;
     private int numberOfTurns;
 
-    public GameStats(ArrayList<Player> ranking, int numberOfTurns) {
+    public GameStats(ArrayList<Player> ranking, int numberOfTurns){
+        Player killshotTrackWinner= finalScoring(ranking);
         this.numberOfTurns = numberOfTurns;
         Collections.sort(ranking, new IntegerComparator());
         this.ranking = ranking;
+
+        //section for TIE BREAKING
+        //if there's a tie, it will break in favor of the player that has the highest score on the killshot track
+        //if it's still a tie, they both wil
+        //TODO gestione delle parità
+    }
+
+    /**
+     * this method scores the killshot track at the end of the fame
+     * it will:
+     *      - score all boards that still have damage tokens, as usual but without killshot
+     *      - score the killshot track: players (ordered by number of tokens) will get 8, 6, 4, 2, 1 points
+     *      - ties in the score on the killshot track break in favor of the player that has the earliest token(s)
+     *
+     * @param players are all of the players in the game
+     * @return the player that has the highest score on the killshot track
+     */
+    private Player finalScoring(ArrayList<Player> players){
+        //TODO scrivere metodo
+        return null;
     }
 
     public ArrayList<Player> getRanking() {
@@ -34,6 +55,6 @@ public class GameStats {
 class IntegerComparator implements Comparator<Player> {
     @Override
     public int compare(Player o1, Player o2) {
-        return Integer.compare(o1.getScore(),o2.getScore());
+        return Integer.compare(o1.getScore(), o2.getScore());
     }
 }

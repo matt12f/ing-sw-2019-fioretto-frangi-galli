@@ -81,7 +81,7 @@ public class TestDamageTracker {
         for(int i=0;i<3;i++)
             testDmgTracker.addDamage('r');
 
-        testDmgTracker.setKill();
+        testDmgTracker.resetDmgTrack();
         for(int i=0;i<12;i++)
             assertEquals(' ',testDmgTracker.getDamage()[i]);
     }

@@ -13,6 +13,36 @@ import java.util.Scanner;
 public class UserInteractionCLI extends UserInteraction {
 
     @Override
+    public boolean[] cardsToReload(GunCard[] cards, boolean[] reloadableCards) {
+        //TODO scrivere metodo
+        return new boolean[0];
+    }
+
+    @Override
+    public boolean yesOrNo(String message, String textYesButton, String textNoButton) {
+        //TODO scrivere metodo
+        return false;
+    }
+
+    @Override
+    public String stringSelector(String message, ArrayList<String> listToChooseFrom) {
+        //TODO scrivere metodo
+        return null;
+    }
+
+    @Override
+    public int[] mapChooser() {
+        //TODO scrivere metodo
+        return new int[0];
+    }
+
+    @Override
+    public PowerupCard spawnChooser(PowerupCard[] list) {
+        //TODO scrivere metodo
+        return null;
+    }
+
+    @Override
     public String actionToRequest(int frenzy) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         ArrayList<String> available = new ArrayList<>();
@@ -30,7 +60,7 @@ public class UserInteractionCLI extends UserInteraction {
             case 2:{
                 System.out.println("Azioni disponibili: frenzy4, frenzy5");
                 available.addAll(Arrays.asList("frenzy4", "frenzy5"));
-        }break;
+            }break;
             default:break;
         }
 
@@ -49,48 +79,24 @@ public class UserInteractionCLI extends UserInteraction {
     }
 
     @Override
-    public boolean[] cardsToReload(GunCard[] cards, boolean[] reloadableCards) {
-        return new boolean[0];
-    }
-
-    @Override
-    public boolean yesOrNo(String message, String textYesButton, String textNoButton) {
-        return false;
-    }
-
-    @Override
-    public String stringSelector(String message, ArrayList<String> listToChooseFrom) {
-        return null;
-    }
-
-    @Override
     public void showMessage(String message) {
         System.out.println(message);
     }
 
     @Override
     public void ammoTileViewer(String content) {
-            StringBuilder builder=new StringBuilder("La AmmoTile che hai raccolto contiene: ");
-            for (int i = 0; i < content.length(); i++)
-                switch (content.charAt(i)){
-                    case 'y':builder.append("1 Yellow Ammo");break;
-                    case 'b':builder.append("1 Blue Ammo");break;
-                    case 'r': builder.append("1 Red Ammo");break;
-                    case 'p':builder.append("1 PowerUp");break;
-                    default:break;
-                }
-            System.out.println(builder.toString());
+        StringBuilder builder=new StringBuilder("La AmmoTile che hai raccolto contiene: ");
+        for (int i = 0; i < content.length(); i++)
+            switch (content.charAt(i)){
+                case 'y':builder.append("1 Yellow Ammo");break;
+                case 'b':builder.append("1 Blue Ammo");break;
+                case 'r': builder.append("1 Red Ammo");break;
+                case 'p':builder.append("1 PowerUp");break;
+                default:break;
+            }
+        System.out.println(builder.toString());
     }
 
-    @Override
-    public int[] mapChooser() {
-        return new int[0];
-    }
-
-    @Override
-    public PowerupCard spawnChooser(PowerupCard[] list) {
-        return null;
-    }
 
     public String ipRequest(){
         String ipServer;
