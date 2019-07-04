@@ -730,7 +730,8 @@ public class UserInteractionGUI extends UserInteraction {
         }
 
         waitingList.getContentPane().add(mainPanel);
-
+        waitingList.revalidate();
+        waitingList.repaint();
     }
 
 }

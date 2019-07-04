@@ -2,8 +2,7 @@ package it.polimi.se2019.model.game;
 
 import it.polimi.se2019.enums.Color;
 
-public class
-Figure {
+public class Figure {
     private Color color;
     private NewCell currentCell;
 
