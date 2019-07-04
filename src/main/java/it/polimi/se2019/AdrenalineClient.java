@@ -264,8 +264,8 @@ public class AdrenalineClient {
 
     private static void displayBoard() {
         if(isGUI()){
-            //todo Ste qui per rappresentare le informazioni ricevute dalla LocalView
-            //gameBoardGui.updateBoardGame(getLocalView().getMapView().getMapNumber(),opponentsBoards,getLocalView().getPersonalPlayerBoardView(),getLocalView().getMapView().getBoardMatrix(),     ,getLocalView().getPlayerHand());
+            //todo Ste qui per rappresentare le informazioni ricevute dalla LocalView(fatto)
+            gameBoardGui.updateBoardGame(opponentsBoards,getLocalView().getPersonalPlayerBoardView(),getLocalView().getMapView().getBoardMatrix(),getLocalView().getMapView().getKillView(),getLocalView().getPlayerHand());
         }
     }
 

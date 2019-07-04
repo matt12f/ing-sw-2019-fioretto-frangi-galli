@@ -146,7 +146,6 @@ PlayerBoardViewGUI extends JPanel{
 
         JDialog dialog = new JDialog();
         dialog.setModal(true);
-        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
         dialog.setTitle("weapon Chooser");
         dialog.getContentPane().add(mainPanel);
         dialog.pack();
