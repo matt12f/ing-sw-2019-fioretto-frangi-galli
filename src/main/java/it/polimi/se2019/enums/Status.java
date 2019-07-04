@@ -5,6 +5,7 @@ public enum Status {
     UPDATE,
     MAPSKULL,
     TAGBACKUSAGE,
+    TRGSCOPE,
     READY,
     NOTREADY,
     START,

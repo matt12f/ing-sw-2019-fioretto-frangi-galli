@@ -24,6 +24,7 @@ public class GameHandler implements Runnable {
     private int skullsNumber;
 
     private boolean useTagBack;
+    private String colorReceived;
 
     public Controller getController() {
         return controller;
@@ -146,7 +147,7 @@ public class GameHandler implements Runnable {
             }
             clientTurn.setStatus(Status.NOTMYTURN); //valuta se magari ripassare da UPDATE piuttosto
             controller.getActiveTurn().nextTurn(controller);
-            controller.getMainGameModel().getDeadPlayers().removeAll(controller.getMainGameModel().getDeadPlayers());
+            controller.getMainGameModel().getDeadPlayers().clear();
             PlayerManager.scoringProcess(controller);
         }
         TurnManager.frenzyActivator(controller);
@@ -204,7 +205,6 @@ public class GameHandler implements Runnable {
                 }
             }
 
-
             //offering targetting scope to current player
             for(int i=0;i< activePlayer.getPlayerBoard().getHand().getPowerups().length;i++)
                 if(activePlayer.getPlayerBoard().getHand().getPowerups()[i].getPowerupType().equals("TargettingScope") &&
@@ -212,15 +212,42 @@ public class GameHandler implements Runnable {
                                 activePlayer.getPlayerBoard().getAmmo().getRed()>0||
                                 activePlayer.getPlayerBoard().getAmmo().getYellow()>0)){
 
+                    //building list of available ammo cubes
+                    ArrayList<String> choices=new ArrayList<>();
+                    if(activePlayer.getPlayerBoard().getAmmo().getBlue()>0)
+                        choices.add("Blue");
+                    if(activePlayer.getPlayerBoard().getAmmo().getRed()>0)
+                        choices.add("Red");
+                    if(activePlayer.getPlayerBoard().getAmmo().getYellow()>0)
+                        choices.add("Yellow");
 
+                    //TODO va scelta una stringa da choices con messaggio "Scegli il colore del cubo da pagare: "
+                    try {
+                        //TODO gli va passato l'ArrayList choices
+                        getTargettingScopeUsage(this.players.get(activePlayer.getId()));
+                    }
+                    catch (InterruptedException e){
+                        LOGGER.log(Level.FINE,"request tagback exception",e);
+                    }
+                    char ammoToPay=this.colorReceived.toLowerCase().charAt(0);
 
-                    //askClient("Scegli il colore del cubo da pagare: ");
-                    //askClient("Scegli il colore del player da colpire tra i seguenti: ",);
-                    //TODO chiedi il colore del cubo che vuole usare e il colore del player che vuole colpire
+                    choices.clear();
+                    for(Player player:playersHit)
+                        choices.add(player.getPlayerBoard().getColor().toString());
 
-                    Player target=new Player(1,"xx", Color.BLUE);//chi vuoi colpire ulteriormente?
+                    //TOdo gli va passata la lista choices, e gli va chiesto questo:
+                    // "Scegli il colore del player da colpire tra i seguenti: " con lo string selector
+                    try {
+                        //TODO gli va passato L'arrayList choices
+                        getTargettingScopeUsage(this.players.get(activePlayer.getId()));
+                    }
+                    catch (InterruptedException e){
+                        LOGGER.log(Level.FINE,"request tagback exception",e);
+                    }
+                    //the player to hit with 1 more damage
+                    Player target=controller.getMainGameModel().getPlayerByColor(this.colorReceived.toLowerCase().charAt(0));
 
-                    PowerupManager.targetingScopeManager(this.controller,target,i);
+                    PowerupManager.targetingScopeManager(this.controller,target,i,ammoToPay);
                     break;
             }
 
@@ -237,6 +264,20 @@ public class GameHandler implements Runnable {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
                 LOGGER.log(Level.FINE,"get tagback usage",e);
+            }
+        }
+    }
+
+    //TODO frangi controlla
+    private void getTargettingScopeUsage(ClientHandler clientTurn) throws InterruptedException {
+        while(!clientTurn.getStatus().equals(Status.WAITING))
+            Thread.sleep(1);
+        clientTurn.setStatus(Status.TRGSCOPE);
+        while(clientTurn.getStatus() == Status.TRGSCOPE){
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                LOGGER.log(Level.FINE,"get targetting scope usage",e);
             }
         }
     }
@@ -359,5 +400,9 @@ public class GameHandler implements Runnable {
 
     public void setUseTagBack(boolean useTagBack) {
         this.useTagBack = useTagBack;
+    }
+
+    public void setColorReceived(String colorReceived) {
+        this.colorReceived = colorReceived;
     }
 }

@@ -47,7 +47,11 @@ public class PowerupManager {
      * Choose 1 of those targets and give it an extra point of damage. Note: You cannot use this to do 1 damage to a
      * target that is receiving only marks.
      */
-    public static void targetingScopeManager(Controller currentController, Player playerDamaged, int cardIndexInHand) {
+    public static void targetingScopeManager(Controller currentController, Player playerDamaged, int cardIndexInHand,char ammoToPay) {
+        char [] cost=new char[1];
+        cost [0]=ammoToPay;
+        currentController.getActiveTurn().getActivePlayer().getPlayerBoard().getAmmo().subtractAmmo(cost);
+
         char [] dmg=new char[1];
         dmg[0]=currentController.getActiveTurn().getActivePlayer().getFigure().getColorChar();
         PlayerManager.damageDealer(currentController,playerDamaged,dmg);
