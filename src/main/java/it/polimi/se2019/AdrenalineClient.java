@@ -27,7 +27,7 @@ public class AdrenalineClient {
     private static boolean GUI; //Se l'utente sceglierà la GUI piuttosto che la cli sarà true
     private static Connection connection;
     private static UserInteractionGUI userInteractionGUI = new UserInteractionGUI();
-    private  static UserInteractionCLI userInteractionCLI = new UserInteractionCLI();
+    private static UserInteractionCLI userInteractionCLI = new UserInteractionCLI();
     private static boolean start = false;
     private static GameBoardGui gameBoardGui;
     private static ArrayList<PlayerBoardView> opponentsBoards = new ArrayList<>() ;
@@ -103,15 +103,17 @@ public class AdrenalineClient {
         connection.getOutput().writeObject(skull);
     }
 
-    private static Boolean waitForUpdate(Connection connection) throws IOException, ClassNotFoundException {
+    private static void waitForUpdate(Connection connection) throws IOException, ClassNotFoundException {
         String req;
         if(connection.isSocket()){
             req = (String) connection.getInput().readObject();
             while(req.equals("Test"))
                 req = (String) connection.getInput().readObject();
-            return !req.equals("UPDATE");
+            if(req.equals("START")){
+                start = true;
+                System.out.println(req);
+            }
         }
-        return false;
     }
 
     private static void displayQue(boolean firstTime) {
@@ -127,6 +129,12 @@ public class AdrenalineClient {
 
     private static void getOtherPlayers(Connection connection) throws IOException, ClassNotFoundException {
         if(connection.isSocket()){
+            boolean lobby = false;
+            String temp;
+            while(!lobby){
+                temp = (String) connection.getInput().readObject();
+                lobby = temp.equals("LOBBY");
+            }
             otherPlayers = (ArrayList<String>) connection.getInput().readObject();
             otherPlayers.remove(nickname);
         }
@@ -214,18 +222,19 @@ public class AdrenalineClient {
             getOtherPlayers(connection);
             displayQue(firstTime);
             try {
-                start = waitForUpdate(connection);
+                waitForUpdate(connection);
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
             firstTime = false;
         }
+        start = false;
         gamePreparation();
     }
 
     private static void gamePreparation() throws IOException, ClassNotFoundException {
+        boolean guiStarted = false;
         while(!start){
-            System.out.println("ok");
             String message = (String) connection.getInput().readObject();
             int[] mapSkull;
             if(message.equals("MAP")) {
@@ -237,13 +246,19 @@ public class AdrenalineClient {
                 setMap(mapSkull[0]);
                 setSkull(mapSkull[1]);
                 message = (String) connection.getInput().readObject();
+
             }
             if(message.equals("VIEW")){
                 connection.getOutput().reset();
                 connection.getOutput().writeBoolean(true);
                 connection.getOutput().flush();
                 localView = (LocalView) connection.getInput().readObject();
-                displayBoard();
+                if(guiStarted)
+                    displayBoard();
+                else{
+                    guiStarted = true;
+                    guiStarter();
+                }
             }
             message = (String) connection.getInput().readObject();
             if(message.equals("SPAWN")) {
@@ -264,7 +279,6 @@ public class AdrenalineClient {
 
     private static void displayBoard() {
         if(isGUI()){
-            //todo Ste qui per rappresentare le informazioni ricevute dalla LocalView(fatto)
             gameBoardGui.updateBoardGame(opponentsBoards,getLocalView().getPersonalPlayerBoardView(),getLocalView().getMapView().getBoardMatrix(),getLocalView().getMapView().getKillView(),getLocalView().getPlayerHand());
         }
     }
@@ -387,10 +401,7 @@ public class AdrenalineClient {
         return true;
     }
 
-    private void guiStarter () {
-        //TODO scrivere metodo (fatto)
-
-
+    private static void guiStarter () {
         for(int i = 0; i< getLocalView().getPlayerBoardViews().size();i++){
             if (i != getLocalView().getPlayerId()){
                 opponentsBoards.add(getLocalView().getPlayerBoardViews().get(i));

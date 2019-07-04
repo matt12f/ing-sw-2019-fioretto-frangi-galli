@@ -4,7 +4,9 @@ package it.polimi.se2019.view;
 import it.polimi.se2019.model.cards.GunCard;
 import it.polimi.se2019.model.cards.PowerupCard;
 
-public  class PlayerHandView{
+import java.io.Serializable;
+
+public  class PlayerHandView implements Serializable {
     private GunCard[] guns;
     private boolean[] loadedGuns;
     private PowerupCard[] powerups;

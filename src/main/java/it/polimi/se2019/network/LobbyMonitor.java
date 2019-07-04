@@ -9,14 +9,15 @@ import java.util.Timer;
 
 public class LobbyMonitor implements Runnable{
     @Override
-    public void run(){ //todo pensare se vada sostituito con qualche condizione
+    public void run(){
         int connectionNumber = 0;
         int prev = 0;
         boolean condition = true;
+        boolean newbie = false;
         boolean timerStarted = false;
         Timer timer = new Timer();
         Thread thread;
-        long time = 0; //todo settare tempo timer prendendolo da file
+        long time = 10; //todo settare tempo timer prendendolo da file
         GameStarter gameToStart = new GameStarter();
         while(condition) {
             try {
@@ -24,6 +25,8 @@ public class LobbyMonitor implements Runnable{
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            if(newbie)
+                gameToStart = new GameStarter();
             if (!AdrenalineServer.getLobby().isEmpty()) {
                 connectionNumber = AdrenalineServer.clientCounter();
                 if(connectionNumber != prev){
@@ -42,6 +45,7 @@ public class LobbyMonitor implements Runnable{
                     if(!timerStarted){
                         timerStarted = true;
                         timer.schedule(gameToStart, time);
+                        newbie = true;
                     }
                 }else{
                     if(timerStarted){

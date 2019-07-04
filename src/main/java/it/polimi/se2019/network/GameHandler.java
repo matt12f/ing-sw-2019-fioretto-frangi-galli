@@ -65,11 +65,16 @@ public class GameHandler implements Runnable {
         ClientHandler clientTurn;
         //scelta rotazione e assegnamento pedina
         setClientColor();
-        shuffleClient(this.players);
-        for (ClientHandler client: this.players) {
-            client.setStatus(Status.NOTMYTURN);
+        for (ClientHandler player: players) {
+            player.setGame(this);
         }
-        getMapSkull(this.players.get(0));
+        shuffleClient(this.players);
+        notifyGameHandlerStart();
+        try {
+            getMapSkull(this.players.get(0));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         createController();
         for (ClientHandler player: this.players) {
             player.setLocalView(new LocalView(this.players.indexOf(player), this.controller.getRemoteView()));
@@ -105,7 +110,6 @@ public class GameHandler implements Runnable {
                 waitingRequest(clientTurn);
                 PlayerManager.choiceExecutor(controller, clientTurn.getChosenAction());
                 notifyView(clientTurn);
-
                 //rileggi il codice
                 for (ClientHandler client : players) {
                     client.setDeadsPlayer(this.controller.getMainGameModel().getDeadPlayers().size());
@@ -165,6 +169,13 @@ public class GameHandler implements Runnable {
         winnerIs();
     }
 
+    private synchronized void notifyGameHandlerStart() {
+        for (ClientHandler client: players) {
+            client.setStatus(Status.NOTMYTURN);
+        }
+
+    }
+
     private synchronized void winnerIs() {
         int max = 0;
         String winnerNick = "";
@@ -179,10 +190,10 @@ public class GameHandler implements Runnable {
         }
     }
 
-    private synchronized void waitForReSpawn(ClientHandler c) {
+    private void waitForReSpawn(ClientHandler c) {
         while(c.getStatus() == Status.DEAD){
             try {
-                wait();
+                Thread.sleep(1);
             } catch (InterruptedException e) {
                 LOGGER.log(Level.FINE,"wait for respawn",e);
             }
@@ -202,21 +213,21 @@ public class GameHandler implements Runnable {
         }
     }
 
-    private synchronized void getMapSkull(ClientHandler clientTurn) {
+    private void getMapSkull(ClientHandler clientTurn) throws InterruptedException {
+        while(!clientTurn.getStatus().equals(Status.WAITING))
+            Thread.sleep(1);
         clientTurn.setStatus(Status.MAPSKULL);
-        notifyAll();
         while(clientTurn.getStatus() == Status.MAPSKULL){
             try {
-                wait();
+                Thread.sleep(1);
             } catch (InterruptedException e) {
                 LOGGER.log(Level.FINE,"get map skull",e);
             }
         }
     }
 
-    private synchronized void notifyView(ClientHandler player) {
+    private void notifyView(ClientHandler player) {
         player.setStatus(Status.VIEW);
-        notifyAll();
     }
 
     private synchronized void calculateActions(ClientHandler clientTurn){
@@ -225,10 +236,10 @@ public class GameHandler implements Runnable {
         this.notifyAll();
     }
 
-    private synchronized void waitingRequest(ClientHandler clientTurn){
+    private void waitingRequest(ClientHandler clientTurn){
         while(clientTurn.getStatus()!= Status.WAITING){
             try {
-                this.wait();
+                Thread.sleep(1);
             } catch (InterruptedException e) {
                 LOGGER.log(Level.FINE,"waiting request",e);
             }
@@ -262,10 +273,9 @@ public class GameHandler implements Runnable {
         clientTurn.setStatus(Status.MYTURN);
     }
 
-    private synchronized void waitForSpawn(ClientHandler player) throws InterruptedException {
-        notifyAll();
+    private void waitForSpawn(ClientHandler player) throws InterruptedException {
         while(player.getStatus() == Status.SPAWN){
-            wait();
+            Thread.sleep(1);
         }
     }
 

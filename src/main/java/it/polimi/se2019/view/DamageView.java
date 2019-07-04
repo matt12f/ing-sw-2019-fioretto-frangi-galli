@@ -1,8 +1,9 @@
 package it.polimi.se2019.view;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class DamageView {
+public class DamageView implements Serializable {
     private char[] damage;
     private ArrayList<Character> marks;
 

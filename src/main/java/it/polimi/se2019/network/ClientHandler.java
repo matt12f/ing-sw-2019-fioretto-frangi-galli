@@ -34,6 +34,7 @@ public class ClientHandler extends Thread implements RMIInterface {
     private PowerupCard spawn;
     private String winnerNick;
     private int deadsPlayer;
+    public Object lock;
 
     @Override
     public void run(){
@@ -48,19 +49,10 @@ public class ClientHandler extends Thread implements RMIInterface {
                     this.nickname = (String) input.readObject();
                     AdrenalineServer.nickController(this);
                 }
-
-                this.output.writeObject(AdrenalineServer.getLobby());
-                while(!status.equals(Status.START)){
-                    Thread.sleep(100);
-                    if(this.status == Status.UPDATE){
-                        this.output.writeObject("UPDATE");
-                        ArrayList<String> temp = AdrenalineServer.getLobby();
-                        this.output.writeObject(temp);
-                        this.output.reset();
-                        this.status = Status.WAITING;
-                    }
-                }
+                initializeLobby();
+                waitingPlayers();
             }
+            this.output.writeObject("START");
             waitForView();
             sendLocalView(); //invio la view al client
             while(status != Status.START){
@@ -109,23 +101,46 @@ public class ClientHandler extends Thread implements RMIInterface {
         }
     }
 
-    private synchronized void waitForWinner() throws InterruptedException {
-        while(this.status != Status.WINNERIS)
-            wait();
+    private synchronized void initializeLobby() throws IOException {
+        this.output.writeObject("LOBBY");
+        this.output.writeObject(AdrenalineServer.getLobby());
     }
 
-    void sendLocalView() throws IOException {
+    private void waitingPlayers() throws InterruptedException, IOException {
+        while(!this.status.equals(Status.NOTMYTURN)){
+            sleep(1);
+            if(this.status.equals(Status.UPDATE)){
+                    updateLobby();
+            }
+        }
+    }
+
+    private synchronized void updateLobby() throws IOException {
+        this.output.writeObject("UPDATE");
+        this.output.writeObject("LOBBY");
+        ArrayList<String> temp = AdrenalineServer.getLobby();
+        this.output.writeObject(temp);
+        this.output.reset();
+        this.status = Status.WAITING;
+    }
+
+    private void waitForWinner() throws InterruptedException {
+        while(this.status != Status.WINNERIS)
+            sleep(1);
+    }
+
+    synchronized void sendLocalView() throws IOException {
         this.output.writeObject("VIEW");
         this.input.readBoolean();
+        System.out.println("invio");
         this.output.reset();
         this.output.writeObject(this.localView);
     }
 
-    private synchronized void statusChanged() throws InterruptedException {
+    private void statusChanged() throws InterruptedException {
         this.status = Status.WAITING;
-        notifyAll();
         while(this.status == Status.WAITING){
-            wait();
+            sleep(1);
         }
     }
 
@@ -139,10 +154,10 @@ public class ClientHandler extends Thread implements RMIInterface {
         notifyAll();
     }
 
-    private synchronized void waiting() throws InterruptedException
+    private void waiting() throws InterruptedException
     {
         while(this.status == Status.WAITING)
-            wait();
+            sleep(1);
     }
 
     public Socket getSocket() {
@@ -188,10 +203,10 @@ public class ClientHandler extends Thread implements RMIInterface {
         this.nickname = nickname;
     }
 
-    private synchronized void waitForView() throws InterruptedException, IOException, ClassNotFoundException {
+    private void waitForView() throws InterruptedException, IOException, ClassNotFoundException {
         status = Status.WAITING;
         while(this.status != Status.VIEW ){
-            wait();
+            Thread.sleep(1);
             if(this.status == Status.MAPSKULL)
                 setMapSkull();
             if(this.status == Status.SPAWN)

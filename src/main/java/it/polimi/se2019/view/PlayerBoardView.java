@@ -3,7 +3,9 @@ package it.polimi.se2019.view;
 import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.model.game.PlayerBoard;
 
-public  class PlayerBoardView {
+import java.io.Serializable;
+
+public  class PlayerBoardView implements Serializable {
     private Color color;
     private AmmoView ammo;
     private boolean front;

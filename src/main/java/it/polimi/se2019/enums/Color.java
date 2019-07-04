@@ -1,6 +1,8 @@
 package it.polimi.se2019.enums;
 
-public enum Color{
+import java.io.Serializable;
+
+public enum Color implements Serializable {
     BLUE,
     YELLOW,
     WHITE,

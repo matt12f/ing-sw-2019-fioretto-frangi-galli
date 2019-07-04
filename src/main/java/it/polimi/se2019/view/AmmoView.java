@@ -1,6 +1,8 @@
 package it.polimi.se2019.view;
 
-public class AmmoView {
+import java.io.Serializable;
+
+public class AmmoView  implements Serializable {
     private int red;
     private int blue;
     private int yellow;

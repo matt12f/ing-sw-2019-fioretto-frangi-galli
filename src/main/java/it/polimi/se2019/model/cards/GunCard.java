@@ -6,9 +6,10 @@ import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
 import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class GunCard{
+public abstract class GunCard implements Serializable {
     protected char [] ammoCost;
     protected String description;
     private boolean loaded;

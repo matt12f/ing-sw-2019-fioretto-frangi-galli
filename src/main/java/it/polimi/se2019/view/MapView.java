@@ -7,9 +7,10 @@ import it.polimi.se2019.model.game.GameModel;
 import it.polimi.se2019.model.game.Map;
 import it.polimi.se2019.model.game.NewCell;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class MapView {
+public class MapView implements Serializable {
 
     private int mapNumber;
     private CellView[][] boardMatrix;

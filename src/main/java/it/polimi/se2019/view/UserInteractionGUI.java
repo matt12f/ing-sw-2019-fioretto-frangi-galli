@@ -730,11 +730,11 @@ public class UserInteractionGUI extends UserInteraction {
                 SwingUtilities.getWindowAncestor(button).dispose();
                 switch (error){
                     case "nick":
-                        mainLogGUI();
+                        //mainLogGUI();
                         SwingUtilities.getWindowAncestor(button).dispose();
                         break;
                     case "connectionIP":
-                        mainLogGUI();
+                        //mainLogGUI();
                         SwingUtilities.getWindowAncestor(button).dispose();
                         break;
                     case "connection":
@@ -767,7 +767,7 @@ public class UserInteractionGUI extends UserInteraction {
         }
 
 
-        waitingList.setModal(true);
+        waitingList.setModal(false);
 
         waitingList.setTitle("wait for other players");
         waitingList.getContentPane().add(mainPanel);

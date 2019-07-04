@@ -4,9 +4,10 @@ import it.polimi.se2019.model.cards.AmmoTileCard;
 import it.polimi.se2019.model.game.Figure;
 import it.polimi.se2019.model.game.NewCell;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class CellView {
+public class CellView implements Serializable {
     private NewCell correspondingCell;
     private int lineIndex;
     private int columnIndex;

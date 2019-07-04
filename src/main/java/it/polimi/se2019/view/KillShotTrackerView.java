@@ -2,9 +2,10 @@ package it.polimi.se2019.view;
 
 import it.polimi.se2019.model.game.KillShotTrack;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class KillShotTrackerView {
+public class KillShotTrackerView  implements Serializable {
     private int skulls;
     private String [] kills;
     private ArrayList<Character> extraKills;
