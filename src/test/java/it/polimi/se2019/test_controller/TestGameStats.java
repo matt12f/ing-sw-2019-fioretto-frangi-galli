@@ -1,5 +1,6 @@
 package it.polimi.se2019.test_controller;
 
+import it.polimi.se2019.controller.Controller;
 import it.polimi.se2019.controller.GameStats;
 import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.model.game.Player;
@@ -23,12 +24,15 @@ public class TestGameStats {
         players.add(player3);
         players.add(player4);
 
+        Controller controller=new Controller(players,2,5);
+
         player1.setScore(23);
         player2.setScore(12);
         player3.setScore(42);
         player4.setScore(21);
 
-        GameStats testRanking=new GameStats(players,25);
+
+        GameStats testRanking=new GameStats(controller,25);
 
         assertEquals(25, testRanking.getNumberOfTurns());
         assertEquals(player2,testRanking.getRanking().get(0));

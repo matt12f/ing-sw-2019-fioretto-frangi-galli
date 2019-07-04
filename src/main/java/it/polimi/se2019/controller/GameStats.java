@@ -8,17 +8,19 @@ import java.util.Comparator;
 
 public class GameStats {
     private ArrayList<Player> ranking;
-    private int numberOfTurns;
+    private int numberOfTurns; //it's the number of turns it took to end the game
 
-    public GameStats(ArrayList<Player> ranking, int numberOfTurns){
-        Player killshotTrackWinner= finalScoring(ranking);
+    public GameStats(Controller currentController, int numberOfTurns){
+        ArrayList<Player> players=currentController.getMainGameModel().getPlayerList();
+
+        Player killshotTrackWinner= finalScoring(players);
         this.numberOfTurns = numberOfTurns;
-        Collections.sort(ranking, new IntegerComparator());
-        this.ranking = ranking;
+        Collections.sort(players, new IntegerComparator());
+        this.ranking = players;
 
         //section for TIE BREAKING
         //if there's a tie, it will break in favor of the player that has the highest score on the killshot track
-        //if it's still a tie, they both wil
+        //if it's still a tie, they both win
         //TODO gestione delle parità
     }
 
@@ -33,6 +35,7 @@ public class GameStats {
      * @return the player that has the highest score on the killshot track
      */
     private Player finalScoring(ArrayList<Player> players){
+
         //TODO scrivere metodo
         return null;
     }

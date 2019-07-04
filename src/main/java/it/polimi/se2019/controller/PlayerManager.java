@@ -10,10 +10,7 @@ import it.polimi.se2019.model.game.*;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.view.LocalView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -81,15 +78,7 @@ public class PlayerManager {
 
         //section for dealing points
         //here we extract the current value of the board
-        int value=board.getCurrentBoardValue();
-
-        for(char playerColor: listOffenders(board.getDamageTrack().getDamage())) {
-            currentController.getMainGameModel().getPlayerByColor(playerColor).setScore(value);
-            if(value>1)
-                value = value - 2;
-            else
-                value=1;
-        }
+        dealPoints(currentController,board);
 
         //we'll then decrease the value of the board after the kill
         board.decreaseBoardValue();
@@ -112,6 +101,26 @@ public class PlayerManager {
     }
 
     /**
+     * this deals the points on a board (no killshot and or overkill management)
+     * @param board is the board to score
+     */
+    private static void dealPoints(Controller currentController, PlayerBoard board){
+        int value=board.getCurrentBoardValue();
+        ArrayList<Character> offendersList=listOffenders(board.getDamageTrack().getDamage());
+
+        //It removes blanks, which may happen if you try to score a damage track at the end of the game (no kills)
+        offendersList.removeIf(character -> character.equals(' '));
+
+        for(Character playerColor: offendersList) {
+            currentController.getMainGameModel().getPlayerByColor(playerColor).setScore(value);
+            if(value>1)
+                value = value - 2;
+            else
+                value=1;
+        }
+    }
+
+    /**
      * this method builds a list of the players char colors by the number of damage they've given
      * (See tests for example)
      *
@@ -119,26 +128,26 @@ public class PlayerManager {
      *
      *  @param damage is the damageTrack
      */
-    private static char[] listOffenders(char[] damage) {
+    private static ArrayList<Character> listOffenders(char[] damage) {
         ArrayList<Character> damageList=new ArrayList<>();
         for(char car: damage)
             damageList.add(car);
 
-        int numberOfOffenders=0;
         //here it orders the damage (it's in the order it's given)
-        ArrayList<Character> temp=new ArrayList<>();
-        for(Character character: damageList){
-            if(!temp.contains(character)){
-                numberOfOffenders++;
-                for (int i = 0; i < Collections.frequency(damageList,character); i++)
-                    temp.add(character);
-            }
-        }
 
-        char [] offendersList=new char[numberOfOffenders];
-        for (int i = 0; i < numberOfOffenders; i++)
-            offendersList[i]=temp.stream().distinct().collect(Collectors.toList()).get(i);
-        return offendersList;
+        LinkedHashMap<Character,Integer> occurrencesOf=new LinkedHashMap<>();
+        //here I'll count the occurrences for each character
+        for(Character character: damageList)
+            if(!occurrencesOf.containsKey(character))
+                occurrencesOf.put(character,Collections.frequency(damageList,character));
+
+        ArrayList<Character> temp = new ArrayList<>();
+
+        occurrencesOf.entrySet().stream()
+                .sorted((entry1, entry2) -> - entry1.getValue().compareTo(entry2.getValue()))
+                .forEach(character -> temp.add(character.getKey()));
+
+        return temp;
 
     }
 
