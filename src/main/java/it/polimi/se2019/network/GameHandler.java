@@ -2,6 +2,7 @@ package it.polimi.se2019.network;
 
 import it.polimi.se2019.controller.AvailableActions;
 import it.polimi.se2019.controller.Controller;
+import it.polimi.se2019.controller.MapManager;
 import it.polimi.se2019.controller.PlayerManager;
 import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.enums.Status;
@@ -135,6 +136,7 @@ public class GameHandler implements Runnable {
                         }
                     }
                 }
+                MapManager.refillEmptiedCells(controller.getMainGameModel().getCurrentMap().getBoardMatrix(),controller.getMainGameModel().getCurrentDecks());
                 if (this.controller.getMainGameModel().getKillshotTrack().getSkulls() == 0)
                     break;
             }
@@ -156,6 +158,7 @@ public class GameHandler implements Runnable {
             }
             clientTurn.setStatus(Status.NOTMYTURN);
             controller.getActiveTurn().nextTurn(controller);
+            MapManager.refillEmptiedCells(controller.getMainGameModel().getCurrentMap().getBoardMatrix(),controller.getMainGameModel().getCurrentDecks());
         }
         for (ClientHandler player: players) {
             player.setStatus(Status.ENDGAME);

@@ -43,13 +43,13 @@ public class AdrenalineClient {
         ClientCallBackClass callBackClass = new ClientCallBackClass();
         clientCallBack stubClient = null;
         new OpenerGUI();
-        Thread.sleep(1000*120);
-        /*else{
+        /*Thread.sleep(1000*120);
+        else{
             //export clientCallBack
             stubClient = (clientCallBack) UnicastRemoteObject.exportObject(callBackClass, 0);
             connection.getLocalRegistry().bind(("C" + connection.getHost()), stubClient);
             connection.getRegistry().lookup("");
-        }*/
+        }
 
 
         while(!start){
@@ -59,7 +59,6 @@ public class AdrenalineClient {
         }
         message = (String) connection.getInput().readObject();
         if(message.equals("MAP")) {
-            //todo fai partire scelta mappa
             message = (String) connection.getInput().readObject();
         }
         if(message.equals("VIEW")){
@@ -70,8 +69,7 @@ public class AdrenalineClient {
         }
         message = (String) connection.getInput().readObject();
         if(message.equals("SPAWN")) {
-            //todo far partire la schermata e poi inviare al server
-        }
+        }*/
     }
 
     private static ActionRequestView getActionFromUser(boolean lastMove){
@@ -153,8 +151,10 @@ public class AdrenalineClient {
         if (GUI) {
             answer = userInteractionGUI.mainLogGUI();
             try {
-                setConnection(answer[1]);
-                connection.setStream();
+                if(connection.getSocket() == null) {
+                    setConnection(answer[1]);
+                    connection.setStream();
+                }
             } catch (IOException e) {
                 userInteractionGUI.showMessage("An error has occurred trying to connect to the specified server, please check the IP.");
             }

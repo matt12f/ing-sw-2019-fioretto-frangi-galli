@@ -1,18 +1,17 @@
 package it.polimi.se2019.test_GUI;
 
 
-//TODO classe da rimuovere
-public class TestGUI {
+import it.polimi.se2019.view.UserInteractionGUI;
+import org.junit.jupiter.api.Test;
 
 
-    public static void testGeneralGui(){
-        //GameBoardGui board =new GameBoardGui(1);
-        //OpenerGUI open = new OpenerGUI();
+class TestGUI {
 
+    @Test
+     void testErrorMessage(){
+        UserInteractionGUI userInteractionGUI = new UserInteractionGUI();
+
+        userInteractionGUI.errorDisplay("nick");
     }
 
-
-    public static void main(String[] args) {
-        testGeneralGui();
-    }
 }

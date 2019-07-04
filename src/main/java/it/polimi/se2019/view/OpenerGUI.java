@@ -14,7 +14,7 @@ public class OpenerGUI {
 
     public  OpenerGUI(){
 
-        Frame frame = new Frame("ADRENALINE");
+        JFrame frame = new JFrame("ADRENALINE");
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints container = new GridBagConstraints();
@@ -39,7 +39,7 @@ public class OpenerGUI {
         container.gridy=2;
         mainPanel.add(cli, container);
 
-
+        frame.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new OpenerGUI.CloseListener());
         frame.add(mainPanel);
         frame.setSize(400,400);
