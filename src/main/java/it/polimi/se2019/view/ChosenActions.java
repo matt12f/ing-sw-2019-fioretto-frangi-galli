@@ -143,8 +143,8 @@ public class ChosenActions implements Serializable {
 
         //selection of normal targets and secondary targets different from the first
         if(!combination.getPlayersTargetList().isEmpty())
-            this.targetsFromList1.addAll(selectTargets(combination.getPlayersTargetList(), combination.getMaxNumPlayerTargets()));
-            //TODO selezione secondo target per MachineGUN
+            this.targetsFromList1.addAll(selectTargets(combination.getPlayersTargetList(),combination.getMinNumPlayerTargets(), combination.getMaxNumPlayerTargets()));
+
 
         if(!combination.getTargetRooms().isEmpty())
             this.targetRoom = selectRoom(combination.getTargetRooms());
@@ -280,7 +280,7 @@ public class ChosenActions implements Serializable {
         if(cellWithTargets.getMaxTargetsInCell()==0 && cellWithTargets.getMinTargetsInCell()==0)
             return targets;
 
-        targets.addAll(selectTargets(cellWithTargets.getTargets(),cellWithTargets.getMaxTargetsInCell()));
+        targets.addAll(selectTargets(cellWithTargets.getTargets(),1, cellWithTargets.getMaxTargetsInCell()));
 
         return targets;
     }
@@ -291,7 +291,11 @@ public class ChosenActions implements Serializable {
         return stringList;
     }
 
-    private ArrayList<Player> selectTargets(ArrayList<Player> playersTargetList, int maxTargets) {
+    /**
+     * this method selects one or more targets from a given list of Players
+     * @param playersTargetList is the list of targets
+     */
+    private ArrayList<Player> selectTargets(ArrayList<Player> playersTargetList, int minTargets, int maxTargets) {
         ArrayList<Player> targets=new ArrayList<>();
 
         //normal selection of 1 or more targets
@@ -303,7 +307,14 @@ public class ChosenActions implements Serializable {
             //here we're removing the players already selected
             playersTargetList.remove(targets.get(0));
 
-            int cont = 1;
+            //manages cards with 2 minimum targets
+            int cont;
+            if (minTargets == 2 && !playersTargetList.isEmpty()) {
+                targets.add(selectOneTarget(playersTargetList, "Scegli il 2° target da colpire"));
+                cont=2;
+            }else
+                cont = 1;
+
             while(maxTargets>cont && !playersTargetList.isEmpty() && this.askUser.yesOrNo("vuoi selezionare altri target? "+"\nTarget restanti: "+(maxTargets-cont), "Si", "No")){
                 cont++;
                 targets.add(selectOneTarget(playersTargetList, "scegli il " + cont + "° target da colpire"));

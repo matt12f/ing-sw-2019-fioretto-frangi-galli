@@ -25,8 +25,14 @@ public class PlayerManager {
      * Note: more than one killshot in one turn -> awards you a point
      */
     public static void scoringProcess(Controller currentController){
-        //TODO usare adrenaline manager sugli altri player
+        //activating adrenaline modes for alive players
+        ArrayList<Player> playersAlive=new ArrayList<>(Player.duplicateList(currentController.getMainGameModel().getPlayerList()));
+        playersAlive.removeAll(currentController.getMainGameModel().getDeadPlayers());
 
+        for(Player player:playersAlive)
+            adrenalineManager(player);
+
+        //scoring section
         //if there are dead players we must score their boards
         if(!currentController.getMainGameModel().getDeadPlayers().isEmpty()){
             ArrayList<PlayerBoard> boardsDeadPlayers = new ArrayList<>();
@@ -44,9 +50,13 @@ public class PlayerManager {
             }
 
         }
-        //TODO svuota la board dalle drop presenti
 
         //TODO considera scoring quando c'è il frenzy attivo
+        //in frenzy: no killshot, boards in frenzy mode do not offer first blood points
+
+        //adrenaline and damage track reset
+        for (Player deadPlayer: currentController.getMainGameModel().getDeadPlayers())
+            adrenalineReset(deadPlayer);
 
         //here we'll update the RemoteView
         currentController.getMainGameModel().notifyRemoteView();
@@ -249,14 +259,25 @@ public class PlayerManager {
     /**
      * this method enables the adrenaline modes in the player boards of a given player
      */
-    public static void adrenalineManager(Player player){
+    private static void adrenalineManager(Player player){
         if(player.getPlayerBoard().getDamageTrack().getDamage().length >= 3)
             player.getPlayerBoard().getActionTileNormal().setAdrenalineMode1(true);
 
         else if(player.getPlayerBoard().getDamageTrack().getDamage().length >= 6)
-            player.getPlayerBoard().getActionTileNormal().setAdrenalineMode1(false);
+            player.getPlayerBoard().getActionTileNormal().setAdrenalineMode2(true);
 
     }
+
+    /**
+     * this method deactivates both adrenaline modes for players that have died
+     * and also resets their damage tracks
+     */
+    private static void adrenalineReset(Player player){
+        player.getPlayerBoard().getDamageTrack().resetDmgTrack();
+        player.getPlayerBoard().getActionTileNormal().setAdrenalineMode1(false);
+        player.getPlayerBoard().getActionTileNormal().setAdrenalineMode2(false);
+    }
+
 
     public static void payGunCardCost(Player player, char [] cost, boolean fullOrReload){
         char [] reloadCost=new char[cost.length-1];

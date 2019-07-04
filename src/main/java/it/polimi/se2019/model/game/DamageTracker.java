@@ -35,19 +35,6 @@ public class DamageTracker {
         return spotFound;
     }
 
-    /**
-     * this method evaluates if a player is alive, killed or overkilled
-     * @return
-     */
-    public String playerStatus(){
-        if(this.damage[12]!=' ')
-            return "overkill";
-        else if(this.damage[11]!=' ')
-            return "kill";
-        else
-            return "alive";
-    }
-
 
     public String dealDamage(char [] damageToDeal){
         for (char damage: damageToDeal)
@@ -110,7 +97,7 @@ public class DamageTracker {
     /**
      * this method resets the vector damage
      */
-    public void setKill(){
+    public void resetDmgTrack(){
         for (int i=0; i < 12; i++) {
             this.damage[i]= ' ';
         }
