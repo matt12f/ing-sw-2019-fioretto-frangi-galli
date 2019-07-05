@@ -86,4 +86,17 @@ public  class PlayerBoardView implements Serializable {
     public Color getColor() {
         return color;
     }
+
+    @Override
+    public boolean equals(Object item) {
+        if (item == null)
+            return false;
+
+        if (this.getClass() != item.getClass())
+            return false;
+
+        PlayerBoardView otherItem = (PlayerBoardView) item;
+
+        return this.color.equals(otherItem.color);
+}
 }

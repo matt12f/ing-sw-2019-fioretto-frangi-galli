@@ -16,22 +16,20 @@ public class ScoreViewGUI extends JFrame  {
         container.gridx=0;
         container.gridy=0;
 
-        mainPanel.add(new Label("your score:"+ownerBoard.getScore()+" points"), container);
+        mainPanel.add(new Label("your score: "+ownerBoard.getScore()+" points"), container);
 
-        int x=0;
+        int x=1;
 
         for (int i = 0; i< opponentBoards.size();i++){
             container.gridx=0;
             container.gridy=x;
-            mainPanel.add(new Label("your score:"+ opponentBoards.get(i).getScore() + " points"), container);
+            mainPanel.add(new Label(opponentBoards.get(i).getColor().toString()+" Player:"+
+                    opponentBoards.get(i).getScore() + " points"), container);
             x+=1;
         }
         container.gridx=0;
         container.gridy=x;
         mainPanel.add(new Label("Total kills: "+ kills), container);
-
-
-
 
 
 

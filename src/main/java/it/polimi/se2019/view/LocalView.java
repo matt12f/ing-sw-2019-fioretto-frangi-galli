@@ -1,7 +1,5 @@
 package it.polimi.se2019.view;
 
-import it.polimi.se2019.model.game.*;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Observable;

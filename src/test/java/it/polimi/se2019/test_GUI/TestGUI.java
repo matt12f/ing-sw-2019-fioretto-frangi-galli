@@ -1,12 +1,8 @@
 package it.polimi.se2019.test_GUI;
 
 
-import it.polimi.se2019.AdrenalineClient;
 import it.polimi.se2019.controller.Controller;
-import it.polimi.se2019.enums.CellEdge;
-import it.polimi.se2019.enums.CellType;
 import it.polimi.se2019.enums.Color;
-import it.polimi.se2019.model.game.GameModel;
 import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.*;

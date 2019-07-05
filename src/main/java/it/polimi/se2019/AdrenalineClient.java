@@ -406,7 +406,7 @@ public class AdrenalineClient {
 
     private static void guiStarter () {
         for(int i = 0; i< getLocalView().getPlayerBoardViews().size();i++){
-            if (i != getLocalView().getPlayerId()){
+            if (getLocalView().getPlayerBoardViews().get(i) != getLocalView().getPersonalPlayerBoardView()){
                 opponentsBoards.add(getLocalView().getPlayerBoardViews().get(i));
             }
         }

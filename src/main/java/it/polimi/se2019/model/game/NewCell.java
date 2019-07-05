@@ -182,4 +182,23 @@ public class NewCell implements Serializable {
 
         return true;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder=new StringBuilder("Cella ");
+        stringBuilder.append(this.color);
+        stringBuilder.append(" di tipo: ");
+        stringBuilder.append(this.cellType.toString());
+
+        stringBuilder.append("\n Top: ");
+        stringBuilder.append(this.top);
+        stringBuilder.append("\n Bottom: ");
+        stringBuilder.append(this.bottom);
+        stringBuilder.append("\n Left: ");
+        stringBuilder.append(this.left);
+        stringBuilder.append("\n Right: ");
+        stringBuilder.append(this.right);
+
+        return stringBuilder.toString();
+    }
 }

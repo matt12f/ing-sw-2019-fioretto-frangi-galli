@@ -21,23 +21,13 @@ public class MapManager {
             case "Down":return 1;
             case"Left":return 2;
             case "Right": return 3;
+            default: return -1;
         }
-        return -1;
-    }
-
-    public static String getDirOfMove(int indexOfMove) {
-        switch (indexOfMove){
-            case 0: return"Up";
-            case 1: return "Down";
-            case 2: return "Left";
-            case 3:return "Right";
-        }
-        return "None";
     }
 
     public static Room getRoom(Controller currentController, NewCell cell){
         for(Room room: currentController.getMainGameModel().getCurrentMap().getRooms())
-           if(room.getColor().equals(cell.getColor()))
+           if(room.getColor()!=null && room.getColor().equals(cell.getColor()))
             return room;
         return null;
     }
@@ -166,6 +156,9 @@ public class MapManager {
         return minimumDist; //this will never be used
     }
 
+    /**
+     * this method returns a list of cells that are 2 moves away, without yours
+     */
     public static ArrayList<NewCell> squaresInRadius2(Controller currentController,FictitiousPlayer player){
         NewCell [][] board= currentController.getMainGameModel().getCurrentMap().getBoardMatrix();
         ArrayList<NewCell> possibleCells=new ArrayList<>(ActionManager.cellsOneMoveAway(currentController, player.getPosition()));
@@ -182,6 +175,9 @@ public class MapManager {
 
             }
         }
+
+        //the algorithm adds your cell as a side effect
+        possibleCells.remove(player.getPosition());
         return possibleCells;
     }
 }

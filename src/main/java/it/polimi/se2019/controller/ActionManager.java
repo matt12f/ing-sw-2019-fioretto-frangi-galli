@@ -46,8 +46,9 @@ public class ActionManager {
             MapManager.getRoom(currentController,arrivalCell).addPlayers(player);
         }
 
-        player.getFigure().getCell().removePlayers(player);
-        arrivalCell.addPlayers(player);
+        player.getFigure().getCell().removePlayers(player); //removes the player from the cell
+        player.getFigure().setCell(arrivalCell); //changes the cell saved in the player
+        arrivalCell.addPlayers(player); //adds the player on the new cell
     }
 
     /**
@@ -75,12 +76,13 @@ public class ActionManager {
         int availableRed=availableAmmo.getRed();
         int availableYellow=availableAmmo.getYellow();
 
-        for(PowerupCard powerupCard: activePlayer.getPlayerBoard().getHand().getPowerups())
-            switch (powerupCard.getCubeColor()){
-                case 'b':availableBlue++;break;
-                case 'y':availableYellow++;break;
-                case 'r':availableRed++;break;
-                default:break;
+        for(int i=0;i<activePlayer.getPlayerBoard().getHand().getPowerups().length;i++)
+            if(activePlayer.getPlayerBoard().getHand().getPowerups()[i]!=null)
+                switch (activePlayer.getPlayerBoard().getHand().getPowerups()[i].getCubeColor()){
+                    case 'b':availableBlue++;break;
+                    case 'y':availableYellow++;break;
+                    case 'r':availableRed++;break;
+                    default:break;
             }
         return availableBlue>=blue&&availableRed>=red&&availableYellow>=yellow;
     }
