@@ -1,5 +1,7 @@
 package it.polimi.se2019.view;
 
+import it.polimi.se2019.AdrenalineClient;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -52,8 +54,7 @@ public class AmmoGUI extends JPanel {
         actionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO turnConclusion va cambiato dinamicamente
-                ActionRequestView actions = new ActionRequestView(false);
+                ActionRequestView actions = new ActionRequestView(AdrenalineClient.isLast());
 
             }
 

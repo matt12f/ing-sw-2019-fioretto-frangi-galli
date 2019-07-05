@@ -32,6 +32,8 @@ public class AdrenalineClient {
     private static ArrayList<PlayerBoardView> opponentsBoards = new ArrayList<>() ;
     private static boolean connected = false;
     private static String[] answer;
+    private static boolean last;
+
 
     public static void main(String[] args){
         connection = new Connection(null, true);
@@ -250,7 +252,6 @@ public class AdrenalineClient {
 
     private static void matchPhase() throws IOException, ClassNotFoundException {
         boolean myturn;
-        boolean last;
         int deadPlayers;
         int actionNumber;
         String status;
@@ -399,6 +400,10 @@ public class AdrenalineClient {
 
     public static void setAnswer(String[] answer) {
         AdrenalineClient.answer = answer;
+    }
+
+    public static boolean isLast() {
+        return last;
     }
 }
 
