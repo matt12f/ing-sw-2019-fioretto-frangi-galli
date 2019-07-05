@@ -19,11 +19,13 @@ public class TestUserInteraction {
         askUser=new UserInteractionGUI();
         //askUser=new UserInteractionCLI();
 
-        testGunReload();
-        testActionSelection();
-        testYesOrNo();
-        testShowMessage();
-        testSelectionFromList();
+       // testGunReload();
+        //testActionSelection();
+        //testYesOrNo();
+        //testShowMessage();
+        //testSelectionFromList();
+
+        testMap();
     }
 
     private static void testSelectionFromList(){
@@ -33,7 +35,7 @@ public class TestUserInteraction {
     }
 
     private static void testShowMessage(){
-        askUser.showMessage("Provolone affumicato");
+        askUser.showMessage("<html>provolone<br>affumicato</html>");
     }
 
     private static void testYesOrNo(){
@@ -66,5 +68,11 @@ public class TestUserInteraction {
         System.out.println(result[0]);
         System.out.println(result[1]);
         System.out.println(result[2]);
+    }
+
+    private static void testMap(){
+        int [] temp=askUser.mapChooser();
+        System.out.println(temp[0]);
+        System.out.println(temp[1]);
     }
 }

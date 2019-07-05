@@ -36,12 +36,13 @@ public class GameModel extends Observable{
 
         //Map setup
         Gson gson = new Gson();
-        try (Reader reader = new FileReader("src/main/JSONfiles/map"+mapNumber+".json")) {
+        try (Reader reader = new FileReader("src/main/resources/JSONfiles/map"+mapNumber+".json")) {
             // Convert JSON File to Java Object
             this.currentMap = gson.fromJson(reader, Map.class);
         } catch (IOException e) {
             LOGGER.log(Level.FINE,"GameModel",e);
         }
+
         for(NewCell[] line:this.currentMap.getBoardMatrix())
             for(NewCell singleCell:line)
                 if(!singleCell.getCellType().equals(CellType.OUTSIDEBOARD))

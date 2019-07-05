@@ -28,7 +28,7 @@ public class MapViewGUI extends JPanel {
 
     public MapViewGUI(int config, CellView[][] boardMatrix){
 
-        this.map = new ImageIcon(new ImageIcon("src/main/sprite/maps/"+ config +".png").getImage().getScaledInstance(597,442,Image.SCALE_DEFAULT));
+        this.map = new ImageIcon(new ImageIcon("src/main/resources/sprite/maps/"+ config +".png").getImage().getScaledInstance(600,450,Image.SCALE_DEFAULT));
 
         this.labelBackground = new JLabel(map);
         labelBackground.setIcon(map);

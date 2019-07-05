@@ -16,23 +16,16 @@ public class GameBoardGui  {
     private MapViewGUI map;
     private PlayerZoneGUI playerZone;
     private BoardZoneGUI boardZone;
-    private ImageIcon background;
     private boolean frenzyStatus = false;
 
-    public GameBoardGui(int config, ArrayList<PlayerBoardView> opponentBoards,PlayerBoardView ownerBoard, CellView[][] boardMatrix){
+    public GameBoardGui(int config, ArrayList<PlayerBoardView> opponentBoards, PlayerBoardView ownerBoard, CellView[][] boardMatrix){
         Frame frame = new Frame("ADRENALINE");
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints container = new GridBagConstraints();
         mainPanel.setLayout(new GridBagLayout());
 
-        //TODO fix background o rimuovere
-        this.background = new ImageIcon(new ImageIcon("src/main/sprite/maps/background.png").getImage().getScaledInstance(1280,720,Image.SCALE_DEFAULT));
-        JLabel labelBackground = new JLabel(background);
-        labelBackground.setIcon(background);
 
-        //mainPanel.setLayout(new GridBagLayout());
-        //container.anchor = GridBagConstraints.NORTHWEST;
         this.map = new MapViewGUI(config, boardMatrix);
         container.gridx=0;
         container.gridy=0;
@@ -41,8 +34,6 @@ public class GameBoardGui  {
 
         this.map.setBoard(boardMatrix);
 
-        //mainPanel.setLayout(new GridBagLayout());
-        //container.anchor = GridBagConstraints.EAST;
         this.boardZone = new BoardZoneGUI(opponentBoards, ownerBoard, 0);
         container.gridx=1;
         container.gridy=1;
@@ -57,7 +48,6 @@ public class GameBoardGui  {
         container.gridwidth = 2;
         mainPanel.add(playerZone, container);
 
-        labelBackground.add(mainPanel);
         frame.addWindowListener(new GameBoardGui.CloseListener());
         frame.add(mainPanel);
         frame.setSize(1280,720);

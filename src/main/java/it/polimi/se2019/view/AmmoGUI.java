@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 
 public class AmmoGUI extends JPanel {
     public JButton actionButton;
-    public AmmoGUI(AmmoView ammo ){
+    public AmmoGUI(AmmoView ammo){
         updateAmmo(ammo);
     }
 
@@ -37,8 +37,6 @@ public class AmmoGUI extends JPanel {
         container.gridx = 0;
         container.gridy = 3;
         add(actionButton,container);
-
-
 
         actionButton.addActionListener(new ActionListener() {
             @Override

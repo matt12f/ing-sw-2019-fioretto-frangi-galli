@@ -19,12 +19,11 @@ public class WeaponMenuGUI extends JFrame{
 
 
     public WeaponMenuGUI(GunCard weaponType){
-            this.weaponName = new Label(weaponType.getClass().getSimpleName().toUpperCase());
-            this.weaponInfo = new Label(weaponType.getDescription());
-            this.weaponCharge = new Label("Loaded:" + weaponType.isLoaded());
-            this.img = new ImageIcon(new ImageIcon("src/main/sprite/cards/weapons/weapons_"+ weaponType.getClass().getSimpleName().toLowerCase() +".png").getImage().getScaledInstance(120,203,Image.SCALE_DEFAULT));
-            this.image = new JLabel(img);
-
+        this.weaponName = new Label(weaponType.getClass().getSimpleName().toUpperCase());
+        this.weaponInfo = new Label(weaponType.getDescription());
+        this.weaponCharge = new Label("Loaded:" + weaponType.isLoaded());
+        this.img = new ImageIcon(new ImageIcon("src/main/resources/sprite/cards/weapons/weapons_"+ weaponType.getClass().getSimpleName().toLowerCase() +".png").getImage().getScaledInstance(120,203,Image.SCALE_DEFAULT));
+        this.image = new JLabel(img);
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints container = new GridBagConstraints();
