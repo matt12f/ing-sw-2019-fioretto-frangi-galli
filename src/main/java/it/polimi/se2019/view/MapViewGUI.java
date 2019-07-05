@@ -54,35 +54,35 @@ public class MapViewGUI extends JPanel {
         labelBackground.setIcon(map);
 
         ///////blue weapons
-         this.weaponblue1 = new WeaponButtonGUI(56,80);
+         this.weaponblue1 = new WeaponButtonGUI(56,80, false);
          this.weaponblue1.setLocation(317, 0);
 
-        this.weaponblue2 = new WeaponButtonGUI(56,80);
+        this.weaponblue2 = new WeaponButtonGUI(56,80, false);
         this.weaponblue2.setLocation(382, 0);
 
-        this.weaponblue3 = new WeaponButtonGUI(56,80);
+        this.weaponblue3 = new WeaponButtonGUI(56,80, false);
         this.weaponblue3.setLocation(448, 0);
 
         ////////red weapons
 
-        this.weaponred1 = new WeaponButtonGUI(80,56);
+        this.weaponred1 = new WeaponButtonGUI(80,56, true);
         this.weaponred1.setLocation(0, 160);
 
-        this.weaponred2 = new WeaponButtonGUI(80,56);
+        this.weaponred2 = new WeaponButtonGUI(80,56, true);
         this.weaponred2.setLocation(0, 225);
 
-        this.weaponred3 = new WeaponButtonGUI(80,56);
+        this.weaponred3 = new WeaponButtonGUI(80,56, true);
         this.weaponred3.setLocation(0, 286);
 
         ///////yellow weapons
 
-        this.weaponyellow1 = new WeaponButtonGUI(80,56);
+        this.weaponyellow1 = new WeaponButtonGUI(80,56, true);
         this.weaponyellow1.setLocation(518, 250);
 
-        this.weaponyellow2 = new WeaponButtonGUI(80,56);
+        this.weaponyellow2 = new WeaponButtonGUI(80,56, true);
         this.weaponyellow2.setLocation(518, 311);
 
-        this.weaponyellow3 = new WeaponButtonGUI(80,56);
+        this.weaponyellow3 = new WeaponButtonGUI(80,56, true);
         this.weaponyellow3.setLocation(518, 375);
 
 
@@ -220,17 +220,17 @@ public class MapViewGUI extends JPanel {
         }
 
         ///////update weapons//////
-        weaponblue1.updateImage(boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(0));
-        weaponblue2.updateImage(boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(1));
-        weaponblue3.updateImage(boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(2));
+        weaponblue1.updateImage(boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(0), false);
+        weaponblue2.updateImage(boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(1), false);
+        weaponblue3.updateImage(boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(2), false);
 
-        weaponred1.updateImage(boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(0));
-        weaponred2.updateImage(boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(1));
-        weaponred3.updateImage(boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(2));
+        weaponred1.updateImage(boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(0), true);
+        weaponred2.updateImage(boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(1), true);
+        weaponred3.updateImage(boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(2), true);
 
-        weaponyellow1.updateImage(boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(0));
-        weaponyellow2.updateImage(boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(1));
-        weaponyellow3.updateImage(boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(2));
+        weaponyellow1.updateImage(boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(0), true);
+        weaponyellow2.updateImage(boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(1), true);
+        weaponyellow3.updateImage(boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(2), true);
 
 
 

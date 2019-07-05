@@ -562,15 +562,15 @@ public class UserInteractionGUI extends UserInteraction {
         GridBagConstraints container = new GridBagConstraints();
         mainPanel.setLayout(new GridBagLayout());
 
-        WeaponButtonGUI w1  = new WeaponButtonGUI(100,160);
-        WeaponButtonGUI w2  = new WeaponButtonGUI(100,160);
-        WeaponButtonGUI w3  = new WeaponButtonGUI(100,160);
-        WeaponButtonGUI w4  = new WeaponButtonGUI(100,160);
+        WeaponButtonGUI w1  = new WeaponButtonGUI(100,160, false);
+        WeaponButtonGUI w2  = new WeaponButtonGUI(100,160, false);
+        WeaponButtonGUI w3  = new WeaponButtonGUI(100,160, false);
+        WeaponButtonGUI w4  = new WeaponButtonGUI(100,160, false);
 
-        w1.updateImage(list[0]);
-        w2.updateImage(list[1]);
-        w3.updateImage(list[2]);
-        w4.updateImage(list[3]);
+        w1.updateImage(list[0], false);
+        w2.updateImage(list[1], false);
+        w3.updateImage(list[2], false);
+        w4.updateImage(list[3],false);
 
         container.gridx=0;
         container.gridy=0;

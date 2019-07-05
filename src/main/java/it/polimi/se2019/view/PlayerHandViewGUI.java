@@ -23,9 +23,9 @@ public class PlayerHandViewGUI extends JPanel {
         setLayout(new GridBagLayout());
 
          weapons = new GunCard[3];
-         weapon1 = new WeaponButtonGUI(100,163);
-         weapon2 = new WeaponButtonGUI(100,163);
-         weapon3 = new WeaponButtonGUI(100,163);
+         weapon1 = new WeaponButtonGUI(100,163, false);
+         weapon2 = new WeaponButtonGUI(100,163 , false);
+         weapon3 = new WeaponButtonGUI(100,163, false);
 
          powerup1 = new PowerupButtonGUI();
          powerup2 = new PowerupButtonGUI();
@@ -102,9 +102,9 @@ public class PlayerHandViewGUI extends JPanel {
     }
 
     public void updateHand(GunCard[] weapons, PowerupCard[] powerups, AmmoView ammoView){
-       weapon1.updateImage(weapons[0]);
-       weapon2.updateImage(weapons[1]);
-       weapon3.updateImage(weapons[2]);
+       weapon1.updateImage(weapons[0], false);
+       weapon2.updateImage(weapons[1], false);
+       weapon3.updateImage(weapons[2], false);
        this.weapons = weapons;
        powerup1.updateImage(powerups[0]);
        powerup2.updateImage(powerups[1]);
