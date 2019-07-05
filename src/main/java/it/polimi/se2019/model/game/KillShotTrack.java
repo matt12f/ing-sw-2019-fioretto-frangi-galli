@@ -15,6 +15,7 @@ public class KillShotTrack {
     public KillShotTrack(int skulls){
         this.kills=new String[skulls];
         this.skulls = skulls;
+        this.extraKills=new ArrayList<>();
     }
 
     public int getSkulls() {
@@ -28,12 +29,12 @@ public class KillShotTrack {
         boolean found = false;
         int i = 0;
         do{
-            if(this.kills[i].isEmpty()){
+            if(this.kills[i]==null){
                 this.kills[i] = kill;
                 found = true;
             }
             i++;
-        }while(!found &&i<this.skulls);
+        }while(!found &&i<this.kills.length);
         this.skulls--;
 
         if(!found){
