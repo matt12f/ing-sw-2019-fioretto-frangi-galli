@@ -4,6 +4,8 @@ import javax.sound.sampled.Line;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import static it.polimi.se2019.enums.CellType.OUTSIDEBOARD;
 
@@ -107,6 +109,94 @@ public class MapViewGUI extends JPanel {
         }
 
         add(labelBackground);
+
+
+
+
+        /** ----------butoons zone------------*/
+
+        weaponblue1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(0) != null){
+                    WeaponMenuGUI frame =new WeaponMenuGUI(boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(0));
+                    frame.setVisible(true);
+                }
+            }});
+        weaponblue2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(1) != null){
+                    WeaponMenuGUI frame =new WeaponMenuGUI(boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(1));
+                    frame.setVisible(true);
+                }
+            }});
+        weaponblue3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(2) != null){
+                    WeaponMenuGUI frame =new WeaponMenuGUI(boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(2));
+                    frame.setVisible(true);
+                }
+            }});
+
+        ///////red//////
+        weaponred1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(0) != null){
+                    WeaponMenuGUI frame =new WeaponMenuGUI(boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(0));
+                    frame.setVisible(true);
+                }
+            }});
+
+        weaponred2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(1) != null){
+                    WeaponMenuGUI frame =new WeaponMenuGUI(boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(1));
+                    frame.setVisible(true);
+                }
+            }});
+        weaponred3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(2) != null){
+                    WeaponMenuGUI frame =new WeaponMenuGUI(boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(2));
+                    frame.setVisible(true);
+                }
+            }});
+
+
+
+        //////yellow/////
+
+        weaponyellow1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(0) != null){
+                    WeaponMenuGUI frame =new WeaponMenuGUI(boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(0));
+                    frame.setVisible(true);
+                }
+            }});
+
+        weaponyellow2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(1) != null){
+                    WeaponMenuGUI frame =new WeaponMenuGUI(boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(1));
+                    frame.setVisible(true);
+                }
+            }});
+
+        weaponyellow3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(2) != null){
+                    WeaponMenuGUI frame =new WeaponMenuGUI(boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(2));
+                    frame.setVisible(true);
+                }
+            }});
     }
 
     public void setBoard(CellView[][] boardMatrix){
