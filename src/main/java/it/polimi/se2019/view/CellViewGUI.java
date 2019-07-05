@@ -82,7 +82,7 @@ public class CellViewGUI extends JPanel {
         int x = 0, y = 0;
         for (int row = 0; row < 3; row++) {
             for (int column = 0; column < 3; column++) {
-                matrixGUI[row][column].setLocation(x, y);
+                matrixGUI[row][column].setLocation(x,y);
 
                 add(matrixGUI[row][column]);
 
