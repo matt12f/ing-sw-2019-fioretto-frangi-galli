@@ -100,8 +100,6 @@ public class MapViewGUI extends JPanel {
                     boardMatrixGUI[row][column].setType("outBoard");
 
                 }
-
-
                 x+=105;
             }
             x=95;
@@ -199,6 +197,7 @@ public class MapViewGUI extends JPanel {
     }
 
     public void setBoard(CellView[][] boardMatrix){
+        //removeAll();
         int x= 95, y= 90;
 
         for (int row=0;row < 3;row++){

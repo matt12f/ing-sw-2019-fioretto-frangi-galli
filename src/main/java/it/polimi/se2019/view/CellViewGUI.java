@@ -12,88 +12,110 @@ public class CellViewGUI extends JPanel {
     private String type;
 
 
-    public CellViewGUI(CellView cell){
+    public CellViewGUI(CellView cell) {
 
         this.matrixGUI = new SquareGUI[3][3];
-        this.type= type;
+
         ////creazione dello square in base al contenuto della cella/////
         int z = 0;
-        for (int i = 0; i<3 ; i++){
-            for (int j = 0; j< 3; j++){
-                if(j==0 && i==0 && cell.getDrop() != null){
-                    matrixGUI[j][i]= new SquareGUI(Color.BLACK);
-                }else if(z < cell.getPlayerFigures().size()){
-                    matrixGUI[j][i]= new SquareGUI(cell.getPlayerFigures().get(z).getColor());
-                    z+=1;
-                }else {
-                    matrixGUI[j][i]= new SquareGUI(Color.RED);
-                }
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (z < cell.getPlayerFigures().size()) {
+                    matrixGUI[j][i] = new SquareGUI(cell.getPlayerFigures().get(z).getColor());
+                    z += 1;
+                } else if (z == cell.getPlayerFigures().size() ) {
 
+                    matrixGUI[j][i] = new SquareGUI(Color.BLACK);
+                }else {
+                    matrixGUI[j][i] = new SquareGUI(Color.RED);
+                }
             }
+
         }
 
-        int x= 0,y = 0;
-        for(int row = 0; row < 3; row++){
-            for (int column =0 ; column < 3 ; column++){
-                matrixGUI[row][column].setLocation(x,y);
-                //if(matrixGUI[row][column] != null){
-                add(matrixGUI[row][column]);
-                //}
 
-                x+=30;
+
+        int x = 0, y = 0;
+        for (int row = 0; row < 3; row++) {
+            for (int column = 0; column < 3; column++) {
+                matrixGUI[row][column].setLocation(x, y);
+
+                add(matrixGUI[row][column]);
+
+
+                x += 30;
             }
-            x= 0;
-            y+= 30;
+            x = 0;
+            y += 30;
         }
 
         setOpaque(false);
 
 
-
-
-        setSize(100,90);
+        setSize(100, 90);
 
     }
 
-    public void updateCell(CellView cell){
+
+    public void updateCell(CellView cell) {
         removeAll();
-        for (int i = 0; i<3 ; i++){
-            for (int j = 0; j< 3; j++){
-                if(j==0 && i==0 && cell.getDrop() != null){
+        /**
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (j == 0 && i == 0 && cell.getDrop() != null) {
                     matrixGUI[j][i].updateImage(Color.BLACK);
-                }else if(!cell.getPlayerFigures().isEmpty()){ //TODO controllare
-                    for(Figure figure:cell.getPlayerFigures())
+                } else if (!cell.getPlayerFigures().isEmpty()) { //TODO controllare
+                    for (Figure figure : cell.getPlayerFigures())
                         matrixGUI[j][i].updateImage(figure.getColor());
-                }else {
-                    matrixGUI[j][i].updateImage(null);
+                } else {
+                    matrixGUI[j][i].updateImage(Color.RED);
                 }
 
             }
+        }*/
+
+        int z = 0;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (z < cell.getPlayerFigures().size()) {
+                    matrixGUI[j][i] = new SquareGUI(cell.getPlayerFigures().get(z).getColor());
+                    z += 1;
+                } else if (z == cell.getPlayerFigures().size() ) {
+
+                    matrixGUI[j][i] = new SquareGUI(Color.BLACK);
+                }else {
+                    matrixGUI[j][i] = new SquareGUI(Color.RED);
+                }
+            }
+
         }
 
         ///add on gui interface
-        int x= 0,y = 0;
-        for(int row = 0; row < 3; row++){
-            for (int column =0 ; column < 3 ; column++){
-                matrixGUI[row][column].setLocation(x,y);
+        int x = 0, y = 0;
+        for (int row = 0; row < 3; row++) {
+            for (int column = 0; column < 3; column++) {
+                matrixGUI[row][column].setLocation(x, y);
                 //if(matrixGUI[row][column] != null){
-                    add(matrixGUI[row][column]);
+                add(matrixGUI[row][column]);
                 //}
 
-                x+=30;
+                x += 30;
             }
-            x= 0;
-            y+= 30;
+            x = 0;
+            y += 30;
         }
     }
 
-    public String getType(){
+    public String getType() {
 
-        return  type;
+        return type;
     }
-    public void setType(String typex){
+
+    public void setType(String typex) {
         this.type = typex;
     }
-
-
 }
+
+
+
+
