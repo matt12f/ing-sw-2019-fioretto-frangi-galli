@@ -77,7 +77,7 @@ public class TestMap {
 
     public static Map createMap(int config)throws FileNotFoundException {
         Gson gson = new Gson();
-        Reader reader = new FileReader("src/main/JSONfiles/map"+config+".json");
+        Reader reader = new FileReader("src/main/resources/JSONfiles/map"+config+".json");
         return gson.fromJson(reader, Map.class);
     }
 
