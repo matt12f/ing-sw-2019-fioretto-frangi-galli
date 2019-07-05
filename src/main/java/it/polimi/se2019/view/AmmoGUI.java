@@ -43,7 +43,8 @@ public class AmmoGUI extends JPanel {
         actionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ActionRequestView actions = new ActionRequestView(AdrenalineClient.isLast());
+                AdrenalineClient.setActionRequested( new ActionRequestView(AdrenalineClient.isLast()));
+
             }
         });
     }

@@ -33,6 +33,8 @@ public class AdrenalineClient {
     private static boolean connected = false;
     private static String[] answer;
     private static boolean last;
+    private static ActionRequestView actionRequested;
+
 
 
     public static void main(String[] args){
@@ -255,7 +257,6 @@ public class AdrenalineClient {
         int deadPlayers;
         int actionNumber;
         String status;
-        ActionRequestView actionRequested;
         AvailableActions actions;
         ChosenActions chosen;
         while(start){
@@ -404,6 +405,10 @@ public class AdrenalineClient {
 
     public static boolean isLast() {
         return last;
+    }
+
+    public static void setActionRequested(ActionRequestView actionRequested) {
+        AdrenalineClient.actionRequested = actionRequested;
     }
 }
 
