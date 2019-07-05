@@ -94,8 +94,6 @@ public class MapView implements Serializable {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 4; j++) {
                 this.getCell(i, j).setPlayerFigures(boardMatrix[i][j]);
-                if(boardMatrix[i][j] != null && boardMatrix[i][j].getCellType().equals(CellType.DROP))
-                    this.getCell(i, j).setDrop(boardMatrix[i][j].toString());
                 this.getCell(i, j).setCell(boardMatrix[i][j]);
             }
         }

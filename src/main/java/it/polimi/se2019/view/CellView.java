@@ -1,5 +1,6 @@
 package it.polimi.se2019.view;
 
+import it.polimi.se2019.enums.CellType;
 import it.polimi.se2019.model.game.Figure;
 import it.polimi.se2019.model.game.NewCell;
 
@@ -10,7 +11,6 @@ public class CellView implements Serializable {
     private NewCell correspondingCell;
     private int lineIndex;
     private int columnIndex;
-    private String drop;
 
     private ArrayList<Figure> playerFigures;
 
@@ -20,17 +20,11 @@ public class CellView implements Serializable {
         this.lineIndex = lineIndex;
         this.columnIndex = columnIndex;
         this.playerFigures = new ArrayList<>();
-        try {
-            setDrop(playerPosition.getDrop().getContent());
-        }catch (NullPointerException e){
-            this.drop=null;
-        }
         setPlayerFigures(playerPosition);
         setCell(playerPosition);
     }
 
     public void setPlayerFigures(NewCell playerPosition){
-
         this.playerFigures.clear();
         if(playerPosition != null && !playerPosition.getPlayers().isEmpty())
             for (int i = 0; i < playerPosition.getPlayers().size(); i++){
@@ -58,16 +52,11 @@ public class CellView implements Serializable {
         return columnIndex;
     }
 
-    public void setDrop(String string){
-        this.drop = string;
-    }
-
     public String getDrop(){
-        return drop;
+        if(this.correspondingCell.getCellType().equals(CellType.DROP))
+            return this.correspondingCell.getDrop().getContent();
+        return "spawn";
     }
-
-
-
 
 }
 

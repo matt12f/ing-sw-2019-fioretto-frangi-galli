@@ -26,29 +26,9 @@ public class MapViewGUI extends JPanel {
 
     private CellViewGUI[][] boardMatrixGUI;
 
-/**
-    private CellViewGUI cella11;
-    private CellViewGUI cella12;
-    private CellViewGUI cella13;
-    private CellViewGUI cella14;
-
-    private CellViewGUI cella21;
-    private CellViewGUI cella22;
-    private CellViewGUI cella23;
-    private CellViewGUI cella24;
-
-    private CellViewGUI cella31;
-    private CellViewGUI cella32;
-    private CellViewGUI cella33;
-    private CellViewGUI cella34;
-*/
-
     public MapViewGUI(int config, CellView[][] boardMatrix){
 
-
-
-            this.map = new ImageIcon(new ImageIcon("src/main/sprite/maps/"+ config +".png").getImage().getScaledInstance(597,442,Image.SCALE_DEFAULT));
-
+        this.map = new ImageIcon(new ImageIcon("src/main/sprite/maps/"+ config +".png").getImage().getScaledInstance(597,442,Image.SCALE_DEFAULT));
 
         this.labelBackground = new JLabel(map);
         labelBackground.setIcon(map);
@@ -86,68 +66,26 @@ public class MapViewGUI extends JPanel {
         this.weaponyellow3.setLocation(518, 375);
 
 
-        ////spazio celle////
+        ////cell space ////
         int x= 95, y= 90;
         boardMatrixGUI = new CellViewGUI[3][4];
-        for (int row=0;row < 3;row++){
-            for(int column=0;column < 4;column++){
-                boardMatrixGUI[row][column]= new CellViewGUI(boardMatrix[row][column]);
+        for (int row=0; row < 3; row++){
+            for(int column=0; column < 4;column++){
+                boardMatrixGUI[row][column] = new CellViewGUI(boardMatrix[row][column]);
                 boardMatrixGUI[row][column].setLocation(x,y);
 
-                if (boardMatrix[row][column].getCorrespondingCell().getCellType() != OUTSIDEBOARD){
+                if (boardMatrix[row][column].getCorrespondingCell().getCellType() != OUTSIDEBOARD)
                     boardMatrixGUI[row][column].setType("inBoard");
-                }else {
+                else
                     boardMatrixGUI[row][column].setType("outBoard");
 
-                }
-                x+=105;
+                x+=105; //moves on the x-axis
             }
-            x=95;
-            y+=110;
+            x=95; //resets x-axis
+            y+=110; //moves on the y-axis
         }
 
- /**
-        /////first line////7
-         this.cella11 = new CellViewGUI();
-         this.cella11.setLocation(95,90);
-
-        this.cella12 = new CellViewGUI();
-        this.cella12.setLocation(200,90);
-
-        this.cella13 = new CellViewGUI();
-        this.cella13.setLocation(305,90);
-
-        this.cella14 = new CellViewGUI();
-        this.cella14.setLocation(410,90);
-
-        ////second line/////
-        this.cella21 = new CellViewGUI();
-        this.cella21.setLocation(95,200);
-
-        this.cella22 = new CellViewGUI();
-        this.cella22.setLocation(200,200);
-
-        this.cella23 = new CellViewGUI();
-        this.cella23.setLocation(305,200);
-
-        this.cella24 = new CellViewGUI();
-        this.cella24.setLocation(410,200);
-
-        ////third line////
-        this.cella31 = new CellViewGUI();
-        this.cella31.setLocation(95,305);
-
-        this.cella32 = new CellViewGUI();
-        this.cella32.setLocation(200,305);
-
-        this.cella33 = new CellViewGUI();
-        this.cella33.setLocation(305,305);
-
-        this.cella34 = new CellViewGUI();
-        this.cella34.setLocation(410,305);
-
-*/
-        ///////add zone////
+        /**---- add zones ---- */
 
         //labelBackground.add(mainPanel);
         labelBackground.add(weaponblue1);
@@ -161,39 +99,14 @@ public class MapViewGUI extends JPanel {
         labelBackground.add(weaponyellow3);
 
 
-
         for (int row=0;row < 3;row++) {
             for (int column = 0; column < 4; column++) {
-                if(boardMatrixGUI[row][column].getType() == "inBoard"){
+                if(boardMatrixGUI[row][column].getType().equals("inBoard"))
                     labelBackground.add(boardMatrixGUI[row][column]);
-                }
-
             }
-
         }
 
-        /**
-        labelBackground.add(cella11);
-        labelBackground.add(cella12);
-        labelBackground.add(cella13);
-        if(config != 2 && config != 4){
-            labelBackground.add(cella14);
-        }
-
-        labelBackground.add(cella21);
-        labelBackground.add(cella22);
-        labelBackground.add(cella23);
-        labelBackground.add(cella24);
-
-        if (config != 1 && config != 2){
-            labelBackground.add(cella31);
-        }
-        labelBackground.add(cella32);
-        labelBackground.add(cella33);
-        labelBackground.add(cella34);
-*/
         add(labelBackground);
-
     }
 
     public void setBoard(CellView[][] boardMatrix){
