@@ -73,20 +73,28 @@ public class PlayerHandViewGUI extends JPanel {
         weapon1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                WeaponMenuGUI frame =new WeaponMenuGUI(weapons[0]);
-                frame.setVisible(true);
+                if (weapons[0] != null){
+                    WeaponMenuGUI frame =new WeaponMenuGUI(weapons[0]);
+                    frame.setVisible(true);
+                }
             }});
         weapon2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                WeaponMenuGUI frame =new WeaponMenuGUI(weapons[1]);
-                frame.setVisible(true);
+                if (weapons[1] != null){
+                    WeaponMenuGUI frame =new WeaponMenuGUI(weapons[1]);
+                    frame.setVisible(true);
+                }
             }});
         weapon3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                WeaponMenuGUI frame =new WeaponMenuGUI(weapons[2]);
-                frame.setVisible(true);
+                if (weapons[2] != null){
+                    WeaponMenuGUI frame =new WeaponMenuGUI(weapons[2]);
+                    frame.setVisible(true);
+                }
+
+
             }});
 
 
