@@ -20,11 +20,11 @@ public class BoardZoneGUI extends JPanel {
     public BoardZoneGUI(ArrayList<PlayerBoardView> boards,PlayerBoardView ownerBoard, int kills){
 
         GridBagConstraints container = new GridBagConstraints();
-       setLayout(new GridBagLayout());
+        setLayout(new GridBagLayout());
 
-     this.boardsDynamic = boards;
-     this.ownerBoardDynamic= ownerBoard;
-     this.killsDynamic = kills;
+        this.boardsDynamic = boards;
+        this.ownerBoardDynamic= ownerBoard;
+        this.killsDynamic = kills;
 
 
        //////////creazione dinamica della board zone///////

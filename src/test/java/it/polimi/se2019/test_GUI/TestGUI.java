@@ -24,34 +24,43 @@ class TestGUI {
         assertTrue(true);
 
 
+
+
+        Player player1=new Player(1,"frank", Color.BLUE);
+        Player player2=new Player(2,"george",Color.YELLOW);
+        Player player3=new Player(3,"miles", Color.WHITE);
+
+
+        NewCell position1= new NewCell(Color.BLUE, CellEdge.WALL,CellEdge.DOOR,CellEdge.ROOM,CellEdge.ROOM, CellType.DROP);
+
+        player1.getFigure().setCell(position1);
+        player2.getFigure().setCell(position1);
+        player3.getFigure().setCell(position1);
+
+        ArrayList<Player> players=new ArrayList<>();
+        players.add(player1);
+        players.add(player2);
+        players.add(player3);
+
         ArrayList<PlayerBoardView> testBoards=new ArrayList<>();
         PlayerBoardView pb1=new PlayerBoardView();
         PlayerBoardView pb2=new PlayerBoardView();
         PlayerBoardView pb3=new PlayerBoardView();
 
+        pb1.update(player1.getPlayerBoard());
+        pb2.update(player2.getPlayerBoard());
+        pb3.update(player3.getPlayerBoard());
+
         testBoards.add(pb1);
         testBoards.add(pb2);
         testBoards.add(pb3);
-
-
-        Player player1=new Player(1,"frank", Color.BLUE);
-        Player player2=new Player(2,"george",Color.YELLOW);
-
-        NewCell position1= new NewCell(Color.BLUE, CellEdge.WALL,CellEdge.DOOR,CellEdge.ROOM,CellEdge.ROOM, CellType.DROP);
-
-        player1.getFigure().setCell(position1);
-
-        player2.getFigure().setCell(position1);
-
-        ArrayList<Player> players=new ArrayList<>();
-        players.add(player1);
-        players.add(player2);
 
         GameModel testModel=new GameModel(players,1,5);
 
         MapView testMap=new MapView(1,5, testModel);
 
         CellView [][] board=testMap.getBoardMatrix();
+
 
         GameBoardGui testGUI=new GameBoardGui(1,testBoards,testBoards.get(0),board);
 
