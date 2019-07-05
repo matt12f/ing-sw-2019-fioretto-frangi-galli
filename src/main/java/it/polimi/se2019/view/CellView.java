@@ -22,7 +22,7 @@ public class CellView implements Serializable {
         this.columnIndex = columnIndex;
         this.playerFigures = new ArrayList<>();
         try {
-            setDrop(playerPosition.getDrop().toString());
+            setDrop(playerPosition.getDrop().getContent());
         }catch (NullPointerException e){
             this.drop=null;
         }
@@ -33,9 +33,8 @@ public class CellView implements Serializable {
     public void setPlayerFigures(NewCell playerPosition){
 
         this.playerFigures.clear();
-        if(playerPosition != null)
+        if(playerPosition != null && !playerPosition.getPlayers().isEmpty())
             for (int i = 0; i < playerPosition.getPlayers().size(); i++){
-                if(!playerPosition.getPlayers().isEmpty())
                     this.playerFigures.add(playerPosition.getPlayers().get(i).getFigure());
             }
     }

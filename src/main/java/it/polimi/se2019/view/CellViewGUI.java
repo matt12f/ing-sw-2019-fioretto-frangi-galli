@@ -1,6 +1,7 @@
 package it.polimi.se2019.view;
 
 import it.polimi.se2019.enums.Color;
+import it.polimi.se2019.model.game.Figure;
 import it.polimi.se2019.model.game.NewCell;
 
 import javax.swing.*;
@@ -42,14 +43,13 @@ public class CellViewGUI extends JPanel {
 
     public void updateCell(CellView cell){
 
-        int z = 0;
         for (int i = 0; i<3 ; i++){
             for (int j = 0; j< 3; j++){
                 if(j==0 && i==0 && cell.getDrop() != null){
                     matrixGUI[j][i].updateImage(Color.BLACK);
-                }else if(z <= cell.getPlayerFigures().size()+1){
-                    matrixGUI[j][i].updateImage(cell.getPlayerFigures().get(z).getColor());
-                    z+=1;
+                }else if(!cell.getPlayerFigures().isEmpty()){ //TODO controllare
+                    for(Figure figure:cell.getPlayerFigures())
+                        matrixGUI[j][i].updateImage(figure.getColor());
                 }else {
                     matrixGUI[j][i].updateImage(null);
                 }

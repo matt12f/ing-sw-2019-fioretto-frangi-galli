@@ -2,6 +2,7 @@ package it.polimi.se2019.test_GUI;
 
 
 import it.polimi.se2019.AdrenalineClient;
+import it.polimi.se2019.controller.Controller;
 import it.polimi.se2019.enums.CellEdge;
 import it.polimi.se2019.enums.CellType;
 import it.polimi.se2019.enums.Color;
@@ -25,22 +26,26 @@ class TestGUI {
 
 
 
-
         Player player1=new Player(1,"frank", Color.BLUE);
         Player player2=new Player(2,"george",Color.YELLOW);
         Player player3=new Player(3,"miles", Color.WHITE);
-
-
-        NewCell position1= new NewCell(Color.BLUE, CellEdge.WALL,CellEdge.DOOR,CellEdge.ROOM,CellEdge.ROOM, CellType.DROP);
-
-        player1.getFigure().setCell(position1);
-        player2.getFigure().setCell(position1);
-        player3.getFigure().setCell(position1);
 
         ArrayList<Player> players=new ArrayList<>();
         players.add(player1);
         players.add(player2);
         players.add(player3);
+
+        Controller controller=new Controller(players,1,5);
+
+        NewCell position1= controller.getMainGameModel().getCurrentMap().getBoardMatrix()[0][0];
+
+        controller.getMainGameModel().getPlayerList().get(0).getFigure().setCell(position1);
+        controller.getMainGameModel().getPlayerList().get(1).getFigure().setCell(position1);
+        controller.getMainGameModel().getPlayerList().get(2).getFigure().setCell(position1);
+
+        position1.addPlayers(player1);
+        position1.addPlayers(player2);
+        position1.addPlayers(player3);
 
         ArrayList<PlayerBoardView> testBoards=new ArrayList<>();
         PlayerBoardView pb1=new PlayerBoardView();
@@ -55,14 +60,11 @@ class TestGUI {
         testBoards.add(pb2);
         testBoards.add(pb3);
 
-        GameModel testModel=new GameModel(players,1,5);
+        MapView testMap=new MapView(1,5, controller.getMainGameModel());
 
-        MapView testMap=new MapView(1,5, testModel);
+        CellView [][] board = testMap.getBoardMatrix();
 
-        CellView [][] board=testMap.getBoardMatrix();
-
-
-        GameBoardGui testGUI=new GameBoardGui(1,testBoards,testBoards.get(0),board);
+        GameBoardGui testGUI=new GameBoardGui(1,testBoards,testBoards.get(0), board);
 
         while(true);
         //test per vedere se si aggiorna la GUI della board

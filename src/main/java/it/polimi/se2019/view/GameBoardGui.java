@@ -26,11 +26,10 @@ public class GameBoardGui  {
         GridBagConstraints container = new GridBagConstraints();
         mainPanel.setLayout(new GridBagLayout());
 
-
+        //TODO fix background o rimuovere
         this.background = new ImageIcon(new ImageIcon("src/main/sprite/maps/background.png").getImage().getScaledInstance(1280,720,Image.SCALE_DEFAULT));
         JLabel labelBackground = new JLabel(background);
         labelBackground.setIcon(background);
-
 
         //mainPanel.setLayout(new GridBagLayout());
         //container.anchor = GridBagConstraints.NORTHWEST;
@@ -40,7 +39,7 @@ public class GameBoardGui  {
         container.gridheight = 2;
         mainPanel.add(map, container);
 
-
+        this.map.setBoard(boardMatrix);//TODO utile?
 
         //mainPanel.setLayout(new GridBagLayout());
         //container.anchor = GridBagConstraints.EAST;
