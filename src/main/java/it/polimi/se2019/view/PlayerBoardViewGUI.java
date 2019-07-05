@@ -15,17 +15,11 @@ PlayerBoardViewGUI extends JPanel{
     protected JLabel board;
     protected  JButton markerButton;
 
-
     private DamageIconGUI[] damageVector;
-
 
     public PlayerBoardViewGUI(PlayerBoardView boardView, int x, int y){
 
-
-
-
         this.board = new JLabel(boardImage);
-
 
         this.markerButton = new JButton("markers");
         markerButton.setLocation(225, 10);
@@ -33,14 +27,13 @@ PlayerBoardViewGUI extends JPanel{
 
         ///////DAMAGE//////
 
-
         this.damageVector = new DamageIconGUI[12];
         char[] boardDamage = boardView.getDamageView().getDamage();
         for (int i = 0; i< 12; i++){
             damageVector[i]= new DamageIconGUI(boardDamage[i]);
         }
 
-        setBoard(   x,  y, false, boardView );
+        setBoard(x,y, false, boardView);
         board.setIcon(boardImage);
         damageVector[0].setLocation(40, 40);
         damageVector[1].setLocation(60, 40);
@@ -55,19 +48,8 @@ PlayerBoardViewGUI extends JPanel{
         damageVector[10].setLocation(275, 40);
         damageVector[11].setLocation(295, 40);
 
-
-        board.add(damageVector[0]);
-        board.add(damageVector[1]);
-        board.add(damageVector[2]);
-        board.add(damageVector[3]);
-        board.add(damageVector[4]);
-        board.add(damageVector[5]);
-        board.add(damageVector[6]);
-        board.add(damageVector[7]);
-        board.add(damageVector[8]);
-        board.add(damageVector[9]);
-        board.add(damageVector[10]);
-        board.add(damageVector[11]);
+        for(int i=0;i<12;i++)
+            board.add(damageVector[i]);
 
         add(board);
 
@@ -82,33 +64,10 @@ PlayerBoardViewGUI extends JPanel{
     }
     public void setBoard( int x, int y, boolean frenzy, PlayerBoardView boardView){
         Color color = boardView.getColor();
-        if (frenzy == false){
-            switch (color){
-                case YELLOW: this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/normal/yellow.jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
-                    break;
-                case BLUE: this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/normal/blue.jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
-                    break;
-                case VIOLET: this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/normal/purple.jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
-                    break;
-                case GREEN: this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/normal/green.jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
-                    break;
-                case WHITE: this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/normal/white.jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
-                    break;
-            }
-        }else {
-            switch (color){
-                case YELLOW: this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/frenzy/yellow.jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
-                    break;
-                case BLUE: this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/frenzy/blue.jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
-                    break;
-                case VIOLET: this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/frenzy/purple.jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
-                    break;
-                case GREEN: this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/frenzy/green.jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
-                    break;
-                case WHITE: this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/frenzy/white.jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
-                    break;
-            }
-        }
+        if(!frenzy)
+            this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/normal/"+color.toString().toLowerCase()+".jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
+        else
+            this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/frenzy/"+color.toString().toLowerCase()+".jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
 
         char[] boardDamage = boardView.getDamageView().getDamage();
         for (int i = 0; i< 12; i++){
@@ -123,30 +82,12 @@ PlayerBoardViewGUI extends JPanel{
         GridBagConstraints container = new GridBagConstraints();
         mainPanel.setLayout(new GridBagLayout());
 
-        String colorString;
         for (int i=0 ; i< marks.size();i++){
             container.gridx=0;
             container.gridy=i;
 
-            switch(marks.get(i)){
-                case 'y': colorString = "yellow";
-                    break;
-                case 'b': colorString = "blue";
-                    break;
-                case 'w': colorString = "white";
-                    break;
-                case 'g': colorString = "green";
-                    break;
-                case 'v': colorString = "purple";
-                    break;
-                default: colorString = null;
-                    break;
-            }
-
-            mainPanel.add(new JLabel(i + ": " + colorString),container);
+            mainPanel.add(new JLabel(i + ": " + colorSwitch(marks.get(i))),container);
         }
-
-
 
         JDialog dialog = new JDialog();
         dialog.setModal(true);
@@ -155,6 +96,17 @@ PlayerBoardViewGUI extends JPanel{
         dialog.pack();
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
+    }
+
+    static String colorSwitch (char car){
+        switch(car){
+            case 'y': return "yellow";
+            case 'b': return  "blue";
+            case 'w': return "white";
+            case 'g': return "green";
+            case 'v': return "purple";
+            default: return null;
+        }
     }
 
 }
