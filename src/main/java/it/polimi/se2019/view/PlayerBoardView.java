@@ -14,6 +14,11 @@ public  class PlayerBoardView implements Serializable {
     private int score;
     private int frenzy; //this value is =0 if frenzy is off; =1 if you can use x2 frenzy actions; =2 if you can use x1 frenzy action
 
+    public PlayerBoardView() {
+        this.ammo=new AmmoView();
+        this.damageView=new DamageView();
+    }
+
     public void setScore(int toSet){
         this.score=toSet;
     }
@@ -29,7 +34,6 @@ public  class PlayerBoardView implements Serializable {
     public void setDamageView(DamageView damageView) {
         this.damageView = damageView;
     }
-
 
 
     public int getScore(){

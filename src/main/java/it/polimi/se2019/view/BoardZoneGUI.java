@@ -20,16 +20,19 @@ public class BoardZoneGUI extends JPanel {
     public BoardZoneGUI(ArrayList<PlayerBoardView> boards,PlayerBoardView ownerBoard, int kills){
 
         GridBagConstraints container = new GridBagConstraints();
-       setLayout(new GridBagLayout());
+        setLayout(new GridBagLayout());
 
-     this.boardsDynamic = boards;
-     this.ownerBoardDynamic= ownerBoard;
-     this.killsDynamic = kills;
+        this.boardsDynamic = boards;
+        this.ownerBoardDynamic= ownerBoard;
+        this.killsDynamic = kills;
 
 
        //////////creazione dinamica della board zone///////
+        this.boardsGUI= new ArrayList<>();
+        for (int i = 0; i< boards.size();i++){
+           boardsGUI.add(new PlayerBoardViewGUI( boards.get(i),420,109 )) ;
+        }
 
-        updateBoards(boardsDynamic,ownerBoardDynamic, false,  killsDynamic);
 
 
         //////////aggiunta dinamica della board zone///////
@@ -61,8 +64,8 @@ public class BoardZoneGUI extends JPanel {
 
     public void updateBoards(ArrayList<PlayerBoardView> boards,PlayerBoardView ownerBoard, boolean frenzy, int kills){
 
-        for (int i = 0; i<= boards.size();i++){
-            boardsGUI.get(0).setBoard( 420,109, frenzy, boards.get(i));
+        for (int i = 0; i< boards.size();i++){
+            boardsGUI.get(i).setBoard( 420,109, frenzy, boards.get(i));
         }
         this.boardsDynamic = boards;
         this.ownerBoardDynamic= ownerBoard;
