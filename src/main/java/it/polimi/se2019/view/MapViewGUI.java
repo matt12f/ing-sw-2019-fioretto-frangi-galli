@@ -87,8 +87,27 @@ public class MapViewGUI extends JPanel {
 
 
         ////spazio celle////
+        int x= 95, y= 90;
+        boardMatrixGUI = new CellViewGUI[3][4];
+        for (int row=0;row < 3;row++){
+            for(int column=0;column < 4;column++){
+                boardMatrixGUI[row][column]= new CellViewGUI(boardMatrix[row][column]);
+                boardMatrixGUI[row][column].setLocation(x,y);
 
-        boardMatrixGUI = new CellViewGUI[4][3];
+                if (boardMatrix[row][column].getCorrespondingCell().getCellType() == OUTSIDEBOARD){
+                    boardMatrixGUI[row][column].setType("inBoard");
+                }else {
+                    boardMatrixGUI[row][column].setType("outBoard");
+
+                }
+
+
+                x+=105;
+            }
+            x=95;
+            y+=110;
+        }
+
  /**
         /////first line////7
          this.cella11 = new CellViewGUI();
@@ -143,11 +162,11 @@ public class MapViewGUI extends JPanel {
         labelBackground.add(weaponyellow2);
         labelBackground.add(weaponyellow3);
 
-        setBoard(boardMatrix);
 
-        for (int row=0;row <= 4;row++) {
-            for (int column = 0; column <= 3; column++) {
-                if(boardMatrixGUI[row][column] != null){
+
+        for (int row=0;row < 3;row++) {
+            for (int column = 0; column < 4; column++) {
+                if(boardMatrixGUI[row][column].getType() == "inBoard"){
                     labelBackground.add(boardMatrixGUI[row][column]);
                 }
 
@@ -184,12 +203,16 @@ public class MapViewGUI extends JPanel {
 
         for (int row=0;row < 3;row++){
             for(int column=0;column < 4;column++){
+                boardMatrixGUI[row][column].updateCell(boardMatrix[row][column]);
+                boardMatrixGUI[row][column].setLocation(x,y);
+
                 if (boardMatrix[row][column].getCorrespondingCell().getCellType() == OUTSIDEBOARD){
-                    boardMatrixGUI[row][column].updateCell(boardMatrix[row][column]);
-                    boardMatrixGUI[row][column].setLocation(x,y);
+                    boardMatrixGUI[row][column].setType("inBoard");
                 }else {
-                    boardMatrixGUI[row][column] = null;
+                    boardMatrixGUI[row][column].setType("outBoard");
+
                 }
+
 
                 x+=105;
             }

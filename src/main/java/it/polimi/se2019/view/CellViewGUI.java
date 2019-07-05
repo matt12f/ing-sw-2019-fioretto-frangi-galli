@@ -8,14 +8,28 @@ import java.awt.*;
 
 public class CellViewGUI extends JPanel {
     private SquareGUI[][] matrixGUI;
+    private String type;
 
 
     public CellViewGUI(CellView cell){
 
         this.matrixGUI = new SquareGUI[3][3];
-
+        this.type= type;
         ////creazione dello square in base al contenuto della cella/////
-        updateCell(cell);
+        int z = 0;
+        for (int i = 0; i<3 ; i++){
+            for (int j = 0; j< 3; j++){
+                if(j==0 && i==0 && cell.getDrop() != null){
+                    matrixGUI[j][i]= new SquareGUI(Color.BLACK);
+                }else if(z < cell.getPlayerFigures().size()){
+                    matrixGUI[j][i]= new SquareGUI(cell.getPlayerFigures().get(z).getColor());
+                    z+=1;
+                }else {
+                    matrixGUI[j][i]= new SquareGUI(Color.RED);
+                }
+
+            }
+        }
 
         setOpaque(false);
 
@@ -29,8 +43,8 @@ public class CellViewGUI extends JPanel {
     public void updateCell(CellView cell){
 
         int z = 0;
-        for (int i = 0; i<=3 ; i++){
-            for (int j = 0; j<= 3; j++){
+        for (int i = 0; i<3 ; i++){
+            for (int j = 0; j< 3; j++){
                 if(j==0 && i==0 && cell.getDrop() != null){
                     matrixGUI[j][i].updateImage(Color.BLACK);
                 }else if(z <= cell.getPlayerFigures().size()+1){
@@ -58,5 +72,14 @@ public class CellViewGUI extends JPanel {
             y+= 30;
         }
     }
+
+    public String getType(){
+
+        return  type;
+    }
+    public void setType(String typex){
+        this.type = typex;
+    }
+
 
 }

@@ -28,10 +28,11 @@ public class SquareGUI extends JLabel {
             case VIOLET:color = "purple";break;
             case YELLOW:color = "yellow";break;
             case BLACK: color = "black";break;
+            case RED : color = "null"; break;
             default: break;
         }
 
-        if (type != null){
+        if (type != Color.RED){
             ImageIcon pic = new ImageIcon(new ImageIcon("src/main/sprite/cards/weapons/"+ color +".png").getImage().getScaledInstance(20,20, Image.SCALE_DEFAULT));
 
             setIcon(pic);
