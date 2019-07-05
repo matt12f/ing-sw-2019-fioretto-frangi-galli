@@ -17,7 +17,7 @@ public class PlayerZoneGUI extends JPanel {
         setLayout(new GridBagLayout());
 
         setLayout(new GridBagLayout());
-        this.hand = new PlayerHandViewGUI();
+        this.hand = new PlayerHandViewGUI(ownerBoard.getAmmo());
         container.fill= GridBagConstraints.HORIZONTAL;
         container.gridx=0;
         container.gridy=0;
@@ -43,6 +43,6 @@ public class PlayerZoneGUI extends JPanel {
 
     public void updateElements(PlayerBoardView ownerBoard, PlayerHandView handView, boolean frenzy){
         this.board.setBoard(420, 109, frenzy,ownerBoard );
-        this.hand.updateHand(handView.getGuns(), handView.getPowerups());
+        this.hand.updateHand(handView.getGuns(), handView.getPowerups(), ownerBoard.getAmmo());
     }
 }
