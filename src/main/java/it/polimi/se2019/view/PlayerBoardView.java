@@ -78,6 +78,7 @@ public  class PlayerBoardView implements Serializable {
         this.ammo.setBLUE(playerBoard.getAmmo().getBlue());
         this.ammo.setRED(playerBoard.getAmmo().getRed());
         this.ammo.setYELLOW(playerBoard.getAmmo().getYellow());
+        this.color = playerBoard.getColor();
         this.getDamageView().setDamage(playerBoard.getDamageTrack().getDamage());
         this.getDamageView().setMarks(playerBoard.getDamageTrack().getMarks());
     }

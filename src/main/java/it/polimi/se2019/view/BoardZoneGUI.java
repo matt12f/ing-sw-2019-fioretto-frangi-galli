@@ -36,7 +36,7 @@ public class BoardZoneGUI extends JPanel {
 
 
         //////////aggiunta dinamica della board zone///////
-        for (int i = 0; i<= boards.size();i++){
+        for (int i = 0; i< boards.size();i++){
             container.gridx=0;
             container.gridy=i;
             add(boardsGUI.get(i), container);

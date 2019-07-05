@@ -23,7 +23,7 @@ PlayerBoardViewGUI extends JPanel{
 
 
 
-        setBoard(   x,  y, false, boardView );
+
         this.board = new JLabel(boardImage);
         board.setIcon(boardImage);
 
@@ -35,8 +35,12 @@ PlayerBoardViewGUI extends JPanel{
 
 
         this.damageVector = new DamageIconGUI[12];
+        char[] boardDamage = boardView.getDamageView().getDamage();
+        for (int i = 0; i< 12; i++){
+            damageVector[i]= new DamageIconGUI(boardDamage[i]);
+        }
 
-
+        setBoard(   x,  y, false, boardView );
 
         damageVector[0].setLocation(40, 40);
         damageVector[1].setLocation(60, 40);
@@ -77,9 +81,9 @@ PlayerBoardViewGUI extends JPanel{
 
     }
     public void setBoard( int x, int y, boolean frenzy, PlayerBoardView boardView){
-
-        if (!frenzy){
-            switch (boardView.getColor()){
+        Color color = boardView.getColor();
+        if (frenzy == false){
+            switch (color){
                 case YELLOW: this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/normal/yellow.jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
                     break;
                 case BLUE: this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/normal/blue.jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
@@ -92,7 +96,7 @@ PlayerBoardViewGUI extends JPanel{
                     break;
             }
         }else {
-            switch (boardView.getColor()){
+            switch (color){
                 case YELLOW: this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/frenzy/yellow.jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
                     break;
                 case BLUE: this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/frenzy/blue.jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
@@ -107,7 +111,7 @@ PlayerBoardViewGUI extends JPanel{
         }
 
         char[] boardDamage = boardView.getDamageView().getDamage();
-        for (int i = 0; i< 2; i++){
+        for (int i = 0; i< 12; i++){
             damageVector[i].setDamageImage(boardDamage[i]);
         }
 
