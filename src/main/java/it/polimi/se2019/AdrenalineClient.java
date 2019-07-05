@@ -20,7 +20,6 @@ import java.util.Scanner;
 public class AdrenalineClient {
     //This controller contains and manages the  game logic for all players (it's initialized only
     // if a player creates a new game)
-    private static NetworkHandler networkHandler;
     private static LocalView localView;
     private static String nickname;
     private static ArrayList<String> otherPlayers;
@@ -34,8 +33,8 @@ public class AdrenalineClient {
     private static boolean connected = false;
     private static String[] answer;
 
-    public static void main(String[] args) throws IOException, AlreadyBoundException, NotBoundException, InterruptedException, ClassNotFoundException {
-        connection = new Connection(null, null, true, null, null);
+    public static void main(String[] args){
+        connection = new Connection(null, true);
         new OpenerGUI();
     }
 
@@ -107,7 +106,7 @@ public class AdrenalineClient {
 
     private static void nicknameRequest() throws IOException, InterruptedException, ClassNotFoundException {
         String nickname;
-        boolean accepted = false;
+        boolean accepted;
         nickname = userInteractionCLI.nicknameRequest(true);
         accepted = setNickname(nickname);
         while (!accepted) {
@@ -357,51 +356,16 @@ public class AdrenalineClient {
         localView = (LocalView) connection.getInput().readObject();
     }
 
-    private static void connectionRequest(boolean GUI, Connection connection) {
-        Scanner scanner;
-        int choice = 5; //inizializzo a un numero a caso, mi basta sia diverso da 0 o 1
-        if (!GUI) {
-            scanner = new Scanner(System.in);
-            System.out.println("Ciao, benvenuto su Adrenaline");
-            while (choice != 1 && choice != 0) {
-                System.out.println("Che connessione vuoi usare? digita 0 per Socket, 1 per RMI:   ");
-                choice = scanner.nextInt();
-                if (choice != 1 && choice != 0)
-                    System.out.println("Mi spiace, hai inserito: " + choice + ", puoi inserire solo 0 o 1, riprova.");
-            }
-            switch (choice) {
-                case 0:
-                    connection.setSocket(true);
-                    break;
-                case 1:
-                    connection.setSocket(false);
-                    break;
-                default:
-                    connection.setSocket(true);
-                    break;
-            }
-        }
-    }
-
     private static boolean setNickname(String nickname) throws IOException, InterruptedException, ClassNotFoundException {
-        Registry registry = null;
-        Status serveStatus;
-        RMIInterface stub = null;
-        boolean isOk = false;
         String reply;
         ObjectOutputStream socketOutput = null;
         ObjectInputStream socketInput = null;
-        if (connection.isSocket()) {
-            socketInput = connection.getInput();
-            socketOutput = connection.getOutput();
-            socketOutput.writeObject(nickname);
-            Thread.sleep(10);
-            reply = (String) socketInput.readObject();
-            return reply.equals("true");
-        }else{
-            //todo gestione nickname RMI
-        }
-        return true;
+        socketInput = connection.getInput();
+        socketOutput = connection.getOutput();
+        socketOutput.writeObject(nickname);
+        Thread.sleep(10);
+        reply = (String) socketInput.readObject();
+        return reply.equals("true");
     }
 
     private static void guiStarter () {
@@ -419,16 +383,10 @@ public class AdrenalineClient {
          *
          */
     private static void setConnection (String ipServer) throws IOException {
-            int serverPort = 9000; //todo caricamento da file configurazione/definisci costante porta del server
+            int serverPort = 9000;
             InetAddress address = InetAddress.getLocalHost();
             String host = address.toString();
-            connection.setHost(host);
-            if (connection.isSocket()) {
-                connection.setSocket(new Socket(ipServer, serverPort));
-            } else {
-                Registry registry = LocateRegistry.getRegistry(ipServer, serverPort);
-                connection.setRegistry(registry);
-            }
+            connection.setSocket(new Socket(ipServer, serverPort));
     }
 
     public static void setGui(boolean val){
@@ -447,31 +405,17 @@ public class AdrenalineClient {
 class Connection{
     private boolean isSocket; //non so come chiamarlo, se socket = true se RMI = false
     private Socket socket;
-    private Registry registry;
-    private Registry localRegistry;
-    private String Host;
     private ObjectOutputStream output = null;
     private ObjectInputStream input = null;
 
-    Connection(Socket socket, Registry registry, boolean isSocket, String host, Registry local) {
-        this.registry = registry;
+    Connection(Socket socket, boolean isSocket) {
         this.socket = socket;
         this.isSocket = isSocket;
-        this.Host = host;
-        this.localRegistry = local;
     }
 
     void setStream() throws IOException {
         this.input = new ObjectInputStream(this.socket.getInputStream());
         this.output = new ObjectOutputStream(this.socket.getOutputStream());
-    }
-
-    Registry getRegistry() {
-        return registry;
-    }
-
-    void setRegistry(Registry registry) {
-        this.registry = registry;
     }
 
     public Socket getSocket() {
@@ -482,31 +426,9 @@ class Connection{
         this.socket = socket;
     }
 
-    public void setSocket(boolean socket) {
-        if(socket){
-            this.registry = null;
-
-        }else{
-            this.socket = null;
-        }
-        this.isSocket = socket;
-
-    }
 
     public boolean isSocket() {
         return this.isSocket;
-    }
-
-    void setHost(String host) {
-        Host = host;
-    }
-
-    String getHost() {
-        return Host;
-    }
-
-    Registry getLocalRegistry() {
-        return localRegistry;
     }
 
     ObjectInputStream getInput() {

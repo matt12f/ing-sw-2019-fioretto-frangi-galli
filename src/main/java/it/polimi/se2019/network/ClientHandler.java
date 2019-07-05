@@ -11,14 +11,12 @@ import it.polimi.se2019.view.LocalView;
 import it.polimi.se2019.enums.Status;
 import java.io.*;
 import java.net.Socket;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 
 
 public class ClientHandler extends Thread {
     private String nickname;
-    private Thread thread;
     private Socket socket = null;
     private boolean accepted = false; //used in a first moment to verify the nickname's uniqueness
     private Status status = Status.NOTREADY;
@@ -169,14 +167,14 @@ public class ClientHandler extends Thread {
         }
     }
 
-    private synchronized void setTagBackUsage() throws IOException, ClassNotFoundException, InterruptedException {
+    private synchronized void setTagBackUsage() throws IOException{
         this.output.writeObject("TAGBACKUSAGE");
         boolean useTagBack = this.input.readBoolean();
         this.game.setUseTagBack(useTagBack);
         this.status = Status.WAITING;
     }
 
-    private synchronized void setTargetingUsage() throws IOException, ClassNotFoundException, InterruptedException {
+    private synchronized void setTargetingUsage() throws IOException, ClassNotFoundException {
         this.output.writeObject("TARGETINGSCOPE");
         this.output.reset();
         this.output.writeObject(this.choices);
@@ -251,9 +249,6 @@ public class ClientHandler extends Thread {
         this.accepted = accepted;
     }
 
-    void setThread(Thread thread) {
-        this.thread = thread;
-    }
 
     public Color getColor() {
         return color;
@@ -276,7 +271,7 @@ public class ClientHandler extends Thread {
     }
 
 
-    public Status getStatus() {
+    Status getStatus() {
         return this.status;
     }
 

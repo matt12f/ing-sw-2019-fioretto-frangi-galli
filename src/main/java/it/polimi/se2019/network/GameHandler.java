@@ -5,11 +5,9 @@ import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.enums.Status;
 import it.polimi.se2019.exceptions.CardNotFoundException;
 import it.polimi.se2019.exceptions.FullException;
-import it.polimi.se2019.model.cards.PowerupCard;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.view.LocalView;
-import it.polimi.se2019.view.PowerupUse;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,7 +21,6 @@ public class GameHandler implements Runnable {
     private Controller controller;
     private int mapNumber;
     private int skullsNumber;
-    private boolean useTarget;
     private boolean useTagBack;
     private String colorReceived;
     private int turns = 0;
@@ -142,6 +139,7 @@ public class GameHandler implements Runnable {
                 for (ClientHandler client: this.players) {
                     if(player.getNickname().equals(client.getNickname())){
                         client.setStatus(Status.DEAD);
+                        client.setDeadsPlayer(this.controller.getMainGameModel().getDeadPlayers().size());
                         try {
                             PlayerManager.getCardsToSpawn(false, controller, player.getId());
                             waitForReSpawn(client);
@@ -332,7 +330,7 @@ public class GameHandler implements Runnable {
 
     }
 
-    private synchronized void winnerIs() throws InterruptedException {
+    private void winnerIs() throws InterruptedException {
         GameStats finale = new GameStats(controller, this.turns);
         for (ClientHandler player: players) {
             while(player.getStatus() != Status.ENDGAME)
@@ -398,7 +396,7 @@ public class GameHandler implements Runnable {
         }
     }
 
-    public void createController(){
+    private void createController(){
         ArrayList<Player> players = new ArrayList<>();
         int id = 0;
         for (ClientHandler client: this.players) {
@@ -427,7 +425,7 @@ public class GameHandler implements Runnable {
         this.mapNumber = map;
     }
 
-     public void setSkull(int skull) {
+     void setSkull(int skull) {
         this.skullsNumber = skull;
     }
 
@@ -436,11 +434,11 @@ public class GameHandler implements Runnable {
         this.players = players;
     }
 
-    public void setUseTagBack(boolean useTagBack) {
+    void setUseTagBack(boolean useTagBack) {
         this.useTagBack = useTagBack;
     }
 
-    public void setColorReceived(String colorReceived) {
+    void setColorReceived(String colorReceived) {
         this.colorReceived = colorReceived;
     }
 }

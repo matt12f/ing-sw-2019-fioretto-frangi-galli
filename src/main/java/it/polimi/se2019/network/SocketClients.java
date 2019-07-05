@@ -13,19 +13,18 @@ public class SocketClients implements Runnable{
     @Override
     public void run() {
         //Qui si accettano gli utenti tramite Socket
-        ServerSocket serverSocket = null;
+        ServerSocket serverSocket;
         ClientHandler newUser;
         Socket socketTemp;
         boolean condition = true;
         try {
-            serverSocket = new ServerSocket(9000); //PORTA TEMPORANEA TODO Sostituire con caricamento da file
+            serverSocket = new ServerSocket(9000); //PORTA TEMPORANEA
             while(condition){ //Finche siamo qui dentro stiamo aspettando le condizioni per startare la partita
                 System.out.println("aspetto un client");
                 socketTemp = serverSocket.accept();
                 socketTemp.setKeepAlive(true);
                 newUser = new ClientHandler();
                 newUser.setSocket(socketTemp);
-                newUser.setThread(null);
                 System.out.println("Nuovo client("+ AdrenalineServer.getLobbyClient().size() +"), socket: " + socketTemp);
                 newUser.start();
             }
