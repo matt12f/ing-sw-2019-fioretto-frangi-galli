@@ -23,9 +23,9 @@ public class CellViewGUI extends JPanel {
                 if (z < cell.getPlayerFigures().size()) {
                     matrixGUI[j][i] = new SquareGUI(cell.getPlayerFigures().get(z).getColor());
                     z += 1;
-                } else if (z == cell.getPlayerFigures().size() ) {
-
+                }  if (i ==1 && j== 2 && cell.getDrop() != null ) {
                     matrixGUI[j][i] = new SquareGUI(Color.BLACK);
+
                 }else {
                     matrixGUI[j][i] = new SquareGUI(Color.RED);
                 }
@@ -35,18 +35,20 @@ public class CellViewGUI extends JPanel {
 
 
 
-        int x = 0, y = 0;
+        int cordx = 0, cordy = 0;
         for (int row = 0; row < 3; row++) {
             for (int column = 0; column < 3; column++) {
-                matrixGUI[row][column].setLocation(x, y);
+                matrixGUI[row][column].setLocation(cordx, cordy);
 
                 add(matrixGUI[row][column]);
 
 
-                x += 30;
+                cordx += 30;
+
             }
-            x = 0;
-            y += 30;
+            cordx = 0;
+            cordy += 30;
+
         }
 
         setOpaque(false);
@@ -59,20 +61,6 @@ public class CellViewGUI extends JPanel {
 
     public void updateCell(CellView cell) {
         removeAll();
-        /**
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (j == 0 && i == 0 && cell.getDrop() != null) {
-                    matrixGUI[j][i].updateImage(Color.BLACK);
-                } else if (!cell.getPlayerFigures().isEmpty()) { //TODO controllare
-                    for (Figure figure : cell.getPlayerFigures())
-                        matrixGUI[j][i].updateImage(figure.getColor());
-                } else {
-                    matrixGUI[j][i].updateImage(Color.RED);
-                }
-
-            }
-        }*/
 
         int z = 0;
         for (int i = 0; i < 3; i++) {
@@ -95,9 +83,9 @@ public class CellViewGUI extends JPanel {
         for (int row = 0; row < 3; row++) {
             for (int column = 0; column < 3; column++) {
                 matrixGUI[row][column].setLocation(x, y);
-                //if(matrixGUI[row][column] != null){
+
                 add(matrixGUI[row][column]);
-                //}
+
 
                 x += 30;
             }
