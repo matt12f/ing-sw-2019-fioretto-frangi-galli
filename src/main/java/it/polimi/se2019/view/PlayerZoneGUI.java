@@ -1,15 +1,11 @@
 package it.polimi.se2019.view;
 
-import it.polimi.se2019.enums.Color;
-
 import javax.swing.*;
 import java.awt.*;
 
 public class PlayerZoneGUI extends JPanel {
-    public PlayerHandViewGUI hand;
-    public PlayerBoardViewGUI board;
-
-
+    private PlayerHandViewGUI hand;
+    private PlayerBoardViewGUI board;
 
     public PlayerZoneGUI (PlayerBoardView ownerBoard){
 
@@ -32,14 +28,11 @@ public class PlayerZoneGUI extends JPanel {
 
         add(board, container);
 
-
-
     }
 
     public void setFrenzy(PlayerBoardView ownerBoard){
         this.board.setBoard(420, 109, true, ownerBoard);
     }
-
 
     public void updateElements(PlayerBoardView ownerBoard, PlayerHandView handView, boolean frenzy){
         this.board.setBoard(420, 109, frenzy,ownerBoard );

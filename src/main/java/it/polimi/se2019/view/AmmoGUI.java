@@ -10,19 +10,12 @@ import java.awt.event.ActionListener;
 public class AmmoGUI extends JPanel {
     public JButton actionButton;
     public AmmoGUI(AmmoView ammo ){
-
         updateAmmo(ammo);
-
-
-
     }
-
-
 
     public void updateAmmo(AmmoView ammo){
         this.actionButton = new JButton("ACTIONS");
         GridBagConstraints container = new GridBagConstraints();
-
 
         //ammo first raw//
         setLayout(new GridBagLayout());
@@ -31,23 +24,19 @@ public class AmmoGUI extends JPanel {
         add(new Label("BLUE:"+ ammo.getBLUE()),container);
 
         //ammo second raw//
-        //setLayout(new GridBagLayout());
         container.gridx = 0;
         container.gridy = 1;
         add(new Label("RED:" + ammo.getRED()),container);
 
         //ammo third raw//
-        //setLayout(new GridBagLayout());
         container.gridx = 0;
         container.gridy = 2;
         add(new Label("YELLOW:"+ ammo.getYELLOW()), container);
 
         //ammo fourraw//
-        //setLayout(new GridBagLayout());
         container.gridx = 0;
         container.gridy = 3;
         add(actionButton,container);
-
 
 
 
@@ -55,9 +44,7 @@ public class AmmoGUI extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ActionRequestView actions = new ActionRequestView(AdrenalineClient.isLast());
-
             }
-
         });
     }
 }
