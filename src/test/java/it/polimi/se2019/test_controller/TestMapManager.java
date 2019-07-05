@@ -239,7 +239,7 @@ public class TestMapManager {
     }
 
     @Test
-    public void testGetCellInRadius2(){
+    public void test1GetCellInRadius2(){
         Player player1=new Player(1,"frank", Color.BLUE);
         Player player2=new Player(2,"george",Color.YELLOW);
         Player player3=new Player(3,"miles", Color.WHITE);
@@ -264,11 +264,94 @@ public class TestMapManager {
 
         ArrayList<NewCell> cellsInRadius= MapManager.squaresInRadius2(controller,testPlayer);
 
-        //TODO check se 8 è il numero giusto di celle in un raggio due nella mappa 1 dalla posizione (1,2)
-        String result= cellsInRadius.toString();
+        assertEquals("[Cella BLUE di tipo: SPAWN\n" +
+                " Top: WALL\n" +
+                " Bottom: DOOR\n" +
+                " Left: ROOM\n" +
+                " Right: DOOR, Cella YELLOW di tipo: DROP\n" +
+                " Top: ROOM\n" +
+                " Bottom: WALL\n" +
+                " Left: DOOR\n" +
+                " Right: ROOM, Cella YELLOW di tipo: DROP\n" +
+                " Top: DOOR\n" +
+                " Bottom: ROOM\n" +
+                " Left: ROOM\n" +
+                " Right: WALL, Cella BLUE di tipo: DROP\n" +
+                " Top: WALL\n" +
+                " Bottom: WALL\n" +
+                " Left: ROOM\n" +
+                " Right: ROOM, Cella GREEN di tipo: DROP\n" +
+                " Top: WALL\n" +
+                " Bottom: DOOR\n" +
+                " Left: DOOR\n" +
+                " Right: WALL, Cella WHITE di tipo: DROP\n" +
+                " Top: DOOR\n" +
+                " Bottom: WALL\n" +
+                " Left: WALL\n" +
+                " Right: DOOR, Cella YELLOW di tipo: SPAWN\n" +
+                " Top: ROOM\n" +
+                " Bottom: WALL\n" +
+                " Left: ROOM\n" +
+                " Right: WALL]",cellsInRadius.toString());
         assertEquals(7, cellsInRadius.size());
     }
 
+    @Test
+    public void test2GetCellInRadius2(){
+        Player player1=new Player(1,"frank", Color.BLUE);
+        Player player2=new Player(2,"george",Color.YELLOW);
+        Player player3=new Player(3,"miles", Color.WHITE);
 
+        ArrayList<Player> players=new ArrayList<>();
+        players.add(player1);
+        players.add(player2);
+        players.add(player3);
+
+        Controller controller=new Controller(players,3,5);
+
+        NewCell [][] board=controller.getMainGameModel().getCurrentMap().getBoardMatrix();
+
+        NewCell position1 = board[2][1];
+        player1.getFigure().setCell(position1);
+
+
+        CellInfo cellInfo=new CellInfo(player1.getFigure().getCell(),false,false);
+
+        FictitiousPlayer testPlayer=new FictitiousPlayer(controller, player1, cellInfo,
+                false,false);
+
+        ArrayList<NewCell> cellsInRadius= MapManager.squaresInRadius2(controller,testPlayer);
+
+        assertEquals("[Cella VIOLET di tipo: DROP\n" +
+                " Top: DOOR\n" +
+                " Bottom: DOOR\n" +
+                " Left: WALL\n" +
+                " Right: WALL, Cella WHITE di tipo: DROP\n" +
+                " Top: DOOR\n" +
+                " Bottom: WALL\n" +
+                " Left: WALL\n" +
+                " Right: ROOM, Cella YELLOW di tipo: DROP\n" +
+                " Top: ROOM\n" +
+                " Bottom: WALL\n" +
+                " Left: DOOR\n" +
+                " Right: ROOM, Cella BLUE di tipo: DROP\n" +
+                " Top: WALL\n" +
+                " Bottom: WALL\n" +
+                " Left: DOOR\n" +
+                " Right: ROOM, Cella RED di tipo: SPAWN\n" +
+                " Top: ROOM\n" +
+                " Bottom: DOOR\n" +
+                " Left: WALL\n" +
+                " Right: WALL, Cella YELLOW di tipo: DROP\n" +
+                " Top: DOOR\n" +
+                " Bottom: ROOM\n" +
+                " Left: WALL\n" +
+                " Right: ROOM, Cella YELLOW di tipo: SPAWN\n" +
+                " Top: ROOM\n" +
+                " Bottom: WALL\n" +
+                " Left: ROOM\n" +
+                " Right: WALL]",cellsInRadius.toString());
+        assertEquals(7, cellsInRadius.size());
+    }
 }
 

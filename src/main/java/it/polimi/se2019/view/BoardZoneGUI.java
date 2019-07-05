@@ -1,7 +1,5 @@
 package it.polimi.se2019.view;
 
-import it.polimi.se2019.enums.Color;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

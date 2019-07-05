@@ -13,12 +13,12 @@ import java.util.Observer;
 import java.awt.*;
 
 public class GameBoardGui  {
-    public MapViewGUI map;
-    public PlayerZoneGUI playerZone;
-    public ScoreViewGUI scoreZone;
-    public BoardZoneGUI boardZone;
-    public ImageIcon background;
-    public boolean frenzyStatus = false;
+    private MapViewGUI map;
+    private PlayerZoneGUI playerZone;
+    private BoardZoneGUI boardZone;
+    private ImageIcon background;
+    private boolean frenzyStatus = false;
+
     public GameBoardGui(int config, ArrayList<PlayerBoardView> opponentBoards,PlayerBoardView ownerBoard, CellView[][] boardMatrix){
         Frame frame = new Frame("ADRENALINE");
 
