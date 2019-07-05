@@ -156,6 +156,9 @@ public class MapManager {
         return minimumDist; //this will never be used
     }
 
+    /**
+     * this method returns a list of cells that are 2 moves away, without yours
+     */
     public static ArrayList<NewCell> squaresInRadius2(Controller currentController,FictitiousPlayer player){
         NewCell [][] board= currentController.getMainGameModel().getCurrentMap().getBoardMatrix();
         ArrayList<NewCell> possibleCells=new ArrayList<>(ActionManager.cellsOneMoveAway(currentController, player.getPosition()));
@@ -172,6 +175,9 @@ public class MapManager {
 
             }
         }
+
+        //the algorithm adds your cell as a side effect
+        possibleCells.remove(player.getPosition());
         return possibleCells;
     }
 }

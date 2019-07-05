@@ -16,7 +16,7 @@ public class ActionRequestView implements Serializable {
     private UserInteraction askUser;
 
     /** this constructor manages both the normal request of a macro action and the end of the turn
-     * when the player must decide wether he wants to use a powerup and/or reload
+     * when the player must decide whether he wants to use a powerup and/or reload
      */
     public ActionRequestView(boolean turnConclusion){
         LocalView localView=AdrenalineClient.getLocalView();

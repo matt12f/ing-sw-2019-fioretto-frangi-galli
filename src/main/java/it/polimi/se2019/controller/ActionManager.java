@@ -46,8 +46,9 @@ public class ActionManager {
             MapManager.getRoom(currentController,arrivalCell).addPlayers(player);
         }
 
-        player.getFigure().getCell().removePlayers(player);
-        arrivalCell.addPlayers(player);
+        player.getFigure().getCell().removePlayers(player); //removes the player from the cell
+        player.getFigure().setCell(arrivalCell); //changes the cell saved in the player
+        arrivalCell.addPlayers(player); //adds the player on the new cell
     }
 
     /**
