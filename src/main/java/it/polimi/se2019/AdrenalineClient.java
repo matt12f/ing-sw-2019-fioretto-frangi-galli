@@ -32,6 +32,10 @@ public class AdrenalineClient {
     private static ArrayList<PlayerBoardView> opponentsBoards = new ArrayList<>() ;
     private static boolean connected = false;
     private static String[] answer;
+    private static boolean last;
+    private static ActionRequestView actionRequested;
+
+
 
     public static void main(String[] args){
         connection = new Connection(null, true);
@@ -250,11 +254,9 @@ public class AdrenalineClient {
 
     private static void matchPhase() throws IOException, ClassNotFoundException {
         boolean myturn;
-        boolean last;
         int deadPlayers;
         int actionNumber;
         String status;
-        ActionRequestView actionRequested;
         AvailableActions actions;
         ChosenActions chosen;
         while(start){
@@ -268,8 +270,6 @@ public class AdrenalineClient {
                 while(actionNumber > 0){
                     actionNumber --;
                     actionRequested = getActionFromUser(last);
-                    if (actionNumber == 0)
-                        last = true;
                     actions = askForAction(connection, actionRequested);
                     try {
                         chosen = presentActions(actions);
@@ -282,6 +282,8 @@ public class AdrenalineClient {
                         targetScope();
                     connection.getInput().readObject();
                     updateLocalView();
+                    if (actionNumber == 0)
+                        last = true;
                 }
                 actionRequested = new ActionRequestView(true);
                 connection.getOutput().writeObject(actionRequested);
@@ -399,6 +401,14 @@ public class AdrenalineClient {
 
     public static void setAnswer(String[] answer) {
         AdrenalineClient.answer = answer;
+    }
+
+    public static boolean isLast() {
+        return last;
+    }
+
+    public static void setActionRequested(ActionRequestView actionRequested) {
+        AdrenalineClient.actionRequested = actionRequested;
     }
 }
 

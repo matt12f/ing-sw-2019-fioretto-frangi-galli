@@ -14,8 +14,6 @@ public class CellView implements Serializable {
 
     private ArrayList<Figure> playerFigures;
 
-
-
     public CellView(int lineIndex, int columnIndex, NewCell playerPosition) {
         this.lineIndex = lineIndex;
         this.columnIndex = columnIndex;

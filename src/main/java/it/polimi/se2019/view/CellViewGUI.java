@@ -1,25 +1,16 @@
 package it.polimi.se2019.view;
 
-import it.polimi.se2019.enums.Color;
-import it.polimi.se2019.model.game.Figure;
-import it.polimi.se2019.model.game.NewCell;
-
 import javax.swing.*;
-import java.awt.*;
 
 public class CellViewGUI extends JPanel {
     private SquareGUI[][] matrixGUI;
     private String type;
 
     public CellViewGUI(CellView cell) {
-
         this.matrixGUI = new SquareGUI[3][3];
-
-        ////creazione dello square in base al contenuto della cella/////
+        //creates the square based on the content
         updateCell(cell);
-
         setOpaque(false);
-
         setSize(100, 90);
     }
 

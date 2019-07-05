@@ -1,8 +1,6 @@
 package it.polimi.se2019.view;
 
-import javax.sound.sampled.Line;
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -69,8 +67,8 @@ public class MapViewGUI extends JPanel {
 
 
         ////cell space ////
-        int x= 95, y= 90;
         boardMatrixGUI = new CellViewGUI[3][4];
+        int x= 95, y= 90;
         for (int row=0; row < 3; row++){
             for(int column=0; column < 4;column++){
                 boardMatrixGUI[row][column] = new CellViewGUI(boardMatrix[row][column]);
@@ -81,13 +79,13 @@ public class MapViewGUI extends JPanel {
                 else
                     boardMatrixGUI[row][column].setType("outBoard");
 
-                x+=105; //moves on the x-axis
+                x+=100; //moves on the x-axis
             }
             x=95; //resets x-axis
             y+=110; //moves on the y-axis
         }
 
-        /**---- add zones ---- */
+        //---- add zones ---- //
 
         //labelBackground.add(mainPanel);
         labelBackground.add(weaponblue1);
@@ -202,19 +200,15 @@ public class MapViewGUI extends JPanel {
     public void setBoard(CellView[][] boardMatrix){
         //removeAll();
         int x= 95, y= 90;
-
         for (int row=0;row < 3;row++){
             for(int column=0;column < 4;column++){
                 boardMatrixGUI[row][column].updateCell(boardMatrix[row][column]);
                 boardMatrixGUI[row][column].setLocation(x,y);
 
-                if (boardMatrix[row][column].getCorrespondingCell().getCellType() != OUTSIDEBOARD){
+                if (boardMatrix[row][column].getCorrespondingCell().getCellType() != OUTSIDEBOARD)
                     boardMatrixGUI[row][column].setType("inBoard");
-                }else {
+                else
                     boardMatrixGUI[row][column].setType("outBoard");
-
-                }
-
 
                 x+=105;
             }
