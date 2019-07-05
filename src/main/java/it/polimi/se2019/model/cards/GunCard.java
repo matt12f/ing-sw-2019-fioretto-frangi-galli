@@ -73,4 +73,12 @@ public abstract class GunCard implements Serializable {
 
     @Override
     public abstract GunCard clone();
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj==null)
+            return false;
+        GunCard card= (GunCard) obj;
+        return this.getClass().getSimpleName().equals(card.getClass().getSimpleName()) && this.isLoaded()==card.isLoaded();
+    }
 }
