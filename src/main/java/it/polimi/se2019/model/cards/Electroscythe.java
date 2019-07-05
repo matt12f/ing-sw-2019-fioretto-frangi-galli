@@ -17,8 +17,7 @@ public class Electroscythe extends GunCardAltEff {
         super();
         this.ammoCost = new char[1];
         ammoCost[0]= 'b';
-        this.description =  "basic mode: Deal 1 damage to every other player on your square.\n"+
-                            "in reaper mode: Deal 2 damage to every other player on your square.";
+        this.description =  "<html>basic mode: Deal 1 damage to every other player on your square.<br>in reaper mode: Deal 2 damage to every other player on your square.</html>";
 
         this.secondaryEffectCost = new char[2];
         secondaryEffectCost[0] = 'b';

@@ -18,16 +18,7 @@ public class PowerGlove extends GunCardAltEff {
         this.ammoCost = new char[2];
         ammoCost[0]= 'y';
         ammoCost[1]= 'b';
-        this.description ="basic mode: Choose 1 target on any square\n" +
-                "exactly 1 move away. Move onto that square\n" +
-                "and give the target 1 damage and 2 marks.\n"+
-                "in rocket fist mode: Choose a square\n" +
-                "exactly 1 move away. Move onto that square.\n" +
-                "You may deal 2 damage to 1 target there.\n" +
-                "If you want, you may move 1 more square in\n" +
-                "that same direction (but only if it is a legal\n" +
-                "move). You may deal 2 damage to 1 target\n" +
-                "there, as well.";
+        this.description ="<html>basic mode: Choose 1 target on any square<br>exactly 1 move away. Move onto that square<br>and give the target 1 damage and 2 marks.<br>in rocket fist mode: Choose a square<br>exactly 1 move away. Move onto that square.<br>You may deal 2 damage to 1 target there.<br>If you want, you may move 1 more square in<br>that same direction (but only if it is a legal<br>move). You may deal 2 damage to 1 target<br>there, as well.</html>";
         this.secondaryEffectCost = new char[1];
         secondaryEffectCost[0] = 'b';
     }

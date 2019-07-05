@@ -55,10 +55,7 @@ public class CyberBlade extends GunCardAddEff {
         this.ammoCost = new char[2];
         ammoCost[0]= 'y';
         ammoCost[1]= 'r';
-        this.description ="<html>basic effect: Deal 2 damage to 1 target on your square<br>"+
-                "with shadowstep: Move 1 square before or after the basic effect.\n"+
-                "with slice and dice: Deal 2 damage to a different target on your square.\n" +
-                "The shadowstep may be used before or after this effect.";
+        this.description ="<html>basic effect: Deal 2 damage to 1 target on your square<br>with shadowstep: Move 1 square before or after the basic effect.<br>with slice and dice: Deal 2 damage to a different target on your square.<br>The shadowstep may be used before or after this effect.</html>";
 
         this.secondaryEffectCost = new char[1];
         secondaryEffectCost[0] = 'n';

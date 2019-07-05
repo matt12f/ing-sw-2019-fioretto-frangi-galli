@@ -28,12 +28,7 @@ public class Thor extends GunCardAddEff {
         this.ammoCost = new char[2];
         ammoCost[0]= 'b';
         ammoCost[1]= 'r';
-        this.description ="basic effect: Deal 2 damage to 1 target you can see.\n"+
-                "with chain reaction: Deal 1 damage to a second target that\n" +
-                "your first target can see.\n"+
-                "with high voltage: Deal 2 damage to a third target that\n" +
-                "your second target can see. You cannot use this effect\n" +
-                "unless you first use the chain reaction.";
+        this.description ="<html>basic effect: Deal 2 damage to 1 target you can see.<br>with chain reaction: Deal 1 damage to a second target that<br>your first target can see.<br>with high voltage: Deal 2 damage to a third target that<br>your second target can see. You cannot use this effect<br>unless you first use the chain reaction.</html>";
 
         this.secondaryEffectCost = new char[1];
         secondaryEffectCost[0] = 'b';
