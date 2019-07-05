@@ -10,18 +10,6 @@ public class TurnManager {
         return activePlayer;
     }
 
-    @Deprecated
-    public void setActivePlayer(Player activePlayer) {
-        this.activePlayer = activePlayer;
-    }
-
-    private void gameStatsUpdate(){
-        //TODO creazione e visualizzazione di quello, usa il metodo showMessage e passagli l'oggetto
-        // gameStats creato .toString() che lo creo custom
-
-        //TODO scrivere
-    }
-
     public void nextTurn(Controller currentController){
         int turn = currentController.getMainGameModel().getTurn();
         turn++;
@@ -32,9 +20,12 @@ public class TurnManager {
         this.setPlayerTurn(turn, currentController);
     }
 
+    /**
+     * this method sets the active player
+     *
+     */
     private void setPlayerTurn(int turn, Controller controller){
-        Player playersTurn = controller.getMainGameModel().getPlayerList().get(turn);
-        this.activePlayer = playersTurn;
+        this.activePlayer = controller.getMainGameModel().getPlayerList().get(turn);
     }
 
     /**

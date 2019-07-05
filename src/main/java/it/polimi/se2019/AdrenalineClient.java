@@ -35,8 +35,6 @@ public class AdrenalineClient {
     private static boolean last;
     private static ActionRequestView actionRequested;
 
-
-
     public static void main(String[] args){
         connection = new Connection(null, true);
         new OpenerGUI();

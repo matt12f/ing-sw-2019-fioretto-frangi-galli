@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
-//TODO correggere test (niente più gameMode)
 public class TestGameModel {
     @Test
     public void testGameModel(){

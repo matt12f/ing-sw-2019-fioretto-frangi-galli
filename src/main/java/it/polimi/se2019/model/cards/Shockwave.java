@@ -13,11 +13,7 @@ public class Shockwave extends GunCardAltEff {
         super();
         this.ammoCost = new char[1];
         ammoCost[0]= 'y';
-        this.description ="basic mode: Choose up to 3 targets on\n" +
-                "different squares, each exactly 1 move away.\n" +
-                "Deal 1 damage to each target.\n"+
-                "in tsunami mode: Deal 1 damage to all\n" +
-                "targets that are exactly 1 move away";
+        this.description ="<html>basic mode: Choose up to 3 targets on<br>different squares, each exactly 1 move away.<br>Deal 1 damage to each target.<br>in tsunami mode: Deal 1 damage to all<br>targets that are exactly 1 move away</html>";
 
         this.secondaryEffectCost = new char[1];
         secondaryEffectCost[0] = 'y';

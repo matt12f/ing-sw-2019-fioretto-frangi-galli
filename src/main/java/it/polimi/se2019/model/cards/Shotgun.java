@@ -7,6 +7,7 @@ import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
 
+
 import java.util.ArrayList;
 
 public class Shotgun extends GunCardAltEff {
@@ -18,12 +19,11 @@ public class Shotgun extends GunCardAltEff {
         this.ammoCost = new char[2];
         ammoCost[0]= 'y';
         ammoCost[1]= 'y';
-        this.description ="basic mode: Deal 3 damage to 1 target on\n" +
-                "your square. If you want, you may then move\n" +
-                "the target 1 square.\n"+
-                "in long barrel mode: Deal 2 damage to\n" +
-                "1 target on any square exactly one move\n" +
-                "away.";
+        this.description ="<html>basic mode: Deal 3 damage to 1 target on<br>your square. If you want, you may then move<br>" +
+                "the target 1 square.<br>" +
+                "in long barrel mode: Deal 2 damage to<br>" +
+                "1 target on any square exactly one move<br>" +
+                "away.</html>";
         this.secondaryEffectCost = new char[1];
         secondaryEffectCost[0] = 'n';
     }

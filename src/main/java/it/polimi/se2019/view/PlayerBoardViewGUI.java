@@ -65,9 +65,9 @@ PlayerBoardViewGUI extends JPanel{
     public void setBoard( int x, int y, boolean frenzy, PlayerBoardView boardView){
         Color color = boardView.getColor();
         if(!frenzy)
-            this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/normal/"+color.toString().toLowerCase()+".jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
+            this.boardImage = new ImageIcon(new ImageIcon("src/main/resources/sprite/boards/normal/"+color.toString().toLowerCase()+".jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
         else
-            this.boardImage = new ImageIcon(new ImageIcon("src/main/sprite/boards/frenzy/"+color.toString().toLowerCase()+".jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
+            this.boardImage = new ImageIcon(new ImageIcon("src/main/resources/sprite/boards/frenzy/"+color.toString().toLowerCase()+".jpg").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
 
         char[] boardDamage = boardView.getDamageView().getDamage();
         for (int i = 0; i< 12; i++){

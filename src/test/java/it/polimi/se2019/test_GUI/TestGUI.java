@@ -20,8 +20,6 @@ class TestGUI {
     public void testGUIUpdate(){
         assertTrue(true);
 
-
-
         Player player1=new Player(1,"frank", Color.BLUE);
         Player player2=new Player(2,"george",Color.YELLOW);
         Player player3=new Player(3,"miles", Color.WHITE);
@@ -63,6 +61,7 @@ class TestGUI {
         GameBoardGui testGUI=new GameBoardGui(1,testBoards,testBoards.get(0), board);
 
         while(true);
+
         //test per vedere se si aggiorna la GUI della board
         //mette un giocatore in una cella, lo sposta e poi aggiorna
         //check se è tutto a posto

@@ -22,13 +22,7 @@ public class VortexCannon extends GunCardAddEff {
         this.ammoCost = new char[2];
         ammoCost[0]= 'b';
         ammoCost[1]= 'b';
-        this.description ="basic effect: Choose a square you can see, but not your\n" +
-                "square. Call it \"the vortex\". Choose a target on the vortex\n" +
-                "or 1 move away from it. Move it onto the vortex and give it\n" +
-                "2 damage.\n"+
-                "with black hole: Choose up to 2 other targets on the\n" +
-                "vortex or 1 move away from it. Move them onto the vortex\n" +
-                "and give them each 1 damage.";
+        this.description ="</html>basic effect: Choose a square you can see, but not your<br>square. Call it \"the vortex\". Choose a target on the vortex<br>or 1 move away from it. Move it onto the vortex and give it<br>2 damage.<br>with black hole: Choose up to 2 other targets on the<br>vortex or 1 move away from it. Move them onto the vortex<br>and give them each 1 damage.</html>";
 
         this.secondaryEffectCost = new char[1];
         secondaryEffectCost[0] = 'r';
