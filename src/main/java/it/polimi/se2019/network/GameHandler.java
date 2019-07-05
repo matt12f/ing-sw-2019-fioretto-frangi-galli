@@ -3,6 +3,7 @@ package it.polimi.se2019.network;
 import it.polimi.se2019.controller.*;
 import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.enums.Status;
+import it.polimi.se2019.exceptions.CardNotFoundException;
 import it.polimi.se2019.exceptions.FullException;
 import it.polimi.se2019.model.cards.PowerupCard;
 import it.polimi.se2019.model.game.Player;
@@ -96,7 +97,11 @@ public class GameHandler implements Runnable {
             } catch (InterruptedException e) {
                 LOGGER.log(Level.FINE,"2nd exception",e);
             }
-            PlayerManager.spawnPlayers(this.controller, c.getLocalView().getPlayerId(), c.getSpawn());
+            try {
+                PlayerManager.spawnPlayers(this.controller, c.getLocalView().getPlayerId(), c.getSpawn());
+            } catch (CardNotFoundException e) {
+                e.printStackTrace();
+            }
             for (ClientHandler player: players) {
                 player.setStatus(Status.VIEW);
                 notifyView(player);
@@ -136,7 +141,7 @@ public class GameHandler implements Runnable {
                             waitForReSpawn(client);
                             PlayerManager.spawnPlayers(controller, client.getLocalView().getPlayerId(), client.getSpawn());
                             setSpawn(client);
-                        } catch (FullException e) {
+                        } catch (FullException | CardNotFoundException e) {
                             LOGGER.log(Level.FINE,"3rd exception",e);
                         }
 
