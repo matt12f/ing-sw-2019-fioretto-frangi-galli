@@ -332,19 +332,21 @@ public class UserInteractionGUI extends UserInteraction {
         map = 1; //setting di default
 
         JButton map1 = new JButton();
-        ImageIcon pic1 = new ImageIcon(new ImageIcon("src/main/resources/sprite/maps/1.png").getImage().getScaledInstance(300,220,Image.SCALE_DEFAULT));
+
+
+        ImageIcon pic1 = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/maps/1.png")).getImage().getScaledInstance(300,220,Image.SCALE_DEFAULT));
         map1.setIcon(pic1);
 
         JButton map2 = new JButton();
-        ImageIcon pic2 = new ImageIcon(new ImageIcon("src/main/resources/sprite/maps/2.png").getImage().getScaledInstance(300,220,Image.SCALE_DEFAULT));
+        ImageIcon pic2 = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/maps/2.png")).getImage().getScaledInstance(300,220,Image.SCALE_DEFAULT));
         map2.setIcon(pic2);
 
         JButton map3 = new JButton();
-        ImageIcon pic3 = new ImageIcon(new ImageIcon("src/main/resources/sprite/maps/3.png").getImage().getScaledInstance(300,220,Image.SCALE_DEFAULT));
+        ImageIcon pic3 = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/maps/3.png")).getImage().getScaledInstance(300,220,Image.SCALE_DEFAULT));
         map3.setIcon(pic3);
 
         JButton map4 = new JButton();
-        ImageIcon pic4 = new ImageIcon(new ImageIcon("src/main/resources/sprite/maps/4.png").getImage().getScaledInstance(300,220,Image.SCALE_DEFAULT));
+        ImageIcon pic4 = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/maps/4.png")).getImage().getScaledInstance(300,220,Image.SCALE_DEFAULT));
         map4.setIcon(pic4);
 
 
@@ -470,8 +472,8 @@ public class UserInteractionGUI extends UserInteraction {
         JButton pw3 = new JButton();
         JButton pw4 = new JButton();
 
-        ImageIcon im1 = new ImageIcon(new ImageIcon("src/main/resources/sprite/cards/powerups/powerups_"+ list[0].getPowerupType() + "_"+list[0].getCubeColor()+ ".png").getImage().getScaledInstance(70,92,Image.SCALE_DEFAULT));
-        ImageIcon im2 = new ImageIcon(new ImageIcon("src/main/resources/sprite/cards/powerups/powerups_"+ list[1].getPowerupType() + "_"+list[1].getCubeColor()+ ".png").getImage().getScaledInstance(70,92,Image.SCALE_DEFAULT));
+        ImageIcon im1 = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/powerups/powerups_"+ list[0].getPowerupType() + "_"+list[0].getCubeColor()+ ".png")).getImage().getScaledInstance(70,92,Image.SCALE_DEFAULT));
+        ImageIcon im2 = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/powerups/powerups_"+ list[1].getPowerupType() + "_"+list[1].getCubeColor()+ ".png")).getImage().getScaledInstance(70,92,Image.SCALE_DEFAULT));
         pw1.setIcon(im1);
         pw2.setIcon(im2);
 
@@ -488,14 +490,14 @@ public class UserInteractionGUI extends UserInteraction {
         mainPanel.add(pw2,container);
 
         if(list[2]!= null){
-            ImageIcon im3 = new ImageIcon(new ImageIcon("src/main/resources/sprite/cards/powerups/powerups_"+ list[2].getPowerupType() + "_"+list[2].getCubeColor()+ ".png").getImage().getScaledInstance(70,92,Image.SCALE_DEFAULT));
+            ImageIcon im3 = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/powerups/powerups_"+ list[2].getPowerupType() + "_"+list[2].getCubeColor()+ ".png")).getImage().getScaledInstance(70,92,Image.SCALE_DEFAULT));
             pw3.setIcon(im3);
             container.gridx=2;
             container.gridy=1;
             mainPanel.add(pw3,container);
         }
         if (list[3] != null){
-            ImageIcon im4 = new ImageIcon(new ImageIcon("src/main/resources/sprite/cards/powerups/powerups_"+ list[3].getPowerupType() + "_"+list[3].getCubeColor()+ ".png").getImage().getScaledInstance(70,92,Image.SCALE_DEFAULT));
+            ImageIcon im4 = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/powerups/powerups_"+ list[3].getPowerupType() + "_"+list[3].getCubeColor()+ ".png")).getImage().getScaledInstance(70,92,Image.SCALE_DEFAULT));
             pw4.setIcon(im4);
             container.gridx=3;
             container.gridy=1;

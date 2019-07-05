@@ -7,9 +7,9 @@ import it.polimi.se2019.enums.CellType;
 import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.view.modelChanged;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.awt.*;
+import java.io.*;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -36,11 +36,13 @@ public class GameModel extends Observable{
 
         //Map setup
         Gson gson = new Gson();
-        try (Reader reader = new FileReader("src/main/resources/JSONfiles/map"+mapNumber+".json")) {
+
+        InputStream in = getClass().getResourceAsStream("/JSONfiles/map"+mapNumber+".json");
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
             // Convert JSON File to Java Object
             this.currentMap = gson.fromJson(reader, Map.class);
-        } catch (IOException e) {
-            LOGGER.log(Level.FINE,"GameModel",e);
+        } catch (IOException  e) {
+            LOGGER.log(Level.FINE,"GameModel", e);
         }
 
         for(NewCell[] line:this.currentMap.getBoardMatrix())

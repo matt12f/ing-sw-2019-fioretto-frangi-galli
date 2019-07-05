@@ -16,9 +16,9 @@ public class WeaponButtonGUI extends JButton {
         sizey=y;
         setSize(sizex,sizey);
         if (!rotate){
-            pic = new ImageIcon(new ImageIcon("src/main/resources/sprite/cards/weapons/weapons_back.png").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
+            pic = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/weapons/weapons_back.png")).getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
         }else{
-            pic = new ImageIcon(new ImageIcon("src/main/resources/sprite/cards/weapons_rotate/back.png").getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
+            pic = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/weapons_rotate/back.png")).getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
         }
 
         setIcon(pic);
@@ -28,16 +28,16 @@ public class WeaponButtonGUI extends JButton {
          this.weaponType = weapon.getClass().getSimpleName().toLowerCase();
          if (weaponType != null){
              if (!rotate){
-                 pic = new ImageIcon(new ImageIcon("src/main/resources/sprite/cards/weapons/weapons_"+ weaponType +".png").getImage().getScaledInstance(sizex,sizey, Image.SCALE_DEFAULT));
+                 pic = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/weapons/weapons_"+ weaponType +".png")).getImage().getScaledInstance(sizex,sizey, Image.SCALE_DEFAULT));
              }else{
-                 pic = new ImageIcon(new ImageIcon("src/main/resources/sprite/cards/weapons_rotate/"+ weaponType +".png").getImage().getScaledInstance(sizex,sizey, Image.SCALE_DEFAULT));
+                 pic = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/weapons_rotate/"+ weaponType +".png")).getImage().getScaledInstance(sizex,sizey, Image.SCALE_DEFAULT));
              }
 
          }else{
              if (!rotate){
-                 pic = new ImageIcon(new ImageIcon("src/main/resources/sprite/cards/weapons/weapons_back.png").getImage().getScaledInstance(sizex,sizey, Image.SCALE_DEFAULT));
+                 pic = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/weapons/weapons_back.png")).getImage().getScaledInstance(sizex,sizey, Image.SCALE_DEFAULT));
              }else{
-                 pic = new ImageIcon(new ImageIcon("src/main/resources/sprite/cards/weapons_rotate/back.png").getImage().getScaledInstance(sizex,sizey, Image.SCALE_DEFAULT));
+                 pic = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/weapons_rotate/back.png")).getImage().getScaledInstance(sizex,sizey, Image.SCALE_DEFAULT));
              }
          }
         setIcon(pic);
