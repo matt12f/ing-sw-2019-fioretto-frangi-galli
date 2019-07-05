@@ -416,7 +416,7 @@ public class GameHandler implements Runnable {
     }
 
     private void waitForSpawn(ClientHandler player) throws InterruptedException {
-        while(player.getStatus() == Status.SPAWN){
+        while(player.getStatus() == Status.SPAWN && player.getSpawn() == null){
             Thread.sleep(1);
         }
     }
