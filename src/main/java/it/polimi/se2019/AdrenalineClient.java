@@ -269,8 +269,6 @@ public class AdrenalineClient {
                 while(actionNumber > 0){
                     actionNumber --;
                     actionRequested = getActionFromUser(last);
-                    if (actionNumber == 0)
-                        last = true;
                     actions = askForAction(connection, actionRequested);
                     try {
                         chosen = presentActions(actions);
@@ -283,6 +281,8 @@ public class AdrenalineClient {
                         targetScope();
                     connection.getInput().readObject();
                     updateLocalView();
+                    if (actionNumber == 0)
+                        last = true;
                 }
                 actionRequested = new ActionRequestView(true);
                 connection.getOutput().writeObject(actionRequested);
