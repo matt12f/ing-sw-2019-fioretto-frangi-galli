@@ -103,7 +103,7 @@ public class GameHandler implements Runnable {
             }
         }
         setStart();
-        //gestione dei turni
+        //turns manager
         while (this.controller.getMainGameModel().getKillshotTrack().getSkulls() > 0){
             turnPreparation(this.controller.getMainGameModel().getTurn());
             clientTurn = this.players.get(this.controller.getMainGameModel().getTurn());
@@ -118,27 +118,35 @@ public class GameHandler implements Runnable {
                 for (ClientHandler client : players) {
                     client.setDeadsPlayer(this.controller.getMainGameModel().getDeadPlayers().size());
                 }
-                for (Player player: this.controller.getMainGameModel().getDeadPlayers()) {
-                    for (ClientHandler client: this.players) {
-                        if(player.getNickname().equals(client.getNickname())){
-                            client.setStatus(Status.DEAD);
-                            try {
-                                 PlayerManager.getCardsToSpawn(false, controller, player.getId());
-                                 waitForReSpawn(client);
-                                 PlayerManager.spawnPlayers(controller, client.getLocalView().getPlayerId(), client.getSpawn());
-                                 setSpawn(client);
-                            } catch (FullException e) {
-                                LOGGER.log(Level.FINE,"3rd exception",e);
-                            }
 
-                        }
-                    }
-                    for (ClientHandler client: players) {
+                MapManager.refillEmptiedCells(controller.getMainGameModel().getCurrentMap().getBoardMatrix(),controller.getMainGameModel().getCurrentDecks());
+
+                if (this.controller.getMainGameModel().getKillshotTrack().getSkulls() == 0)
+                    break;
+            }
+            clientTurn.setStatus(Status.NOTMYTURN);
+            controller.getActiveTurn().nextTurn(controller);
+            PlayerManager.scoringProcess(controller);
+            for (Player player: this.controller.getMainGameModel().getDeadPlayers()) {
+                for (ClientHandler client: this.players) {
+                    if(player.getNickname().equals(client.getNickname())){
+                        client.setStatus(Status.DEAD);
                         try {
-                            client.sendLocalView();
-                        } catch (IOException e) {
-                            LOGGER.log(Level.FINE,"4th exception",e);
+                            PlayerManager.getCardsToSpawn(false, controller, player.getId());
+                            waitForReSpawn(client);
+                            PlayerManager.spawnPlayers(controller, client.getLocalView().getPlayerId(), client.getSpawn());
+                            setSpawn(client);
+                        } catch (FullException e) {
+                            LOGGER.log(Level.FINE,"3rd exception",e);
                         }
+
+                    }
+                }
+                for (ClientHandler client: players) {
+                    try {
+                        client.sendLocalView();
+                    } catch (IOException e) {
+                        LOGGER.log(Level.FINE,"4th exception",e);
                     }
                 }
                 MapManager.refillEmptiedCells(controller.getMainGameModel().getCurrentMap().getBoardMatrix(),controller.getMainGameModel().getCurrentDecks());
@@ -204,6 +212,7 @@ public class GameHandler implements Runnable {
                     }
                 }
             }
+
 
             //offering targetting scope to current player
             for(int i=0;i< activePlayer.getPlayerBoard().getHand().getPowerups().length;i++)

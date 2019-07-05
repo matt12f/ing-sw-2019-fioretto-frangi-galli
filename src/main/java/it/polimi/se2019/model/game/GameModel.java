@@ -13,6 +13,7 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
+import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,10 +29,6 @@ public class GameModel extends Observable{
     private int turn;
     private List<modelChanged> viewObserver = new ArrayList<>();
 
-    public void addObserver(modelChanged toAdd){
-        viewObserver.add(toAdd);
-    }
-    
     public GameModel(ArrayList<Player> playerList, int mapNumber, int skulls){
         this.currentDecks=new Decks();
         this.playerList = playerList;

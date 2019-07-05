@@ -28,8 +28,11 @@ public class GameStats {
         //the second if evaluates if both of the player have scores on the killshot track (so it's already been considered they're tied)
         if(this.ranking.get(0).getScore()==this.ranking.get(1).getScore()){
             if(killshotTrackScoring.contains(this.ranking.get(0).getPlayerBoard().getColorChar()) &&
-                    killshotTrackScoring.contains(this.ranking.get(1).getPlayerBoard().getColorChar()))
+                    killshotTrackScoring.contains(this.ranking.get(1).getPlayerBoard().getColorChar())){
                 this.singleWinner=false;
+            }
+            else
+                this.singleWinner=true;
         }
         else
             this.singleWinner=true;

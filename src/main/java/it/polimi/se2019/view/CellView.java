@@ -33,10 +33,11 @@ public class CellView implements Serializable {
     public void setPlayerFigures(NewCell playerPosition){
 
         this.playerFigures.clear();
-        for (int i = 0; i < playerPosition.getPlayers().size(); i++){
-            if(!playerPosition.getPlayers().isEmpty())
-                this.playerFigures.add(playerPosition.getPlayers().get(i).getFigure());
-        }
+        if(playerPosition != null)
+            for (int i = 0; i < playerPosition.getPlayers().size(); i++){
+                if(!playerPosition.getPlayers().isEmpty())
+                    this.playerFigures.add(playerPosition.getPlayers().get(i).getFigure());
+            }
     }
 
     public ArrayList<Figure> getPlayerFigures(){

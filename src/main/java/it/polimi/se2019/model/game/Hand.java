@@ -7,11 +7,13 @@ import it.polimi.se2019.exceptions.FullException;
 
 public class Hand {
     private PowerupCard [] powerups;
+    private PowerupCard additionalPowerup;
     private GunCard [] guns;
     private static final int MAXCARDS=3;
 
     public Hand(){
         this.guns = new GunCard[MAXCARDS];
+        this.additionalPowerup = null;
         this.powerups = new PowerupCard[MAXCARDS];
     }
 
@@ -54,6 +56,10 @@ public class Hand {
         if(!set) throw new FullException("guns");
     }
 
+    public void setAdditionalPowerup(PowerupCard additionalPowerup) {
+        this.additionalPowerup = additionalPowerup;
+    }
+
     /**this method puts a powerup in the player's hand
      * */
     public void setPowerup(PowerupCard powerup) throws FullException {
@@ -88,6 +94,7 @@ public class Hand {
         while(!substituted && i<MAXCARDS){
             if(this.powerups[i]==discarded) {
                 this.powerups[i]=newPowerup;
+                this.additionalPowerup = null;
                 substituted = true;
             }
             else i++;
@@ -117,6 +124,11 @@ public class Hand {
         }
 
     }
+
+    public PowerupCard getAdditionalPowerup() {
+        return additionalPowerup;
+    }
+
 
     public void removePowerUp(int indexInHand){
         this.powerups[indexInHand]=null;

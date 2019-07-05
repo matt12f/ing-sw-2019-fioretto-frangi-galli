@@ -106,5 +106,52 @@ public class TestGameStats {
 
     }
 
+    @Test
+    public void testTieBreaking2() {
+        Player player1=new Player(1,"frank", Color.BLUE);
+        Player player2=new Player(2,"george",Color.YELLOW);
+        Player player3=new Player(3,"miles",Color.WHITE);
+        Player player4=new Player(4,"carl",Color.GREEN);
+
+        ArrayList<Player> players=new ArrayList<>();
+
+        Controller controller=new Controller(players,2,3);
+
+        players.add(player1);
+        players.add(player2);
+        players.add(player3);
+        players.add(player4);
+
+        player1.setScore(19);
+        player2.setScore(27);
+        player3.setScore(12);
+        player4.setScore(5);
+
+
+        controller.getMainGameModel().getKillshotTrack().setKills("bb");
+        controller.getMainGameModel().getKillshotTrack().setKills("ww");
+        controller.getMainGameModel().getKillshotTrack().setKills("g");
+
+        GameStats testRanking=new GameStats(controller,25);
+
+        assertEquals("Game results\n" +
+                "The game was 25 turns long\n" +
+                "\n" +
+                "There's a single winner: YELLOW Player with id: 2; with nickname: george; Scored 27 points!\n" +
+                "\n" +
+                "Ranking: \n" +
+                "1° place: YELLOW Player with id: 2; with nickname: george; Scored 27 points!\n" +
+                "2° place: BLUE Player with id: 1; with nickname: frank; Scored 27 points!\n" +
+                "3° place: WHITE Player with id: 3; with nickname: miles; Scored 18 points!\n" +
+                "4° place: GREEN Player with id: 4; with nickname: carl; Scored 9 points!\n",testRanking.toString());
+
+        assertEquals(25, testRanking.getNumberOfTurns());
+        assertEquals(player2,testRanking.getRanking().get(0));
+        assertEquals(player1,testRanking.getRanking().get(1));
+        assertEquals(player3,testRanking.getRanking().get(2));
+        assertEquals(player4,testRanking.getRanking().get(3));
+
+    }
+
 
 }

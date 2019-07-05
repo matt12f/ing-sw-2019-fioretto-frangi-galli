@@ -185,6 +185,7 @@ public class AdrenalineClient {
                 else
                     waitForStart();
                 while(!accepted) {
+                    userInteractionGUI.mainLogGUI();
                     accepted =  setNickname(answer[0]);
                     if (accepted) {
                         waitForStart();

@@ -1,7 +1,9 @@
  package it.polimi.se2019.model.cards;
 
 
- public class AmmoTileCard {
+ import java.io.Serializable;
+
+ public class AmmoTileCard implements Serializable {
 
     private String content;
     /**
