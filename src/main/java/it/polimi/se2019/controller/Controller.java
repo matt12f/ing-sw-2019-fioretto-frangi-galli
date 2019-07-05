@@ -24,6 +24,7 @@ public class Controller{
         this.mainGameModel=new GameModel(players, mapNumber, skulls);
         this.remoteView=new RemoteView(this.mainGameModel, mapNumber, skulls);
         this.activeTurn = new TurnManager();
+        this.getMainGameModel().addObserver(this.remoteView);
         setupBoard();
     }
 

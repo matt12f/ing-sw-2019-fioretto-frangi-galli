@@ -10,6 +10,7 @@ public  class PlayerHandView implements Serializable {
     private GunCard[] guns;
     private boolean[] loadedGuns;
     private PowerupCard[] powerups;
+    private PowerupCard additionalPowerup;
 
     public PlayerHandView(){
         this.powerups = new PowerupCard[3];
@@ -19,6 +20,7 @@ public  class PlayerHandView implements Serializable {
             this.guns[i] = null;
             this.powerups[i] = null;
         }
+        this.additionalPowerup = null;
     }
 
     public boolean isGunHandFull(){
@@ -50,6 +52,8 @@ public  class PlayerHandView implements Serializable {
     }
 
     public void setPowerups(PowerupCard[] powerups) {
-        this.powerups = powerups;
+        for (int i = 0; i < this.powerups.length; i++) {
+            this.powerups[i] = powerups[i];
+        }
     }
 }

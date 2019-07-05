@@ -148,7 +148,7 @@ public class PlayerManager {
 
     }
 
-    public static void spawnPlayers(Controller controller, int id, PowerupCard spawn){
+    public static void spawnPlayers(Controller controller, int id, PowerupCard spawn) throws CardNotFoundException {
         NewCell[][] map = controller.getMainGameModel().getCurrentMap().getBoardMatrix();
         Color cellNeeded;
         if(spawn.getCubeColor() == 'b')
@@ -165,25 +165,40 @@ public class PlayerManager {
                 }
             }
         }
+
+        PowerupCard optional = controller.getMainGameModel().getPlayerList().get(id).getPlayerBoard().getHand().getAdditionalPowerup();
+        if(optional == null){
+            controller.getMainGameModel().getPlayerList().get(id).getPlayerBoard().getHand().substitutionPowerup(spawn, null);
+        }else{
+            if(optional == spawn)
+                controller.getMainGameModel().getPlayerList().get(id).getPlayerBoard().getHand().setAdditionalPowerup(null);
+            else{
+                controller.getMainGameModel().getPlayerList().get(id).getPlayerBoard().getHand().substitutionPowerup(spawn, optional);
+            }
+        }
+
         controller.getMainGameModel().notifyRemoteView();
     }
 
     public static void getCardsToSpawn(boolean setUpGame, Controller controller, int id) throws FullException {
-        PowerupCard[] cards = new PowerupCard[Hand.getMaxcards()+1];
+        PowerupCard card;
         if(setUpGame){
-            PowerupCard card;
             card = controller.getMainGameModel().getCurrentDecks().getPowerupsDeck().draw();
             controller.getMainGameModel().getPlayerList().get(id).getPlayerBoard().getHand().setPowerup(card);
             card= controller.getMainGameModel().getCurrentDecks().getPowerupsDeck().draw();
             controller.getMainGameModel().getPlayerList().get(id).getPlayerBoard().getHand().setPowerup(card);
         }else{
-            for (int i = 0; i < Hand.getMaxcards(); i++) {
-                cards[i] = controller.getMainGameModel().getPlayerList().get(id).getPlayerBoard().getHand().getPowerup(i);
+            card = controller.getMainGameModel().getPlayerList().get(id).getPlayerBoard().getHand().getPowerup(2);
+            if(card == null){
+                card = controller.getMainGameModel().getCurrentDecks().getPowerupsDeck().draw();
+                controller.getMainGameModel().getPlayerList().get(id).getPlayerBoard().getHand().setPowerup(card);
+            }else{
+                card = controller.getMainGameModel().getCurrentDecks().getPowerupsDeck().draw();
+                controller.getMainGameModel().getPlayerList().get(id).getPlayerBoard().getHand().setAdditionalPowerup(card);
+
             }
-            cards[Hand.getMaxcards()] = controller.getMainGameModel().getCurrentDecks().getPowerupsDeck().draw();
         }
-        controller.getRemoteView().getPlayerHands().get(id).setPowerups(cards);
-        controller.getRemoteView().notifyLocalViews();
+        controller.getMainGameModel().notifyRemoteView();
     }
 
     /**
