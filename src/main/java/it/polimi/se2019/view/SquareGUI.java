@@ -35,7 +35,7 @@ public class SquareGUI extends JLabel {
         }
 
         if (type != Color.RED){
-            ImageIcon pic = new ImageIcon(new ImageIcon("src/main/sprite/damage/"+ color +".png").getImage().getScaledInstance(20,20, Image.SCALE_DEFAULT));
+            ImageIcon pic = new ImageIcon(new ImageIcon("src/main/sprite/figures/"+ color +".png").getImage().getScaledInstance(20,20, Image.SCALE_DEFAULT));
             setIcon(pic);
         }
         }
