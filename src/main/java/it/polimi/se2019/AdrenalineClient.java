@@ -2,6 +2,7 @@ package it.polimi.se2019;
 
 import it.polimi.se2019.controller.AvailableActions;
 import it.polimi.se2019.enums.Status;
+import it.polimi.se2019.exceptions.NoActionsException;
 import it.polimi.se2019.model.cards.PowerupCard;
 import it.polimi.se2019.network.*;
 import it.polimi.se2019.view.*;
@@ -11,7 +12,6 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
@@ -36,44 +36,7 @@ public class AdrenalineClient {
 
     public static void main(String[] args) throws IOException, AlreadyBoundException, NotBoundException, InterruptedException, ClassNotFoundException {
         connection = new Connection(null, null, true, null, null);
-        boolean start = false;
-        boolean myturn = false;
-        boolean last = false;
-        int frenzy = 0;
-        int actionNumber = 0;
-        String message = null;
-        ActionRequestView actionRequested;
-        AvailableActions actions;
-        ClientCallBackClass callBackClass = new ClientCallBackClass();
-        clientCallBack stubClient = null;
         new OpenerGUI();
-        /*Thread.sleep(1000*120);
-        else{
-            //export clientCallBack
-            stubClient = (clientCallBack) UnicastRemoteObject.exportObject(callBackClass, 0);
-            connection.getLocalRegistry().bind(("C" + connection.getHost()), stubClient);
-            connection.getRegistry().lookup("");
-        }
-
-
-        while(!start){
-            getOtherPlayers(connection);
-            displayQue();
-            start = waitForUpdate(connection);
-        }
-        message = (String) connection.getInput().readObject();
-        if(message.equals("MAP")) {
-            message = (String) connection.getInput().readObject();
-        }
-        if(message.equals("VIEW")){
-            connection.getOutput().reset();
-            connection.getOutput().writeBoolean(true);
-            connection.getOutput().flush();
-            localView = (LocalView) connection.getInput().readObject();
-        }
-        message = (String) connection.getInput().readObject();
-        if(message.equals("SPAWN")) {
-        }*/
     }
 
     private static ActionRequestView getActionFromUser(boolean lastMove){
@@ -305,18 +268,31 @@ public class AdrenalineClient {
                 actionNumber = connection.getInput().readInt();
                 while(actionNumber > 0){
                     actionNumber --;
+                    actionRequested = getActionFromUser(last);
                     if (actionNumber == 0)
                         last = true;
-                    actionRequested = getActionFromUser(last);
                     actions = askForAction(connection, actionRequested);
-                    chosen = presentActions(actions);
-                    connection.getOutput().writeObject(chosen);
+                    try {
+                        chosen = presentActions(actions);
+                        connection.getOutput().writeObject(chosen);
+                    } catch (NoActionsException e) {
+                        e.printStackTrace();
+                    }
+                    status = (String) connection.getInput().readObject();
+                    if(status.equals("TARGETINGSCOPE"))
+                        targetScope();
+                    connection.getInput().readObject();
                     updateLocalView();
                 }
-            }else{
+                actionRequested = new ActionRequestView(true);
+                connection.getOutput().writeObject(actionRequested);
+                connection.getInput().readObject();
                 updateLocalView();
-
+            }else{
+                waitForInfo();
+                updateLocalView();
             }
+            //questo è il fine turno
             deadPlayers = (int) connection.getInput().readObject();
             status = (String) connection.getInput().readObject();
             if (!status.equals("ALIVE")){
@@ -325,10 +301,37 @@ public class AdrenalineClient {
             }
             for (int i = 0; i < deadPlayers; i++) {
                 localView = (LocalView) connection.getInput().readObject();
-                //todo stampare la LocalView
+                displayBoard();
             }
+
         }
-        //todo gestione fine partita
+        String finale = (String) connection.getInput().readObject();
+        userInteractionGUI.showMessage(finale);
+    }
+
+    private static void targetScope() throws IOException, ClassNotFoundException {
+        ArrayList<String> choices = (ArrayList<String>) connection.getInput().readObject();
+        String reply = userInteractionGUI.stringSelector("Scegli il colore del cubo da pagare: ", choices);
+        connection.getOutput().writeObject(reply);
+        if(!reply.equals("Nothing")) {
+            connection.getInput().readObject();
+            choices = (ArrayList<String>) connection.getInput().readObject();
+            reply = userInteractionGUI.stringSelector("Scegli il colore del player da colpire tra i seguenti: ", choices);
+            connection.getOutput().writeObject(reply);
+        }
+
+    }
+
+    private static void waitForInfo() throws IOException, ClassNotFoundException {
+        String message;
+        message = (String) connection.getInput().readObject();
+        if (message.equals("TAGBACKUSAGE"))
+            granade();
+    }
+
+    private static void granade() throws IOException {
+        boolean reply = userInteractionGUI.yesOrNo("Sei stato colpito, vuoi usare il PowerUP TagBack Grenade?", "Si", "No");
+        connection.getOutput().writeBoolean(reply);
     }
 
     private static void reSpawn() throws IOException, ClassNotFoundException {
@@ -340,11 +343,8 @@ public class AdrenalineClient {
         connection.getOutput().writeObject(card);
     }
 
-    private static ChosenActions presentActions(AvailableActions actions) {
-        if(isGUI()){
-
-        }
-        return null;
+    private static ChosenActions presentActions(AvailableActions actions) throws NoActionsException {
+        return new ChosenActions(actions);
     }
 
     private static void updateLocalView() throws IOException, ClassNotFoundException {
@@ -412,14 +412,6 @@ public class AdrenalineClient {
         }
 
         gameBoardGui = new GameBoardGui(getLocalView().getMapView().getMapNumber(),opponentsBoards,getLocalView().getPersonalPlayerBoardView(),getLocalView().getMapView().getBoardMatrix() );
-    }
-
-    private static void networkStarterClient ( boolean rmi){
-        if (rmi) {
-            networkHandler = new NetworkHandlerRMI();
-            localView = networkHandler.getLocalView(1); //TODO recuperare il numero del player corretto
-            //TODO scrivere metodo
-        }
     }
 
         /** This method creates the connection between Client and server
@@ -523,17 +515,5 @@ class Connection{
 
     ObjectOutputStream getOutput() {
         return this.output;
-    }
-}
-
-
-
-class ClientCallBackClass implements clientCallBack{
-
-    @Override
-public void ClientCallBack() throws RemoteException {
-        /*
-        //this method is empty because is used by the server only to check if the connection works before the match start
-         */
     }
 }

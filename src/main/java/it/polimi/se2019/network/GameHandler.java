@@ -23,9 +23,10 @@ public class GameHandler implements Runnable {
     private Controller controller;
     private int mapNumber;
     private int skullsNumber;
-
+    private boolean useTarget;
     private boolean useTagBack;
     private String colorReceived;
+    private int turns = 0;
 
     public Controller getController() {
         return controller;
@@ -117,21 +118,26 @@ public class GameHandler implements Runnable {
                 calculateActions(clientTurn);
                 waitingRequest(clientTurn);
                 PlayerManager.choiceExecutor(controller, clientTurn.getChosenAction());
+                managePowerUps(PlayerManager.choiceExecutor(controller, clientTurn.getChosenAction()));
                 notifyView(clientTurn);
-
-                //rileggi il codice
-                for (ClientHandler client : players) {
-                    client.setDeadsPlayer(this.controller.getMainGameModel().getDeadPlayers().size());
-                }
-
                 MapManager.refillEmptiedCells(controller.getMainGameModel().getCurrentMap().getBoardMatrix(),controller.getMainGameModel().getCurrentDecks());
-
+                try {
+                    postAction();
+                } catch (InterruptedException e) {
+                    LOGGER.log(Level.FINE,"3rd exception",e);
+                }
                 if (this.controller.getMainGameModel().getKillshotTrack().getSkulls() == 0)
                     break;
+                //fine azione
             }
-            clientTurn.setStatus(Status.NOTMYTURN);
-            controller.getActiveTurn().nextTurn(controller);
+            //fine turno
+            this.turns++;
             PlayerManager.scoringProcess(controller);
+            try {
+                notifyEndTurn();
+            } catch (InterruptedException e) {
+                LOGGER.log(Level.FINE,"4th exception",e);
+            }
             for (Player player: this.controller.getMainGameModel().getDeadPlayers()) {
                 for (ClientHandler client: this.players) {
                     if(player.getNickname().equals(client.getNickname())){
@@ -142,7 +148,7 @@ public class GameHandler implements Runnable {
                             PlayerManager.spawnPlayers(controller, client.getLocalView().getPlayerId(), client.getSpawn());
                             setSpawn(client);
                         } catch (FullException | CardNotFoundException e) {
-                            LOGGER.log(Level.FINE,"3rd exception",e);
+                            LOGGER.log(Level.FINE,"5th exception",e);
                         }
 
                     }
@@ -151,7 +157,7 @@ public class GameHandler implements Runnable {
                     try {
                         client.sendLocalView();
                     } catch (IOException e) {
-                        LOGGER.log(Level.FINE,"4th exception",e);
+                        LOGGER.log(Level.FINE,"6th exception",e);
                     }
                 }
                 MapManager.refillEmptiedCells(controller.getMainGameModel().getCurrentMap().getBoardMatrix(),controller.getMainGameModel().getCurrentDecks());
@@ -161,7 +167,6 @@ public class GameHandler implements Runnable {
             clientTurn.setStatus(Status.NOTMYTURN); //valuta se magari ripassare da UPDATE piuttosto
             controller.getActiveTurn().nextTurn(controller);
             controller.getMainGameModel().getDeadPlayers().clear();
-            PlayerManager.scoringProcess(controller);
         }
         TurnManager.frenzyActivator(controller);
         for (int j = 0; j<players.size(); j++){
@@ -175,15 +180,45 @@ public class GameHandler implements Runnable {
                 managePowerUps(PlayerManager.choiceExecutor(controller, chosenActions));
                 notifyView(clientTurn);
             }
-            clientTurn.setStatus(Status.NOTMYTURN);
+            waitingRequest(clientTurn);
+            calculateActions(clientTurn);
+            try {
+                notifyEndTurn();
+            } catch (InterruptedException e) {
+                LOGGER.log(Level.FINE,"7th exception",e);
+            }
             controller.getActiveTurn().nextTurn(controller);
             MapManager.refillEmptiedCells(controller.getMainGameModel().getCurrentMap().getBoardMatrix(),controller.getMainGameModel().getCurrentDecks());
+            this.turns++;
         }
         for (ClientHandler player: players) {
             player.setStatus(Status.ENDGAME);
         }
         PlayerManager.scoringProcess(controller); //last scoring of the game (after the final frenzy round)
-        winnerIs();
+        try {
+            winnerIs();
+        } catch (InterruptedException e) {
+            LOGGER.log(Level.FINE,"8th exception",e);
+        }
+    }
+
+    private void notifyEndTurn() throws InterruptedException {
+        for (ClientHandler player: players) {
+            while((player.getStatus() != Status.WAITING))
+                Thread.sleep(1);
+            player.setStatus(Status.ENDTURN);
+        }
+    }
+
+    private void postAction() throws InterruptedException {
+        for (ClientHandler player: players) {
+            while((player.getStatus() != Status.WAITING))
+                Thread.sleep(1);
+            if(controller.getActiveTurn().getActivePlayer().getNickname().equals(player.getNickname()))
+                player.setStatus(Status.MYTURN);
+            else
+                player.setStatus(Status.NOTMYTURN);
+        }
     }
 
     /**
@@ -202,14 +237,12 @@ public class GameHandler implements Runnable {
 
                     for(int i=0;i< player.getPlayerBoard().getHand().getPowerups().length;i++)
                         if(player.getPlayerBoard().getHand().getPowerups()[i].getPowerupType().equals("TagbackGrenade")){
-
                             try{
-                                //TODO è giusto così?
                                 getTagBackUsage(this.players.get(player.getId()));
                                 if(this.useTagBack){
-                                //TODO messaggio da visualizzare in gui: "Sei stato colpito, vuoi usare il PowerUP TagBack Grenade?")
-                                PowerupManager.grenadeManager(this.controller,activePlayer,player,i);
-                                break;
+                                    this.players.get(player.getId()).setStatus(Status.TAGBACKUSAGE);
+                                    PowerupManager.grenadeManager(this.controller,activePlayer,player,i);
+                                    break;
                             }}
                             catch (InterruptedException e){
                                 LOGGER.log(Level.FINE,"request tagback exception",e);
@@ -234,41 +267,38 @@ public class GameHandler implements Runnable {
                         choices.add("Red");
                     if(activePlayer.getPlayerBoard().getAmmo().getYellow()>0)
                         choices.add("Yellow");
+                    choices.add("Nothing");
 
-                    //TODO va scelta una stringa da choices con messaggio "Scegli il colore del cubo da pagare: "
                     try {
-                        //TODO gli va passato l'ArrayList choices
+                        players.get(activePlayer.getId()).setChoices(choices);
                         getTargettingScopeUsage(this.players.get(activePlayer.getId()));
                     }
                     catch (InterruptedException e){
                         LOGGER.log(Level.FINE,"request tagback exception",e);
                     }
-                    char ammoToPay=this.colorReceived.toLowerCase().charAt(0);
+                    if(!this.colorReceived.equals("Nothing")){
+                        char ammoToPay=this.colorReceived.toLowerCase().charAt(0);
 
-                    choices.clear();
-                    for(Player player:playersHit)
-                        choices.add(player.getPlayerBoard().getColor().toString());
+                        choices.clear();
+                        for(Player player:playersHit)
+                            choices.add(player.getPlayerBoard().getColor().toString());
+                        try {
+                            players.get(activePlayer.getId()).setChoices(choices);
+                            getTargettingScopeUsage(this.players.get(activePlayer.getId()));
+                        }
+                        catch (InterruptedException e){
+                            LOGGER.log(Level.FINE,"request tagback exception",e);
+                        }
+                        //the player to hit with 1 more damage
+                        Player target=controller.getMainGameModel().getPlayerByColor(this.colorReceived.toLowerCase().charAt(0));
 
-                    //TOdo gli va passata la lista choices, e gli va chiesto questo:
-                    // "Scegli il colore del player da colpire tra i seguenti: " con lo string selector
-                    try {
-                        //TODO gli va passato L'arrayList choices
-                        getTargettingScopeUsage(this.players.get(activePlayer.getId()));
+                        PowerupManager.targetingScopeManager(this.controller,target,i,ammoToPay);
+                        break;
                     }
-                    catch (InterruptedException e){
-                        LOGGER.log(Level.FINE,"request tagback exception",e);
-                    }
-                    //the player to hit with 1 more damage
-                    Player target=controller.getMainGameModel().getPlayerByColor(this.colorReceived.toLowerCase().charAt(0));
-
-                    PowerupManager.targetingScopeManager(this.controller,target,i,ammoToPay);
-                    break;
-            }
-
+                }
         }
     }
 
-    //TODO frangi controlla
     private void getTagBackUsage(ClientHandler clientTurn) throws InterruptedException {
         while(!clientTurn.getStatus().equals(Status.WAITING))
             Thread.sleep(1);
@@ -281,10 +311,8 @@ public class GameHandler implements Runnable {
             }
         }
     }
-
-    //TODO frangi controlla
     private void getTargettingScopeUsage(ClientHandler clientTurn) throws InterruptedException {
-        while(!clientTurn.getStatus().equals(Status.WAITING))
+        while(!clientTurn.getStatus().equals(Status.WAITING) )
             Thread.sleep(1);
         clientTurn.setStatus(Status.TRGSCOPE);
         while(clientTurn.getStatus() == Status.TRGSCOPE){
@@ -304,18 +332,15 @@ public class GameHandler implements Runnable {
 
     }
 
-    private synchronized void winnerIs() {
-        int max = 0;
-        String winnerNick = "";
-        for (ClientHandler client : players) {
-            if(client.getLocalView().getPersonalPlayerBoardView().getScore() > max)
-                max = client.getLocalView().getPersonalPlayerBoardView().getScore();
+    private synchronized void winnerIs() throws InterruptedException {
+        GameStats finale = new GameStats(controller, this.turns);
+        for (ClientHandler player: players) {
+            while(player.getStatus() != Status.ENDGAME)
+                Thread.sleep(1);
+            player.setGameStats(finale);
+            player.setStatus(Status.WINNERIS);
         }
-        for (ClientHandler client: players) {
-            client.setWinnerNick(winnerNick);
-            client.setStatus(Status.WINNERIS);
-            notifyAll();
-        }
+
     }
 
     private void waitForReSpawn(ClientHandler c) {
@@ -361,7 +386,6 @@ public class GameHandler implements Runnable {
     private synchronized void calculateActions(ClientHandler clientTurn){
         clientTurn.setAvailableActions(new AvailableActions(clientTurn.getRequestView(), controller.getActiveTurn().getActivePlayer().getId(), controller));
         clientTurn.setStatus(Status.CALCULATED);
-        this.notifyAll();
     }
 
     private void waitingRequest(ClientHandler clientTurn){

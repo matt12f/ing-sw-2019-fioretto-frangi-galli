@@ -2,6 +2,7 @@ package it.polimi.se2019.network;
 
 import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.controller.AvailableActions;
+import it.polimi.se2019.controller.GameStats;
 import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.model.cards.PowerupCard;
 import it.polimi.se2019.view.ActionRequestView;
@@ -15,12 +16,11 @@ import java.util.ArrayList;
 
 
 
-public class ClientHandler extends Thread implements RMIInterface {
+public class ClientHandler extends Thread {
     private String nickname;
     private Thread thread;
     private Socket socket = null;
     private boolean accepted = false; //used in a first moment to verify the nickname's uniqueness
-    private String host;
     private Status status = Status.NOTREADY;
     private Color color;
     private ObjectOutputStream output;
@@ -29,29 +29,26 @@ public class ClientHandler extends Thread implements RMIInterface {
     private ActionRequestView requestView;
     private AvailableActions availableActions;
     private int actionsNumber;
+    private boolean reload;
     private ChosenActions chosenAction;
     private LocalView localView;
     private PowerupCard spawn;
-    private String winnerNick;
     private int deadsPlayer;
-    public Object lock;
+    private ArrayList<String> choices;
+    private GameStats finale;
 
     @Override
     public void run(){
         try {
             System.out.println("Partito clientHandler della socket: " + this.socket);
-            if(this.socket == null){
-                //todo RMI
-            }else{
-                this.output = new ObjectOutputStream(this.socket.getOutputStream());
-                this.input = new ObjectInputStream(this.socket.getInputStream());
-                while (!this.accepted){
-                    this.nickname = (String) input.readObject();
-                    AdrenalineServer.nickController(this);
-                }
-                initializeLobby();
-                waitingPlayers();
+            this.output = new ObjectOutputStream(this.socket.getOutputStream());
+            this.input = new ObjectInputStream(this.socket.getInputStream());
+            while (!this.accepted){
+                this.nickname = (String) input.readObject();
+                AdrenalineServer.nickController(this);
             }
+            initializeLobby();
+            waitingPlayers();
             this.output.writeObject("START");
             waitForView();
             sendLocalView(); //invio la view al client
@@ -59,28 +56,36 @@ public class ClientHandler extends Thread implements RMIInterface {
                 waitForView();
                 sendLocalView();
             }
-            while(!status.equals(Status.ENDGAME)){
-                switch (this.status){
-                    case MYTURN:
-                        this.output.writeObject("MYTURN");
-                        this.input.readBoolean();
-                        this.output.writeObject(this.actionsNumber); //comunica quante azioni può fare il giocatore
-                        for(int j = 0; j<this.actionsNumber; j++){
-                            requestView = (ActionRequestView) this.input.readObject();
-                            statusChanged();
-                            this.output.writeObject(availableActions);
-                            this.chosenAction = (ChosenActions) this.input.readObject();
-                            statusChanged();
-                            sendLocalView();
-                        }
-                        break;
-                    case NOTMYTURN:
-                        this.output.writeObject("NOTMYTURN");
-                        statusChanged();
-                        sendLocalView();
-                        break;
-                    default:
-                        break;
+            while(!status.equals(Status.ENDGAME)) {
+                while(this.status != Status.ENDTURN) {
+                    switch (this.status) {
+                        case MYTURN:
+                            reload = true;
+                            this.output.writeObject("MYTURN");
+                            this.input.readBoolean();
+                            this.output.writeObject(this.actionsNumber); //comunica quante azioni può fare il giocatore
+                            for (int j = 0; j < this.actionsNumber; j++) {
+                                requestView = (ActionRequestView) this.input.readObject();
+                                statusChanged();
+                                this.output.writeObject(availableActions);
+                                this.chosenAction = (ChosenActions) this.input.readObject();
+                            }
+                            waitForTurn();
+                            break;
+                        case NOTMYTURN:
+                            reload = false;
+                            this.output.writeObject("NOTMYTURN");
+                            waitForTurn();
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                //gestione di fine turno
+                if(reload){
+                    this.requestView = (ActionRequestView) this.input.readObject();
+                    statusChanged();
+
                 }
                 this.output.writeObject(deadsPlayer);
                 if (status.equals(Status.DEAD)){
@@ -92,13 +97,29 @@ public class ClientHandler extends Thread implements RMIInterface {
                 }else{
                     this.output.writeObject("ALIVE");
                 }
-
             }
             waitForWinner();
-            this.output.writeObject(winnerNick);
+            this.output.writeObject(finale.toString());
         } catch (InterruptedException | IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    private void waitForTurn() throws InterruptedException, IOException, ClassNotFoundException {
+        this.status = Status.WAITING;
+        while(status != Status.MYTURN && status != Status.NOTMYTURN && status != Status.ENDGAME && status != Status.ENDTURN){
+            sleep(1);
+            if(status == Status.TAGBACKUSAGE)
+                setTagBackUsage();
+            if(status == Status.TRGSCOPE)
+                setTargetingUsage();
+            if(status == Status.VIEW)
+                sendLocalView();
+        }
+        this.setStatus(Status.ENDTURN);
+        while (status == Status.ENDTURN)
+            sleep(1);
+
     }
 
     private synchronized void initializeLobby() throws IOException {
@@ -132,7 +153,6 @@ public class ClientHandler extends Thread implements RMIInterface {
     synchronized void sendLocalView() throws IOException {
         this.output.writeObject("VIEW");
         this.input.readBoolean();
-        System.out.println("invio");
         this.output.reset();
         this.output.writeObject(this.localView);
     }
@@ -144,22 +164,20 @@ public class ClientHandler extends Thread implements RMIInterface {
         }
     }
 
-    //TODO frangi controlla
-    private synchronized void setTagBackUsage() throws IOException, ClassNotFoundException {
+    private synchronized void setTagBackUsage() throws IOException, ClassNotFoundException, InterruptedException {
         this.output.writeObject("TAGBACKUSAGE");
-        boolean useTagBack = (boolean) this.input.readObject();
+        boolean useTagBack = this.input.readBoolean();
         this.game.setUseTagBack(useTagBack);
         this.status = Status.WAITING;
-        notifyAll();
     }
 
-    //TODO frangi controlla
-    private synchronized void setTargettingUsage() throws IOException, ClassNotFoundException {
-        this.output.writeObject("TAGBACKUSAGE");
+    private synchronized void setTargetingUsage() throws IOException, ClassNotFoundException, InterruptedException {
+        this.output.writeObject("TARGETINGSCOPE");
+        this.output.reset();
+        this.output.writeObject(this.choices);
         String useTagBack = (String) this.input.readObject();
         this.game.setColorReceived(useTagBack);
         this.status = Status.WAITING;
-        notifyAll();
     }
 
     private synchronized void setMapSkull() throws IOException, ClassNotFoundException {
@@ -181,10 +199,6 @@ public class ClientHandler extends Thread implements RMIInterface {
         return socket;
     }
 
-    void setHost(String host) {
-        this.host = host;
-    }
-
     public void setSocket(Socket socket) {
         this.socket = socket;
     }
@@ -195,25 +209,6 @@ public class ClientHandler extends Thread implements RMIInterface {
 
     public ObjectOutputStream getOutput() {
         return output;
-    }
-
-    @Override
-    public LocalView getLocalView(int playerID) throws RemoteException {
-
-        return null;
-    }
-
-    @Override
-    public AvailableActions askAction(ActionRequestView codedAction, int playerID) throws RemoteException {
-        return null;
-    }
-
-    @Override
-    public synchronized void setNicknameRMI(String nickname) throws RemoteException, InterruptedException {
-        setNickname(nickname);
-        this.getThread().wait();
-        if(!this.accepted)
-            throw (new IllegalArgumentException());
     }
 
     public void setNickname(String nickname) {
@@ -230,6 +225,9 @@ public class ClientHandler extends Thread implements RMIInterface {
                 setSpawn();
             if(this.status == Status.START)
                 break;
+            if(this.status == Status.TAGBACKUSAGE)
+                setTagBackUsage();
+
         }
     }
 
@@ -242,14 +240,7 @@ public class ClientHandler extends Thread implements RMIInterface {
         waiting();
     }
 
-    @Override
-    public String actionRequest() throws RemoteException {
-        return null;
-    }
 
-    private Thread getThread() {
-        return thread;
-    }
 
     public void setAccepted(boolean accepted) {
         this.accepted = accepted;
@@ -279,7 +270,7 @@ public class ClientHandler extends Thread implements RMIInterface {
         this.availableActions = availableActions;
     }
 
-    @Override
+
     public Status getStatus() {
         return this.status;
     }
@@ -312,7 +303,11 @@ public class ClientHandler extends Thread implements RMIInterface {
         this.deadsPlayer = deadsPlayer;
     }
 
-    void setWinnerNick(String winnerNick) {
-        this.winnerNick = winnerNick;
+    void setChoices(ArrayList<String> choices) {
+        this.choices = choices;
+    }
+
+    void setGameStats(GameStats stats) {
+        this.finale = stats;
     }
 }
