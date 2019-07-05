@@ -5,6 +5,8 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 
+import static it.polimi.se2019.enums.CellType.OUTSIDEBOARD;
+
 
 public class MapViewGUI extends JPanel {
 
@@ -145,7 +147,10 @@ public class MapViewGUI extends JPanel {
 
         for (int row=0;row <= 4;row++) {
             for (int column = 0; column <= 3; column++) {
-                labelBackground.add(boardMatrixGUI[row][column]);
+                if(boardMatrixGUI[row][column] != null){
+                    labelBackground.add(boardMatrixGUI[row][column]);
+                }
+
             }
 
         }
@@ -179,8 +184,13 @@ public class MapViewGUI extends JPanel {
 
         for (int row=0;row < 3;row++){
             for(int column=0;column < 4;column++){
-                boardMatrixGUI[row][column].updateCell(boardMatrix[row][column]);
-                boardMatrixGUI[row][column].setLocation(x,y);
+                if (boardMatrix[row][column].getCorrespondingCell().getCellType() == OUTSIDEBOARD){
+                    boardMatrixGUI[row][column].updateCell(boardMatrix[row][column]);
+                    boardMatrixGUI[row][column].setLocation(x,y);
+                }else {
+                    boardMatrixGUI[row][column] = null;
+                }
+
                 x+=105;
             }
             x=95;
