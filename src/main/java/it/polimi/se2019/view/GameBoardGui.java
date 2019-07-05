@@ -39,7 +39,7 @@ public class GameBoardGui  {
         container.gridheight = 2;
         mainPanel.add(map, container);
 
-        this.map.setBoard(boardMatrix);//TODO utile?
+        this.map.setBoard(boardMatrix);
 
         //mainPanel.setLayout(new GridBagLayout());
         //container.anchor = GridBagConstraints.EAST;

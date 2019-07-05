@@ -1,6 +1,5 @@
 package it.polimi.se2019.view;
 
-import it.polimi.se2019.model.cards.AmmoTileCard;
 import it.polimi.se2019.model.game.Figure;
 import it.polimi.se2019.model.game.NewCell;
 

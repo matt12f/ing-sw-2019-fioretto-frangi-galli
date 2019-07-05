@@ -95,8 +95,8 @@ public class PlayerHandViewGUI extends JPanel {
 
     public void updateHand(GunCard[] weapons, PowerupCard[] powerups, AmmoView ammoView){
        weapon1.updateImage(weapons[0]);
-       weapon2.updateImage(weapons[0]);
-       weapon3.updateImage(weapons[0]);
+       weapon2.updateImage(weapons[1]);
+       weapon3.updateImage(weapons[2]);
        this.weapons = weapons;
        powerup1.updateImage(powerups[0]);
        powerup2.updateImage(powerups[1]);
