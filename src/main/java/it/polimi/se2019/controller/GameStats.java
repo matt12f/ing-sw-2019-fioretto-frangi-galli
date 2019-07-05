@@ -10,11 +10,11 @@ public class GameStats {
     private boolean singleWinner;
 
     public GameStats(Controller currentController, int numberOfTurns){
-        ArrayList<Player> players=currentController.getMainGameModel().getPlayerList();
+        ArrayList<Player> players = currentController.getMainGameModel().getPlayerList();
 
         ArrayList<Character> killshotTrackScoring = finalScoring(currentController, players);
         this.numberOfTurns = numberOfTurns;
-        this.ranking = players;
+        this.ranking=new ArrayList<>();
 
         //section for TIE BREAKING
         //if there's a tie, it will break in favor of the player that has the highest score on the killshot track
@@ -26,12 +26,13 @@ public class GameStats {
 
         //the first if determines if there's a TIE between the first two players
         //the second if evaluates if both of the player have scores on the killshot track (so it's already been considered they're tied)
-        if(this.ranking.get(0).getScore()==this.ranking.get(1).getScore())
+        if(this.ranking.get(0).getScore()==this.ranking.get(1).getScore()){
             if(killshotTrackScoring.contains(this.ranking.get(0).getPlayerBoard().getColorChar()) &&
                     killshotTrackScoring.contains(this.ranking.get(1).getPlayerBoard().getColorChar()))
-                this.singleWinner=true;
-            else
                 this.singleWinner=false;
+        }
+        else
+            this.singleWinner=true;
     }
 
     public int compare(Player o1, Player o2, ArrayList<Character> secondaryRanking){
@@ -90,19 +91,19 @@ public class GameStats {
 
         gameStats.append("The game was ");
         gameStats.append(this.numberOfTurns);
-        gameStats.append(" turns long\n");
+        gameStats.append(" turns long\n\n");
 
         if(this.singleWinner) {
             gameStats.append("There's a single winner: ");
             gameStats.append(this.ranking.get(0).toString());
         }
         else{
-            gameStats.append("There's a tie between Player: ");
+            gameStats.append("There's a tie between Player: \n");
             gameStats.append(this.ranking.get(0).toString());
             gameStats.append("\n");
             gameStats.append(this.ranking.get(1).toString());
         }
-        gameStats.append("\n full playerList: \n");
+        gameStats.append("\n\nRanking: \n");
 
         //listing players
         for(Player player:this.ranking){
