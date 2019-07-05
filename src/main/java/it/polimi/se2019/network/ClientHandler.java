@@ -97,6 +97,11 @@ public class ClientHandler extends Thread {
                 }else{
                     this.output.writeObject("ALIVE");
                 }
+                if(this.status == Status.ENDGAME)
+                    this.output.writeBoolean(false);
+                else
+                    this.output.writeBoolean(true);
+                this.output.flush();
             }
             waitForWinner();
             this.output.writeObject(finale.toString());

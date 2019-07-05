@@ -303,7 +303,7 @@ public class AdrenalineClient {
                 localView = (LocalView) connection.getInput().readObject();
                 displayBoard();
             }
-
+            start  = connection.getInput().readBoolean();
         }
         String finale = (String) connection.getInput().readObject();
         userInteractionGUI.showMessage(finale);

@@ -26,7 +26,6 @@ public class SocketClients implements Runnable{
                 newUser = new ClientHandler();
                 newUser.setSocket(socketTemp);
                 newUser.setThread(null);
-                newUser.setHost(null);
                 System.out.println("Nuovo client("+ AdrenalineServer.getLobbyClient().size() +"), socket: " + socketTemp);
                 newUser.start();
             }
