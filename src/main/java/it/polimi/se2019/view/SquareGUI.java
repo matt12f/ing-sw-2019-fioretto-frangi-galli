@@ -22,12 +22,12 @@ public class SquareGUI extends JLabel {
     public void updateImage(Color type){
 
         switch (type){
-            case WHITE: color = "white";
-            case BLUE:color = "blue";
-            case GREEN:color = "green";
-            case VIOLET:color = "purple";
-            case YELLOW:color = "yellow";
-            case BLACK: color = "black";
+            case WHITE: color = "white";break;
+            case BLUE:color = "blue";break;
+            case GREEN:color = "green";break;
+            case VIOLET:color = "purple";break;
+            case YELLOW:color = "yellow";break;
+            case BLACK: color = "black";break;
             default: break;
         }
 
