@@ -8,15 +8,12 @@ import java.awt.*;
 import it.polimi.se2019.enums.Color;
 
 public class SquareGUI extends JLabel {
-
     private String color;
 
 
-
     public SquareGUI(Color color){
-
         updateImage(color);
-        setSize(20,20);
+        setSize(20,34);
     }
 
     public void updateImage(Color type){
@@ -35,9 +32,11 @@ public class SquareGUI extends JLabel {
         }
 
         if (type != Color.RED){
-            ImageIcon pic = new ImageIcon(new ImageIcon("src/main/sprite/damage/"+ color +".png").getImage().getScaledInstance(20,20, Image.SCALE_DEFAULT));
+            ImageIcon pic = new ImageIcon(new ImageIcon("src/main/sprite/damage/"+ color +".png").getImage().getScaledInstance(20,34, Image.SCALE_DEFAULT));
             setIcon(pic);
-        }
+            setVisible(true);
+        }else
+            setVisible(false);
         }
     }
 

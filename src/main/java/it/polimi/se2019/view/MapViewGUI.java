@@ -94,10 +94,10 @@ public class MapViewGUI extends JPanel {
                 boardMatrixGUI[row][column]= new CellViewGUI(boardMatrix[row][column]);
                 boardMatrixGUI[row][column].setLocation(x,y);
 
-                if (boardMatrix[row][column].getCorrespondingCell().getCellType() == OUTSIDEBOARD){
-                    boardMatrixGUI[row][column].setType("inBoard");
-                }else {
+                if (boardMatrix[row][column].getCorrespondingCell().getCellType().equals(OUTSIDEBOARD)){
                     boardMatrixGUI[row][column].setType("outBoard");
+                }else {
+                    boardMatrixGUI[row][column].setType("inBoard");
 
                 }
 
@@ -166,7 +166,7 @@ public class MapViewGUI extends JPanel {
 
         for (int row=0;row < 3;row++) {
             for (int column = 0; column < 4; column++) {
-                if(boardMatrixGUI[row][column].getType() == "inBoard"){
+                if(boardMatrixGUI[row][column].getType().equals("inBoard")){
                     labelBackground.add(boardMatrixGUI[row][column]);
                 }
 
@@ -207,9 +207,9 @@ public class MapViewGUI extends JPanel {
                 boardMatrixGUI[row][column].setLocation(x,y);
 
                 if (boardMatrix[row][column].getCorrespondingCell().getCellType() == OUTSIDEBOARD){
-                    boardMatrixGUI[row][column].setType("inBoard");
-                }else {
                     boardMatrixGUI[row][column].setType("outBoard");
+                }else {
+                    boardMatrixGUI[row][column].setType("inBoard");
 
                 }
 
