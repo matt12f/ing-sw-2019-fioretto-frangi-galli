@@ -27,12 +27,14 @@ public class BoardZoneGUI extends JPanel {
         this.killsDynamic = kills;
 
 
+        //removes the player board of the owner, so it's not displayed twice
+        boards.remove(ownerBoard);
+
        //////////creazione dinamica della board zone///////
         this.boardsGUI= new ArrayList<>();
         for (int i = 0; i< boards.size();i++){
-           boardsGUI.add(new PlayerBoardViewGUI( boards.get(i),420,109 )) ;
+           boardsGUI.add(new PlayerBoardViewGUI( boards.get(i),420,109 ));
         }
-
 
 
         //////////aggiunta dinamica della board zone///////
@@ -54,7 +56,7 @@ public class BoardZoneGUI extends JPanel {
         score.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ScoreViewGUI frame =new ScoreViewGUI(boardsDynamic,ownerBoardDynamic, killsDynamic );
+                ScoreViewGUI frame =new ScoreViewGUI(boardsDynamic, ownerBoardDynamic, killsDynamic );
                 frame.setVisible(true);
             }
 

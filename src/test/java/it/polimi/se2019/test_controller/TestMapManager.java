@@ -1,6 +1,8 @@
 package it.polimi.se2019.test_controller;
 
+import it.polimi.se2019.controller.CellInfo;
 import it.polimi.se2019.controller.Controller;
+import it.polimi.se2019.controller.FictitiousPlayer;
 import it.polimi.se2019.controller.MapManager;
 import it.polimi.se2019.enums.CellEdge;
 import it.polimi.se2019.enums.CellType;
@@ -235,5 +237,38 @@ public class TestMapManager {
                 else
                     assertEquals(board[i][j].getCellType(),CellType.OUTSIDEBOARD);
     }
+
+    @Test
+    public void testGetCellInRadius2(){
+        Player player1=new Player(1,"frank", Color.BLUE);
+        Player player2=new Player(2,"george",Color.YELLOW);
+        Player player3=new Player(3,"miles", Color.WHITE);
+
+        ArrayList<Player> players=new ArrayList<>();
+        players.add(player1);
+        players.add(player2);
+        players.add(player3);
+
+        Controller controller=new Controller(players,1,5);
+
+        NewCell [][] board=controller.getMainGameModel().getCurrentMap().getBoardMatrix();
+
+        NewCell position1 = board[1][2];
+        player1.getFigure().setCell(position1);
+
+
+        CellInfo cellInfo=new CellInfo(player1.getFigure().getCell(),false,false);
+
+        FictitiousPlayer testPlayer=new FictitiousPlayer(controller, player1, cellInfo,
+                false,false);
+
+        ArrayList<NewCell> cellsInRadius= MapManager.squaresInRadius2(controller,testPlayer);
+
+        //TODO check se 8 è il numero giusto di celle in un raggio due nella mappa 1 dalla posizione (1,2)
+        String result= cellsInRadius.toString();
+        assertEquals(7, cellsInRadius.size());
+    }
+
+
 }
 
