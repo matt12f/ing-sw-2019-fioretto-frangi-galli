@@ -25,7 +25,7 @@ PlayerBoardViewGUI extends JPanel{
 
 
         this.board = new JLabel(boardImage);
-        board.setIcon(boardImage);
+
 
         this.markerButton = new JButton("markers");
         markerButton.setLocation(225, 10);
@@ -41,7 +41,7 @@ PlayerBoardViewGUI extends JPanel{
         }
 
         setBoard(   x,  y, false, boardView );
-
+        board.setIcon(boardImage);
         damageVector[0].setLocation(40, 40);
         damageVector[1].setLocation(60, 40);
         damageVector[2].setLocation(85, 40);
