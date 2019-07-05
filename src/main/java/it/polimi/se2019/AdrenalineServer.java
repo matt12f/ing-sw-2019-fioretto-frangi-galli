@@ -15,23 +15,19 @@ public class AdrenalineServer{
 
     public static void main( String[] args) throws InterruptedException {
         SocketClients socketClient;
-        RMIClients rmiClients;
         LobbyMonitor lobbyMonitor;
         System.out.println("Server partito");
         socketClient = new SocketClients();
-        rmiClients= new RMIClients();
         lobbyMonitor = new LobbyMonitor();
-        Thread threadSocket = new Thread(rmiClients); //prende gli utenti via Socket
-        Thread threadRMI = new Thread(socketClient); //prende gli utenti via rmi
+        Thread threadSocket = new Thread(socketClient); //prende gli utenti via Socket
+
         Thread threadMonitor = new Thread(lobbyMonitor);
         AdrenalineServer.lobby = new ArrayList<>();
         AdrenalineServer.lobbyClient = new ArrayList<>();
-        threadRMI.start();
         threadSocket.start();
         threadMonitor.start();
         System.out.println("threads partiti");
         try {
-            threadRMI.join();
             threadSocket.join();
             threadMonitor.join();
         } catch (InterruptedException e) {
@@ -74,8 +70,6 @@ public class AdrenalineServer{
                     indexToDelete.add(lobbyClient.indexOf(client));
                     System.out.println("cliente disconnesso");
                 }
-            }else{
-                //todo fare controllo tramite RMI
             }
         }
         //deleting useless ClientHandler from lobbyClient

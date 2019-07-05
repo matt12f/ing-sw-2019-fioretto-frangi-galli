@@ -93,6 +93,7 @@ public class RemoteView  extends    View implements RMIInterface {
         for (PlayerBoardView player: playerBoardViews) {
             player.update(model.getPlayerList().get(playerBoardViews.indexOf(player)).getPlayerBoard());
             this.playerHands.get(playerBoardViews.indexOf(player)).setPowerups(model.getPlayerList().get(playerBoardViews.indexOf(player)).getPlayerBoard().getHand().getPowerups());
+            this.playerHands.get(playerBoardViews.indexOf(player)).setAdditionalPowerup(model.getPlayerList().get(playerBoardViews.indexOf(player)).getPlayerBoard().getHand().getAdditionalPowerup());
             this.playerHands.get(playerBoardViews.indexOf(player)).setGuns(model.getPlayerList().get(playerBoardViews.indexOf(player)).getPlayerBoard().getHand().getGuns());
             for (int i = 0; i < Hand.getMaxcards() ; i++) {
                 gunCard = model.getPlayerList().get(playerBoardViews.indexOf(player)).getPlayerBoard().getHand().getGuns()[i];

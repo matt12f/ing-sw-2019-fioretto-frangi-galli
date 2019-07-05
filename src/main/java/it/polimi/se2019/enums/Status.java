@@ -17,6 +17,6 @@ public enum Status {
     ENDGAME,
     DEAD,
     WINNERIS,
-    VIEW
+    ENDTURN, VIEW
 }
 
