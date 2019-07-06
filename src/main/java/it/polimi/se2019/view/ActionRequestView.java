@@ -55,8 +55,9 @@ public class ActionRequestView implements Serializable {
 
         PowerupCard[] cardView=localView.getPlayerHand().getPowerups();
 
-        for(int i=0;i<cardView.length;i++)
-            if (cardView[i].getPowerupType().equals("Newton") && this.askUser.yesOrNo("Vuoi usare un PowerUp Newton?","Si","No")){
+        for(int i=0;i<cardView.length && cardView[i]!=null;i++)
+            if (cardView[i].getPowerupType().equals("Newton") &&
+                    this.askUser.yesOrNo("Vuoi usare un PowerUp Newton?","Si","No")){
                 ArrayList<String> playerColors = getPlayerColors();
                 String colorString = this.askUser.stringSelector("Quale player vuoi spostare? scegline il colore", playerColors);
 

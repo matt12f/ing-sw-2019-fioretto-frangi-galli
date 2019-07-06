@@ -13,14 +13,14 @@ import java.util.Observable;		//for update();
 public class WeaponMenuGUI extends JFrame{
     private JLabel image;
     private Label weaponName;
-    private Label weaponInfo;
+    private TextArea weaponInfo;
     private Label weaponCharge;
     private ImageIcon img;
 
 
     public WeaponMenuGUI(GunCard weaponType){
         this.weaponName = new Label(weaponType.getClass().getSimpleName().toUpperCase());
-        this.weaponInfo = new Label(weaponType.getDescription());
+        this.weaponInfo = new TextArea(weaponType.getDescription());
         this.weaponCharge = new Label("Loaded:" + weaponType.isLoaded());
         this.img = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/weapons/weapons_"+ weaponType.getClass().getSimpleName().toLowerCase() +".png")).getImage().getScaledInstance(120,203,Image.SCALE_DEFAULT));
         this.image = new JLabel(img);
@@ -47,8 +47,6 @@ public class WeaponMenuGUI extends JFrame{
         mainPanel.add(weaponCharge, container);
 
 
-
-
         addWindowListener(new WeaponMenuGUI.CloseListener());
         add(mainPanel);
         setSize(600,400);
@@ -56,12 +54,6 @@ public class WeaponMenuGUI extends JFrame{
         setVisible(true);
 
     }
-
-    public void update(Observable obs, Object obj) {
-
-
-    } //update()
-
 
 
     public static class CloseListener extends WindowAdapter {
