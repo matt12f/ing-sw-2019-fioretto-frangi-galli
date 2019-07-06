@@ -71,14 +71,26 @@ class TestGUI {
         //updated damage tracks
         char [] damage= {'b','b','y','y','g','g'};
         player1.getPlayerBoard().getDamageTrack().dealDamage(damage);
+        player1.getPlayerBoard().getDamageTrack().addMark('b');
+        player1.getPlayerBoard().getDamageTrack().addMark('b');
+        player1.getPlayerBoard().getDamageTrack().addMark('y');
+        player1.getPlayerBoard().getDamageTrack().addMark('g');
         pb1.update(player1.getPlayerBoard());
 
         damage[0]='w';
         player2.getPlayerBoard().getDamageTrack().dealDamage(damage);
+        player1.getPlayerBoard().getDamageTrack().addMark('w');
+        player1.getPlayerBoard().getDamageTrack().addMark('b');
+        player1.getPlayerBoard().getDamageTrack().addMark('y');
+        player1.getPlayerBoard().getDamageTrack().addMark('g');
         pb2.update(player2.getPlayerBoard());
 
         damage[0]='v';
         player3.getPlayerBoard().getDamageTrack().dealDamage(damage);
+        player1.getPlayerBoard().getDamageTrack().addMark('v');
+        player1.getPlayerBoard().getDamageTrack().addMark('b');
+        player1.getPlayerBoard().getDamageTrack().addMark('y');
+        player1.getPlayerBoard().getDamageTrack().addMark('g');
         pb3.update(player3.getPlayerBoard());
 
 
@@ -106,6 +118,20 @@ class TestGUI {
         PlayerHandView playerHandView=new PlayerHandView();
         playerHandView.setGuns(gunsForP1);
         playerHandView.setPowerups(pWUPForP1);
+
+        NewCell position2= controller.getMainGameModel().getCurrentMap().getBoardMatrix()[2][2];
+
+        controller.getMainGameModel().getPlayerList().get(0).getFigure().setCell(position2);
+        controller.getMainGameModel().getPlayerList().get(1).getFigure().setCell(position2);
+        controller.getMainGameModel().getPlayerList().get(2).getFigure().setCell(position2);
+
+        position1.removePlayers(player1);
+        position1.removePlayers(player2);
+        position1.removePlayers(player3);
+
+        position2.addPlayers(player1);
+        position2.addPlayers(player2);
+        position2.addPlayers(player3);
 
         testGUI.updateBoardGame(testBoards,testBoards.get(0),board,killShotTrackerView,playerHandView);
         while(true);

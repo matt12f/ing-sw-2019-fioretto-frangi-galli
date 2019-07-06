@@ -4,23 +4,22 @@ import javax.swing.*;
 import java.awt.*;
 
 public class SquareGUI extends JLabel {
+    ImageIcon pic;
 
     public SquareGUI(String content, String dropContent){
-
-        ImageIcon pic;
         //this adds the player colored circles
-        if (!content.equals("DROP") && !content.equals("EMPTY"))
-            pic = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/figures/" + content.toLowerCase() + ".png")).getImage().getScaledInstance(25, 25, Image.SCALE_DEFAULT));
-        else if(content.equals("DROP"))
-            pic = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/ammo/ammo_" + dropContent + ".png")).getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT));
-        else
-            pic=null;
-
-        setIcon(pic);
+        updateContent(content,dropContent);
     }
 
-
-
+    public void updateContent(String content, String dropContent){
+        if (!content.equals("DROP") && !content.equals("EMPTY"))
+            this.pic = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/figures/" + content.toLowerCase() + ".png")).getImage().getScaledInstance(25, 25, Image.SCALE_DEFAULT));
+        else if(content.equals("DROP"))
+            this.pic = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/ammo/ammo_" + dropContent + ".png")).getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT));
+        else
+            this.pic=null;
+        setIcon(this.pic);
+    }
 
 
 }

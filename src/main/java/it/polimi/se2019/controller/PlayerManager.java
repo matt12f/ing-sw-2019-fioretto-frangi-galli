@@ -158,10 +158,11 @@ public class PlayerManager  {
             cellNeeded = Color.RED;
         else
             cellNeeded = Color.YELLOW;
-        for (int i = 0; i < map.length - 1; i++) {
-            for (int j = 0; j < map[0].length - 1; j++) {
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[0].length; j++) {
                 if (map[i][j].getCellType().equals(CellType.SPAWN) && map[i][j].getColor() == cellNeeded) {
                     map[i][j].addPlayers(controller.getMainGameModel().getPlayerList().get(id));
+                    MapManager.getRoom(controller,map[i][j]).addPlayers(controller.getMainGameModel().getPlayerList().get(id));
                     controller.getMainGameModel().getPlayerList().get(id).getFigure().setCell(map[i][j]);
                 }
             }

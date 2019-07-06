@@ -52,6 +52,7 @@ public class NewCell implements Serializable {
     public ArrayList<Player> getPlayers(){
         return players;
     }
+
     public void addPlayers(Player newPlayer){
         this.players.add(newPlayer);
     }

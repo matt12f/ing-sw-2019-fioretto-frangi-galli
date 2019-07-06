@@ -32,7 +32,6 @@ public class GameBoardGui  {
         container.gridheight = 2;
         mainPanel.add(map, container);
 
-        this.map.setBoard(boardMatrix);
 
         this.boardZone = new BoardZoneGUI(opponentBoards, ownerBoard, 0);
         container.gridx=1;

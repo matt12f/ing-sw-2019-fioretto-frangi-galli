@@ -1,11 +1,9 @@
 package it.polimi.se2019.view;
 
-import javax.print.DocFlavor;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.URL;
 
 import static it.polimi.se2019.enums.CellType.OUTSIDEBOARD;
 
@@ -30,10 +28,7 @@ public class MapViewGUI extends JPanel {
 
     public MapViewGUI(int config, CellView[][] boardMatrix){
 
-        URL url = getClass().getResource("/sprite/maps/"+ config +".png");
-        this.map =new ImageIcon(new ImageIcon(url).getImage().getScaledInstance(600,450,Image.SCALE_DEFAULT));
-        //this.map = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/maps/"+ config +".png")).getImage().getScaledInstance(600,450,Image.SCALE_DEFAULT));
-        //new ImageIcon(url);
+        this.map = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/maps/"+ config +".png")).getImage().getScaledInstance(600,450,Image.SCALE_DEFAULT));
         this.labelBackground = new JLabel(map);
         labelBackground.setIcon(map);
 
@@ -115,7 +110,7 @@ public class MapViewGUI extends JPanel {
 
 
 
-        /** ----------butoons zone------------*/
+        /* ----------buttons zone------------*/
 
         weaponblue1.addActionListener(new ActionListener() {
             @Override
@@ -202,7 +197,6 @@ public class MapViewGUI extends JPanel {
     }
 
     public void setBoard(CellView[][] boardMatrix){
-        //removeAll();
         int x= 95, y= 90;
         for (int row=0;row < 3;row++){
             for(int column=0;column < 4;column++){

@@ -25,6 +25,7 @@ public class BoardZoneGUI extends JPanel {
         this.killsDynamic = kills;
 
 
+
         //i=1 removes the player board of the owner, so it's not displayed twice
 
        //////////creazione dinamica della board zone///////
@@ -35,10 +36,10 @@ public class BoardZoneGUI extends JPanel {
 
 
         //////////aggiunta dinamica della board zone///////
-        for (int i = 1; i< boards.size();i++){
+        for (int i = 0; i< boards.size()-1;i++){
             container.gridx=0;
             container.gridy=i;
-            add(boardsGUI.get(i-1), container);
+            add(boardsGUI.get(i), container);
         }
 
 
@@ -63,8 +64,8 @@ public class BoardZoneGUI extends JPanel {
 
     public void updateBoards(ArrayList<PlayerBoardView> boards,PlayerBoardView ownerBoard, boolean frenzy, int kills){
 
-        for (int i = 1; i< boards.size();i++){
-            boardsGUI.get(i-1).setBoard( 420,109, frenzy, boards.get(i));
+        for (int i = 0; i< boards.size()-1;i++){
+            boardsGUI.get(i).setBoard( 420,109, frenzy, boards.get(i+1));
         }
         this.boardsDynamic = boards;
         this.ownerBoardDynamic= ownerBoard;
