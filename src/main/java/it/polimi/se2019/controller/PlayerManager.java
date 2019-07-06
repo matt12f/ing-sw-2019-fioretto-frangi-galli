@@ -243,8 +243,9 @@ public class PlayerManager  {
 
         ArrayList<Player> playersBefore=Player.duplicateList(currentController.getMainGameModel().getPlayerList());
 
-        //applies shoot actions with the card selected
-        actions.getChosenGun().applyEffects(currentController, actions);
+        //applies shoot actions with the card selected if you have selected an action to shoot
+        if(actions.getChosenGun()!=null)
+            actions.getChosenGun().applyEffects(currentController, actions);
 
         ArrayList<Player> playersAfter = Player.duplicateList(currentController.getMainGameModel().getPlayerList());
 

@@ -88,7 +88,7 @@ public class AvailableActions implements Serializable {
         ArrayList<CellInfo> singleArrivalCells=createArrivalCells(board,player,minMoveDistance,maxMoveDistance,grab);
 
         this.fictitiousPlayers=new ArrayList<>();
-        for(CellInfo cell:singleArrivalCells)
+        for(CellInfo cell: singleArrivalCells)
             this.fictitiousPlayers.add(new FictitiousPlayer(currentController, player, cell, shoot, frenzyReload));
     }
 
@@ -109,7 +109,9 @@ public class AvailableActions implements Serializable {
             //here I'll add the cells that the player can move into
             for(NewCell [] cellRow: board)
                 for(NewCell singleCell: cellRow)
-                    if(!singleCell.getCellType().equals(CellType.OUTSIDEBOARD) && singleCell!=player.getFigure().getCell() && MapManager.distanceBetweenCells(board,referenceCell,singleCell) <= maxMoveDistance)
+                    if(!singleCell.getCellType().equals(CellType.OUTSIDEBOARD) &&
+                            singleCell!=referenceCell &&
+                            MapManager.distanceBetweenCells(board,referenceCell,singleCell) <= maxMoveDistance)
                         singleArrivalCells.add(new CellInfo(referenceCell, grab,singleCell.getDrop()!=null && grab));
 
         }

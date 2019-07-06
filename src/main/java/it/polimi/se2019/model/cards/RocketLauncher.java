@@ -47,7 +47,13 @@ public class RocketLauncher extends GunCardAddEff {
         this.ammoCost = new char[2];
         ammoCost[0]= 'r';
         ammoCost[1]= 'r';
-        this.description ="<html>basic effect: Deal 2 damage to 1 target you can see that is not on your<br>square. Then you may move the target 1 square<br>with rocket jump: Move 1 or 2 squares. This effect can be used either<br>before or after the basic effect.<br>with fragmenting warhead: During the basic effect, deal 1 damage to<br>every player on your target's original square – including the target,<br>even if you move it.</html>";
+        this.description ="basic effect: Deal 2 damage to 1 target you can see that is not on your\n" +
+                "square. Then you may move the target 1 square\n"+
+                "with rocket jump: Move 1 or 2 squares. This effect can be used either\n" +
+                "before or after the basic effect.\n"+
+                "with fragmenting warhead: During the basic effect, deal 1 damage to\n" +
+                "every player on your target's original square – including the target,\n" +
+                "even if you move it.";
         this.secondaryEffectCost = new char[1];
         secondaryEffectCost[0] = 'b';
         this.tertiaryEffectCost = new char[1];

@@ -45,7 +45,11 @@ public class PlasmaGun extends GunCardAddEff {
         this.ammoCost = new char[2];
         ammoCost[0] = 'b';
         ammoCost[1]= 'y';
-        this.description ="<html>basic effect: Deal 2 damage to 1 target you can see.<br>with phase glide: Move 1 or 2 squares. This effect can be<br>used either before or after the basic effect.<br>with charged shot: Deal 1 additional damage to your<br>target.</html>";
+        this.description ="basic effect: Deal 2 damage to 1 target you can see.\n"+
+                "with phase glide: Move 1 or 2 squares. This effect can be\n" +
+                "used either before or after the basic effect.\n"+
+                "with charged shot: Deal 1 additional damage to your\n" +
+                "target.";
 
         this.secondaryEffectCost = new char[1];
         secondaryEffectCost[0] = 'n';

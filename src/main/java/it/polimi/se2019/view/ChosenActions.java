@@ -58,7 +58,7 @@ public class ChosenActions implements Serializable {
 
         //Section for selection of cells where the fictitious player will be
         ArrayList<String> arrivalCellsIndex=new ArrayList<>();
-        for(FictitiousPlayer fictPlayer:actions.getFictitiousPlayers())
+        for(FictitiousPlayer fictPlayer: actions.getFictitiousPlayers())
             arrivalCellsIndex.add(actions.getFictitiousPlayers().indexOf(fictPlayer)+". "+cellToText(localView, fictPlayer.getPosition()));
 
         String chosenArrivalCell=this.askUser.stringSelector("Scegli una cella dove vuoi spostarti",arrivalCellsIndex);

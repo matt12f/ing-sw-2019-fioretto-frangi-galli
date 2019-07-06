@@ -18,7 +18,11 @@ public class Furnace extends GunCardAltEff {
         this.ammoCost = new char[2];
         ammoCost[0]= 'r';
         ammoCost[1]= 'b';
-        this.description ="<html>basic mode: Choose a room you can see, but not the room<br>you are in. Deal 1 damage to everyone in that room.<br>in cozy fire mode: Choose a square exactly one move<br>away. Deal 1 damage and 1 mark to everyone on that<br>square.</html>";
+        this.description ="basic mode: Choose a room you can see, but not the room"+
+                "\nyou are in. Deal 1 damage to everyone in that room."+
+                "\nin cozy fire mode: Choose a square exactly one move"+
+                "\naway. Deal 1 damage and 1 mark to everyone on that"+
+                "\nsquare.";
         this.secondaryEffectCost = new char[1];
         secondaryEffectCost[0] = 'n';
     }

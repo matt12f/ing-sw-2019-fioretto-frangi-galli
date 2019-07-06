@@ -35,7 +35,11 @@ public class MachineGun extends GunCardAddEff {
         this.ammoCost = new char[2];
         ammoCost[0]= 'b';
         ammoCost[1]= 'r';
-        this.description ="<html>basic effect: Choose 1 or 2 targets you can see and deal<br>1 damage to each.<br>with focus shot: Deal 1 additional damage to one of those<br>targets.<br>with turret tripod: Deal 1 additional damage to the other<br>of those targets and/or deal 1 damage to a different target<br>you can see.</html>";
+        this.description ="basic effect: Choose 1 or 2 targets you can see and deal\n" +
+                "1 damage to each.\n"+"with focus shot: Deal 1 additional damage to one of those\n" +
+                "targets.\n"+"with turret tripod: Deal 1 additional damage to the other\n" +
+                "of those targets and/or deal 1 damage to a different target\n" +
+                "you can see.";
         this.secondaryEffectCost = new char[1];
         secondaryEffectCost[0] = 'y';
         this.tertiaryEffectCost = new char[1];
