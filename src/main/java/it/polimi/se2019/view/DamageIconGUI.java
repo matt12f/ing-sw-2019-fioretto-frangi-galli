@@ -5,6 +5,7 @@ import java.awt.*;
 
 public class DamageIconGUI extends JLabel {
     private ImageIcon damageImage;
+
     public DamageIconGUI (char color){
         setDamageImage(color);
         setSize(16,27);
