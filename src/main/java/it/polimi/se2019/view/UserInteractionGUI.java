@@ -768,7 +768,7 @@ public class UserInteractionGUI extends UserInteraction {
         waitingList.setTitle("wait for other players");
         waitingList.getContentPane().add(mainPanel);
         waitingList.pack();
-        waitingList.setSize(400,400);
+        waitingList.setSize(200,200);
         waitingList.setLocationRelativeTo(null);
         waitingList.setVisible(true);
 

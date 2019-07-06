@@ -54,7 +54,15 @@ public class RocketLauncher extends GunCardAddEff {
         tertiaryEffectCost[0] = 'y';
     }
 
-
+    /**
+     * This method was overridden to accomodate the weirdness of the card
+     *
+     * @param currentController it the current controller of the game
+     * @param effectsCombination is a specific combination of the possible effects
+     * @param player contains the attributes of the player to calculate the actions upon
+     * @return available usages of the card for a certain combination
+     * @throws UnavailableEffectCombinationException if the combination has no targets
+     */
     @Override
     public SingleEffectsCombinationActions buildAvailableActions(Controller currentController, FictitiousPlayer player, ArrayList<String> effectsCombination) throws UnavailableEffectCombinationException {
         SingleEffectsCombinationActions actions=new SingleEffectsCombinationActions(effectsCombination);
@@ -72,7 +80,10 @@ public class RocketLauncher extends GunCardAddEff {
     }
 
     /**
-     * this must be custom made
+     * This was overridden because it needs a special management, given that the card has "weird" combinations
+     * of the effects
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
      */
     @Override
     public void applyEffects(Controller currentController, ChosenActions playersChoice){
@@ -112,7 +123,7 @@ public class RocketLauncher extends GunCardAddEff {
     }
 
     /**
-     * here you must select cells where you want move & hit a target + cells where you can move the target after you've hit it
+     * you will have selected cells where you want move & hit a target + cells where you can move the target after you've hit it
      */
     @Override
     void applyTertiaryEffect(Controller currentController, ChosenActions playersChoice) {
@@ -130,7 +141,7 @@ public class RocketLauncher extends GunCardAddEff {
     }
 
     /**
-     * applies only the third effect
+     * this method applies only the third effect
      */
     private void applyThird(Controller currentController, ChosenActions playersChoice, NewCell cell) {
         ActionManager.giveDmgandMksToPlayers(currentController,cell.getPlayers(),playersChoice,1,0);
@@ -138,6 +149,9 @@ public class RocketLauncher extends GunCardAddEff {
 
     /**
      * Deal 2 damage to 1 target you can see that is not on your square. Then you may move the target 1 square.
+     * @param currentController it the current controller of the game
+     * @param actions is the container of the actions
+     * @param player contains the attributes of the player to calculate the actions upon
      */
     @Override
     void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
@@ -160,6 +174,9 @@ public class RocketLauncher extends GunCardAddEff {
 
     /**
      * Move 1 or 2 squares. This effect can be used either before or after the basic effect.
+     * @param currentController it the current controller of the game
+     * @param actions is the container of the actions
+     * @param player contains the attributes of the player to calculate the actions upon
      */
     @Override
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
@@ -173,7 +190,10 @@ public class RocketLauncher extends GunCardAddEff {
     /**
      * During the basic effect, deal 1 damage to every player on your target's original square – including the target, even if you move it.
      *
-     * actually returns: cells where you can move & hit a target + cells where you can move the target after you've hit it
+     * adds to actions: cells where you can move & hit a target + cells where you can move the target after you've hit it
+     * @param currentController it the current controller of the game
+     * @param actions is the container of the actions
+     * @param player contains the attributes of the player to calculate the actions upon
      */
     @Override
     void targetsOfTertiaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
@@ -193,6 +213,10 @@ public class RocketLauncher extends GunCardAddEff {
 
     }
 
+    /**
+     * method for deep cloning
+     * @return a deep clone of the card
+     */
     @Override
     public GunCard clone() {
         GunCard gunCard = new RocketLauncher();

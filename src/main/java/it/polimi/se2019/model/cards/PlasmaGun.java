@@ -55,7 +55,13 @@ public class PlasmaGun extends GunCardAddEff {
     }
 
     /**
-     * here the target methods are used in a different way than the actions of the optional actions
+     * This method was overridden to accomodate the weirdness of the card
+     *
+     * @param currentController it the current controller of the game
+     * @param effectsCombination is a specific combination of the possible effects
+     * @param player contains the attributes of the player to calculate the actions upon
+     * @return available usages of the card for a certain combination
+     * @throws UnavailableEffectCombinationException if the combination has no targets
      */
     @Override
     public SingleEffectsCombinationActions buildAvailableActions(Controller currentController, FictitiousPlayer player, ArrayList<String> effectsCombination) throws UnavailableEffectCombinationException {
@@ -90,7 +96,10 @@ public class PlasmaGun extends GunCardAddEff {
     }
 
     /**
-     * this must be custom made
+     * This was overridden because it needs a special management, given that the card has "weird" combinations
+     * of the effects
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
      */
     @Override
     public void applyEffects(Controller currentController, ChosenActions playersChoice){
@@ -126,6 +135,7 @@ public class PlasmaGun extends GunCardAddEff {
 
     /**
      * this applies the opt1 + base/base+opt2
+     *
      */
     @Override
     void applyTertiaryEffect(Controller currentController, ChosenActions playersChoice) {
@@ -137,9 +147,13 @@ public class PlasmaGun extends GunCardAddEff {
     }
 
     /**
-     * Deal 2 damage to 1 target you can see.
+     * Base effect description: Deal 2 damage to 1 target you can see.
      *
-     * returns: normal list of players you can see
+     * adds to actions: normal list of players you can see
+     *
+     * @param currentController it the current controller of the game
+     * @param actions is the container of the actions
+     * @param player contains the attributes of the player to calculate the actions upon
      */
     @Override
     void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player){
@@ -153,9 +167,13 @@ public class PlasmaGun extends GunCardAddEff {
     }
 
     /**
-     * Move 1 or 2 squares. This effect can be used either before or after the basic effect.
+     * Optional1 effect description: Move 1 or 2 squares. This effect can be used either before or after the basic effect.
      *
-     * actually returns: squares 1 e 2 moves away without targets (where you can move)
+     * adds to actions: squares 1 e 2 moves away without targets (where you can move)
+     *
+     * @param currentController it the current controller of the game
+     * @param actions is the container of the actions
+     * @param player contains the attributes of the player to calculate the actions upon
      */
     @Override
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
@@ -168,9 +186,13 @@ public class PlasmaGun extends GunCardAddEff {
     }
 
     /**
-     * Deal 1 additional damage to your target.
+     * Optional2 effect description: Deal 1 additional damage to your target.
      *
-     * actually returns: square 1 e 2 moves away (where you can move) containing the targets visible from there
+     * adds to actions: square 1 e 2 moves away (where you can move) containing the targets visible from there
+     *
+     * @param currentController it the current controller of the game
+     * @param actions is the container of the actions
+     * @param player contains the attributes of the player to calculate the actions upon
      */
     @Override
     void targetsOfTertiaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
@@ -182,6 +204,10 @@ public class PlasmaGun extends GunCardAddEff {
         actions.setMaxCellToSelect(1);
     }
 
+    /**
+     * method for deep cloning
+     * @return a deep clone of the card
+     */
     @Override
     public GunCard clone() {
         GunCard gunCard = new PlasmaGun();

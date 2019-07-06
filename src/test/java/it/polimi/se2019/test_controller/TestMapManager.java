@@ -146,7 +146,7 @@ public class TestMapManager {
 
         assertEquals(cell.getColor(),MapManager.getRoom(controller,cell).getColor());
 
-        NewCell cell1=new NewCell(Color.BLACK, CellEdge.WALL,CellEdge.WALL,CellEdge.WALL,CellEdge.WALL, CellType.DROP);
+        NewCell cell1=new NewCell(Color.VIOLET, CellEdge.WALL,CellEdge.WALL,CellEdge.WALL,CellEdge.WALL, CellType.DROP);
 
         assertNull(MapManager.getRoom(controller,cell1));
 

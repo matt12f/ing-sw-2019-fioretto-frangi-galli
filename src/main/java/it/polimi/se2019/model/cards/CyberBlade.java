@@ -66,6 +66,15 @@ public class CyberBlade extends GunCardAddEff {
         tertiaryEffectCost[0] = 'y';
     }
 
+    /**
+     * This method was overridden to accomodate the weirdness of the card
+     *
+     * @param currentController it the current controller of the game
+     * @param effectsCombination is a specific combination of the possible effects
+     * @param player contains the attributes of the player to calculate the actions upon
+     * @return available usages of the card for a certain combination
+     * @throws UnavailableEffectCombinationException if the combination has no targets
+     */
     @Override
     public SingleEffectsCombinationActions buildAvailableActions(Controller currentController, FictitiousPlayer player, ArrayList<String> effectsCombination) throws UnavailableEffectCombinationException {
         SingleEffectsCombinationActions actions=new SingleEffectsCombinationActions(effectsCombination);
@@ -108,6 +117,11 @@ public class CyberBlade extends GunCardAddEff {
         return actions;
     }
 
+    /**
+     * this is a custom method that determines if the secondary optional effect is offerable
+     * @param actions is the container of the actions
+     * @return if the secondary optional effect is offerable
+     */
     private boolean enabler(SingleEffectsCombinationActions actions) {
         boolean possibleOpt2=false;
         for(CellWithTargets cell:actions.getCellsWithTargets())
@@ -121,7 +135,10 @@ public class CyberBlade extends GunCardAddEff {
     }
 
     /**
-     * this must be custom made
+     * This was overridden because it needs a special management, given that the card has "weird" combinations
+     * of the effects
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
      */
     @Override
     public void applyEffects(Controller currentController, ChosenActions playersChoice){
@@ -139,7 +156,9 @@ public class CyberBlade extends GunCardAddEff {
     }
 
     /**
-     * this applies only [Base, Optional1, Optional2]
+     * this method applies only [Base, Optional1, Optional2]
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
      */
     private void applySpecial(Controller currentController, ChosenActions playersChoice) {
         //damage one target
@@ -151,9 +170,10 @@ public class CyberBlade extends GunCardAddEff {
 
     }
 
-
     /**
      * This applies the base/base+opt2 effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
      */
     @Override
     void applyBaseEffect(Controller currentController, ChosenActions playersChoice){
@@ -165,6 +185,8 @@ public class CyberBlade extends GunCardAddEff {
 
     /**
      * This applies the Optional1 effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
      */
     @Override
     void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
@@ -173,6 +195,8 @@ public class CyberBlade extends GunCardAddEff {
 
     /**
      * This applies the Optional1 + Base/Base+Opt2 effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
      */
     @Override
     void applyTertiaryEffect(Controller currentController, ChosenActions playersChoice) {
@@ -184,9 +208,10 @@ public class CyberBlade extends GunCardAddEff {
     }
 
     /**
-     * Deal 2 damage to 1 target on your square.
-     *
-     * returns: a list of players you can hit, totally normal, riiight?
+     * Base effect description: Deal 2 damage to 1 target on your square.
+     * @param currentController it the current controller of the game
+     * @param actions is the container of the actions
+     * @param player contains the attributes of the player to calculate the actions upon
      */
     @Override
     void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
@@ -202,9 +227,12 @@ public class CyberBlade extends GunCardAddEff {
     }
 
     /**
-     * Move 1 square before or after the basic effect.
+     * Optional1 effect description: Move 1 square before or after the basic effect.
      *
-     * returns: squares where you can move
+     * adds to action: squares where you can move
+     * @param currentController it the current controller of the game
+     * @param actions is the container of the actions
+     * @param player contains the attributes of the player to calculate the actions upon
      */
     @Override
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
@@ -217,9 +245,12 @@ public class CyberBlade extends GunCardAddEff {
     }
 
     /**
-     * Deal 2 damage to a different target on your square. The shadowstep may be used before or after this effect.
+     * Optional2 effect description: Deal 2 damage to a different target on your square. The shadowstep may be used before or after this effect.
      *
-     * returns: squares where you can move with target you can hit
+     * adds to action: squares where you can move with target you can hit
+     * @param currentController it the current controller of the game
+     * @param actions is the container of the actions
+     * @param player contains the attributes of the player to calculate the actions upon
      */
     @Override
     void targetsOfTertiaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
@@ -231,6 +262,10 @@ public class CyberBlade extends GunCardAddEff {
         actions.setMaxCellToSelect(1);
     }
 
+    /**
+     * method for deep cloning
+     * @return a deep clone of the card
+     */
     @Override
     public GunCard clone() {
         GunCard gunCard = new CyberBlade();

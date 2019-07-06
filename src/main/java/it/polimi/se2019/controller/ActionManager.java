@@ -12,6 +12,11 @@ public class ActionManager {
 
     /**
      * deals a certain amount of damage and marks to a single player
+     * @param currentController is the current controller
+     * @param target is the single target to hit
+     * @param playersChoice is the choices the player made
+     * @param numDmg is the number of damage to deal
+     * @param numMks  is the number of marks to deal
      */
     public static void giveDmgandMksToOnePlayer(Controller currentController, Player target, ChosenActions playersChoice, int numDmg, int numMks){
         if(numDmg!=0)
@@ -22,6 +27,12 @@ public class ActionManager {
 
     /**
      * deals the same amount of damage and marks to more than one player
+     *
+     * @param currentController is the current controller
+     * @param targetList is the list of targets to hit
+     * @param playersChoice is the choices the player made
+     * @param numDmg is the number of damage to deal
+     * @param numMks  is the number of marks to deal
      */
     public static void giveDmgandMksToPlayers(Controller currentController, ArrayList<Player> targetList, ChosenActions playersChoice, int numDmg, int numMks){
         if(numDmg!=0){
@@ -36,6 +47,7 @@ public class ActionManager {
 
     /**
      * it moves a player from its current position to an arrival cell sent as a parameter
+     * @param currentController is the controller of the game
      * @param player is the player to move
      * @param arrivalCell is the cell to move the player into
      */
@@ -53,7 +65,11 @@ public class ActionManager {
 
     /**
      * this method evaluates if a player can pay the cost to grab a GunCard from a SpawnCell
+     * @param activePlayer is the active player (important to get the powerup cubes)
+     * @param availableAmmo this is the available ammo it has (it could be different from the one in his hand)
+     * @param ammoCost is the ammocost of the item
      * @param fullOrReload: if true it evaluates the full cost of reloading, if false it evaluates only the buying cost
+     * @return if a player can pay the cost
      */
     public static boolean canAffordCost(Player activePlayer, Ammo availableAmmo, char[] ammoCost, boolean fullOrReload) {
         int blue=0;
@@ -88,8 +104,10 @@ public class ActionManager {
     }
 
     /**
-     *  Returns the targets a certain player can see (doesn't include yourself)
-     *  */
+     * @param currentController is the controller of the game
+     * @param playersPOV is the player POV from which to calculate the targets
+     * @return players you can see (doesn't include yourself)
+     * */
     public static ArrayList<Player> visibleTargets(Controller currentController,FictitiousPlayer playersPOV){
         ArrayList<Player> targets = visibleTargets(currentController,playersPOV.getPosition());
         //It will finally remove the current player from the target list
@@ -98,7 +116,12 @@ public class ActionManager {
         return targets;
     }
 
-    public static ArrayList<Player> visibleTargets(Controller currentController,NewCell playersPosition){
+    /**
+     * @param currentController is the controller of the game
+     * @param playersPosition is the  position from which to calculate the targets
+     * @return players you can see (includes yourself)
+     * */
+    public static ArrayList<Player> visibleTargets(Controller currentController, NewCell playersPosition){
         //it will add all of the targets in the room first
         ArrayList<Player> targets=new ArrayList<>(Player.duplicateList(MapManager.getRoom(currentController, playersPosition).getPlayers()));
 
@@ -115,6 +138,11 @@ public class ActionManager {
         return targets;
     }
 
+    /**
+     * @param currentController is the controller of the game
+     * @param playersPOV is the player POV from which to calculate the targets
+     * @return players you cannot see
+     * */
     public static ArrayList<Player> notVisibleTargets(Controller currentController,FictitiousPlayer playersPOV){
         ArrayList<Player> allTargets = new ArrayList<>(Player.duplicateList(currentController.getMainGameModel().getPlayerList()));
 
@@ -126,7 +154,9 @@ public class ActionManager {
     }
 
     /**
-     * returns the squares you can see (including yours)
+     * @param currentController is the controller of the game
+     * @param playersPOV is the player POV from which to calculate the targets
+     * @return squares you can see (including yours)
      * */
     public static ArrayList<NewCell> visibleSquares(Controller currentController, FictitiousPlayer playersPOV){
         //it will add first the squares in your room
@@ -146,7 +176,9 @@ public class ActionManager {
     }
 
     /**
-     * This method gives you a list of players one move away
+     * @param currentController is the controller of the game
+     * @param player is the player from which to calculate the targets
+     * @return  a list of players one move away
      */
     public static ArrayList<Player> targetsOneMoveAway(Controller currentController, FictitiousPlayer player){
         ArrayList<Player> targets=new ArrayList<>();
@@ -155,6 +187,12 @@ public class ActionManager {
         return targets;
     }
 
+    /**
+     *
+     * @param currentController is the controller of the game
+     * @param position is the position from which to calculate the near cells
+     * @return a list of cells one move away
+     */
     public static ArrayList<NewCell> cellsOneMoveAway(Controller currentController,NewCell position){
         NewCell[][] board= currentController.getMainGameModel().getCurrentMap().getBoardMatrix();
         ArrayList<NewCell> cellsOneMoveAway=new ArrayList<>();

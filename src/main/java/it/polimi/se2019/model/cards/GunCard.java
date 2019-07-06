@@ -79,6 +79,6 @@ public abstract class GunCard implements Serializable {
         if(obj==null)
             return false;
         GunCard card= (GunCard) obj;
-        return this.getClass().getSimpleName().equals(card.getClass().getSimpleName()) && this.isLoaded()==card.isLoaded();
+        return this.getClass().isAssignableFrom(card.getClass()) && this.isLoaded()==card.isLoaded();
     }
 }

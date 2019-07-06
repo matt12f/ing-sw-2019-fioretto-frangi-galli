@@ -3,6 +3,7 @@ package it.polimi.se2019.test_model.test_cards;
 import it.polimi.se2019.model.cards.CyberBlade;
 import it.polimi.se2019.model.cards.Electroscythe;
 import it.polimi.se2019.model.cards.GunCard;
+import it.polimi.se2019.model.cards.Zx2;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -20,6 +21,10 @@ public class TestGunCardClone {
         gunCard.setLoaded(false);
 
         GunCard deepClone = gunCard.clone();
+
+        //checks the equals method
+        assertEquals(gunCard,deepClone);
+        assertNotEquals(gunCard,new Zx2());
 
         assertEquals(gunCard.isLoaded(),deepClone.isLoaded());
 
@@ -57,6 +62,10 @@ public class TestGunCardClone {
         gunCard.setLoaded(false);
 
         GunCard deepClone = gunCard.clone();
+
+        //checks the equals method
+        assertEquals(gunCard,deepClone);
+        assertNotEquals(gunCard,new Zx2());
 
         assertEquals(gunCard.isLoaded(),deepClone.isLoaded());
 
