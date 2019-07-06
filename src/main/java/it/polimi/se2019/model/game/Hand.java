@@ -5,7 +5,9 @@ import it.polimi.se2019.model.cards.PowerupCard;
 import it.polimi.se2019.exceptions.CardNotFoundException;
 import it.polimi.se2019.exceptions.FullException;
 
-public class Hand {
+import java.io.Serializable;
+
+public class Hand implements Serializable {
     private PowerupCard [] powerups;
     private PowerupCard additionalPowerup;
     private GunCard [] guns;
@@ -92,7 +94,7 @@ public class Hand {
         int i=0;
         boolean substituted=false;
         while(!substituted && i<MAXCARDS){
-            if(this.powerups[i]==discarded) {
+            if(this.powerups[i].equals(discarded)) {
                 this.powerups[i]=newPowerup;
                 this.additionalPowerup = null;
                 substituted = true;

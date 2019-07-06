@@ -497,7 +497,7 @@ public class UserInteractionGUI extends UserInteraction {
             mainPanel.add(pw3,container);
         }
         if (optional != null){
-            ImageIcon im4 = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/powerups/powerups_"+ list[3].getPowerupType() + "_"+list[3].getCubeColor()+ ".png")).getImage().getScaledInstance(70,92,Image.SCALE_DEFAULT));
+            ImageIcon im4 = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/powerups/powerups_"+ optional.getPowerupType() + "_"+list[3].getCubeColor()+ ".png")).getImage().getScaledInstance(70,92,Image.SCALE_DEFAULT));
             pw4.setIcon(im4);
             container.gridx=3;
             container.gridy=1;
@@ -534,7 +534,7 @@ public class UserInteractionGUI extends UserInteraction {
         pw4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                chosenPowerup = list[3];
+                chosenPowerup = optional;
 
                 JButton button = (JButton)e.getSource();
                 SwingUtilities.getWindowAncestor(button).dispose();

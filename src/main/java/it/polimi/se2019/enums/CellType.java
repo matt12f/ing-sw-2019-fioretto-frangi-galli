@@ -1,6 +1,8 @@
 package it.polimi.se2019.enums;
 
-public enum CellType {
+import java.io.Serializable;
+
+public enum CellType implements Serializable {
     SPAWN,
     DROP,
     OUTSIDEBOARD

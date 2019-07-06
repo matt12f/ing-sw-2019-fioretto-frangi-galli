@@ -1,6 +1,8 @@
 package it.polimi.se2019.model.game;
 
-public abstract class ActionTile {
+import java.io.Serializable;
+
+public abstract class ActionTile implements Serializable {
     protected int actionCounter;
 
     public int getActionCounter() {

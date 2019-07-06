@@ -88,7 +88,7 @@ public class AdrenalineClient {
         String req;
         if(connection.isSocket()){
             req = (String) connection.getInput().readObject();
-            while(req.equals("Test"))
+            while(  req.equals("Test"))
                 req = (String) connection.getInput().readObject();
             if(req.equals("START")){
                 start = true;
@@ -216,7 +216,6 @@ public class AdrenalineClient {
             System.out.println(message);
             int[] mapSkull;
             if(message.equals("MAP")) {
-                System.out.println("mappa");
                 if (isGUI()){
                     mapSkull = userInteractionGUI.mapChooser();
                 }else{
@@ -225,10 +224,8 @@ public class AdrenalineClient {
                 setMap(mapSkull[0]);
                 setSkull(mapSkull[1]);
                 message = (String) connection.getInput().readObject();
-
             }
             if(message.equals("VIEW")){
-                System.out.println("view");
                 connection.getOutput().reset();
                 connection.getOutput().writeBoolean(true);
                 connection.getOutput().flush();
@@ -240,13 +237,14 @@ public class AdrenalineClient {
                     guiStarter();
                 }
             }
-            message = (String) connection.getInput().readObject();
-            if( message != null && message.equals("SPAWN")) {
-                System.out.println("ricevuta richiesta spawn");
+            if(message.equals("SPAWN")) {
                 localView = (LocalView) connection.getInput().readObject();
                 if(isGUI()){
                     PowerupCard cardForSpawn = userInteractionGUI.spawnChooser(localView.getPlayerHand().getPowerups(), localView.getPlayerHand().getAdditionalPowerup());
-                    sendSpawnChoice(cardForSpawn);
+                    connection.getOutput().writeObject(cardForSpawn);
+                    String mxg = (String) connection.getInput().readObject();
+                    connection.getOutput().writeBoolean(true);
+                    connection.getOutput().flush();
                     updateLocalView();
                     displayBoard();
                 }
@@ -364,8 +362,12 @@ public class AdrenalineClient {
     }
 
     private static void sendSpawnChoice(PowerupCard cardForSpawn) throws IOException, ClassNotFoundException {
-        connection.getOutput().reset();
         connection.getOutput().writeObject(cardForSpawn);
+        connection.getOutput().flush();
+        connection.getOutput().reset();
+        String ciao = (String) connection.getInput().readObject();
+        connection.getOutput().writeBoolean(true);
+        connection.getOutput().flush();
         localView = (LocalView) connection.getInput().readObject();
     }
 

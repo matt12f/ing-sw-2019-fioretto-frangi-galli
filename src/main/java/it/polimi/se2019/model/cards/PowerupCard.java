@@ -27,4 +27,12 @@ public class PowerupCard implements Serializable {
         return new PowerupCard(this.powerupType,this.cubeColor);
     }
 
+    @Override
+    public boolean equals(Object obj){
+        if(obj == null)
+            return false;
+        PowerupCard powerUp = (PowerupCard) obj;
+        return this.getClass().isAssignableFrom(powerUp.getClass()) && this.cubeColor == powerUp.cubeColor && this.powerupType.equals(powerUp.getPowerupType());
+    }
+
 }

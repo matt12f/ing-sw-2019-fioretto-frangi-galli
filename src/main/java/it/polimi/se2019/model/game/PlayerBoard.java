@@ -2,9 +2,10 @@ package it.polimi.se2019.model.game;
 
 import it.polimi.se2019.enums.Color;
 
+import java.io.Serializable;
 import java.util.Observable;
 
-public class PlayerBoard extends Observable {
+public class PlayerBoard extends Observable  implements Serializable {
     private Color color;
     private int currentBoardValue; //equivalent to the amount of skulls, that reduce the value of the scored card
     private boolean front;

@@ -1,6 +1,8 @@
 package it.polimi.se2019.model.game;
 
-public class Ammo {
+import java.io.Serializable;
+
+public class Ammo  implements Serializable {
     private int blue;
     private int red;
     private int yellow;

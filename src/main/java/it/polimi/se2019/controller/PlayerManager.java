@@ -175,6 +175,7 @@ public class PlayerManager  {
                 controller.getMainGameModel().getPlayerList().get(id).getPlayerBoard().getHand().setAdditionalPowerup(null);
             else{
                 controller.getMainGameModel().getPlayerList().get(id).getPlayerBoard().getHand().substitutionPowerup(spawn, optional);
+                controller.getMainGameModel().getPlayerList().get(id).getPlayerBoard().getHand().substitutionPowerup(optional, null);
             }
         }
 

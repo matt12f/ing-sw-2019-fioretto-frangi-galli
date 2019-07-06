@@ -35,7 +35,7 @@ public class AdrenalineServer{
         }
     }
 
-    public static ArrayList<String> getLobby(){
+    public synchronized static ArrayList<String> getLobby(){
         return AdrenalineServer.lobby;
     }
 

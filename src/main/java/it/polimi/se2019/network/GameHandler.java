@@ -84,13 +84,12 @@ public class GameHandler implements Runnable {
             notifyView(player);
         }
         for (ClientHandler c: players) {
+            System.out.println("spawno");
             try {
                 PlayerManager.getCardsToSpawn(true, this.controller, c.getLocalView().getPlayerId());
-                System.out.println("carte settate");
             } catch (FullException e) {
                 LOGGER.log(Level.FINE,"1st exception",e);
             }
-            notifySpawn(c);
             try {
                 c.setSpawn();
             } catch (IOException e) {
@@ -105,9 +104,15 @@ public class GameHandler implements Runnable {
             } catch (CardNotFoundException e) {
                 e.printStackTrace();
             }
+            System.out.println("spawnato");
             for (ClientHandler player: players) {
-                player.setStatus(Status.VIEW);
-                notifyView(player);
+                try {
+                    System.out.println("view aggiornata");
+                    player.sendLocalView();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
         setStart();
@@ -203,10 +208,6 @@ public class GameHandler implements Runnable {
         } catch (InterruptedException e) {
             LOGGER.log(Level.FINE,"8th exception",e);
         }
-    }
-
-    private void notifySpawn(ClientHandler c) {
-        c.setStatus(Status.SPAWN);
     }
 
     private void notifyEndTurn() throws InterruptedException {

@@ -2,9 +2,10 @@ package it.polimi.se2019.model.game;
 
 import it.polimi.se2019.enums.Color;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Player {
+public class Player implements Serializable {
     private String nickname;
     private int id;
     private int score;

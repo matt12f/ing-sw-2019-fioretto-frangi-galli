@@ -1,6 +1,8 @@
 package it.polimi.se2019.enums;
 
-public enum CellEdge {
+import java.io.Serializable;
+
+public enum CellEdge implements Serializable {
     WALL,
     ROOM,
     DOOR

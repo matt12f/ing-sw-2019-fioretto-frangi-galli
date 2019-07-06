@@ -2,7 +2,9 @@ package it.polimi.se2019.model.game;
 
 import it.polimi.se2019.enums.Color;
 
-public class Figure {
+import java.io.Serializable;
+
+public class Figure implements Serializable {
     private Color color;
     private NewCell currentCell;
 

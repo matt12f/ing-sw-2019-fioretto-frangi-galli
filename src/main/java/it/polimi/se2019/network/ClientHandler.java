@@ -156,9 +156,10 @@ public class ClientHandler extends Thread {
     }
 
     synchronized void sendLocalView() throws IOException {
-        this.output.writeObject("VIEW");
-        this.input.readBoolean();
         this.output.reset();
+        this.output.writeObject("VIEW");
+        this.output.flush();
+        this.input.readBoolean();
         this.output.writeObject(this.localView);
     }
 
@@ -196,8 +197,10 @@ public class ClientHandler extends Thread {
     }
 
     private void waiting() throws InterruptedException {
-        while(this.status == Status.WAITING)
+        while(this.status == Status.WAITING) {
             sleep(1);
+            notifyAll();
+        }
     }
 
     public Socket getSocket() {
@@ -235,12 +238,10 @@ public class ClientHandler extends Thread {
 
     synchronized void setSpawn() throws IOException, ClassNotFoundException, InterruptedException {
         output.reset();
-        System.out.println("richiesta inv");
         output.writeObject("SPAWN");
         output.writeObject(this.localView);
-        spawn = (PowerupCard) input.readObject();
+        this.spawn = (PowerupCard) input.readObject();
         this.status = Status.WAITING;
-        waiting();
     }
 
 
@@ -296,7 +297,7 @@ public class ClientHandler extends Thread {
     }
 
     public PowerupCard getSpawn() {
-        return spawn;
+        return this.spawn;
     }
 
     void setDeadsPlayer(int deadsPlayer) {
