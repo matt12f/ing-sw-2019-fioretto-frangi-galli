@@ -51,7 +51,7 @@ public class WeaponMenuGUI extends JFrame{
 
         addWindowListener(new WeaponMenuGUI.CloseListener());
         add(mainPanel);
-        setSize(1000,700);
+        setSize(600,400);
         setLocation(0,0);
         setVisible(true);
 
