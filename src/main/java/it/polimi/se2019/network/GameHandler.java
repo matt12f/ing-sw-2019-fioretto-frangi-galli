@@ -9,6 +9,7 @@ import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.view.LocalView;
 
+import javax.xml.bind.SchemaOutputResolver;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -104,10 +105,8 @@ public class GameHandler implements Runnable {
             } catch (CardNotFoundException e) {
                 e.printStackTrace();
             }
-            System.out.println("spawnato");
             for (ClientHandler player: players) {
                 try {
-                    System.out.println("view aggiornata");
                     player.sendLocalView();
 
                 } catch (IOException e) {
@@ -115,18 +114,26 @@ public class GameHandler implements Runnable {
                 }
             }
         }
-        setStart();
+        try {
+            setStart();
+        } catch (IOException e) {
+            System.out.println("non sono riuscito ad avviare la partita");
+        }
         //turns manager
+        this.controller.getActiveTurn();
         while (this.controller.getMainGameModel().getKillshotTrack().getSkulls() > 0){
             turnPreparation(this.controller.getMainGameModel().getTurn());
             clientTurn = this.players.get(this.controller.getMainGameModel().getTurn());
+            clientTurn.setActionsNumber( this.controller.getActiveTurn().getActivePlayer().getPlayerBoard().getActionTileNormal().getActionCounter());
+            System.out.println("turno di: " + clientTurn.getColor());
             for(int i = 0; i<controller.getActiveTurn().getActivePlayer().getPlayerBoard().getActionTileNormal().getActionCounter(); i++) {
                 waitingRequest(clientTurn);
+                notifyClient(clientTurn);
                 calculateActions(clientTurn);
-                waitingRequest(clientTurn);
+                sendAvailable(clientTurn);
+                getChosenAction(clientTurn);
                 PlayerManager.choiceExecutor(controller, clientTurn.getChosenAction());
                 managePowerUps(PlayerManager.choiceExecutor(controller, clientTurn.getChosenAction()));
-                notifyView(clientTurn);
                 MapManager.refillEmptiedCells(controller.getMainGameModel().getCurrentMap().getBoardMatrix(),controller.getMainGameModel().getCurrentDecks());
                 try {
                     postAction();
@@ -210,6 +217,19 @@ public class GameHandler implements Runnable {
         }
     }
 
+    private void notifyClient(ClientHandler clientTurn) {
+    }
+
+    private void getChosenAction(ClientHandler clientTurn) {
+        try {
+            clientTurn.receiveChosen();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void notifyEndTurn() throws InterruptedException {
         for (ClientHandler player: players) {
             while((player.getStatus() != Status.WAITING))
@@ -220,12 +240,11 @@ public class GameHandler implements Runnable {
 
     private void postAction() throws InterruptedException {
         for (ClientHandler player: players) {
-            while((player.getStatus() != Status.WAITING))
-                Thread.sleep(1);
-            if(controller.getActiveTurn().getActivePlayer().getNickname().equals(player.getNickname()))
-                player.setStatus(Status.MYTURN);
-            else
-                player.setStatus(Status.NOTMYTURN);
+            try {
+                player.sendLocalView();
+            } catch (IOException e) {
+                System.out.println("problema invio local view a fine turno");
+            }
         }
     }
 
@@ -277,26 +296,17 @@ public class GameHandler implements Runnable {
                         choices.add("Yellow");
                     choices.add("Nothing");
 
-                    try {
                         players.get(activePlayer.getId()).setChoices(choices);
                         getTargettingScopeUsage(this.players.get(activePlayer.getId()));
-                    }
-                    catch (InterruptedException e){
-                        LOGGER.log(Level.FINE,"request tagback exception",e);
-                    }
                     if(!this.colorReceived.equals("Nothing")){
                         char ammoToPay=this.colorReceived.toLowerCase().charAt(0);
 
                         choices.clear();
                         for(Player player:playersHit)
                             choices.add(player.getPlayerBoard().getColor().toString());
-                        try {
-                            players.get(activePlayer.getId()).setChoices(choices);
-                            getTargettingScopeUsage(this.players.get(activePlayer.getId()));
-                        }
-                        catch (InterruptedException e){
-                            LOGGER.log(Level.FINE,"request tagback exception",e);
-                        }
+                        players.get(activePlayer.getId()).setChoices(choices);
+                        getTargettingScopeUsage(this.players.get(activePlayer.getId()));
+
                         //the player to hit with 1 more damage
                         Player target=controller.getMainGameModel().getPlayerByColor(this.colorReceived.toLowerCase().charAt(0));
 
@@ -308,9 +318,11 @@ public class GameHandler implements Runnable {
     }
 
     private void getTagBackUsage(ClientHandler clientTurn) throws InterruptedException {
-        while(!clientTurn.getStatus().equals(Status.WAITING))
-            Thread.sleep(1);
-        clientTurn.setStatus(Status.TAGBACKUSAGE);
+        try {
+            clientTurn.setTagBackUsage();
+        } catch (IOException e) {
+            System.out.println("problemi granta");
+        }
         while(clientTurn.getStatus() == Status.TAGBACKUSAGE){
             try {
                 Thread.sleep(1);
@@ -319,9 +331,14 @@ public class GameHandler implements Runnable {
             }
         }
     }
-    private void getTargettingScopeUsage(ClientHandler clientTurn) throws InterruptedException {
-        while(!clientTurn.getStatus().equals(Status.WAITING) )
-            Thread.sleep(1);
+    private void getTargettingScopeUsage(ClientHandler clientTurn){
+        try {
+            clientTurn.setTargetingUsage();
+        } catch (IOException e) {
+            System.out.println("problemi IO granata");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         clientTurn.setStatus(Status.TRGSCOPE);
         while(clientTurn.getStatus() == Status.TRGSCOPE){
             try {
@@ -367,10 +384,9 @@ public class GameHandler implements Runnable {
         notifyAll();
     }
 
-    private synchronized void setStart() {
+    private synchronized void setStart() throws IOException {
         for (ClientHandler player: players) {
-            player.setStatus(Status.START);
-            notifyAll();
+            player.setStart();
         }
     }
 
@@ -388,21 +404,38 @@ public class GameHandler implements Runnable {
     }
 
     private void notifyView(ClientHandler player) {
-        player.setStatus(Status.VIEW);
+        try {
+            player.sendLocalView();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private synchronized void calculateActions(ClientHandler clientTurn){
         clientTurn.setAvailableActions(new AvailableActions(clientTurn.getRequestView(), controller.getActiveTurn().getActivePlayer().getId(), controller));
-        clientTurn.setStatus(Status.CALCULATED);
+    }
+
+    private void sendAvailable(ClientHandler client){
+        try {
+            client.sendAvaiable();
+        } catch (IOException e) {
+            System.out.println("errore invio avaiable");
+        }
     }
 
     private void waitingRequest(ClientHandler clientTurn){
-        while(clientTurn.getStatus()!= Status.WAITING){
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-                LOGGER.log(Level.FINE,"waiting request",e);
-            }
+        try {
+            clientTurn.notifyTurn();
+            System.out.println("c");
+        } catch (IOException e) {
+            System.out.println("problema comunicazione turno");
+        }
+        try {
+            clientTurn.askAction();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 

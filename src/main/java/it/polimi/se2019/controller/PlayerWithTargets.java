@@ -2,6 +2,7 @@ package it.polimi.se2019.controller;
 
 import it.polimi.se2019.model.game.Player;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -9,7 +10,7 @@ import java.util.ArrayList;
  *
  * returns the list of every player on the board with a list of players it can see
  */
-public class PlayerWithTargets {
+public class PlayerWithTargets implements Serializable {
     private Player target;
     private ArrayList<Player> targetsItCanSee;
     PlayerWithTargets(Controller currentController, Player target) {

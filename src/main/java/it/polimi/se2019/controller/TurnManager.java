@@ -1,5 +1,6 @@
 package it.polimi.se2019.controller;
 
+import it.polimi.se2019.model.game.GameModel;
 import it.polimi.se2019.model.game.Player;
 
 public class TurnManager {
@@ -8,6 +9,10 @@ public class TurnManager {
 
     public Player getActivePlayer() {
         return activePlayer;
+    }
+
+    public TurnManager(GameModel model){
+        this.activePlayer = model.getPlayerList().get(0);
     }
 
     public void nextTurn(Controller currentController){

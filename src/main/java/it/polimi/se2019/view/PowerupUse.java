@@ -2,7 +2,9 @@ package it.polimi.se2019.view;
 
 import it.polimi.se2019.enums.Color;
 
-public class PowerupUse {
+import java.io.Serializable;
+
+public class PowerupUse  implements Serializable {
     private int indexInHand;
     private Color colorPlayerToMove;
     private String directionOfMove;

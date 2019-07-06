@@ -4,6 +4,7 @@ import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
 import it.polimi.se2019.model.cards.GunCard;
 import it.polimi.se2019.model.game.Player;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -24,7 +25,7 @@ import java.util.ArrayList;
  * Usage of mustSwap: it indicates that to use a card you must swap it with one in your hand
  */
 
-public class SingleCardActions{
+public class SingleCardActions implements Serializable {
     private GunCard gunToUse;
     private ArrayList<String> availableCombinations; //For the GUI/CLI to list them efficiently
     private ArrayList<SingleEffectsCombinationActions> effectsCombinationActions;

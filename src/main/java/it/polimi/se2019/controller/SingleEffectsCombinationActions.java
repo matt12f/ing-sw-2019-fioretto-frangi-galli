@@ -5,12 +5,13 @@ import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.model.game.Room;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * This class creates objects that represent the things a player must choose from to use a certain effect
  */
-public class SingleEffectsCombinationActions{
+public class SingleEffectsCombinationActions implements Serializable {
     private final ArrayList<String> effectsCombination;
 
     //these variables are for cards that just need the client to select a certain number of targets for an effect

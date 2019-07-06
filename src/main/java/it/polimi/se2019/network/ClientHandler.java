@@ -56,13 +56,12 @@ public class ClientHandler extends Thread {
                 waitForView();
                 sendLocalView();
             }
+            status = Status.WAITING;
             while(!status.equals(Status.ENDGAME)) {
                 while(this.status != Status.ENDTURN) {
                     switch (this.status) {
                         case MYTURN:
                             reload = true;
-                            this.output.writeObject("MYTURN");
-                            this.input.readBoolean();
                             this.output.writeObject(this.actionsNumber); //comunica quante azioni può fare il giocatore
                             for (int j = 0; j < this.actionsNumber; j++) {
                                 requestView = (ActionRequestView) this.input.readObject();
@@ -170,14 +169,14 @@ public class ClientHandler extends Thread {
         }
     }
 
-    private synchronized void setTagBackUsage() throws IOException{
+    synchronized void setTagBackUsage() throws IOException{
         this.output.writeObject("TAGBACKUSAGE");
         boolean useTagBack = this.input.readBoolean();
         this.game.setUseTagBack(useTagBack);
         this.status = Status.WAITING;
     }
 
-    private synchronized void setTargetingUsage() throws IOException, ClassNotFoundException {
+    synchronized void setTargetingUsage() throws IOException, ClassNotFoundException {
         this.output.writeObject("TARGETINGSCOPE");
         this.output.reset();
         this.output.writeObject(this.choices);
@@ -310,5 +309,29 @@ public class ClientHandler extends Thread {
 
     void setGameStats(GameStats stats) {
         this.finale = stats;
+    }
+
+    void setStart() throws IOException {
+        this.output.writeObject("START");
+    }
+
+    void notifyTurn() throws IOException {
+        this.output.writeObject("MYTURN");
+        this.input.readBoolean();
+        System.out.println("b");
+        this.output.writeInt(this.actionsNumber);
+        this.output.reset();
+    }
+
+    void askAction() throws IOException, ClassNotFoundException {
+        requestView = (ActionRequestView) this.input.readObject();
+    }
+
+    public void sendAvaiable() throws IOException {
+        this.output.writeObject(this.availableActions);
+    }
+
+    public void receiveChosen() throws IOException, ClassNotFoundException {
+        this.chosenAction = (ChosenActions) this.input.readObject();
     }
 }

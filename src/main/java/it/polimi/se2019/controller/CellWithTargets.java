@@ -3,9 +3,10 @@ package it.polimi.se2019.controller;
 import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class CellWithTargets{
+public class CellWithTargets implements Serializable {
     private NewCell targetCell;
     private ArrayList<Player> targets; //These are targets to choose from
     private int maxTargetsInCell;

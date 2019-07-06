@@ -23,7 +23,7 @@ public class Controller{
     public Controller(ArrayList<Player> players, int mapNumber, int skulls) {
         this.mainGameModel=new GameModel(players, mapNumber, skulls);
         this.remoteView=new RemoteView(this.mainGameModel, mapNumber, skulls);
-        this.activeTurn = new TurnManager();
+        this.activeTurn = new TurnManager(this.getMainGameModel());
         this.getMainGameModel().addObserver(this.remoteView);
         setupBoard();
     }

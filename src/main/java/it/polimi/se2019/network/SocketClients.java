@@ -18,7 +18,7 @@ public class SocketClients implements Runnable{
         Socket socketTemp;
         boolean condition = true;
         try {
-            serverSocket = new ServerSocket(14566); //PORTA TEMPORANEA
+            serverSocket = new ServerSocket(14567); //PORTA TEMPORANEA
             while(condition){ //Finche siamo qui dentro stiamo aspettando le condizioni per startare la partita
                 System.out.println("aspetto un client");
                 socketTemp = serverSocket.accept();

@@ -71,7 +71,7 @@ public class AdrenalineClient {
     private static boolean receiveServerMessage(Connection connection) throws IOException, ClassNotFoundException {
             String msg;
             msg = (String) connection.getInput().readObject();
-            return (msg.equals("YOURTURN"));
+            return (msg.equals("MYTURN"));
     }
 
     private static void setMap(int map) throws IOException {
@@ -224,6 +224,7 @@ public class AdrenalineClient {
                 setMap(mapSkull[0]);
                 setSkull(mapSkull[1]);
                 message = (String) connection.getInput().readObject();
+                System.out.println(message);
             }
             if(message.equals("VIEW")){
                 connection.getOutput().reset();
@@ -270,15 +271,20 @@ public class AdrenalineClient {
         ChosenActions chosen;
         while(start){
             myturn = receiveServerMessage(connection);
+            System.out.println("Inizio del turno");
             if(myturn){
                 last = false;
                 connection.getOutput().reset();
                 connection.getOutput().writeBoolean(true);
                 connection.getOutput().flush();
+                System.out.println("b");
                 actionNumber = connection.getInput().readInt();
+                System.out.println("numero azioni");
                 while(actionNumber > 0){
+                    gameBoardGui.enableActionsButton();
                     actionNumber --;
                     actionRequested = getActionFromUser(last);
+                    System.out.println("azione ricevuta");
                     actions = askForAction(connection, actionRequested);
                     try {
                         chosen = presentActions(actions);
@@ -398,7 +404,7 @@ public class AdrenalineClient {
          *
          */
     private static void setConnection (String ipServer) throws IOException {
-            int serverPort = 14566;
+            int serverPort = 14567;
             InetAddress address = InetAddress.getLocalHost();
             String host = address.toString();
             connection.setSocket(new Socket(ipServer, serverPort));
