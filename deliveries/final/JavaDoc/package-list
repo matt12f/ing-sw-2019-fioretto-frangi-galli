@@ -1,0 +1,12 @@
+it.polimi.se2019
+it.polimi.se2019.controller
+it.polimi.se2019.enums
+it.polimi.se2019.exceptions
+it.polimi.se2019.model.cards
+it.polimi.se2019.model.game
+it.polimi.se2019.network
+it.polimi.se2019.test_GUI
+it.polimi.se2019.test_controller
+it.polimi.se2019.test_model.test_cards
+it.polimi.se2019.test_model.test_game
+it.polimi.se2019.view

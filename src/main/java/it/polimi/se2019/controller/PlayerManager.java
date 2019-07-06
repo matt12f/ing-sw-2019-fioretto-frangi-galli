@@ -14,7 +14,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
-public class PlayerManager {
+public class PlayerManager  {
 
     /**
      * This method scores all of the boards at the end of a turn

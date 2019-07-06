@@ -59,7 +59,7 @@ public class AdrenalineServer{
     public static synchronized int clientCounter(){
         int connectionNumber = lobbyClient.size();
         ArrayList<Integer> indexToDelete = new ArrayList<>();
-        //checking wich connections correctly works
+        //checking which connections correctly works
         for (ClientHandler client: lobbyClient) {
             if(client.getSocket() != null){
                 try{
