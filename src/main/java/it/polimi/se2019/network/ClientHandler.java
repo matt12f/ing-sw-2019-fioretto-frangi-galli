@@ -91,7 +91,7 @@ public class ClientHandler extends Thread {
                 if (status.equals(Status.DEAD)){
                     this.output.writeObject("DEAD");
                     this.output.reset();
-                    this.output.writeObject(this.localView.getPlayerHand().getPowerups());
+                    this.output.writeObject(this.localView);
                     this.spawn = (PowerupCard) this.input.readObject();
                     this.status = Status.WAITING;
                 }else{

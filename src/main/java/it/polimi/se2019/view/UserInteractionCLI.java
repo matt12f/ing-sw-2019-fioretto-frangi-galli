@@ -37,7 +37,7 @@ public class UserInteractionCLI extends UserInteraction {
     }
 
     @Override
-    public PowerupCard spawnChooser(PowerupCard[] list) {
+    public PowerupCard spawnChooser(PowerupCard[] list, PowerupCard optional) {
         //TODO scrivere metodo
         return null;
     }

@@ -13,5 +13,5 @@ public abstract class UserInteraction {
     public abstract void showMessage(String message);
     public abstract void ammoTileViewer(String content);
     public abstract int[] mapChooser();
-    public abstract PowerupCard spawnChooser(PowerupCard[] list);
+    public abstract PowerupCard spawnChooser(PowerupCard[] list, PowerupCard optional);
 }

@@ -460,7 +460,7 @@ public class UserInteractionGUI extends UserInteraction {
     }
 
     @Override
-    public PowerupCard spawnChooser(PowerupCard[] list){
+    public PowerupCard spawnChooser(PowerupCard[] list, PowerupCard optional){
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints container = new GridBagConstraints();
@@ -496,7 +496,7 @@ public class UserInteractionGUI extends UserInteraction {
             container.gridy=1;
             mainPanel.add(pw3,container);
         }
-        if (list[3] != null){
+        if (optional != null){
             ImageIcon im4 = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/powerups/powerups_"+ list[3].getPowerupType() + "_"+list[3].getCubeColor()+ ".png")).getImage().getScaledInstance(70,92,Image.SCALE_DEFAULT));
             pw4.setIcon(im4);
             container.gridx=3;

@@ -245,7 +245,7 @@ public class AdrenalineClient {
                 System.out.println("ricevuta richiesta spawn");
                 localView = (LocalView) connection.getInput().readObject();
                 if(isGUI()){
-                    PowerupCard cardForSpawn = userInteractionGUI.spawnChooser(localView.getPlayerHand().getPowerups());
+                    PowerupCard cardForSpawn = userInteractionGUI.spawnChooser(localView.getPlayerHand().getPowerups(), localView.getPlayerHand().getAdditionalPowerup());
                     sendSpawnChoice(cardForSpawn);
                     updateLocalView();
                     displayBoard();
@@ -347,10 +347,10 @@ public class AdrenalineClient {
     }
 
     private static void reSpawn() throws IOException, ClassNotFoundException {
-        PowerupCard[] cards = (PowerupCard[]) connection.getInput().readObject();
+        localView  = (LocalView) connection.getInput().readObject();
         PowerupCard card = null;
         if(isGUI())
-            card = userInteractionGUI.spawnChooser(cards);
+            card = userInteractionGUI.spawnChooser(localView.getPlayerHand().getPowerups(), localView.getPlayerHand().getAdditionalPowerup());
         connection.getInput().reset();
         connection.getOutput().writeObject(card);
     }
