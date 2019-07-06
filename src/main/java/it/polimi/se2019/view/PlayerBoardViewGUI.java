@@ -64,6 +64,7 @@ PlayerBoardViewGUI extends JPanel{
 
 
     }
+
     public void setBoard( int x, int y, boolean frenzy, PlayerBoardView boardView){
         Color color = boardView.getColor();
         if(!frenzy)

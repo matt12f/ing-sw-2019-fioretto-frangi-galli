@@ -25,7 +25,7 @@ public class KillShotTrack {
     /**
      * this method adds kills to the killshot track and extra kills during frenzy
      */
-    public void setKills(String kill) {
+    public void setKills( String kill) {
         boolean found = false;
         int i = 0;
         do{
@@ -45,14 +45,6 @@ public class KillShotTrack {
 
     public String[] getKills() {
         return this.kills;
-    }
-
-    /**
-     * this method adds kills and overkills during final frenzy
-     */
-    public void addExtraKills(String extraKill) {
-        for(int i=0;i<extraKill.length();i++)
-            this.extraKills.add(extraKill.charAt(i));
     }
 
     public ArrayList<Character> getExtraKills() {

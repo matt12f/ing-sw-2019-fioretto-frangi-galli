@@ -35,7 +35,7 @@ public class PlayerZoneGUI extends JPanel {
     }
 
     public void updateElements(PlayerBoardView ownerBoard, PlayerHandView handView, boolean frenzy){
-        this.board.setBoard(420, 109, frenzy,ownerBoard );
+        this.board.setBoard(420, 109, frenzy, ownerBoard);
         this.hand.updateHand(handView.getGuns(), handView.getPowerups(), ownerBoard.getAmmo());
     }
 }

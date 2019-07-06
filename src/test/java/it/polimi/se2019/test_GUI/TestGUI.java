@@ -72,11 +72,13 @@ class TestGUI {
         char [] damage= {'b','b','y','y','g','g'};
         player1.getPlayerBoard().getDamageTrack().dealDamage(damage);
         pb1.update(player1.getPlayerBoard());
+
         damage[0]='w';
         player2.getPlayerBoard().getDamageTrack().dealDamage(damage);
         pb2.update(player2.getPlayerBoard());
+
         damage[0]='v';
-        player2.getPlayerBoard().getDamageTrack().dealDamage(damage);
+        player3.getPlayerBoard().getDamageTrack().dealDamage(damage);
         pb3.update(player3.getPlayerBoard());
 
 
@@ -86,11 +88,11 @@ class TestGUI {
         killShotTrack.setKills("bb");
         killShotTrack.setKills("w");
         killShotTrack.setKills("yy");
-        killShotTrack.addExtraKills("vgg");
+        killShotTrack.setKills("gg");
 
         killShotTrackerView.update(killShotTrack);
 
-        //updated handview for the player1
+        //updated hand view for the player1
         GunCard [] gunsForP1=new GunCard[3];
         gunsForP1[0]=new CyberBlade();
         gunsForP1[1]=new Electroscythe();

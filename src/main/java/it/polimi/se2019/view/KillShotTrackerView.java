@@ -35,6 +35,17 @@ public class KillShotTrackerView  implements Serializable {
         this.kills = kills;
     }
 
+    /**
+     * @return number of kills (overkills are not considered)
+     */
+    public int getNumKills(){
+        int cont=0;
+        for (int i = 0; i < skulls; i++)
+            if(this.kills[i]!=null)
+                cont++;
+        return cont;
+    }
+
     public void setSkulls(int skulls) {
         this.skulls = skulls;
     }

@@ -36,9 +36,13 @@ public class DamageTracker {
     }
 
 
+    /**
+     * @param damageToDeal is the damage to be dealt to it
+     * @return state of the player after damage: alive or overkilled
+     */
     public String dealDamage(char [] damageToDeal){
-        for (char damage: damageToDeal)
-            if (addDamage(damage)) //the rest of the damage is wasted
+        for (int i = 0; i < damageToDeal.length ; i++)
+            if (!addDamage(damageToDeal[i])) //the rest of the damage is wasted
                 return "overkill";
 
         return "alive";

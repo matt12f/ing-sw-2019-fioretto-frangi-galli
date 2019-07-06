@@ -73,7 +73,7 @@ public class GameBoardGui  {
     }
 
     public void updateBoardGame(ArrayList<PlayerBoardView> opponentBoards,PlayerBoardView ownerBoard, CellView[][] boardMatrix, KillShotTrackerView kills, PlayerHandView ownerHand){
-        boardZone.updateBoards(opponentBoards, ownerBoard, frenzyStatus, kills.getSkulls());
+        boardZone.updateBoards(opponentBoards, ownerBoard, frenzyStatus, kills.getNumKills());
         map.setBoard(boardMatrix);
         playerZone.updateElements(ownerBoard, ownerHand, frenzyStatus);
 
