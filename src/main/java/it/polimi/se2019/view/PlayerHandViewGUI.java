@@ -12,13 +12,13 @@ public class PlayerHandViewGUI extends JPanel {
     private WeaponButtonGUI weapon1;
     private WeaponButtonGUI weapon2;
     private WeaponButtonGUI weapon3;
-    protected GunCard[] weapons;
-    protected AmmoGUI ammo ;
-    PowerupButtonGUI powerup1;
-    PowerupButtonGUI powerup2;
-    PowerupButtonGUI powerup3;
+    private GunCard[] weapons;
+    private AmmoGUI ammo;
+    private PowerupButtonGUI powerup1;
+    private PowerupButtonGUI powerup2;
+    private PowerupButtonGUI powerup3;
+
     public PlayerHandViewGUI(AmmoView ammoView){
-        //JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints container = new GridBagConstraints();
         setLayout(new GridBagLayout());
 
@@ -111,5 +111,9 @@ public class PlayerHandViewGUI extends JPanel {
        powerup3.updateImage(powerups[2]);
        this.ammo.updateAmmo(ammoView);
 
+    }
+
+    protected AmmoGUI getAmmo() {
+        return ammo;
     }
 }

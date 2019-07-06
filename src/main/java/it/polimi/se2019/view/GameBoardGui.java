@@ -75,7 +75,12 @@ public class GameBoardGui  {
         boardZone.updateBoards(opponentBoards, ownerBoard, frenzyStatus, kills.getNumKills());
         map.setBoard(boardMatrix);
         playerZone.updateElements(ownerBoard, ownerHand, frenzyStatus);
+    }
 
-
+    /**
+     * this method enables the action button for the player that will select the actions to
+     */
+    public void enableActionsButton(){
+        this.playerZone.getHand().getAmmo().updateActionsButton();
     }
 }

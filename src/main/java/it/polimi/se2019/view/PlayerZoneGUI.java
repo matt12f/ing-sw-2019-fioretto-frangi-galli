@@ -30,6 +30,10 @@ public class PlayerZoneGUI extends JPanel {
 
     }
 
+    protected PlayerHandViewGUI getHand(){
+        return this.hand;
+    }
+
     public void setFrenzy(PlayerBoardView ownerBoard){
         this.board.setBoard(420, 109, true, ownerBoard);
     }
