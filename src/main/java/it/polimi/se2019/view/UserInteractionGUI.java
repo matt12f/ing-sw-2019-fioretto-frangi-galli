@@ -636,7 +636,7 @@ public class UserInteractionGUI extends UserInteraction {
         return chosenWeapon;
     }
 
-    public String[] mainLogGUI(){
+    public synchronized String[] mainLogGUI(){
         JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints container = new GridBagConstraints();
         mainPanel.setLayout(new GridBagLayout());

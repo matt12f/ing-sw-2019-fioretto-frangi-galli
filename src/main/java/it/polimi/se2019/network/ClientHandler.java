@@ -48,9 +48,11 @@ public class ClientHandler extends Thread {
             initializeLobby();
             waitingPlayers();
             this.output.writeObject("START");
+            status = Status.WAITING;
             waitForView();
             sendLocalView(); //invio la view al client
             while(status != Status.START){
+                status = Status.WAITING;
                 waitForView();
                 sendLocalView();
             }
@@ -219,13 +221,10 @@ public class ClientHandler extends Thread {
     }
 
     private void waitForView() throws InterruptedException, IOException, ClassNotFoundException {
-        status = Status.WAITING;
         while(this.status != Status.VIEW ){
             Thread.sleep(1);
             if(this.status == Status.MAPSKULL)
                 setMapSkull();
-            if(this.status == Status.SPAWN)
-                setSpawn();
             if(this.status == Status.START)
                 break;
             if(this.status == Status.TAGBACKUSAGE)
@@ -234,8 +233,9 @@ public class ClientHandler extends Thread {
         }
     }
 
-    private synchronized void setSpawn() throws IOException, ClassNotFoundException, InterruptedException {
+    synchronized void setSpawn() throws IOException, ClassNotFoundException, InterruptedException {
         output.reset();
+        System.out.println("richiesta inv");
         output.writeObject("SPAWN");
         output.writeObject(this.localView);
         spawn = (PowerupCard) input.readObject();

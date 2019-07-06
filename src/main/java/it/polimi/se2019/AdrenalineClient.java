@@ -1,21 +1,14 @@
 package it.polimi.se2019;
 
 import it.polimi.se2019.controller.AvailableActions;
-import it.polimi.se2019.enums.Status;
 import it.polimi.se2019.exceptions.NoActionsException;
 import it.polimi.se2019.model.cards.PowerupCard;
-import it.polimi.se2019.network.*;
 import it.polimi.se2019.view.*;
 
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.rmi.AlreadyBoundException;
-import java.rmi.NotBoundException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class AdrenalineClient {
     //This controller contains and manages the  game logic for all players (it's initialized only
@@ -23,8 +16,8 @@ public class AdrenalineClient {
     private static LocalView localView;
     private static String nickname;
     private static ArrayList<String> otherPlayers;
-    private static boolean GUI; //Se l'utente sceglierà la GUI piuttosto che la cli sarà true
-    private static Connection connection;
+    private static boolean GUI = true; //Se l'utente sceglierà la GUI piuttosto che la cli sarà true
+    private static Connection connection = new Connection(null, true);
     private static UserInteractionGUI userInteractionGUI = new UserInteractionGUI();
     private static UserInteractionCLI userInteractionCLI = new UserInteractionCLI();
     private static boolean start = false;
@@ -36,8 +29,30 @@ public class AdrenalineClient {
     private static ActionRequestView actionRequested;
 
     public static void main(String[] args){
-        connection = new Connection(null, true);
-        new OpenerGUI();
+        answer = userInteractionGUI.mainLogGUI();
+        ipServerRequest();
+        try {
+            waitForStart();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            gamePreparation();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            matchPhase();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private static ActionRequestView getActionFromUser(boolean lastMove){
@@ -100,6 +115,7 @@ public class AdrenalineClient {
             while(!lobby){
                 temp = (String) connection.getInput().readObject();
                 lobby = temp.equals("LOBBY");
+                System.out.println(temp);
             }
             otherPlayers = (ArrayList<String>) connection.getInput().readObject();
             otherPlayers.remove(nickname);
@@ -129,7 +145,6 @@ public class AdrenalineClient {
         String[] temp;
         boolean accepted;
         if (GUI) {
-            answer = userInteractionGUI.mainLogGUI();
             while(!connected) {
                 try {
                     setConnection(answer[1]);
@@ -146,14 +161,10 @@ public class AdrenalineClient {
                 accepted = setNickname(answer[0]);
                 if(!accepted)
                     userInteractionGUI.errorDisplay("nick");
-                else
-                    waitForStart();
                 while(!accepted) {
                     userInteractionGUI.mainLogGUI();
                     accepted =  setNickname(answer[0]);
-                    if (accepted) {
-                        waitForStart();
-                    } else {
+                    if (!accepted) {
                         userInteractionGUI.errorDisplay("nick");
                     }
                 }
@@ -196,15 +207,16 @@ public class AdrenalineClient {
             firstTime = false;
         }
         start = false;
-        gamePreparation();
     }
 
     private static void gamePreparation() throws IOException, ClassNotFoundException {
         boolean guiStarted = false;
         while(!start){
             String message = (String) connection.getInput().readObject();
+            System.out.println(message);
             int[] mapSkull;
             if(message.equals("MAP")) {
+                System.out.println("mappa");
                 if (isGUI()){
                     mapSkull = userInteractionGUI.mapChooser();
                 }else{
@@ -216,6 +228,7 @@ public class AdrenalineClient {
 
             }
             if(message.equals("VIEW")){
+                System.out.println("view");
                 connection.getOutput().reset();
                 connection.getOutput().writeBoolean(true);
                 connection.getOutput().flush();
@@ -228,7 +241,8 @@ public class AdrenalineClient {
                 }
             }
             message = (String) connection.getInput().readObject();
-            if(message.equals("SPAWN")) {
+            if( message != null && message.equals("SPAWN")) {
+                System.out.println("ricevuta richiesta spawn");
                 localView = (LocalView) connection.getInput().readObject();
                 if(isGUI()){
                     PowerupCard cardForSpawn = userInteractionGUI.spawnChooser(localView.getPlayerHand().getPowerups());
@@ -239,7 +253,6 @@ public class AdrenalineClient {
             }
             if(message.equals("START")){
                 start = true;
-                matchPhase();
             }
         }
     }
@@ -383,7 +396,7 @@ public class AdrenalineClient {
          *
          */
     private static void setConnection (String ipServer) throws IOException {
-            int serverPort = 9000;
+            int serverPort = 14566;
             InetAddress address = InetAddress.getLocalHost();
             String host = address.toString();
             connection.setSocket(new Socket(ipServer, serverPort));

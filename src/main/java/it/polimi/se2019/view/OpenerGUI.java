@@ -14,7 +14,7 @@ public class OpenerGUI {
 
     public  OpenerGUI(){
 
-        JFrame frame = new JFrame("ADRENALINE");
+        JDialog frame = new JDialog();
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints container = new GridBagConstraints();
@@ -22,6 +22,7 @@ public class OpenerGUI {
 
         JButton gui = new JButton("GUI");
         JButton cli = new JButton("CLI");
+
 
 
         container.gridx=0;

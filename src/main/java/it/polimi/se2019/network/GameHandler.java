@@ -86,14 +86,19 @@ public class GameHandler implements Runnable {
         for (ClientHandler c: players) {
             try {
                 PlayerManager.getCardsToSpawn(true, this.controller, c.getLocalView().getPlayerId());
+                System.out.println("carte settate");
             } catch (FullException e) {
                 LOGGER.log(Level.FINE,"1st exception",e);
             }
-            c.setStatus(Status.SPAWN);
+            notifySpawn(c);
             try {
-                waitForSpawn(c);
+                c.setSpawn();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             } catch (InterruptedException e) {
-                LOGGER.log(Level.FINE,"2nd exception",e);
+                e.printStackTrace();
             }
             try {
                 PlayerManager.spawnPlayers(this.controller, c.getLocalView().getPlayerId(), c.getSpawn());
@@ -198,6 +203,10 @@ public class GameHandler implements Runnable {
         } catch (InterruptedException e) {
             LOGGER.log(Level.FINE,"8th exception",e);
         }
+    }
+
+    private void notifySpawn(ClientHandler c) {
+        c.setStatus(Status.SPAWN);
     }
 
     private void notifyEndTurn() throws InterruptedException {

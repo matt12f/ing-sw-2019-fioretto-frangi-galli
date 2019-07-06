@@ -25,8 +25,7 @@ public class LobbyMonitor implements Runnable{
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if(newbie)
-                gameToStart = new GameStarter();
+            gameToStart = new GameStarter();
             if (!AdrenalineServer.getLobby().isEmpty()) {
                 connectionNumber = AdrenalineServer.clientCounter();
                 if(connectionNumber != prev){
@@ -43,9 +42,9 @@ public class LobbyMonitor implements Runnable{
                     thread.start();
                 }else if(connectionNumber == 3 || connectionNumber == 4){
                     if(!timerStarted){
+                        timer = new Timer();
                         timerStarted = true;
                         timer.schedule(gameToStart, time);
-                        newbie = true;
                     }
                 }else{
                     if(timerStarted){
