@@ -21,6 +21,7 @@ PlayerBoardViewGUI extends JPanel{
 
         this.board = new JLabel(boardImage);
 
+
         ///////DAMAGE//////
 
         this.damageVector = new DamageIconGUI[12];
@@ -32,12 +33,6 @@ PlayerBoardViewGUI extends JPanel{
         setBoard(x,y, false, boardView);
 
         board.setIcon(boardImage);
-
-        this.markerButton = new JButton("markers");
-        markerButton.setLocation(225, 10);
-        board.add(markerButton);
-
-
         damageVector[0].setLocation(40, 40);
         damageVector[1].setLocation(60, 40);
         damageVector[2].setLocation(85, 40);
@@ -51,6 +46,11 @@ PlayerBoardViewGUI extends JPanel{
         damageVector[10].setLocation(275, 40);
         damageVector[11].setLocation(295, 40);
 
+        this.markerButton = new JButton("marks");
+        markerButton.setSize(45,15);
+        markerButton.setLocation(230, 5);
+        board.add(markerButton);
+
         for(int i=0;i<12;i++)
             board.add(damageVector[i]);
 
@@ -63,8 +63,8 @@ PlayerBoardViewGUI extends JPanel{
             }});
 
 
-    }
 
+    }
     public void setBoard( int x, int y, boolean frenzy, PlayerBoardView boardView){
         Color color = boardView.getColor();
         if(!frenzy)
@@ -94,9 +94,10 @@ PlayerBoardViewGUI extends JPanel{
 
         JDialog dialog = new JDialog();
         dialog.setModal(true);
-        dialog.setTitle("markers");
+        dialog.setTitle("marks");
         dialog.getContentPane().add(mainPanel);
         dialog.pack();
+        dialog.setSize(300,100);
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
     }
