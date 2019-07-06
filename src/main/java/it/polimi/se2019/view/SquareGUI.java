@@ -18,6 +18,7 @@ public class SquareGUI extends JLabel {
             this.pic = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/ammo/ammo_" + dropContent + ".png")).getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT));
         else
             this.pic=null;
+
         setIcon(this.pic);
     }
 

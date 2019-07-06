@@ -86,7 +86,6 @@ public class MapViewGUI extends JPanel {
 
         //---- add zones ---- //
 
-        //labelBackground.add(mainPanel);
         labelBackground.add(weaponblue1);
         labelBackground.add(weaponblue2);
         labelBackground.add(weaponblue3);
@@ -197,21 +196,10 @@ public class MapViewGUI extends JPanel {
     }
 
     public void setBoard(CellView[][] boardMatrix){
-        int x= 95, y= 90;
         for (int row=0;row < 3;row++){
             for(int column=0;column < 4;column++){
                 boardMatrixGUI[row][column].updateCell(boardMatrix[row][column]);
-                boardMatrixGUI[row][column].setLocation(x,y);
-
-                if (boardMatrix[row][column].getCorrespondingCell().getCellType() != OUTSIDEBOARD)
-                    boardMatrixGUI[row][column].setType("inBoard");
-                else
-                    boardMatrixGUI[row][column].setType("outBoard");
-
-                x+=105;
             }
-            x=95;
-            y+=110;
         }
 
         ///////update weapons//////

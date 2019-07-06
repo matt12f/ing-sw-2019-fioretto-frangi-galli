@@ -1,10 +1,8 @@
 package it.polimi.se2019.view;
 
-import it.polimi.se2019.enums.Status;
 import it.polimi.se2019.model.cards.GunCard;
 import it.polimi.se2019.model.game.*;
-import it.polimi.se2019.controller.AvailableActions;
-import java.rmi.RemoteException;
+
 import java.util.ArrayList;
 import java.util.Observer;
 import java.util.Observable;
@@ -64,6 +62,7 @@ public class RemoteView  extends View {
         GunCard gunCard;
         this.mapView.getKillView().update(model.getKillshotTrack());
         this.mapView.uploadBoardMatrix(model.getCurrentMap().getBoardMatrix());
+
         for (PlayerBoardView player: playerBoardViews) {
             player.update(model.getPlayerList().get(playerBoardViews.indexOf(player)).getPlayerBoard());
             this.playerHands.get(playerBoardViews.indexOf(player)).setPowerups(model.getPlayerList().get(playerBoardViews.indexOf(player)).getPlayerBoard().getHand().getPowerups());

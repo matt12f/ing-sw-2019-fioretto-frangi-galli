@@ -34,7 +34,7 @@ public class MapView implements Serializable {
     }
 
     public CellView getCell (int i, int j){
-        return boardMatrix[i][j];
+        return this.boardMatrix[i][j];
     }
 
     public CellView[][] getBoardMatrix() {
@@ -90,11 +90,11 @@ public class MapView implements Serializable {
         return null;
     }
 
-    public void uploadBoardMatrix(NewCell[][] boardMatrix){
+    public void uploadBoardMatrix(NewCell[][] newBoard){
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 4; j++) {
-                this.getCell(i, j).setPlayerFigures(boardMatrix[i][j]);
-                this.getCell(i, j).setCell(boardMatrix[i][j]);
+                this.getCell(i, j).setPlayerFigures(newBoard[i][j]);
+                this.getCell(i, j).setCell(newBoard[i][j]);
             }
         }
     }

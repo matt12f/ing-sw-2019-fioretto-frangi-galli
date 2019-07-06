@@ -79,18 +79,18 @@ class TestGUI {
 
         damage[0]='w';
         player2.getPlayerBoard().getDamageTrack().dealDamage(damage);
-        player1.getPlayerBoard().getDamageTrack().addMark('w');
-        player1.getPlayerBoard().getDamageTrack().addMark('b');
-        player1.getPlayerBoard().getDamageTrack().addMark('y');
-        player1.getPlayerBoard().getDamageTrack().addMark('g');
+        player2.getPlayerBoard().getDamageTrack().addMark('w');
+        player2.getPlayerBoard().getDamageTrack().addMark('b');
+        player2.getPlayerBoard().getDamageTrack().addMark('y');
+        player2.getPlayerBoard().getDamageTrack().addMark('g');
         pb2.update(player2.getPlayerBoard());
 
         damage[0]='v';
         player3.getPlayerBoard().getDamageTrack().dealDamage(damage);
-        player1.getPlayerBoard().getDamageTrack().addMark('v');
-        player1.getPlayerBoard().getDamageTrack().addMark('b');
-        player1.getPlayerBoard().getDamageTrack().addMark('y');
-        player1.getPlayerBoard().getDamageTrack().addMark('g');
+        player3.getPlayerBoard().getDamageTrack().addMark('v');
+        player3.getPlayerBoard().getDamageTrack().addMark('b');
+        player3.getPlayerBoard().getDamageTrack().addMark('y');
+        player3.getPlayerBoard().getDamageTrack().addMark('g');
         pb3.update(player3.getPlayerBoard());
 
 
@@ -132,6 +132,9 @@ class TestGUI {
         position2.addPlayers(player1);
         position2.addPlayers(player2);
         position2.addPlayers(player3);
+
+        testMap.uploadBoardMatrix(controller.getMainGameModel().getCurrentMap().getBoardMatrix());
+
 
         testGUI.updateBoardGame(testBoards,testBoards.get(0),board,killShotTrackerView,playerHandView);
         while(true);

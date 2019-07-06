@@ -14,16 +14,18 @@ public class CellView implements Serializable {
 
     private ArrayList<Figure> playerFigures;
 
-    public CellView(int lineIndex, int columnIndex, NewCell playerPosition) {
+    public CellView(int lineIndex, int columnIndex, NewCell position) {
         this.lineIndex = lineIndex;
         this.columnIndex = columnIndex;
         this.playerFigures = new ArrayList<>();
-        setPlayerFigures(playerPosition);
-        setCell(playerPosition);
+        this.correspondingCell=position;
+        setPlayerFigures(position);
+        setCell(position);
     }
 
     public void setPlayerFigures(NewCell playerPosition){
         this.playerFigures.clear();
+
         if(playerPosition != null && !playerPosition.getPlayers().isEmpty())
             for (int i = 0; i < playerPosition.getPlayers().size(); i++){
                     this.playerFigures.add(playerPosition.getPlayers().get(i).getFigure());
@@ -38,8 +40,8 @@ public class CellView implements Serializable {
         return correspondingCell;
     }
 
-    public void setCell(NewCell playerPosition){
-        this.correspondingCell = playerPosition;
+    public void setCell(NewCell newCorrespondingCell){
+        this.correspondingCell = newCorrespondingCell;
     }
 
     public int getLineIndex() {

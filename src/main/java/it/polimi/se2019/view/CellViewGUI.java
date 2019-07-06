@@ -20,9 +20,9 @@ public class CellViewGUI extends JPanel {
                     matrixGUI[i][j]=new SquareGUI("EMPTY","");
 
         if(!cell.getDrop().equals("spawn"))
-            matrixGUI[2][2] = new SquareGUI("DROP",cell.getDrop());
+            matrixGUI[2][2].updateContent("DROP",cell.getDrop());
         else
-            matrixGUI[2][2] =new SquareGUI("EMPTY","");
+            matrixGUI[2][2].updateContent("EMPTY","");
 
         //add on gui interface
         int x = 0, y= 0;
@@ -40,9 +40,7 @@ public class CellViewGUI extends JPanel {
         setSize(100, 90);
     }
 
-    //TODO check
     public void updateCell(CellView cell) {
-        //this adds only the figures
         int z = 0;
         for (int i = 0; i < 3; i++)
             for (int j = 0; j < 3; j++)
