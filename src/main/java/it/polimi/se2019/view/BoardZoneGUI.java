@@ -15,41 +15,37 @@ public class BoardZoneGUI extends JPanel {
     private int killsDynamic;
 
 
-    public BoardZoneGUI(ArrayList<PlayerBoardView> boards,PlayerBoardView ownerBoard, int kills){
+    public BoardZoneGUI(ArrayList<PlayerBoardView> boards, PlayerBoardView ownerBoard, int kills){
 
         GridBagConstraints container = new GridBagConstraints();
         setLayout(new GridBagLayout());
 
         this.boardsDynamic = boards;
-        this.ownerBoardDynamic= ownerBoard;
+        this.ownerBoardDynamic = ownerBoard;
         this.killsDynamic = kills;
-
-
-
-        //i=1 removes the player board of the owner, so it's not displayed twice
-
-       //////////creazione dinamica della board zone///////
-        this.boardsGUI= new ArrayList<>();
-        for (int i = 1; i< boards.size();i++){
-           boardsGUI.add(new PlayerBoardViewGUI( boards.get(i),420,109 ));
-        }
-
-
-        //////////aggiunta dinamica della board zone///////
-        for (int i = 0; i< boards.size()-1;i++){
-            container.gridx=0;
-            container.gridy=i;
-            add(boardsGUI.get(i), container);
-        }
-
-
 
 
         this.score = new JButton("View Score");
 
         container.gridx=0;
-        container.gridy=4;
+        container.gridy=0;
         add(score,container);
+
+
+       //creating board zone dinamically
+        this.boardsGUI= new ArrayList<>();
+
+        for (int i = 1; i< boards.size();i++)
+           boardsGUI.add(new PlayerBoardViewGUI( boards.get(i),420,109 ));
+
+
+        //adding board zone dinamically
+        for (int i = 0; i < boardsGUI.size(); i++){
+            container.gridx=0;
+            container.gridy=i+1;
+            add(boardsGUI.get(i), container);
+        }
+
 
         score.addActionListener(new ActionListener() {
             @Override
@@ -64,9 +60,10 @@ public class BoardZoneGUI extends JPanel {
 
     public void updateBoards(ArrayList<PlayerBoardView> boards,PlayerBoardView ownerBoard, boolean frenzy, int kills){
 
-        for (int i = 0; i< boards.size()-1;i++){
+        for (int i = 0; i< boardsGUI.size(); i++){
             boardsGUI.get(i).setBoard( 420,109, frenzy, boards.get(i+1));
         }
+
         this.boardsDynamic = boards;
         this.ownerBoardDynamic= ownerBoard;
         this.killsDynamic = kills;

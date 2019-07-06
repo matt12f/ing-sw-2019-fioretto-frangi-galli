@@ -19,9 +19,6 @@ PlayerBoardViewGUI extends JPanel{
 
     public PlayerBoardViewGUI(PlayerBoardView boardView, int x, int y){
 
-        this.board = new JLabel(boardImage);
-
-
         ///////DAMAGE//////
 
         this.damageVector = new DamageIconGUI[12];
@@ -30,9 +27,12 @@ PlayerBoardViewGUI extends JPanel{
             damageVector[i]= new DamageIconGUI(boardDamage[i]);
         }
 
-        setBoard(x,y, false, boardView);
+        this.boardImage = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/boards/normal/"+
+                boardView.getColor().toString().toLowerCase()+".jpg")).getImage().getScaledInstance(x,y,
+                Image.SCALE_DEFAULT));
 
-        board.setIcon(boardImage);
+        this.board = new JLabel(boardImage);
+
         damageVector[0].setLocation(40, 40);
         damageVector[1].setLocation(60, 40);
         damageVector[2].setLocation(85, 40);
@@ -63,7 +63,6 @@ PlayerBoardViewGUI extends JPanel{
             }});
 
 
-
     }
 
 
@@ -73,6 +72,8 @@ PlayerBoardViewGUI extends JPanel{
             this.boardImage = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/boards/normal/"+color.toString().toLowerCase()+".jpg")).getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
         else
             this.boardImage = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/boards/frenzy/"+color.toString().toLowerCase()+".jpg")).getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
+
+        this.board.setIcon(boardImage);
 
         char[] boardDamage = boardView.getDamageView().getDamage();
         for (int i = 0; i< 12; i++){
