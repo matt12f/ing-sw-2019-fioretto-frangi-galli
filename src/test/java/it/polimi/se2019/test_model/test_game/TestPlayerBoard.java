@@ -37,4 +37,41 @@ public class TestPlayerBoard {
         assertEquals(2,testPlayerBoard.getActionTileFrenzy().getActionCounter());
     }
 
+    @Test
+    public void testDecreaseValue(){
+        PlayerBoard testPlayerBoard=new PlayerBoard(Color.BLUE);
+
+        assertNotNull(testPlayerBoard.getActionTileNormal());
+        assertEquals(8, testPlayerBoard.getCurrentBoardValue());
+
+        testPlayerBoard.decreaseBoardValue();
+        assertEquals(6, testPlayerBoard.getCurrentBoardValue());
+
+        testPlayerBoard.decreaseBoardValue();
+        assertEquals(4, testPlayerBoard.getCurrentBoardValue());
+
+        testPlayerBoard.decreaseBoardValue();
+        assertEquals(2, testPlayerBoard.getCurrentBoardValue());
+
+        testPlayerBoard.decreaseBoardValue();
+        assertEquals(1, testPlayerBoard.getCurrentBoardValue());
+
+        testPlayerBoard.decreaseBoardValue();
+        assertEquals(1, testPlayerBoard.getCurrentBoardValue());
+
+        testPlayerBoard.flipPlayerBoard();
+        testPlayerBoard.activateFrenzy(2);
+        assertEquals(4, testPlayerBoard.getCurrentBoardValue());
+
+        testPlayerBoard.decreaseBoardValue();
+        assertEquals(2, testPlayerBoard.getCurrentBoardValue());
+
+        testPlayerBoard.decreaseBoardValue();
+        assertEquals(1, testPlayerBoard.getCurrentBoardValue());
+
+        testPlayerBoard.decreaseBoardValue();
+        assertEquals(1, testPlayerBoard.getCurrentBoardValue());
+
+    }
+
 }

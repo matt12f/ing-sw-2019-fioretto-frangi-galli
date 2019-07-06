@@ -94,7 +94,10 @@ public class PlayerManager  {
             //gives one mark back
             currentController.getMainGameModel().getPlayerByColor(offenderColor).getPlayerBoard().getDamageTrack().addMark(board.getColorChar());
         }
-        currentController.getMainGameModel().getKillshotTrack().setKills(kill.toString());
+        if(!currentController.getMainGameModel().getFinalFrenzy())
+            currentController.getMainGameModel().getKillshotTrack().setKills(kill.toString());
+        else
+            currentController.getMainGameModel().getKillshotTrack().addExtraKills(kill.toString());
 
         return offenderColor;
     }

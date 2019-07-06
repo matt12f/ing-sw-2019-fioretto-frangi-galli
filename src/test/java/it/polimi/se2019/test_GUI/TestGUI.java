@@ -3,6 +3,8 @@ package it.polimi.se2019.test_GUI;
 
 import it.polimi.se2019.controller.Controller;
 import it.polimi.se2019.enums.Color;
+import it.polimi.se2019.model.cards.*;
+import it.polimi.se2019.model.game.KillShotTrack;
 import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.*;
@@ -60,6 +62,50 @@ class TestGUI {
 
         GameBoardGui testGUI=new GameBoardGui(1,testBoards,testBoards.get(0), board);
 
+        try {
+            Thread.sleep(1000);
+        }catch (InterruptedException e){
+            //nothing to see here
+        }
+
+        //updated damage tracks
+        char [] damage= {'b','b','y','y','g','g'};
+        player1.getPlayerBoard().getDamageTrack().dealDamage(damage);
+        pb1.update(player1.getPlayerBoard());
+        damage[0]='w';
+        player2.getPlayerBoard().getDamageTrack().dealDamage(damage);
+        pb2.update(player2.getPlayerBoard());
+        damage[0]='v';
+        player2.getPlayerBoard().getDamageTrack().dealDamage(damage);
+        pb3.update(player3.getPlayerBoard());
+
+
+        //updated killshot track
+        KillShotTrackerView killShotTrackerView=new KillShotTrackerView(5);
+        KillShotTrack killShotTrack=new KillShotTrack(5);
+        killShotTrack.setKills("bb");
+        killShotTrack.setKills("w");
+        killShotTrack.setKills("yy");
+        killShotTrack.addExtraKills("vgg");
+
+        killShotTrackerView.update(killShotTrack);
+
+        //updated handview for the player1
+        GunCard [] gunsForP1=new GunCard[3];
+        gunsForP1[0]=new CyberBlade();
+        gunsForP1[1]=new Electroscythe();
+        gunsForP1[2]=new Zx2();
+
+        PowerupCard [] pWUPForP1=new PowerupCard[3];
+        pWUPForP1[0]=new PowerupCard("TargettingScope",'b');
+        pWUPForP1[1]=new PowerupCard("NewTon",'r');
+        pWUPForP1[2]=new PowerupCard("Teleporter",'y');
+
+        PlayerHandView playerHandView=new PlayerHandView();
+        playerHandView.setGuns(gunsForP1);
+        playerHandView.setPowerups(pWUPForP1);
+
+        testGUI.updateBoardGame(testBoards,testBoards.get(0),board,killShotTrackerView,playerHandView);
         while(true);
 
         //test per vedere se si aggiorna la GUI della board

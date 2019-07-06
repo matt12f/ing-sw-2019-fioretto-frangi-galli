@@ -25,8 +25,13 @@ public class WeaponButtonGUI extends JButton {
     }
 
     public void updateImage(GunCard weapon, boolean rotate ){
-         this.weaponType = weapon.getClass().getSimpleName().toLowerCase();
-         if (weaponType != null){
+         try{
+             this.weaponType = weapon.getClass().getSimpleName().toLowerCase();
+         }catch (NullPointerException e){
+             this.weaponType="error";
+         }
+
+         if (!weaponType.equals("error")){
              if (!rotate){
                  pic = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/weapons/weapons_"+ weaponType +".png")).getImage().getScaledInstance(sizex,sizey, Image.SCALE_DEFAULT));
              }else{

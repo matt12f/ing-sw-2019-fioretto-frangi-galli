@@ -35,6 +35,16 @@ public class TestPlayer {
         //this is a clone! it's not the same
         assertNotEquals(player1.getPlayerBoard(),player2.getPlayerBoard());
 
+        player1.setScore(22);
+        assertNotEquals(player1,player2);
+
+        player1.setScore(22);
+        assertNotEquals(player1,player2);
+
+        assertNotEquals(null,player1);
+
+        assertNotEquals("",player1);
+
     }
 
     @Test
@@ -42,7 +52,7 @@ public class TestPlayer {
         Player player1=new Player(1,"frank", Color.BLUE);
         Player player2=new Player(2,"george",Color.YELLOW);
 
-        NewCell position1= new NewCell(Color.BLUE, CellEdge.WALL,CellEdge.DOOR,CellEdge.ROOM,CellEdge.ROOM, CellType.DROP);
+        NewCell position1 = new NewCell(Color.BLUE, CellEdge.WALL,CellEdge.DOOR,CellEdge.ROOM,CellEdge.ROOM, CellType.DROP);
 
         player1.getFigure().setCell(position1);
 
@@ -62,5 +72,13 @@ public class TestPlayer {
         players.remove(player2);
 
         assertNotEquals(players, playersDeepCopy);
+    }
+
+    @Test
+    public void testGetNickname(){
+        Player player1=new Player(1,"frank", Color.BLUE);
+
+        assertEquals("frank",player1.getNickname());
+
     }
 }

@@ -67,6 +67,9 @@ public class GameStats {
             for(int i=0;i<token.length();i++)
                 tokens.add(token.charAt(i));
 
+        //this considers also the extra kills from frenzy
+        tokens.addAll(currentController.getMainGameModel().getKillshotTrack().getExtraKills());
+
         char [] tokensArray=new char[tokens.size()];
         for (int i = 0; i < tokensArray.length; i++)
             tokensArray[i]=tokens.get(i);

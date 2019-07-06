@@ -21,10 +21,6 @@ PlayerBoardViewGUI extends JPanel{
 
         this.board = new JLabel(boardImage);
 
-        this.markerButton = new JButton("markers");
-        markerButton.setLocation(225, 10);
-        board.add(markerButton);
-
         ///////DAMAGE//////
 
         this.damageVector = new DamageIconGUI[12];
@@ -34,7 +30,14 @@ PlayerBoardViewGUI extends JPanel{
         }
 
         setBoard(x,y, false, boardView);
+
         board.setIcon(boardImage);
+
+        this.markerButton = new JButton("markers");
+        markerButton.setLocation(225, 10);
+        board.add(markerButton);
+
+
         damageVector[0].setLocation(40, 40);
         damageVector[1].setLocation(60, 40);
         damageVector[2].setLocation(85, 40);
@@ -58,7 +61,6 @@ PlayerBoardViewGUI extends JPanel{
             public void actionPerformed(ActionEvent e) {
                showMarkers(boardView.getDamageView().getMarks());
             }});
-
 
 
     }
@@ -91,7 +93,7 @@ PlayerBoardViewGUI extends JPanel{
 
         JDialog dialog = new JDialog();
         dialog.setModal(true);
-        dialog.setTitle("weapon Chooser");
+        dialog.setTitle("markers");
         dialog.getContentPane().add(mainPanel);
         dialog.pack();
         dialog.setLocationRelativeTo(null);

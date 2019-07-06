@@ -31,7 +31,6 @@ public class WeaponMenuGUI extends JFrame{
 
         container.gridx = 0;
         container.gridy = 1;
-        //container.gridheight = 3;
         mainPanel.add(image, container);
 
 

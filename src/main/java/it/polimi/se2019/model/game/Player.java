@@ -19,6 +19,11 @@ public class Player {
         this.figure = new Figure(color);
     }
 
+    /**
+     * this method deep clones a given player list
+     * @param originalList list to clone
+     * @return cloned list
+     */
     public static ArrayList<Player> duplicateList(ArrayList<Player> originalList) {
         ArrayList<Player> clone = new ArrayList<>();
         for(Player player: originalList)
@@ -38,9 +43,9 @@ public class Player {
         return score;
     }
 
-    /**This method adds points to a player
-     *
-     * */
+    /**
+     * This method adds points to a player
+     */
     public void setScore(int points) {
        this.score += points;
     }

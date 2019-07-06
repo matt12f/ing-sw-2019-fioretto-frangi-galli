@@ -3,14 +3,13 @@ package it.polimi.se2019.view;
 import it.polimi.se2019.enums.Status;
 import it.polimi.se2019.model.cards.GunCard;
 import it.polimi.se2019.model.game.*;
-import it.polimi.se2019.network.RMIInterface;
 import it.polimi.se2019.controller.AvailableActions;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Observer;
 import java.util.Observable;
 
-public class RemoteView  extends    View implements RMIInterface {
+public class RemoteView  extends View {
     private ArrayList<PlayerBoardView> playerBoardViews;
     private MapView mapView;
     private ArrayList<PlayerHandView> playerHands;
@@ -54,31 +53,6 @@ public class RemoteView  extends    View implements RMIInterface {
         super.addObserver(o);
     }
 
-    @Override
-    public LocalView getLocalView(int playerID) throws RemoteException {
-        return null; //TODO rivedere
-    }
-
-    @Override
-    public AvailableActions askAction(ActionRequestView codedAction, int playerID) throws RemoteException {
-        return null; //TODO rivedere
-    }
-
-    @Override
-    public void setNicknameRMI(String nickname) throws RemoteException, IllegalArgumentException, InterruptedException {
-
-    }
-
-    @Override
-    public String actionRequest() throws RemoteException {
-        return null;
-    }
-
-    @Override
-    public Status getStatus() throws RemoteException {
-        return null;
-    }
-
     /**
      * This method updates the Remote View (the one on the Server) when it's changed by the choices of a player
      * at the end of the turn.
@@ -100,6 +74,7 @@ public class RemoteView  extends    View implements RMIInterface {
                 if(gunCard != null)
                     loaded[i] = gunCard.isLoaded();
             }
+            this.playerHands.get(playerBoardViews.indexOf(player)).setPowerups(model.getPlayerList().get(playerBoardViews.indexOf(player)).getPlayerBoard().getHand().getPowerups());
             this.playerHands.get(playerBoardViews.indexOf(player)).setLoadedGuns(loaded);
         }
         notifyLocalViews();
