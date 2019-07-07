@@ -270,7 +270,7 @@ public class AdrenalineClient {
         while(start){
             myturn = receiveServerMessage(connection);
             frenzy = isFrenzy();
-            if(!activated)
+            if(!activated && frenzy)
                 gameBoardGUI.setFrenzy(localView.getPlayerBoardViews(), localView.getPersonalPlayerBoardView());
             System.out.println("Inizio del mio turno: " + myturn);
             if(myturn){
