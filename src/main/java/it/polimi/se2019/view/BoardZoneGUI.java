@@ -15,7 +15,7 @@ public class BoardZoneGUI extends JPanel {
     private int killsDynamic;
 
     /**
-     * constructor that create the zone to showmthe opponent's boards
+     * constructor that create the zone to show the opponent's boards
      * @param boards
      * @param ownerBoard
      * @param kills
