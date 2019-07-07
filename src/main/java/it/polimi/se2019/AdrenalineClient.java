@@ -256,6 +256,7 @@ public class AdrenalineClient {
     }
 
     private static void matchPhase() throws IOException, ClassNotFoundException {
+        String temp;
         boolean myturn;
         boolean lastAction;
         int deadPlayers;
@@ -311,16 +312,19 @@ public class AdrenalineClient {
             }
             //questo è il fine turno
             deadPlayers = (int) connection.getInput().readObject();
-            status = (String) connection.getInput().readObject();
-            if (!status.equals("ALIVE")){
-                reSpawn();
-                deadPlayers -= 1;
+            if(deadPlayers > 0){
+                status = (String) connection.getInput().readObject();
+                if (!status.equals("ALIVE")){
+                    reSpawn();
+                    deadPlayers -= 1;
+                }
+                for (int i = 0; i < deadPlayers; i++) {
+                    localView = (LocalView) connection.getInput().readObject();
+                    displayBoard();
+                }
             }
-            for (int i = 0; i < deadPlayers; i++) {
-                localView = (LocalView) connection.getInput().readObject();
-                displayBoard();
-            }
-            start  = connection.getInput().readBoolean();
+            temp = (String) connection.getInput().readObject();
+            start  = temp.equals("START");
         }
         String finale = (String) connection.getInput().readObject();
         userInteractionGUI.showMessage(finale);

@@ -152,7 +152,6 @@ public class GameHandler implements Runnable {
                 sendAvailable(clientTurn);
                 getChosenAction(clientTurn);
                 managePowerUps(PlayerManager.choiceExecutor(controller, clientTurn.getChosenAction()));
-                MapManager.refillEmptiedCells(controller.getMainGameModel().getCurrentMap().getBoardMatrix(),controller.getMainGameModel().getCurrentDecks());
                 this.controller.getMainGameModel().notifyRemoteView();
                 try {
                     try {
@@ -167,9 +166,24 @@ public class GameHandler implements Runnable {
                     break;
                 //fine azione
             }
+            waitingRequest(clientTurn);
+            reload(clientTurn);
+            try {
+                clientTurn.sendLocalView();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             //fine turno
             this.turns++;
             PlayerManager.scoringProcess(controller);
+            try {
+                for (ClientHandler clientHandler: players) {
+                    clientHandler.getOutput().writeObject(this.controller.getMainGameModel().getDeadPlayers().size());
+                }
+                System.out.println("inviati morti: " +  this.controller.getMainGameModel().getDeadPlayers().size());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             for (Player player: this.controller.getMainGameModel().getDeadPlayers()) {
                 for (ClientHandler client: this.players) {
                     if(player.getNickname().equals(client.getNickname())){
@@ -193,11 +207,15 @@ public class GameHandler implements Runnable {
                         LOGGER.log(Level.FINE,"6th exception",e);
                     }
                 }
-                MapManager.refillEmptiedCells(controller.getMainGameModel().getCurrentMap().getBoardMatrix(),controller.getMainGameModel().getCurrentDecks());
-                if (this.controller.getMainGameModel().getKillshotTrack().getSkulls() == 0)
-                    break;
             }
-            clientTurn.setStatus(Status.NOTMYTURN); //valuta se magari ripassare da UPDATE piuttosto
+            for (ClientHandler clientHandler: players) {
+                try {
+                    clientHandler.getOutput().writeObject("START");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            MapManager.refillEmptiedCells(controller.getMainGameModel().getCurrentMap().getBoardMatrix(),controller.getMainGameModel().getCurrentDecks());
             controller.getActiveTurn().nextTurn(controller);
             controller.getMainGameModel().getDeadPlayers().clear();
         }
@@ -233,6 +251,10 @@ public class GameHandler implements Runnable {
         } catch (InterruptedException e) {
             LOGGER.log(Level.FINE,"8th exception",e);
         }
+    }
+
+    private void reload(ClientHandler clientTurn) {
+        new AvailableActions(clientTurn.getRequestView(), this.players.indexOf(clientTurn) ,controller);
     }
 
     private void notifyClient(ClientHandler clientTurn) {
