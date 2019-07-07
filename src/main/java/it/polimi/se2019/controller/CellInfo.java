@@ -7,6 +7,12 @@ public class CellInfo{
     private boolean canGrabCard;
     private boolean canGrabAmmo;
 
+    /**
+     * useful class used for controls
+     * @param arrivalCell
+     * @param canGrabCard says if it's possible to grab a card
+     * @param canGrabAmmo says if it's possible to grab a drop
+     */
     public CellInfo(NewCell arrivalCell, boolean canGrabCard, boolean canGrabAmmo) {
         this.cell = arrivalCell;
         this.canGrabCard = canGrabCard;

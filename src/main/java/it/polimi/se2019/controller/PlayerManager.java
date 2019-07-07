@@ -151,6 +151,13 @@ public class PlayerManager  {
 
     }
 
+    /**
+     * method that allows  to spawn players in the right spawn point
+     * @param controller
+     * @param id player id
+     * @param spawn color that indicates the spawn point
+     * @throws CardNotFoundException
+     */
     public static void spawnPlayers(Controller controller, int id, PowerupCard spawn) throws CardNotFoundException {
         NewCell[][] map = controller.getMainGameModel().getCurrentMap().getBoardMatrix();
         Color cellNeeded;
@@ -185,6 +192,13 @@ public class PlayerManager  {
         controller.getMainGameModel().notifyRemoteView();
     }
 
+    /**
+     *
+     * @param setUpGame
+     * @param controller
+     * @param id player's id
+     * @throws FullException
+     */
     public static void getCardsToSpawn(boolean setUpGame, Controller controller, int id) throws FullException {
         PowerupCard card;
         if(setUpGame){
@@ -348,7 +362,12 @@ public class PlayerManager  {
         player.getPlayerBoard().getActionTileNormal().setAdrenalineMode2(false);
     }
 
-
+    /**
+     * method that allows the player to pay the ammocost for a weapon
+     * @param player
+     * @param cost
+     * @param pickOrFullReload
+     */
     public static void payGunCardCost(Player player, char [] cost, boolean pickOrFullReload){
         if(!pickOrFullReload)
             player.getPlayerBoard().getAmmo().subtractAmmo(cost);
@@ -360,6 +379,11 @@ public class PlayerManager  {
         }
     }
 
+    /**
+     * method that allows to recharge weapons
+     * @param player
+     * @param reload
+     */
     public static void reloadManager(Player player, boolean[] reload) {
         for(int i=0;i<player.getPlayerBoard().getHand().getGuns().length;i++)
             if(player.getPlayerBoard().getHand().getGuns()[i]!=null && reload[i]) {

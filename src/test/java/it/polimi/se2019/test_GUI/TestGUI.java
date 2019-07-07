@@ -25,11 +25,15 @@ class TestGUI {
         Player player1=new Player(1,"frank", Color.BLUE);
         Player player2=new Player(2,"george",Color.YELLOW);
         Player player3=new Player(3,"miles", Color.WHITE);
+        Player player4=new Player(4,"charles", Color.GREEN);
+        Player player5=new Player(5,"carl", Color.VIOLET);
 
         ArrayList<Player> players=new ArrayList<>();
         players.add(player1);
         players.add(player2);
         players.add(player3);
+        players.add(player4);
+        players.add(player5);
 
         Controller controller=new Controller(players,1,5);
 
@@ -38,23 +42,33 @@ class TestGUI {
         controller.getMainGameModel().getPlayerList().get(0).getFigure().setCell(position1);
         controller.getMainGameModel().getPlayerList().get(1).getFigure().setCell(position1);
         controller.getMainGameModel().getPlayerList().get(2).getFigure().setCell(position1);
+        controller.getMainGameModel().getPlayerList().get(3).getFigure().setCell(position1);
+        controller.getMainGameModel().getPlayerList().get(4).getFigure().setCell(position1);
 
         position1.addPlayers(player1);
         position1.addPlayers(player2);
         position1.addPlayers(player3);
+        position1.addPlayers(player4);
+        position1.addPlayers(player5);
 
         ArrayList<PlayerBoardView> testBoards=new ArrayList<>();
         PlayerBoardView pb1=new PlayerBoardView(player1.getPlayerBoard(),player1.getScore());
         PlayerBoardView pb2=new PlayerBoardView(player2.getPlayerBoard(),player2.getScore());
         PlayerBoardView pb3=new PlayerBoardView(player3.getPlayerBoard(),player3.getScore());
+        PlayerBoardView pb4=new PlayerBoardView(player3.getPlayerBoard(),player4.getScore());
+        PlayerBoardView pb5=new PlayerBoardView(player3.getPlayerBoard(),player5.getScore());
 
         pb1.update(player1.getPlayerBoard());
         pb2.update(player2.getPlayerBoard());
         pb3.update(player3.getPlayerBoard());
+        pb4.update(player4.getPlayerBoard());
+        pb5.update(player5.getPlayerBoard());
 
         testBoards.add(pb1);
         testBoards.add(pb2);
         testBoards.add(pb3);
+        testBoards.add(pb4);
+        testBoards.add(pb5);
 
         MapView testMap=new MapView(1,5, controller.getMainGameModel());
 
@@ -124,14 +138,20 @@ class TestGUI {
         controller.getMainGameModel().getPlayerList().get(0).getFigure().setCell(position2);
         controller.getMainGameModel().getPlayerList().get(1).getFigure().setCell(position2);
         controller.getMainGameModel().getPlayerList().get(2).getFigure().setCell(position2);
+        controller.getMainGameModel().getPlayerList().get(3).getFigure().setCell(position2);
+        controller.getMainGameModel().getPlayerList().get(4).getFigure().setCell(position2);
 
         position1.removePlayers(player1);
         position1.removePlayers(player2);
         position1.removePlayers(player3);
+        position1.removePlayers(player4);
+        position1.removePlayers(player5);
 
         position2.addPlayers(player1);
         position2.addPlayers(player2);
         position2.addPlayers(player3);
+        position2.addPlayers(player4);
+        position2.addPlayers(player5);
 
         testMap.uploadBoardMatrix(controller.getMainGameModel().getCurrentMap().getBoardMatrix());
 

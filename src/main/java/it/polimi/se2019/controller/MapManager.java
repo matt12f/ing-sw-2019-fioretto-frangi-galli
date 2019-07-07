@@ -32,6 +32,11 @@ public class MapManager {
         return null;
     }
 
+    /**
+     * refill all the cells with empty slots
+     * @param mapMatrixToFill
+     * @param decks
+     */
     public static void refillEmptiedCells(NewCell[][] mapMatrixToFill, Decks decks) {
         for (int i = 0; i < 3; i++)
             for (int j = 0; j < 4; j++)
@@ -44,6 +49,11 @@ public class MapManager {
                 }
     }
 
+    /**
+     * refill a single cell (called by refillEmptiedCells)
+     * @param decks
+     * @param cell
+     */
     private static void refillCell(Decks decks,NewCell cell) {
         try {
             if (cell.getCellType().equals(CellType.DROP))
@@ -55,6 +65,12 @@ public class MapManager {
         }
     }
 
+    /**
+     * convert a view into model data
+     * @param currentController
+     * @param cellView
+     * @return
+     */
     public static NewCell cellViewToNewCell(Controller currentController, CellView cellView) {
         return currentController.getMainGameModel().getCurrentMap().getBoardMatrix()[cellView.getLineIndex()][cellView.getColumnIndex()];
     }
@@ -116,12 +132,28 @@ public class MapManager {
      * this method evaluates if a move in the board is valid
      * NOTE: it does not allow movement through an internal wall
      */
+    /**
+     *
+     * @param visited
+     * @param previousCell
+     * @param row
+     * @param col
+     * @param directionIndex
+     * @return
+     */
     private static boolean isMoveLegal(boolean [][] visited, NewCell previousCell, int row, int col, int directionIndex) {
             return !previousCell.getEdge(directionIndex).equals(CellEdge.WALL) && !visited[row][col];
     }
 
     /**
      * This methos calculates the distance between startCell and destinationCell with a Lee BFS algorithm
+     */
+    /**
+     *
+     * @param board
+     * @param startCell
+     * @param arrivalCell
+     * @return
      */
     public static int distanceBetweenCells(NewCell[][] board, NewCell startCell, NewCell arrivalCell){
         int i = getLineOrColumnIndex(board, startCell, true);
@@ -158,6 +190,12 @@ public class MapManager {
 
     /**
      * this method returns a list of cells that are 2 moves away, without yours
+     */
+    /**
+     *
+     * @param currentController
+     * @param player
+     * @return
      */
     public static ArrayList<NewCell> squaresInRadius2(Controller currentController,FictitiousPlayer player){
         NewCell [][] board= currentController.getMainGameModel().getCurrentMap().getBoardMatrix();

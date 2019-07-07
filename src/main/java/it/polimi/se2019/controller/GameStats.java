@@ -38,6 +38,13 @@ public class GameStats {
             this.singleWinner=true;
     }
 
+    /**
+     * compare players
+     * @param o1
+     * @param o2
+     * @param secondaryRanking
+     * @return
+     */
     public int compare(Player o1, Player o2, ArrayList<Character> secondaryRanking){
         int result=Integer.compare(o1.getScore(), o2.getScore());
         if(result==0)

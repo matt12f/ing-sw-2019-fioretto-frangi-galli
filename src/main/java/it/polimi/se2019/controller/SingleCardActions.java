@@ -50,6 +50,13 @@ public class SingleCardActions implements Serializable {
         }
     }
 
+    /**
+     * allow to perform a single weaon effects
+     * @param gunCard
+     * @param cardEffects
+     * @param player
+     * @return
+     */
     private ArrayList<ArrayList<String>> reduceToAffordableEffects(GunCard gunCard, ArrayList<ArrayList<String>> cardEffects,FictitiousPlayer player) {
         ArrayList<ArrayList<String>> availableEffectsCombinations=new ArrayList<>();
         boolean affordable;

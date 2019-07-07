@@ -19,6 +19,14 @@ public class PowerupManager {
      * 1 or 2 squares in one direction. (You can't use this to move a figure after it respawns at the end of your turn.
      * That would be too late.)
      */
+    /**
+     *
+     * @param currentController
+     * @param cardIndexInHand
+     * @param player
+     * @param distance
+     * @param directionIndex
+     */
     public static void newtonManager(Controller currentController,int cardIndexInHand, Player player, int distance, int directionIndex){
         NewCell cell= null;
         try {
@@ -37,6 +45,12 @@ public class PowerupManager {
      * of the board. (You can't use this after you see where someone respawns at the end of your turn. By then it is too
      * late.)
      */
+    /**
+     *
+     * @param currentController
+     * @param cardIndexInHand
+     * @param destinationCell
+     */
     public static void teleporterManager(Controller currentController, int cardIndexInHand, NewCell destinationCell){
         ActionManager.movePlayer(currentController,currentController.getActiveTurn().getActivePlayer(),destinationCell);
         removeFromHand(currentController, cardIndexInHand);
@@ -46,6 +60,13 @@ public class PowerupManager {
      * You may play this card when you are dealing damage to one or more targets. Pay 1 ammo cube of any color.
      * Choose 1 of those targets and give it an extra point of damage. Note: You cannot use this to do 1 damage to a
      * target that is receiving only marks.
+     */
+    /**
+     *
+     * @param currentController
+     * @param playerDamaged
+     * @param cardIndexInHand
+     * @param ammoToPay
      */
     public static void targetingScopeManager(Controller currentController, Player playerDamaged, int cardIndexInHand,char ammoToPay) {
         char [] cost=new char[1];
@@ -62,6 +83,13 @@ public class PowerupManager {
     /**
      *  You may play this card when you receive damage from a player you can see. Give that player 1 mark.
      */
+    /**
+     *
+     * @param currentController
+     * @param playerDamaged
+     * @param playerGivingDamage
+     * @param cardIndexInHand
+     */
     public static void grenadeManager(Controller currentController, Player playerDamaged, Player playerGivingDamage, int cardIndexInHand){
         char [] marks=new char[1];
         marks[0]=playerGivingDamage.getFigure().getColorChar();
@@ -69,6 +97,11 @@ public class PowerupManager {
         removeFromHand(currentController,cardIndexInHand);
     }
 
+    /**
+     * allow to remove a powerup from the hand when used
+     * @param currentController
+     * @param cardIndexInHand
+     */
     private static void removeFromHand(Controller currentController,int cardIndexInHand) {
         currentController.getActiveTurn().getActivePlayer().getPlayerBoard().getHand().removePowerUp(cardIndexInHand);
     }
