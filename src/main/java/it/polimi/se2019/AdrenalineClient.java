@@ -26,6 +26,7 @@ public class AdrenalineClient {
     private static String[] answer;
     private static boolean last;
     private static ActionRequestView actionRequested;
+    private static boolean frenzy;
 
     public static void main(String[] args){
         answer = userInteractionGUI.mainLogGUI();
@@ -54,7 +55,7 @@ public class AdrenalineClient {
 
     }
 
-    private static ActionRequestView getActionFromUser(boolean lastMove){
+    private static ActionRequestView getActionFromUser(boolean lastMove){ //TODO gestire eccezione
         return new ActionRequestView(lastMove);
     }
 
@@ -259,6 +260,8 @@ public class AdrenalineClient {
         String temp;
         boolean myturn;
         boolean lastAction;
+        boolean action;
+        boolean activated = false;
         int deadPlayers;
         int actionNumber;
         String status;
@@ -266,25 +269,33 @@ public class AdrenalineClient {
         ChosenActions chosen;
         while(start){
             myturn = receiveServerMessage(connection);
+            frenzy = isFrenzy();
+            if(!activated && frenzy)
+                gameBoardGUI.setFrenzy(localView.getPlayerBoardViews(), localView.getPersonalPlayerBoardView());
             System.out.println("Inizio del mio turno: " + myturn);
             if(myturn){
                 last = false;
                 connection.getOutput().reset();
                 connection.getOutput().writeBoolean(true);
                 connection.getOutput().flush();
+
                 System.out.println("b");
                 actionNumber = connection.getInput().readInt();
                 while(actionNumber > 0){
                     actionNumber --;
-                    actionRequested = getActionFromUser(last);
-                    System.out.println("azione ricevuta");
-                    actions = askForAction(connection, actionRequested);
-                    try {
-                        chosen = presentActions(actions);
-                        connection.getOutput().writeObject(chosen);
-                    } catch (NoActionsException e) {
-                        e.printStackTrace();
-                    }
+                    action = false;
+                    do {
+                        actionRequested = getActionFromUser(last);
+                        System.out.println("azione ricevuta");
+                        actions = askForAction(connection, actionRequested);
+                        try {
+                            chosen = presentActions(actions);
+                            connection.getOutput().writeObject(chosen);
+                            action = true;
+                        } catch (NoActionsException e) {
+                            userInteractionGUI.showMessage("Mi spiace, non hai nessuna azione disponibile, riprova.");
+                        }
+                    }while(!action);
                     status = (String) connection.getInput().readObject();
                     System.out.println(status);
                     if(status.equals("TARGETINGSCOPE")) {
@@ -329,6 +340,18 @@ public class AdrenalineClient {
         userInteractionGUI.showMessage(finale);
     }
 
+    private static boolean isFrenzy() {
+        String mxg = null;
+        try {
+            mxg = (String) connection.getInput().readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return mxg.equals("FRENZY");
+    }
+
     private static void targetScope() throws IOException, ClassNotFoundException {
         ArrayList<String> choices = (ArrayList<String>) connection.getInput().readObject();
         String reply = userInteractionGUI.stringSelector("Scegli il colore del cubo da pagare: ", choices);
@@ -367,7 +390,8 @@ public class AdrenalineClient {
     }
 
     private static ChosenActions presentActions(AvailableActions actions) throws NoActionsException {
-        return new ChosenActions(actions);
+            ChosenActions temp = new ChosenActions(actions);
+            return temp;
     }
 
     private static void updateLocalView() throws IOException, ClassNotFoundException {
