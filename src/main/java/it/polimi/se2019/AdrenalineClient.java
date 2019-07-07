@@ -22,7 +22,6 @@ public class AdrenalineClient {
     private static UserInteractionCLI userInteractionCLI = new UserInteractionCLI();
     private static boolean start = false;
     private static GameBoardGUI gameBoardGUI;
-    private static ArrayList<PlayerBoardView> allPlayersBoards = new ArrayList<>() ;
     private static boolean connected = false;
     private static String[] answer;
     private static boolean last;
@@ -255,9 +254,8 @@ public class AdrenalineClient {
     }
 
     private static void displayBoard() {
-        if(isGUI()){
-            gameBoardGUI.updateBoardGame(allPlayersBoards,getLocalView().getPersonalPlayerBoardView(),getLocalView().getMapView().getBoardMatrix(),getLocalView().getMapView().getKillView(),getLocalView().getPlayerHand());
-        }
+            gameBoardGUI.updateBoardGame(getLocalView().getPlayerBoardViews(),getLocalView().getPersonalPlayerBoardView(),getLocalView().getMapView().getBoardMatrix(),getLocalView().getMapView().getKillView(),getLocalView().getPlayerHand());
+
     }
 
     private static void matchPhase() throws IOException, ClassNotFoundException {
@@ -394,8 +392,7 @@ public class AdrenalineClient {
     }
 
     private static void guiStarter () {
-        allPlayersBoards=getLocalView().getPlayerBoardViews();
-        gameBoardGUI = new GameBoardGUI(getLocalView().getMapView().getMapNumber(), allPlayersBoards,getLocalView().getPersonalPlayerBoardView(),getLocalView().getMapView().getBoardMatrix() );
+        gameBoardGUI = new GameBoardGUI(getLocalView().getMapView().getMapNumber(), getLocalView().getPlayerBoardViews(),getLocalView().getPersonalPlayerBoardView(),getLocalView().getMapView().getBoardMatrix() );
     }
 
         /** This method creates the connection between Client and server

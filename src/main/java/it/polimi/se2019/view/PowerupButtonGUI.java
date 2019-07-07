@@ -14,9 +14,9 @@ public class PowerupButtonGUI extends JButton {
     }
     public void updateImage(PowerupCard type){
         if (type!= null){
-            pwImage= new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/powerups/powerups_"+ type.getPowerupType() + "_"+type.getCubeColor()+ ".png")).getImage().getScaledInstance(70,92,Image.SCALE_DEFAULT));
+            pwImage= new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/powerups/powerups_"+ type.getPowerupType().toLowerCase() + "_"+type.getCubeColor()+ ".png")).getImage().getScaledInstance(70,92,Image.SCALE_SMOOTH));
         }else{
-            pwImage = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/powerups/powerups_back.png")).getImage().getScaledInstance(70,92, Image.SCALE_DEFAULT));
+            pwImage = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/powerups/powerups_back.png")).getImage().getScaledInstance(70,110, Image.SCALE_SMOOTH));
         }
 
         setIcon(pwImage);

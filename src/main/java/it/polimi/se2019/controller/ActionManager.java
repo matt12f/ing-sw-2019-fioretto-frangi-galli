@@ -51,16 +51,20 @@ public class ActionManager {
      * @param player is the player to move
      * @param arrivalCell is the cell to move the player into
      */
-    public static void movePlayer(Controller currentController,Player player, NewCell arrivalCell) {
+    public static void movePlayer(Controller currentController, Player player, NewCell arrivalCell) {
         //if the room has changed
         if(!player.getFigure().getCell().getColor().equals(arrivalCell.getColor())){
             MapManager.getRoom(currentController,player.getFigure().getCell()).removePlayers(player);
             MapManager.getRoom(currentController,arrivalCell).addPlayers(player);
         }
 
+        NewCell[][] board=currentController.getMainGameModel().getCurrentMap().getBoardMatrix();
+        NewCell realArrivalCell=board[MapManager.getLineOrColumnIndex(board,arrivalCell,true)]
+                [MapManager.getLineOrColumnIndex(board,arrivalCell,false)];
+
         player.getFigure().getCell().removePlayers(player); //removes the player from the cell
-        player.getFigure().setCell(arrivalCell); //changes the cell saved in the player
-        arrivalCell.addPlayers(player); //adds the player on the new cell
+        player.getFigure().setCell(realArrivalCell); //changes the cell saved in the player
+        realArrivalCell.addPlayers(player); //adds the player on the new cell
     }
 
     /**

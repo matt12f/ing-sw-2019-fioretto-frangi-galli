@@ -214,12 +214,13 @@ public class PlayerManager  {
         Player player = currentController.getActiveTurn().getActivePlayer();
         FictitiousPlayer fictitiousPlayer=actions.getFictitiousPlayer();
         //moves the player
+
         ActionManager.movePlayer(currentController, player, fictitiousPlayer.getPosition());
 
         //grab management, ammo first, then gun cards
         GunCard cardToDiscard;
         if(fictitiousPlayer.isGrabbedAmmo()) {
-            if(player.getPlayerBoard().getAmmo().addAmmo(player.getFigure().getCell().pickItem().getContent())){ //checks if you can draw a powerup
+            if(player.getPlayerBoard().getAmmo().addAmmo(fictitiousPlayer.getPosition().pickItem().getContent())){ //checks if you can draw a powerup
                 try { //tries to place the powerup in your hand and then removing the card from the deck if it succeeded
                     player.getPlayerBoard().getHand().setPowerup(currentController.getMainGameModel().getCurrentDecks().getPowerupsDeck().peekCardOnTop());
                     currentController.getMainGameModel().getCurrentDecks().getPowerupsDeck().draw();
@@ -328,10 +329,10 @@ public class PlayerManager  {
 
 
     public static void payGunCardCost(Player player, char [] cost, boolean fullOrReload){
-        char [] reloadCost=new char[cost.length-1];
         if(fullOrReload)
             player.getPlayerBoard().getAmmo().subtractAmmo(cost);
         else{
+            char [] reloadCost=new char[cost.length-1];
             for (int i = 0; i < cost.length-1; i++)
                 reloadCost[i]=cost[i+1];
             player.getPlayerBoard().getAmmo().subtractAmmo(reloadCost);

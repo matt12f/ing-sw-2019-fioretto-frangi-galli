@@ -30,7 +30,7 @@ public class GrenadeLauncher extends GunCardAddEff {
         this.numberOfOptional = 1;
         this.ammoCost = new char[1];
         ammoCost[0]= 'r';
-        this.description ="<html>basic effect: Deal 1 damage to 1 target you can see. Then you may move"+
+        this.description ="basic effect: Deal 1 damage to 1 target you can see. Then you may move"+
                 "\nthe target 1 square."+
                 "\nwith extra grenade: Deal 1 damage to every player on a square you can"+
                 "\nsee. You can use this before or after the basic effect's move.";

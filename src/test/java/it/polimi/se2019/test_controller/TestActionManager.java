@@ -20,6 +20,8 @@ public class TestActionManager {
 
         ArrayList<Player> players=new ArrayList<>();
 
+        players.add(player1);
+
         Controller controller=new Controller(players,2,3);
 
         NewCell[][] board=controller.getMainGameModel().getCurrentMap().getBoardMatrix();
@@ -95,6 +97,7 @@ public class TestActionManager {
         Player player1=new Player(1,"frank", Color.BLUE);
 
         ArrayList<Player> players=new ArrayList<>();
+        players.add(player1);
         Controller controller=new Controller(players,4,3);
         NewCell[][] board=controller.getMainGameModel().getCurrentMap().getBoardMatrix();
         NewCell position1 = board[1][1];

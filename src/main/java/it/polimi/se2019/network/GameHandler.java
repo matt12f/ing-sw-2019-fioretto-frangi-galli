@@ -120,7 +120,6 @@ public class GameHandler implements Runnable {
             System.out.println("non sono riuscito ad avviare la partita");
         }
         //turns manager
-        this.controller.getActiveTurn();
         while (this.controller.getMainGameModel().getKillshotTrack().getSkulls() > 0){
             turnPreparation(this.controller.getMainGameModel().getTurn());
             clientTurn = this.players.get(this.controller.getMainGameModel().getTurn());
@@ -132,7 +131,6 @@ public class GameHandler implements Runnable {
                 calculateActions(clientTurn);
                 sendAvailable(clientTurn);
                 getChosenAction(clientTurn);
-                PlayerManager.choiceExecutor(controller, clientTurn.getChosenAction());
                 managePowerUps(PlayerManager.choiceExecutor(controller, clientTurn.getChosenAction()));
                 MapManager.refillEmptiedCells(controller.getMainGameModel().getCurrentMap().getBoardMatrix(),controller.getMainGameModel().getCurrentDecks());
                 this.controller.getMainGameModel().notifyRemoteView();

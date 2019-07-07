@@ -27,7 +27,7 @@ public class Electroscythe extends GunCardAltEff {
 
     @Override
     void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
-        ArrayList<Player> targets=new ArrayList<>(Player.duplicateList(playersChoice.getFictitiousPlayer().getPosition().getPlayers()));
+        ArrayList<Player> targets=new ArrayList<>(Player.duplicateList(currentController.getActiveTurn().getActivePlayer().getFigure().getCell().getPlayers()));
         targets.remove(playersChoice.getFictitiousPlayer().getCorrespondingPlayer());
         ActionManager.giveDmgandMksToPlayers(currentController,targets,playersChoice,1,0);
     }

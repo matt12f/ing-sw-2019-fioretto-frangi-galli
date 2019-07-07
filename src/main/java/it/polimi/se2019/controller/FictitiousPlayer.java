@@ -42,22 +42,24 @@ public class FictitiousPlayer implements Serializable {
         this.playerId=player.getId();
         ArrayList<GunCard> usableCards;
         this.playerColor=player.getFigure().getColor();
-        this.position =cell.getCell();
+        NewCell[][] board=currentController.getMainGameModel().getCurrentMap().getBoardMatrix();
+        this.position = board[MapManager.getLineOrColumnIndex(board,cell.getCell(),true)]
+                [MapManager.getLineOrColumnIndex(board,cell.getCell(),false)];
 
         //the available ammo must be initialized even if you can't grab ammo
         this.availableAmmo=player.getPlayerBoard().getAmmo().clone();
 
-        if (cell.isCanGrabAmmo()&&cell.getCell().getDrop()!=null){
-                this.availableAmmo.addAmmo(cell.getCell().getDrop().getContent());
+        if (cell.isCanGrabAmmo() && this.position.getDrop()!=null){
+                this.availableAmmo.addAmmo(this.position.getDrop().getContent());
                 this.grabbedAmmo=true;
         }
 
         this.pickableCards=new ArrayList<>();
         //this is done for grab/move+grab actions where you may want to just pick a card
         if(cell.isCanGrabCard())
-            for(GunCard gunCard:cell.getCell().getWeaponCards())
-                if(gunCard!=null && ActionManager.canAffordCost(player,this.availableAmmo,gunCard.getAmmoCost(),true))
-                    this.pickableCards.add(gunCard);
+            for(int i=0; i<this.position.getWeaponCards().size();i++)
+                if(this.position.getWeaponCards().get(i)!=null && ActionManager.canAffordCost(player,this.availableAmmo,this.position.getWeaponCards().get(i).getAmmoCost(),true))
+                    this.pickableCards.add(this.position.getWeaponCards().get(i));
 
         //the "pickable" cards can ALL be added to the cards a player can choose from, if it's noted that
         // if the player chooses one of those, he must discard one of his current cards. This could work
@@ -115,8 +117,9 @@ public class FictitiousPlayer implements Serializable {
         return playerColor;
     }
 
+
     public NewCell getPosition() {
-        return position;
+        return this.position;
     }
 
     public Ammo getAvailableAmmo() {

@@ -101,7 +101,9 @@ public class AvailableActions implements Serializable {
         //in case the player is allowed NOT to move from his current cell (all of the macroActions except for Normal1)
         //this works also for actions without movement but with or without grab
         if(minMoveDistance==0)
-            singleArrivalCells.add(new CellInfo(player.getFigure().getCell(),grab,player.getFigure().getCell().getDrop()!=null && grab));
+            singleArrivalCells.add(new CellInfo(player.getFigure().getCell(),
+                    player.getFigure().getCell().getCellType().equals(CellType.SPAWN)&& grab,
+                    player.getFigure().getCell().getCellType().equals(CellType.DROP) && grab));
 
         NewCell referenceCell=player.getFigure().getCell();
 
@@ -109,10 +111,11 @@ public class AvailableActions implements Serializable {
             //here I'll add the cells that the player can move into
             for(NewCell [] cellRow: board)
                 for(NewCell singleCell: cellRow)
-                    if(!singleCell.getCellType().equals(CellType.OUTSIDEBOARD) &&
-                            singleCell!=referenceCell &&
+                    if(!singleCell.getCellType().equals(CellType.OUTSIDEBOARD) && singleCell!=referenceCell &&
                             MapManager.distanceBetweenCells(board,referenceCell,singleCell) <= maxMoveDistance)
-                        singleArrivalCells.add(new CellInfo(singleCell, grab,singleCell.getDrop()!=null && grab));
+                        singleArrivalCells.add(new CellInfo(singleCell,
+                                singleCell.getCellType().equals(CellType.SPAWN)&& grab,
+                                singleCell.getCellType().equals(CellType.DROP) && grab));
 
         }
 
