@@ -28,7 +28,7 @@ public class UserInteractionGUI extends UserInteraction {
     @Override
     public String actionToRequest(int frenzy,String playerColor){
 
-        JLabel label = new JLabel("Player "+ playerColor + ": Select the Macro actions");
+        JLabel label = new JLabel( playerColor.toLowerCase() + " player turn: Select the Macro action");
 
         JButton moveButton = new JButton("Move");
         moveButton.addActionListener(new ActionListener() {

@@ -212,26 +212,26 @@ public class MapViewGUI extends JPanel {
             }
         }
 
-        ///////update weapons//////
-        if(boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(0)!=null)
+        //section that updates weapons
+        if(!boardMatrix[0][2].getCorrespondingCell().getWeaponCards().isEmpty() && boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(0)!=null)
             weaponblue1.updateImage(boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(0), false);
-        if(boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(1)!=null)
+        if(boardMatrix[0][2].getCorrespondingCell().getWeaponCards().size()>=2 && boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(1)!=null)
             weaponblue2.updateImage(boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(1), false);
-        if(boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(2)!=null)
+        if(boardMatrix[0][2].getCorrespondingCell().getWeaponCards().size()>=3 && boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(2)!=null)
             weaponblue3.updateImage(boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(2), false);
 
-        if(boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(0)!=null)
+        if(!boardMatrix[1][0].getCorrespondingCell().getWeaponCards().isEmpty() && boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(0)!=null)
             weaponred1.updateImage(boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(0), true);
-        if(boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(1)!=null)
+        if(boardMatrix[1][0].getCorrespondingCell().getWeaponCards().size()>=2 && boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(1)!=null)
             weaponred2.updateImage(boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(1), true);
-        if(boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(2)!=null)
+        if(boardMatrix[1][0].getCorrespondingCell().getWeaponCards().size()>=3 && boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(2)!=null)
             weaponred3.updateImage(boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(2), true);
 
-        if(boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(0)!=null)
+        if(!boardMatrix[2][3].getCorrespondingCell().getWeaponCards().isEmpty() && boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(0)!=null)
             weaponyellow1.updateImage(boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(0), true);
-        if(boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(1)!=null)
+        if(boardMatrix[2][3].getCorrespondingCell().getWeaponCards().size()>=2 && boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(1)!=null)
             weaponyellow2.updateImage(boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(1), true);
-        if(boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(2)!=null)
+        if(boardMatrix[2][3].getCorrespondingCell().getWeaponCards().size()>=3 && boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(2)!=null)
             weaponyellow3.updateImage(boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(2), true);
 
 
