@@ -343,11 +343,17 @@ public class GameHandler implements Runnable {
     }
 
     private void notifyFrenzy(ClientHandler clientTurn) throws IOException {
+        String mxg;
         if(this.controller.getMainGameModel().getFinalFrenzy()){
-            clientTurn.getOutput().writeObject("FRENZY");
+            mxg = ("FRENZY");
         }else{
-            clientTurn.getOutput().writeObject("MELONI");
+            mxg = ("MELONI");
         }
+        System.out.println("ho inviato: " + mxg);
+        clientTurn.getOutput().writeObject(mxg);
+        /*for (ClientHandler client: players) {
+            client.getOutput().writeObject(mxg);
+        }*/
     }
 
     private void reload(ClientHandler clientTurn) {
