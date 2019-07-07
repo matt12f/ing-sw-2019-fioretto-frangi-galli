@@ -29,9 +29,8 @@ public class SingleCardActions implements Serializable {
     private GunCard gunToUse;
     private ArrayList<String> availableCombinations; //For the GUI/CLI to list them efficiently
     private ArrayList<SingleEffectsCombinationActions> effectsCombinationActions;
-    private boolean mustSwap;
 
-    public SingleCardActions(Controller currentController, GunCard gunCard, FictitiousPlayer player, boolean mustSwap) {
+    public SingleCardActions(Controller currentController, GunCard gunCard, FictitiousPlayer player) {
         //this part builds the list of combination of the effects a player can afford to use
         this.gunToUse=gunCard;
 
@@ -40,7 +39,6 @@ public class SingleCardActions implements Serializable {
 
         this.effectsCombinationActions =new ArrayList<>();
         this.availableCombinations=new ArrayList<>();
-        this.mustSwap=mustSwap;
         for(ArrayList<String> effectsCombination: effectsOrder){
             try{
             this.effectsCombinationActions.add(gunCard.buildAvailableActions(currentController,player,effectsCombination));
@@ -85,9 +83,6 @@ public class SingleCardActions implements Serializable {
         return availableCombinations;
     }
 
-    public boolean isMustSwap() {
-        return mustSwap;
-    }
 
     public ArrayList<SingleEffectsCombinationActions> getEffectsCombinationActions(){
         return effectsCombinationActions;

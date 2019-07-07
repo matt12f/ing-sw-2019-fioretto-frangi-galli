@@ -4,6 +4,7 @@ import it.polimi.se2019.model.cards.PowerupCard;
 
 import it.polimi.se2019.exceptions.CardNotFoundException;
 import it.polimi.se2019.exceptions.FullException;
+import it.polimi.se2019.model.cards.Zx2;
 
 import java.io.Serializable;
 
@@ -84,6 +85,19 @@ public class Hand implements Serializable {
         Hand handClone=this.clone();
         try {
             handClone.setPowerup(new PowerupCard("xxx",'x'));
+        }catch (FullException e){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * harmlessly checks if the guncards array is full
+     */
+    public boolean isGunCardHandFull(){
+        Hand handClone=this.clone();
+        try {
+            handClone.setGun(new Zx2());
         }catch (FullException e){
             return true;
         }
