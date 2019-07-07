@@ -21,4 +21,5 @@ public class PowerupButtonGUI extends JButton {
 
         setIcon(pwImage);
     }
+
 }

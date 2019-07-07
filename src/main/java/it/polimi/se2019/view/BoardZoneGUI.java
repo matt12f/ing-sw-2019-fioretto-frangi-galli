@@ -14,7 +14,12 @@ public class BoardZoneGUI extends JPanel {
     private JButton score;
     private int killsDynamic;
 
-
+    /**
+     * constructor that create the zone to showmthe opponent's boards
+     * @param boards
+     * @param ownerBoard
+     * @param kills
+     */
     public BoardZoneGUI(ArrayList<PlayerBoardView> boards, PlayerBoardView ownerBoard, int kills){
 
         GridBagConstraints container = new GridBagConstraints();

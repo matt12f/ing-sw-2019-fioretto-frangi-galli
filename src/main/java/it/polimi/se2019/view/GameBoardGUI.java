@@ -66,7 +66,11 @@ public class GameBoardGUI {
         } //windowClosing()
     } //CloseListener
 
-
+    /**
+     * this method set the franzy mode on the gui layout
+     * @param opponentBoards
+     * @param ownerBoard
+     */
     public void setFrenzy(ArrayList<PlayerBoardView> opponentBoards,PlayerBoardView ownerBoard){
         boardZone.updateBoards(opponentBoards, ownerBoard, true, 0);
         playerZone.setFrenzy(ownerBoard);

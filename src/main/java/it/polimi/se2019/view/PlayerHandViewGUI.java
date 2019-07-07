@@ -13,6 +13,7 @@ public class PlayerHandViewGUI extends JPanel {
     private WeaponButtonGUI weapon2;
     private WeaponButtonGUI weapon3;
     private GunCard[] weapons;
+    private PowerupCard[] powerups;
     private AmmoGUI ammo;
     private PowerupButtonGUI powerup1;
     private PowerupButtonGUI powerup2;
@@ -27,6 +28,7 @@ public class PlayerHandViewGUI extends JPanel {
          weapon2 = new WeaponButtonGUI(100,163 , false);
          weapon3 = new WeaponButtonGUI(100,163, false);
 
+         powerups = new PowerupCard[3];
          powerup1 = new PowerupButtonGUI();
          powerup2 = new PowerupButtonGUI();
          powerup3 = new PowerupButtonGUI();
@@ -97,6 +99,33 @@ public class PlayerHandViewGUI extends JPanel {
 
             }});
 
+        powerup1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (powerups[0] != null){
+                    PowerUpMenuGUI frame =new PowerUpMenuGUI(powerups[0]);
+                    frame.setVisible(true);
+                }
+            }});
+
+        powerup2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (powerups[1] != null){
+                    PowerUpMenuGUI frame =new PowerUpMenuGUI(powerups[1]);
+                    frame.setVisible(true);
+                }
+            }});
+
+        powerup3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (powerups[2] != null){
+                    PowerUpMenuGUI frame =new PowerUpMenuGUI(powerups[2]);
+                    frame.setVisible(true);
+                }
+            }});
+
 
 
     }
@@ -106,6 +135,7 @@ public class PlayerHandViewGUI extends JPanel {
        weapon2.updateImage(weapons[1], false);
        weapon3.updateImage(weapons[2], false);
        this.weapons = weapons;
+       this.powerups = powerups;
        powerup1.updateImage(powerups[0]);
        powerup2.updateImage(powerups[1]);
        powerup3.updateImage(powerups[2]);

@@ -36,7 +36,7 @@ public class TestUserInteraction {
     }
 
     private static void testShowMessage(){
-        askUser.showMessage("<html>provolone<br>affumicato</html>");
+        askUser.showMessage("<html>provolone <br>affumicato</html>");
     }
 
     private static void testYesOrNo(){
