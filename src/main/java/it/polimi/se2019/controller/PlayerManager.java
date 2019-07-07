@@ -235,6 +235,10 @@ public class PlayerManager  {
         FictitiousPlayer fictitiousPlayer=actions.getFictitiousPlayer();
         //moves the player
 
+        NewCell[][] board=currentController.getMainGameModel().getCurrentMap().getBoardMatrix();
+        fictitiousPlayer.setPosition(board[MapManager.getLineOrColumnIndex(board,fictitiousPlayer.getPosition(),true)]
+                [MapManager.getLineOrColumnIndex(board,fictitiousPlayer.getPosition(),false)]);
+
         ActionManager.movePlayer(currentController, player, fictitiousPlayer.getPosition());
 
         //grab management, ammo first, then gun cards
