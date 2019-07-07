@@ -19,6 +19,10 @@ public class PlayerHandViewGUI extends JPanel {
     private PowerupButtonGUI powerup2;
     private PowerupButtonGUI powerup3;
 
+    /**
+     * builder that create the players hand
+     * @param ammoView contains the data of the ammo in the player's hand
+     */
     public PlayerHandViewGUI(AmmoView ammoView){
         GridBagConstraints container = new GridBagConstraints();
         setLayout(new GridBagLayout());
@@ -130,6 +134,12 @@ public class PlayerHandViewGUI extends JPanel {
 
     }
 
+    /**
+     * update the player's hand
+     * @param weapons vector of the weapon in the hand
+     * @param powerups vector of the powerups in the hand
+     * @param ammoView contains the data of the ammo in the player's hand
+     */
     public void updateHand(GunCard[] weapons, PowerupCard[] powerups, AmmoView ammoView){
        weapon1.updateImage(weapons[0], false);
        weapon2.updateImage(weapons[1], false);
@@ -143,7 +153,4 @@ public class PlayerHandViewGUI extends JPanel {
 
     }
 
-    protected AmmoGUI getAmmo() {
-        return ammo;
-    }
 }

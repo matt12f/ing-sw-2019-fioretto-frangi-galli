@@ -26,6 +26,12 @@ public class MapViewGUI extends JPanel {
 
     private CellViewGUI[][] boardMatrixGUI;
 
+
+    /**
+     * builder that create the map of the game, choosing the right configuration looking for the player's choice
+     * @param config number of the map configuration
+     * @param boardMatrix matrix of the cell views
+     */
     public MapViewGUI(int config, CellView[][] boardMatrix){
 
         this.map = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/maps/"+ config +".png")).getImage().getScaledInstance(600,450,Image.SCALE_SMOOTH));
@@ -195,6 +201,10 @@ public class MapViewGUI extends JPanel {
             }});
     }
 
+    /**
+     * update the cell board and the content of the spowner cells
+     * @param boardMatrix matrix of the cell views
+     */
     public void setBoard(CellView[][] boardMatrix){
         for (int row=0;row < 3;row++){
             for(int column=0;column < 4;column++){

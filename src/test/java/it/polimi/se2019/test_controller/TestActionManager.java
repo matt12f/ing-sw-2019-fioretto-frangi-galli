@@ -73,22 +73,22 @@ public class TestActionManager {
         Ammo availableAmmo= player1.getPlayerBoard().getAmmo();
 
         char [] cost={'b','b','y'};
-        assertFalse(ActionManager.canAffordCost(player1,availableAmmo,cost,true));
-        assertTrue(ActionManager.canAffordCost(player1,availableAmmo,cost,false));
+        assertFalse(ActionManager.canAffordCost(player1,availableAmmo,cost,false));
+        assertTrue(ActionManager.canAffordCost(player1,availableAmmo,cost,true));
 
         char [] cost2={'b','y'};
-        assertTrue(ActionManager.canAffordCost(player1,availableAmmo,cost2,true));
+        assertTrue(ActionManager.canAffordCost(player1,availableAmmo,cost2,false));
 
         assertDoesNotThrow(()->player1.getPlayerBoard().getHand().setPowerup(new PowerupCard("TargettingScope",'b')));
         assertDoesNotThrow(()->player1.getPlayerBoard().getHand().setPowerup(new PowerupCard("Newton",'y')));
         assertDoesNotThrow(()->player1.getPlayerBoard().getHand().setPowerup(new PowerupCard("Teleporter",'r')));
 
         char [] cost3={'b','b','b','y','r'};
-        assertFalse(ActionManager.canAffordCost(player1,availableAmmo,cost3,true));
-        assertTrue(ActionManager.canAffordCost(player1,availableAmmo,cost3,false));
+        assertFalse(ActionManager.canAffordCost(player1,availableAmmo,cost3,false));
+        assertTrue(ActionManager.canAffordCost(player1,availableAmmo,cost3,true));
 
         char [] cost4={'b','r','y'};
-        assertTrue(ActionManager.canAffordCost(player1,availableAmmo,cost4,true));
+        assertTrue(ActionManager.canAffordCost(player1,availableAmmo,cost4,false));
 
     }
 

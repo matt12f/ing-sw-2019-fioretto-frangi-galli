@@ -56,7 +56,6 @@ public  class PlayerHandView implements Serializable {
             this.powerups[i] = powerups[i];
         }
     }
-
     public PowerupCard getAdditionalPowerup() {
         return additionalPowerup;
     }
@@ -64,4 +63,5 @@ public  class PlayerHandView implements Serializable {
     public void setAdditionalPowerup(PowerupCard additionalPowerup) {
         this.additionalPowerup = additionalPowerup;
     }
+
 }

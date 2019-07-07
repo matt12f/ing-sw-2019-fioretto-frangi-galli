@@ -14,6 +14,12 @@ public class CellView implements Serializable {
 
     private ArrayList<Figure> playerFigures;
 
+    /**
+     * create a view of the cell to store the data of the corrisponding cell
+     * @param lineIndex line position of the cell
+     * @param columnIndex column position of the cell
+     * @param position model data of the cell
+     */
     public CellView(int lineIndex, int columnIndex, NewCell position) {
         this.lineIndex = lineIndex;
         this.columnIndex = columnIndex;
@@ -23,6 +29,10 @@ public class CellView implements Serializable {
         setCell(position);
     }
 
+    /**
+     * update of the players in the cell
+     * @param playerPosition  model data of the cell
+     */
     public void setPlayerFigures(NewCell playerPosition){
         this.playerFigures.clear();
 
@@ -32,26 +42,50 @@ public class CellView implements Serializable {
             }
     }
 
+    /**
+     *
+     * @return the list of player's figures
+     */
     public ArrayList<Figure> getPlayerFigures(){
         return this.playerFigures;
     }
 
+    /**
+     *
+     * @return model data of the cell
+     */
     public NewCell getCorrespondingCell() {
         return correspondingCell;
     }
 
+    /**
+     * set the data of the cell view
+     * @param newCorrespondingCell
+     */
     public void setCell(NewCell newCorrespondingCell){
         this.correspondingCell = newCorrespondingCell;
     }
 
+    /**
+     *
+     * @return line position
+     */
     public int getLineIndex() {
         return lineIndex;
     }
 
+    /**
+     *
+     * @return column position
+     */
     public int getColumnIndex() {
         return columnIndex;
     }
 
+    /**
+     *
+     * @return the drop inside the cell
+     */
     public String getDrop(){
         if(this.correspondingCell.getCellType().equals(CellType.DROP))
             return this.correspondingCell.getDrop().getContent();

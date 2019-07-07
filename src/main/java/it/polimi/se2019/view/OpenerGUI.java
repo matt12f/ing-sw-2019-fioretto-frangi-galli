@@ -11,7 +11,9 @@ import java.awt.event.WindowEvent;
 
 public class OpenerGUI {
 
-
+    /**
+     * builder that create the first frame that ask to the player what type of visualization he wants
+     */
     public  OpenerGUI(){
 
         JDialog frame = new JDialog();

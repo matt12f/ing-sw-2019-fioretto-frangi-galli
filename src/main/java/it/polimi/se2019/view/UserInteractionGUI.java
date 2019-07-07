@@ -19,6 +19,12 @@ public class UserInteractionGUI extends UserInteraction {
     private JDialog waitingList = new JDialog();
     private String[] answer = new String[2];
 
+
+    /**
+     * Dialog that ask to the player wich action he wants to perform
+     * @param frenzy indicate if frenzy mode is on or off
+     * @return the player's choice
+     */
     @Override
     public String actionToRequest(int frenzy){
 
@@ -135,6 +141,14 @@ public class UserInteractionGUI extends UserInteraction {
 
     }
 
+
+    /**
+     * jdialog that ask to th player if he wants to do or accept a situation or not
+     * @param message question to the pllayer
+     * @param textYesButton acceptance conditions
+     * @param textNoButton negation conditions
+     * @return
+     */
     @Override
     public boolean yesOrNo(String message, String textYesButton, String textNoButton) {
         JLabel label = new JLabel(message);
@@ -182,6 +196,13 @@ public class UserInteractionGUI extends UserInteraction {
         return yesNoChoice;
     }
 
+
+    /**
+     * jdialog that allows the user to choose from a list of possible decisions
+     * @param message question
+     * @param listToChooseFrom list of the possible actions
+     * @return the action chosen by the user
+     */
     @Override
     public String stringSelector(String message, ArrayList<String> listToChooseFrom) {
         JComboBox chooseList = new JComboBox(listToChooseFrom.toArray(new String[listToChooseFrom.size()]));
@@ -219,6 +240,10 @@ public class UserInteractionGUI extends UserInteraction {
         return chosenByList;
     }
 
+    /**
+     * jdialog that show a message to the user
+     * @param message string that tells something to the user
+     */
     @Override
     public void showMessage(String message) {
         JLabel mex = new JLabel(message);
@@ -233,6 +258,13 @@ public class UserInteractionGUI extends UserInteraction {
         dialog.setVisible(true);
     }
 
+
+    /**
+     * jdialog that shows to the user the weapons that could be reloaded and the user can choose to reload them
+     * @param cards vector with the weapons
+     * @param reloadableCards boolean vector that shows which weapon could be reloaded
+     * @return the position of the weapons to reload
+     */
     @Override
     public boolean[] cardsToReload(GunCard[] cards, boolean[] reloadableCards) {
         //n    Jdialog sullo stesso concetto del metodo di sopra, con 3 checkbox, dove vengono attivate a seconda
@@ -299,14 +331,14 @@ public class UserInteractionGUI extends UserInteraction {
     }
 
     /**
-     * this method allows the user to see the picture of the drop
-     * @param content is the content of the card in a string form
+     * this metod allows the user to see the picture of the drop
+     * @param content content of the drop
      */
     @Override
     public void ammoTileViewer(String content){
 
         JPanel body = new JPanel(new BorderLayout(8, 8));
-        ImageIcon pic = new ImageIcon(new ImageIcon("src/main/sprite/ammo/ammo_"+ content +".png").getImage().getScaledInstance(150,150, Image.SCALE_SMOOTH));
+        ImageIcon pic = new ImageIcon(new ImageIcon("src/main/sprite/ammo/ammo_"+ content +".png").getImage().getScaledInstance(150,150, Image.SCALE_DEFAULT));
         JLabel image = new JLabel(pic);
         image.setIcon(pic);
 
@@ -314,15 +346,20 @@ public class UserInteractionGUI extends UserInteraction {
         body.add(image, BorderLayout.SOUTH);
 
 
+
         JDialog dialog = new JDialog();
         dialog.setModal(true);
-        dialog.setTitle("Drop disclaimer");
+        dialog.setTitle("Drop desclaimer");
         dialog.getContentPane().add(body);
         dialog.pack();
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
     }
 
+    /**
+     * jdialog that allows the user to choose a map configuration and the maximum of kill in the game
+     * @return
+     */
     @Override
     public int[] mapChooser(){
 
@@ -460,6 +497,13 @@ public class UserInteractionGUI extends UserInteraction {
         return ret ;
     }
 
+
+    /**
+     * jdialog that ask to the user which powerup card he want to discard
+     * @param list list with the powerups in the hand
+     * @param optional 4th powerup
+     * @return the discarded one
+     */
     @Override
     public PowerupCard spawnChooser(PowerupCard[] list, PowerupCard optional){
 
@@ -473,8 +517,8 @@ public class UserInteractionGUI extends UserInteraction {
         JButton pw3 = new JButton();
         JButton pw4 = new JButton();
 
-        ImageIcon im1 = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/powerups/powerups_"+ list[0].getPowerupType().toLowerCase() + "_"+list[0].getCubeColor()+ ".png")).getImage().getScaledInstance(70,92,Image.SCALE_SMOOTH));
-        ImageIcon im2 = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/powerups/powerups_"+ list[1].getPowerupType().toLowerCase() + "_"+list[1].getCubeColor()+ ".png")).getImage().getScaledInstance(70,92,Image.SCALE_SMOOTH));
+        ImageIcon im1 = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/powerups/powerups_"+ list[0].getPowerupType() + "_"+list[0].getCubeColor()+ ".png")).getImage().getScaledInstance(70,92,Image.SCALE_DEFAULT));
+        ImageIcon im2 = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/powerups/powerups_"+ list[1].getPowerupType() + "_"+list[1].getCubeColor()+ ".png")).getImage().getScaledInstance(70,92,Image.SCALE_DEFAULT));
         pw1.setIcon(im1);
         pw2.setIcon(im2);
 
@@ -491,14 +535,14 @@ public class UserInteractionGUI extends UserInteraction {
         mainPanel.add(pw2,container);
 
         if(list[2]!= null){
-            ImageIcon im3 = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/powerups/powerups_"+ list[2].getPowerupType().toLowerCase() + "_"+list[2].getCubeColor()+ ".png")).getImage().getScaledInstance(70,92,Image.SCALE_SMOOTH));
+            ImageIcon im3 = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/powerups/powerups_"+ list[2].getPowerupType() + "_"+list[2].getCubeColor()+ ".png")).getImage().getScaledInstance(70,92,Image.SCALE_DEFAULT));
             pw3.setIcon(im3);
             container.gridx=2;
             container.gridy=1;
             mainPanel.add(pw3,container);
         }
         if (optional != null){
-            ImageIcon im4 = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/powerups/powerups_"+ optional.getPowerupType().toLowerCase() + "_"+list[3].getCubeColor()+ ".png")).getImage().getScaledInstance(70,92,Image.SCALE_SMOOTH));
+            ImageIcon im4 = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/powerups/powerups_"+ optional.getPowerupType() + "_"+list[3].getCubeColor()+ ".png")).getImage().getScaledInstance(70,92,Image.SCALE_DEFAULT));
             pw4.setIcon(im4);
             container.gridx=3;
             container.gridy=1;
@@ -555,6 +599,12 @@ public class UserInteractionGUI extends UserInteraction {
         return chosenPowerup;
     }
 
+
+    /**
+     * ask to the user to choose a weapon to discard
+     * @param list of the weapons
+     * @return the discarded one
+     */
     //Not in use at the moment
     public GunCard weaponChoose(GunCard[] list){
 
@@ -637,6 +687,11 @@ public class UserInteractionGUI extends UserInteraction {
         return chosenWeapon;
     }
 
+
+    /**
+     * ask to the user nickname and ip adress and put the player in the waiting list
+     * @return nickname, ip address
+     */
     public synchronized String[] mainLogGUI(){
         JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints container = new GridBagConstraints();
@@ -692,6 +747,10 @@ public class UserInteractionGUI extends UserInteraction {
         return answer;
     }
 
+    /**
+     * show an error message
+     * @param error message to show
+     */
     public void errorDisplay(String error){
 
         JLabel message= new JLabel();
@@ -750,7 +809,10 @@ public class UserInteractionGUI extends UserInteraction {
         dialog.setVisible(true);
     }
 
-
+    /**
+     * create a jdialog that show the waiting list
+     * @param players list of the waiting players
+     */
     public void waitingListCreation (ArrayList<String> players){
         JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints container = new GridBagConstraints();
@@ -776,6 +838,11 @@ public class UserInteractionGUI extends UserInteraction {
 
 
     }
+
+    /**
+     * update the waiting list and show the new players
+     * @param players list of all waiting players
+     */
     public void waitingListUpdate(ArrayList<String> players){
         waitingList.getContentPane().removeAll();
         JPanel mainPanel = new JPanel(new GridBagLayout());

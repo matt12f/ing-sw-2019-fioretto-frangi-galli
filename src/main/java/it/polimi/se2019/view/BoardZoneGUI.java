@@ -16,9 +16,9 @@ public class BoardZoneGUI extends JPanel {
 
     /**
      * constructor that create the zone to show the opponent's boards
-     * @param boards
-     * @param ownerBoard
-     * @param kills
+     * @param boards is the list of the opponents' oards
+     * @param ownerBoard board of the user/player
+     * @param kills number of the actual kills in the game
      */
     public BoardZoneGUI(ArrayList<PlayerBoardView> boards, PlayerBoardView ownerBoard, int kills){
 
@@ -63,6 +63,13 @@ public class BoardZoneGUI extends JPanel {
 
     }
 
+    /**
+     * this method update all the boards and the score after a player's move
+     * @param boards is the list of the opponents' oards
+     * @param ownerBoard board of the user/player
+     * @param frenzy is the boolean indicator that says if frenzy mode is on or off
+     * @param kills number of the actual kills in the game
+     */
     public void updateBoards(ArrayList<PlayerBoardView> boards,PlayerBoardView ownerBoard, boolean frenzy, int kills){
 
         for (int i = 0; i< boardsGUI.size(); i++){

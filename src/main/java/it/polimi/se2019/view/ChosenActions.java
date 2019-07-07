@@ -71,8 +71,8 @@ public class ChosenActions implements Serializable {
                 powerupManagement(this.fictitiousPlayer);
             }
             if(!this.fictitiousPlayer.getPickableCards().isEmpty()){ //in case this is a grab/move + grab action picking a Gun
-                cardToPick = gunCardManager(this.fictitiousPlayer.getPickableCards());
-                if(localView.getPlayerHand().isGunHandFull())
+                this.cardToPick = gunCardManager(this.fictitiousPlayer.getPickableCards());
+                if(localView.getPlayerHand().isGunHandFull())//this happens if you already have three cards in your hand and you want to pick a fourth one
                     this.cardToDiscard = cardDiscardSelector(localView);
             }
 
@@ -86,7 +86,7 @@ public class ChosenActions implements Serializable {
             this.fictitiousPlayer.getAvailableCardActions().removeIf(cardActionsPredicate);
 
             for(SingleCardActions cardActions: this.fictitiousPlayer.getAvailableCardActions()) //this card is valid to be used
-                    listOfCards.add("Usable card: " + cardActions.getGunCardToUse().getClass().getSimpleName() + "; Must swap to use it: " + cardActions.isMustSwap());
+                    listOfCards.add("Usable card: " + cardActions.getGunCardToUse().getClass().getSimpleName());
 
 
             //asks the user which card it wants to use, listing the combination of effects it can perform
@@ -101,9 +101,6 @@ public class ChosenActions implements Serializable {
             SingleCardActions chosenCard = this.fictitiousPlayer.getAvailableCardActions().get(listOfCards.indexOf(cardSelected));
 
             this.chosenGun=chosenCard.getGunCardToUse();
-
-            if(chosenCard.isMustSwap())
-                this.cardToDiscard=cardDiscardSelector(localView);
 
             //choice of the action combination
             String chosenCombination=this.askUser.stringSelector("Scegliere una combinazione di effetti",chosenCard.getAvailableCombinations());

@@ -65,7 +65,7 @@ public class PowerupManager {
     public static void grenadeManager(Controller currentController, Player playerDamaged, Player playerGivingDamage, int cardIndexInHand){
         char [] marks=new char[1];
         marks[0]=playerGivingDamage.getFigure().getColorChar();
-        PlayerManager.markerDealer(playerDamaged,marks);
+        PlayerManager.markerDealer(currentController, playerDamaged,marks);
         removeFromHand(currentController,cardIndexInHand);
     }
 

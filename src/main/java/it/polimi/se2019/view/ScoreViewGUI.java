@@ -8,6 +8,13 @@ import java.util.ArrayList;
 
 public class ScoreViewGUI extends JFrame  {
 
+
+    /**
+     * buid a frame hat shows every player's score and the total kills in the game
+     * @param opponentBoards board of the opponents
+     * @param ownerBoard board of the user
+     * @param kills  number of kills
+     */
     public ScoreViewGUI(ArrayList<PlayerBoardView> opponentBoards, PlayerBoardView ownerBoard, int kills){
         JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints container = new GridBagConstraints();

@@ -17,6 +17,12 @@ PlayerBoardViewGUI extends JPanel{
 
     private DamageIconGUI[] damageVector;
 
+    /**
+     * builder that create a single player's board
+     * @param boardView board data
+     * @param x width of the board
+     * @param y height of the board
+     */
     public PlayerBoardViewGUI(PlayerBoardView boardView, int x, int y){
 
         ///////DAMAGE//////
@@ -65,7 +71,13 @@ PlayerBoardViewGUI extends JPanel{
 
     }
 
-
+    /**
+     * update the board depending on the data
+     * @param x width of the board
+     * @param y height of the board
+     * @param frenzy boolean that says if frenzy mode is on or off
+     * @param boardView board data
+     */
     public void setBoard( int x, int y, boolean frenzy, PlayerBoardView boardView){
         Color color = boardView.getColor();
         if(!frenzy)
@@ -83,6 +95,10 @@ PlayerBoardViewGUI extends JPanel{
 
     }
 
+    /**
+     * mathod that allows to see the list of the markers on the board
+     * @param marks
+     */
     public void showMarkers(ArrayList<Character> marks){
         JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints container = new GridBagConstraints();
@@ -106,6 +122,11 @@ PlayerBoardViewGUI extends JPanel{
         dialog.setVisible(true);
     }
 
+    /**
+     * method that assign a char to a color (String)
+     * @param car char of the color
+     * @return
+     */
     static String colorSwitch (char car){
         switch(car){
             case 'y': return "yellow";

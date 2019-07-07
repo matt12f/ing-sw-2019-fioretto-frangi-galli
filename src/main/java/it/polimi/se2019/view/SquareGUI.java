@@ -6,11 +6,21 @@ import java.awt.*;
 public class SquareGUI extends JLabel {
     ImageIcon pic;
 
+    /**
+     * create a square of the cell and put a figure depending on the players' color that arw staying into that cell
+     * @param content indicate if the square is a drop, is a figure or is empty
+     * @param dropContent data with the content of the drop (if the cell is a drop cell)
+     */
     public SquareGUI(String content, String dropContent){
         //this adds the player colored circles
         updateContent(content,dropContent);
     }
 
+    /**
+     * update the content of the square
+     * @param content indicate if the square is a drop, is a figure or is empty
+     * @param dropContent data with the content of the drop (if the cell is a drop cell)
+     */
     public void updateContent(String content, String dropContent){
         if (!content.equals("DROP") && !content.equals("EMPTY"))
             this.pic = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/figures/" + content.toLowerCase() + ".png")).getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));

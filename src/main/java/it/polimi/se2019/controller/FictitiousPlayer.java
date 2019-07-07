@@ -55,22 +55,23 @@ public class FictitiousPlayer implements Serializable {
         }
 
         this.pickableCards=new ArrayList<>();
-        //this is done for grab/move+grab actions where you may want to just pick a card
+        //this is a section for grab/move+grab actions where you may want to just pick a card
         if(cell.isCanGrabCard())
             for(int i=0; i<this.position.getWeaponCards().size();i++)
-                if(this.position.getWeaponCards().get(i)!=null && ActionManager.canAffordCost(player,this.availableAmmo,this.position.getWeaponCards().get(i).getAmmoCost(),true))
+                if(this.position.getWeaponCards().get(i)!=null && ActionManager.canAffordCost(player,this.availableAmmo, this.position.getWeaponCards().get(i).getAmmoCost(),true))
                     this.pickableCards.add(this.position.getWeaponCards().get(i));
 
-        //the "pickable" cards can ALL be added to the cards a player can choose from, if it's noted that
-        // if the player chooses one of those, he must discard one of his current cards. This could work
-        // because the use of a card is exclusionary (you can only use one at a time).
+        //the "pickable" cards MUST NOT  be added to the cards a player can choose from. You cannot grab and shoot
+        //in the same macro action
+
+        //This is a section only for shoot actions (you may have a move before)
         this.availableCardActions = new ArrayList<>();
         if(shoot){
             usableCards=evaluateUsableCards(player,frenzyReload);
-            usableCards.addAll(pickableCards);
 
+            //you must swap a card if you already have three in your hand
             for (GunCard gunCard : usableCards)
-                this.availableCardActions.add(new SingleCardActions(currentController, gunCard,this,usableCards.size()>3));
+                this.availableCardActions.add(new SingleCardActions(currentController, gunCard,this));
 
             //removes cards with no actionsAvailable
             this.availableCardActions.removeIf(p->p.getEffectsCombinationActions().isEmpty());

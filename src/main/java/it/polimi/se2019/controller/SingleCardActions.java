@@ -29,9 +29,8 @@ public class SingleCardActions implements Serializable {
     private GunCard gunToUse;
     private ArrayList<String> availableCombinations; //For the GUI/CLI to list them efficiently
     private ArrayList<SingleEffectsCombinationActions> effectsCombinationActions;
-    private boolean mustSwap;
 
-    public SingleCardActions(Controller currentController, GunCard gunCard, FictitiousPlayer player, boolean mustSwap) {
+    public SingleCardActions(Controller currentController, GunCard gunCard, FictitiousPlayer player) {
         //this part builds the list of combination of the effects a player can afford to use
         this.gunToUse=gunCard;
 
@@ -40,7 +39,6 @@ public class SingleCardActions implements Serializable {
 
         this.effectsCombinationActions =new ArrayList<>();
         this.availableCombinations=new ArrayList<>();
-        this.mustSwap=mustSwap;
         for(ArrayList<String> effectsCombination: effectsOrder){
             try{
             this.effectsCombinationActions.add(gunCard.buildAvailableActions(currentController,player,effectsCombination));
@@ -55,16 +53,18 @@ public class SingleCardActions implements Serializable {
     private ArrayList<ArrayList<String>> reduceToAffordableEffects(GunCard gunCard, ArrayList<ArrayList<String>> cardEffects,FictitiousPlayer player) {
         ArrayList<ArrayList<String>> availableEffectsCombinations=new ArrayList<>();
         boolean affordable;
-        for(ArrayList<String> combination:cardEffects) {
+        for(ArrayList<String> combination: cardEffects) {
             affordable=true;
             for (String effect : combination)
                 switch (effect) {
                 case "Optional1":{
-                        if(!ActionManager.canAffordCost(player.getCorrespondingPlayer(),player.getAvailableAmmo(),gunCard.getSecondaryEffectCost(),true))
+                    //the false at the end considers the full cost of the effect cost
+                        if(!ActionManager.canAffordCost(player.getCorrespondingPlayer(),player.getAvailableAmmo(),gunCard.getSecondaryEffectCost(),false))
                             affordable=false;
                     }break;
                     case "Optional2":{
-                        if(!ActionManager.canAffordCost(player.getCorrespondingPlayer(),player.getAvailableAmmo(),gunCard.getTertiaryEffectCost(),true))
+                        //the false at the end considers the full cost of the effect cost
+                        if(!ActionManager.canAffordCost(player.getCorrespondingPlayer(),player.getAvailableAmmo(),gunCard.getTertiaryEffectCost(),false))
                             affordable=false;
                     }break;
                         default: break; //case "Base"
@@ -83,9 +83,6 @@ public class SingleCardActions implements Serializable {
         return availableCombinations;
     }
 
-    public boolean isMustSwap() {
-        return mustSwap;
-    }
 
     public ArrayList<SingleEffectsCombinationActions> getEffectsCombinationActions(){
         return effectsCombinationActions;

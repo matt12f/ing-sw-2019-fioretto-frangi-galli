@@ -68,8 +68,8 @@ public class GameBoardGUI {
 
     /**
      * this method set the franzy mode on the gui layout
-     * @param opponentBoards
-     * @param ownerBoard
+     * @param opponentBoards arraylist with the opponents' boards
+     * @param ownerBoard BoardView with the info about the owner player's board
      */
     public void setFrenzy(ArrayList<PlayerBoardView> opponentBoards,PlayerBoardView ownerBoard){
         boardZone.updateBoards(opponentBoards, ownerBoard, true, 0);
@@ -92,10 +92,4 @@ public class GameBoardGUI {
         //TODO aggiornare il frenzy
     }
 
-    /**
-     * this method enables the action button for the player that will select the actions to
-     */
-    public void enableActionsButton(){
-        this.playerZone.getHand().getAmmo().updateActionsButton();
-    }
 }
