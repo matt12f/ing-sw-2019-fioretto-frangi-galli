@@ -158,7 +158,6 @@ public class GameHandler implements Runnable {
                     waitingRequest(clientTurn);
                     calculateActions(clientTurn);
                     sendAvailable(clientTurn);
-                    getChosenAction(clientTurn);
                     try {
                         confirm = (String) clientTurn.getInput().readObject();
                     } catch (IOException e) {
@@ -166,8 +165,12 @@ public class GameHandler implements Runnable {
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     }
-                    if(confirm.equals("OK"))
+                    if(confirm.equals("OK")) {
+                        getChosenAction(clientTurn);
                         accepted = true;
+                    }else{
+                        accepted = false;
+                    }
                 }while(!accepted);
 
                 managePowerUps(PlayerManager.choiceExecutor(controller, clientTurn.getChosenAction()));
