@@ -45,14 +45,14 @@ public class FictitiousPlayer implements Serializable {
         this.playerColor=player.getFigure().getColor();
         this.position =cell.getCell();
 
-        if (cell.isCanGrabAmmo()){
-            this.availableAmmo=player.getPlayerBoard().getAmmo();
-            if(cell.getCell().getDrop()!=null){
+        //the available ammo must be initialized even if you can't grab ammo
+        this.availableAmmo=player.getPlayerBoard().getAmmo().clone();
+
+        if (cell.isCanGrabAmmo()&&cell.getCell().getDrop()!=null){
                 this.availableAmmo.addAmmo(cell.getCell().getDrop().getContent());
                 this.grabbedAmmo=true;
-            }
-
         }
+
         this.pickableCards=new ArrayList<>();
         //this is done for grab/move+grab actions where you may want to just pick a card
         if(cell.isCanGrabCard())
@@ -83,12 +83,14 @@ public class FictitiousPlayer implements Serializable {
      * this method simply evaluates whether the player can use a card by checking:
      * - if it's loaded
      * - if it can be reloaded in frenzy modes that allow it
+     * - if he can afford it in case there's a frenzy reload
      */
     private ArrayList<GunCard> evaluateUsableCards(Player player, boolean frenzyReload){
         ArrayList<GunCard> usableCards=new ArrayList<>();
         //evaluates if the guns are loaded
         for(GunCard gunCard: player.getPlayerBoard().getHand().getGuns()){
-            if(gunCard!=null && (gunCard.isLoaded()||frenzyReload && ActionManager.canAffordCost(player,player.getPlayerBoard().getAmmo(),gunCard.getAmmoCost(),false)))
+            if(gunCard!=null &&
+                    (gunCard.isLoaded()||frenzyReload && ActionManager.canAffordCost(player,this.availableAmmo,gunCard.getAmmoCost(),false)))
                 usableCards.add(gunCard);
         }
         return usableCards;
