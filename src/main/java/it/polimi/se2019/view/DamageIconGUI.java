@@ -24,7 +24,7 @@ public class DamageIconGUI extends JLabel {
         String colorString=PlayerBoardViewGUI.colorSwitch(color);
 
         if (colorString != null)
-            this.damageImage = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/damage/"+ colorString +".png")).getImage().getScaledInstance(16,27, Image.SCALE_DEFAULT));
+            this.damageImage = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/damage/"+ colorString +".png")).getImage().getScaledInstance(16,27, Image.SCALE_SMOOTH));
         else
             this.damageImage = null;
 

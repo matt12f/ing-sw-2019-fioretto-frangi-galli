@@ -35,7 +35,7 @@ PlayerBoardViewGUI extends JPanel{
 
         this.boardImage = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/boards/normal/"+
                 boardView.getColor().toString().toLowerCase()+".jpg")).getImage().getScaledInstance(x,y,
-                Image.SCALE_DEFAULT));
+                Image.SCALE_SMOOTH));
 
         this.board = new JLabel(boardImage);
 
@@ -81,9 +81,9 @@ PlayerBoardViewGUI extends JPanel{
     public void setBoard( int x, int y, boolean frenzy, PlayerBoardView boardView){
         Color color = boardView.getColor();
         if(!frenzy)
-            this.boardImage = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/boards/normal/"+color.toString().toLowerCase()+".jpg")).getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
+            this.boardImage = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/boards/normal/"+color.toString().toLowerCase()+".jpg")).getImage().getScaledInstance(x,y, Image.SCALE_SMOOTH));
         else
-            this.boardImage = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/boards/frenzy/"+color.toString().toLowerCase()+".jpg")).getImage().getScaledInstance(x,y, Image.SCALE_DEFAULT));
+            this.boardImage = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/boards/frenzy/"+color.toString().toLowerCase()+".jpg")).getImage().getScaledInstance(x,y, Image.SCALE_SMOOTH));
 
         this.board.setIcon(boardImage);
 

@@ -19,15 +19,13 @@ public class AmmoGUI extends JPanel {
     private JLabel blueAmmo;
     private JLabel redAmmo;
     private JLabel yellowAmmo;
-    private String turnMessage;
 
     /**
      * this constructor builds the graphics
      * @param ammo is the ammo of the current player
      */
     public AmmoGUI(AmmoView ammo){
-        this.turnMessage="Wait to select actions";
-        this.actionButton = new JButton(this.turnMessage);
+        this.actionButton = new JButton("Request Actions");
         GridBagConstraints container =new GridBagConstraints();
         this.actionButton.setEnabled(false);
 
@@ -56,7 +54,6 @@ public class AmmoGUI extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 AdrenalineClient.setActionRequested( new ActionRequestView(AdrenalineClient.isLast()));
-                turnMessage="Wait to select actions";
                 actionButton.setEnabled(false);
             }
         });
@@ -76,7 +73,6 @@ public class AmmoGUI extends JPanel {
      * this method enables the action button when it's the player's turn
      */
     public void updateActionsButton(){
-        turnMessage="Premi per scegliere azione!";
         actionButton.setEnabled(true);
     }
 }

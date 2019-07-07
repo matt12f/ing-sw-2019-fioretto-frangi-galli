@@ -38,7 +38,7 @@ public class BoardZoneGUI extends JPanel {
 
 
        //creating board zone dinamically
-        this.boardsGUI= new ArrayList<>();
+        this.boardsGUI = new ArrayList<>();
 
         for (int i = 1; i< boards.size();i++)
            boardsGUI.add(new PlayerBoardViewGUI( boards.get(i),420,109 ));

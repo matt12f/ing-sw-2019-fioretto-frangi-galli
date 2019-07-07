@@ -51,16 +51,20 @@ public class ActionManager {
      * @param player is the player to move
      * @param arrivalCell is the cell to move the player into
      */
-    public static void movePlayer(Controller currentController,Player player, NewCell arrivalCell) {
+    public static void movePlayer(Controller currentController, Player player, NewCell arrivalCell) {
         //if the room has changed
         if(!player.getFigure().getCell().getColor().equals(arrivalCell.getColor())){
             MapManager.getRoom(currentController,player.getFigure().getCell()).removePlayers(player);
             MapManager.getRoom(currentController,arrivalCell).addPlayers(player);
         }
 
+        NewCell[][] board=currentController.getMainGameModel().getCurrentMap().getBoardMatrix();
+        NewCell realArrivalCell=board[MapManager.getLineOrColumnIndex(board,arrivalCell,true)]
+                [MapManager.getLineOrColumnIndex(board,arrivalCell,false)];
+
         player.getFigure().getCell().removePlayers(player); //removes the player from the cell
-        player.getFigure().setCell(arrivalCell); //changes the cell saved in the player
-        arrivalCell.addPlayers(player); //adds the player on the new cell
+        player.getFigure().setCell(realArrivalCell); //changes the cell saved in the player
+        realArrivalCell.addPlayers(player); //adds the player on the new cell
     }
 
     /**
@@ -68,18 +72,21 @@ public class ActionManager {
      * @param activePlayer is the active player (important to get the powerup cubes)
      * @param availableAmmo this is the available ammo it has (it could be different from the one in his hand)
      * @param ammoCost is the ammocost of the item
-     * @param fullOrReload: if true it evaluates the full cost of reloading, if false it evaluates only the buying cost
+     * @param pickOrFullReload: if true it evaluates the cost of picking the item (removes the first cube),
+     *                       otherwise if false it evaluates the full cost (full reload cost)
      * @return if a player can pay the cost
      */
-    public static boolean canAffordCost(Player activePlayer, Ammo availableAmmo, char[] ammoCost, boolean fullOrReload) {
+    public static boolean canAffordCost(Player activePlayer, Ammo availableAmmo, char[] ammoCost, boolean pickOrFullReload) {
         int blue=0;
         int red=0;
         int yellow=0;
         int start;
-        if (fullOrReload)
-            start=0;
-        else
+
+        if (pickOrFullReload)
             start=1;
+        else
+            start=0;
+
         for(int i=start;i<ammoCost.length;i++){
             switch (ammoCost[i]) {
                 case 'b':blue++;break;

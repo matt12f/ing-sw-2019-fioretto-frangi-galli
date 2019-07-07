@@ -14,7 +14,7 @@ public class PowerUpMenuGUI extends  JFrame {
      * @param pw powerup card with data
      */
     public PowerUpMenuGUI(PowerupCard pw){
-          img = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/powerups/powerups_"+ pw.getPowerupType().toLowerCase() +"_"+ pw.getCubeColor() +".png")).getImage().getScaledInstance(120,203,Image.SCALE_DEFAULT));
+        img = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/powerups/powerups_"+ pw.getPowerupType().toLowerCase() +"_"+ pw.getCubeColor() +".png")).getImage().getScaledInstance(169,264,Image.SCALE_SMOOTH));
         JLabel imgLabel = new JLabel(img);
         imgLabel.setIcon(img);
 

@@ -26,8 +26,19 @@ public class LocalView  extends View implements Observer, Serializable {
         this.playerPosition = playerPosition;
     }
 
+    /**
+     * this method returns the playerboards in the right order, with the one from the current player first
+     * @return all the playerboards in order
+     */
     public ArrayList<PlayerBoardView> getPlayerBoardViews() {
-        return playerBoardViews;
+        ArrayList<PlayerBoardView> temp= new ArrayList<>();
+        temp.add(this.playerBoardViews.get(this.playerId));
+
+        for (int i = 0; i < this.playerBoardViews.size() ; i++)
+            if(this.playerBoardViews.get(i)!=temp.get(0))
+                temp.add(this.playerBoardViews.get(i));
+
+        return temp;
     }
 
     public PlayerBoardView getPersonalPlayerBoardView() {

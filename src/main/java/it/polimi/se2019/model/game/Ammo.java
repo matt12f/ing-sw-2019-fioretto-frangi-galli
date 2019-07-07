@@ -62,19 +62,19 @@ public class Ammo  implements Serializable {
      * They do not prevent the value to become negative because it is prevented at the method calling.
      */
     public void setBlue(int blue) {
-        this.blue += blue;
+        this.blue = this.blue+ blue;
         if (this.blue > 3){
             this.blue = 3;
         }
     }
     public void setRed(int red) {
-        this.red += red;
+        this.red = this.red + red;
         if (this.red > 3){
             this.red = 3;
         }
     }
     public void setYellow(int yellow) {
-        this.yellow += yellow;
+        this.yellow = this.yellow + yellow;
         if (this.yellow > 3){
             this.yellow = 3;
         }

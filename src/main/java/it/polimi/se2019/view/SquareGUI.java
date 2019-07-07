@@ -23,7 +23,7 @@ public class SquareGUI extends JLabel {
      */
     public void updateContent(String content, String dropContent){
         if (!content.equals("DROP") && !content.equals("EMPTY"))
-            this.pic = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/figures/" + content.toLowerCase() + ".png")).getImage().getScaledInstance(25, 25, Image.SCALE_DEFAULT));
+            this.pic = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/figures/" + content.toLowerCase() + ".png")).getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
         else if(content.equals("DROP"))
             this.pic = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/ammo/ammo_" + dropContent + ".png")).getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT));
         else

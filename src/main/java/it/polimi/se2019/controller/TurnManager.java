@@ -22,12 +22,11 @@ public class TurnManager {
             turn = 0;
         }
         currentController.getMainGameModel().setTurn(turn);
-        this.setPlayerTurn(turn, currentController);
+        this.activePlayer = currentController.getMainGameModel().getPlayerList().get(turn);
     }
 
     /**
      * this method sets the active player
-     *
      */
     private void setPlayerTurn(int turn, Controller controller){
         this.activePlayer = controller.getMainGameModel().getPlayerList().get(turn);

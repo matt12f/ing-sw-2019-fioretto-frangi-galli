@@ -89,6 +89,7 @@ public class GameBoardGUI {
         boardZone.updateBoards(allBoards, ownerBoard, frenzyStatus, kills.getNumKills());
         map.setBoard(boardMatrix);
         playerZone.updateElements(ownerBoard, ownerHand, frenzyStatus);
+        //TODO aggiornare il frenzy
     }
 
     /**

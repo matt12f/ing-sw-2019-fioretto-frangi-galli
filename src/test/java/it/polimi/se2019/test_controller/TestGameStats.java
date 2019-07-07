@@ -56,12 +56,12 @@ public class TestGameStats {
 
         ArrayList<Player> players=new ArrayList<>();
 
-        Controller controller=new Controller(players,2,3);
-
         players.add(player1);
         players.add(player2);
         players.add(player3);
         players.add(player4);
+
+        Controller controller=new Controller(players,2,3);
 
         player1.setScore(23);
         player2.setScore(25);
@@ -95,12 +95,13 @@ public class TestGameStats {
 
         ArrayList<Player> players=new ArrayList<>();
 
-        Controller controller=new Controller(players,2,3);
 
         players.add(player1);
         players.add(player2);
         players.add(player3);
         players.add(player4);
+
+        Controller controller=new Controller(players,2,3);
 
         player1.setScore(19);
         player2.setScore(27);

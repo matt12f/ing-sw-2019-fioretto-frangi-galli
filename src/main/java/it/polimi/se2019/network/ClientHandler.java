@@ -157,8 +157,6 @@ public class ClientHandler extends Thread {
     synchronized void sendLocalView() throws IOException {
         this.output.reset();
         this.output.writeObject("VIEW");
-        this.output.flush();
-        this.input.readBoolean();
         this.output.writeObject(this.localView);
     }
 

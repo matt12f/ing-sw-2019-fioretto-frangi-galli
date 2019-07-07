@@ -22,6 +22,11 @@ public class TestController {
 
         ArrayList<Player> players=new ArrayList<>();
 
+        players.add(player1);
+        players.add(player2);
+        players.add(player3);
+        players.add(player4);
+
         Controller controller=new Controller(players,2,3);
 
         players.add(player1);
