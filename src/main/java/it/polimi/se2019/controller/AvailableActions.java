@@ -112,7 +112,7 @@ public class AvailableActions implements Serializable {
                     if(!singleCell.getCellType().equals(CellType.OUTSIDEBOARD) &&
                             singleCell!=referenceCell &&
                             MapManager.distanceBetweenCells(board,referenceCell,singleCell) <= maxMoveDistance)
-                        singleArrivalCells.add(new CellInfo(referenceCell, grab,singleCell.getDrop()!=null && grab));
+                        singleArrivalCells.add(new CellInfo(singleCell, grab,singleCell.getDrop()!=null && grab));
 
         }
 
