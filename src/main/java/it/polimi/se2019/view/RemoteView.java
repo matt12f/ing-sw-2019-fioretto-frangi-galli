@@ -70,10 +70,12 @@ public class RemoteView  extends View {
 
             player.update(model.getPlayerList().get(indexOfPlayer).getPlayerBoard());
             boolean[] temp = new boolean[3];
-
-            temp[0] = model.getPlayerList().get(indexOfPlayer).getPlayerBoard().getHand().getGuns()[0].isLoaded();
-            temp[1] = model.getPlayerList().get(indexOfPlayer).getPlayerBoard().getHand().getGuns()[1].isLoaded();
-            temp[2] = model.getPlayerList().get(indexOfPlayer).getPlayerBoard().getHand().getGuns()[2].isLoaded();
+            if(model.getPlayerList().get(indexOfPlayer).getPlayerBoard().getHand().getGuns()[0] != null)
+                temp[0] = model.getPlayerList().get(indexOfPlayer).getPlayerBoard().getHand().getGuns()[0].isLoaded();
+            if(model.getPlayerList().get(indexOfPlayer).getPlayerBoard().getHand().getGuns()[1] != null)
+                temp[1] = model.getPlayerList().get(indexOfPlayer).getPlayerBoard().getHand().getGuns()[1].isLoaded();
+            if(model.getPlayerList().get(indexOfPlayer).getPlayerBoard().getHand().getGuns()[2] != null)
+                temp[2] = model.getPlayerList().get(indexOfPlayer).getPlayerBoard().getHand().getGuns()[2].isLoaded();
 
 
 
