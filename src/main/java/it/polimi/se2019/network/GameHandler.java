@@ -9,7 +9,6 @@ import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.view.LocalView;
 
-import javax.xml.bind.SchemaOutputResolver;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -120,12 +119,33 @@ public class GameHandler implements Runnable {
             System.out.println("non sono riuscito ad avviare la partita");
         }
         //turns manager
+        boolean lastAction;
         while (this.controller.getMainGameModel().getKillshotTrack().getSkulls() > 0){
             turnPreparation(this.controller.getMainGameModel().getTurn());
             clientTurn = this.players.get(this.controller.getMainGameModel().getTurn());
             clientTurn.setActionsNumber( this.controller.getActiveTurn().getActivePlayer().getPlayerBoard().getActionTileNormal().getActionCounter());
             System.out.println("turno di: " + clientTurn.getColor());
+            try {
+                clientTurn.notifyTurn();
+                for (ClientHandler client: players) {
+                    if (!clientTurn.getNickname().equals(client.getNickname()))
+                        client.getOutput().writeObject("NOTMYTURN");
+                }
+            } catch (IOException e) {
+                System.out.println("problema comunicazione turno");
+            }
             for(int i = 0; i<controller.getActiveTurn().getActivePlayer().getPlayerBoard().getActionTileNormal().getActionCounter(); i++) {
+                lastAction = (i == (controller.getActiveTurn().getActivePlayer().getPlayerBoard().getActionTileNormal().getActionCounter() -1));
+                for (ClientHandler client: players) {
+                    if (!clientTurn.getNickname().equals(client.getNickname())) {
+                        try {
+                            client.getOutput().writeBoolean(lastAction);
+                            client.getOutput().flush();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
                 waitingRequest(clientTurn);
                 notifyClient(clientTurn);
                 calculateActions(clientTurn);
@@ -150,11 +170,6 @@ public class GameHandler implements Runnable {
             //fine turno
             this.turns++;
             PlayerManager.scoringProcess(controller);
-            try {
-                notifyEndTurn();
-            } catch (InterruptedException e) {
-                LOGGER.log(Level.FINE,"4th exception",e);
-            }
             for (Player player: this.controller.getMainGameModel().getDeadPlayers()) {
                 for (ClientHandler client: this.players) {
                     if(player.getNickname().equals(client.getNickname())){
@@ -244,7 +259,7 @@ public class GameHandler implements Runnable {
     private void postAction() throws InterruptedException, IOException {
         for (ClientHandler player: players) {
             //try {
-                player.sendLocalView();
+            player.sendLocalView();
             /*} catch (IOException e) {
                 System.out.println("problema invio local view a fine turno");
             }*/
@@ -427,12 +442,6 @@ public class GameHandler implements Runnable {
     }
 
     private void waitingRequest(ClientHandler clientTurn){
-        try {
-            clientTurn.notifyTurn();
-            System.out.println("c");
-        } catch (IOException e) {
-            System.out.println("problema comunicazione turno");
-        }
         try {
             clientTurn.askAction();
         } catch (IOException e) {

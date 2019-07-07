@@ -227,8 +227,6 @@ public class AdrenalineClient {
             }
             if(message.equals("VIEW")){
                 connection.getOutput().reset();
-                connection.getOutput().writeBoolean(true);
-                connection.getOutput().flush();
                 localView = (LocalView) connection.getInput().readObject();
                 if(guiStarted)
                     displayBoard();
@@ -259,6 +257,7 @@ public class AdrenalineClient {
 
     private static void matchPhase() throws IOException, ClassNotFoundException {
         boolean myturn;
+        boolean lastAction;
         int deadPlayers;
         int actionNumber;
         String status;
@@ -266,7 +265,7 @@ public class AdrenalineClient {
         ChosenActions chosen;
         while(start){
             myturn = receiveServerMessage(connection);
-            System.out.println("Inizio del turno");
+            System.out.println("Inizio del mio turno: " + myturn);
             if(myturn){
                 last = false;
                 connection.getOutput().reset();
@@ -287,6 +286,7 @@ public class AdrenalineClient {
                         e.printStackTrace();
                     }
                     status = (String) connection.getInput().readObject();
+                    System.out.println(status);
                     if(status.equals("TARGETINGSCOPE")) {
                         targetScope();
                         connection.getInput().readObject();
@@ -302,8 +302,12 @@ public class AdrenalineClient {
                 connection.getInput().readObject();
                 updateLocalView();
             }else{
-                waitForInfo();
-                updateLocalView();
+                do{
+                    lastAction = connection.getInput().readBoolean();
+                    waitForInfo();
+                    updateLocalView();
+                    displayBoard();
+                }while (!lastAction);
             }
             //questo è il fine turno
             deadPlayers = (int) connection.getInput().readObject();
@@ -338,6 +342,7 @@ public class AdrenalineClient {
     private static void waitForInfo() throws IOException, ClassNotFoundException {
         String message;
         message = (String) connection.getInput().readObject();
+        System.out.println(message);
         if (message.equals("TAGBACKUSAGE")){
             granade();
             connection.getInput().readObject();
@@ -363,8 +368,6 @@ public class AdrenalineClient {
     }
 
     private static void updateLocalView() throws IOException, ClassNotFoundException {
-        connection.getOutput().writeBoolean(true);
-        connection.getOutput().flush();
         localView = (LocalView) connection.getInput().readObject();
     }
 
@@ -373,8 +376,6 @@ public class AdrenalineClient {
         connection.getOutput().flush();
         connection.getOutput().reset();
         String ciao = (String) connection.getInput().readObject();
-        connection.getOutput().writeBoolean(true);
-        connection.getOutput().flush();
         localView = (LocalView) connection.getInput().readObject();
     }
 
