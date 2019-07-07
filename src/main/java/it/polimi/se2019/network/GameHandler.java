@@ -261,6 +261,8 @@ public class GameHandler implements Runnable {
                 sendAvailable(clientTurn);
                 getChosenAction(clientTurn);
                 managePowerUps(PlayerManager.choiceExecutor(controller, clientTurn.getChosenAction()));
+                if(lastAction)
+                    MapManager.refillEmptiedCells(controller.getMainGameModel().getCurrentMap().getBoardMatrix(),controller.getMainGameModel().getCurrentDecks());
                 this.controller.getMainGameModel().notifyRemoteView();
                 try {
                     try {
@@ -317,7 +319,6 @@ public class GameHandler implements Runnable {
                     }
                 }
             }
-            MapManager.refillEmptiedCells(controller.getMainGameModel().getCurrentMap().getBoardMatrix(),controller.getMainGameModel().getCurrentDecks());
             controller.getActiveTurn().nextTurn(controller);
             for (ClientHandler clientHandler: players) {
                 try {

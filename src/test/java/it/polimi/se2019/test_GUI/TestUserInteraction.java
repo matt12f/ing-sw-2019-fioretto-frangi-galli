@@ -23,10 +23,10 @@ public class TestUserInteraction {
        // testGunReload();
         //testActionSelection();
         //testYesOrNo();
-        //testShowMessage();
-        testSelectionFromList();
+        testShowMessage();
+        //testSelectionFromList();
 
-        testMap();
+        //testMap();
     }
 
     private static void testSelectionFromList(){
@@ -36,7 +36,7 @@ public class TestUserInteraction {
     }
 
     private static void testShowMessage(){
-        askUser.showMessage("<html>provolone <br>affumicato</html>");
+        askUser.showMessage("provolone affumicato");
     }
 
     private static void testYesOrNo(){
