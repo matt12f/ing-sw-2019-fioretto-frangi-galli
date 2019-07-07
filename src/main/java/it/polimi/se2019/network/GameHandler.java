@@ -435,7 +435,8 @@ public class GameHandler implements Runnable {
                 if(!ActionManager.visibleTargets(this.controller,player.getFigure().getCell()).contains(activePlayer)){
 
                     for(int i=0;i< player.getPlayerBoard().getHand().getPowerups().length;i++)
-                        if(player.getPlayerBoard().getHand().getPowerups()[i].getPowerupType().equals("TagbackGrenade")){
+                        if(player.getPlayerBoard().getHand().getPowerups()[i]!=null &&
+                                player.getPlayerBoard().getHand().getPowerups()[i].getPowerupType().equals("TagbackGrenade")){
                             try{
                                 getTagBackUsage(this.players.get(player.getId()));
                                 if(this.useTagBack){
@@ -453,7 +454,8 @@ public class GameHandler implements Runnable {
 
             //offering targetting scope to current player
             for(int i=0;i< activePlayer.getPlayerBoard().getHand().getPowerups().length;i++)
-                if(activePlayer.getPlayerBoard().getHand().getPowerups()[i].getPowerupType().equals("TargettingScope") &&
+                if(activePlayer.getPlayerBoard().getHand().getPowerups()[i]!=null &&
+                        activePlayer.getPlayerBoard().getHand().getPowerups()[i].getPowerupType().equals("TargettingScope") &&
                         (activePlayer.getPlayerBoard().getAmmo().getBlue()>0||
                                 activePlayer.getPlayerBoard().getAmmo().getRed()>0||
                                 activePlayer.getPlayerBoard().getAmmo().getYellow()>0)){
