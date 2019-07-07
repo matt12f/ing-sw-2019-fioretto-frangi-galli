@@ -15,15 +15,8 @@ public class RemoteView  extends View {
     public RemoteView (GameModel model, int mapNum, int skulls){
         this.playerHands = new ArrayList<>();
         this.playerBoardViews = new ArrayList<>();
-        for (Player player: model.getPlayerList()) {
-            this.playerBoardViews.add(new PlayerBoardView());
-            this.playerBoardViews.get(this.playerBoardViews.size() - 1).setScore(0);
-            this.playerBoardViews.get(this.playerBoardViews.size() - 1).setColor(player.getPlayerBoard().getColor());
-            this.playerBoardViews.get(this.playerBoardViews.size() - 1).setFrenzy(0);
-            this.playerBoardViews.get(this.playerBoardViews.size() - 1).setFront(true);
-            this.playerBoardViews.get(this.playerBoardViews.size() -1).setAmmo(new AmmoView());
-            this.playerBoardViews.get(this.playerBoardViews.size() -1).setDamageView(new DamageView());
-
+        for (Player player: model.getPlayerList()){
+            this.playerBoardViews.add(new PlayerBoardView(player.getPlayerBoard(),player.getScore()));
             this.playerHands.add(new PlayerHandView());
         }
         this.mapView = new MapView(mapNum, skulls, model);
@@ -65,6 +58,7 @@ public class RemoteView  extends View {
 
         for (PlayerBoardView player: playerBoardViews) {
             player.update(model.getPlayerList().get(playerBoardViews.indexOf(player)).getPlayerBoard());
+
             this.playerHands.get(playerBoardViews.indexOf(player)).setPowerups(model.getPlayerList().get(playerBoardViews.indexOf(player)).getPlayerBoard().getHand().getPowerups());
             this.playerHands.get(playerBoardViews.indexOf(player)).setAdditionalPowerup(model.getPlayerList().get(playerBoardViews.indexOf(player)).getPlayerBoard().getHand().getAdditionalPowerup());
             this.playerHands.get(playerBoardViews.indexOf(player)).setGuns(model.getPlayerList().get(playerBoardViews.indexOf(player)).getPlayerBoard().getHand().getGuns());

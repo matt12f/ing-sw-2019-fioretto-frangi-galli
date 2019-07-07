@@ -5,6 +5,12 @@ import it.polimi.se2019.enums.Color;
 import java.io.Serializable;
 import java.util.Observable;
 
+/**
+ * this class represents the single player board and it also includes the ActionTile, if the frenzy is null it's in
+ * normal playing mode, otherwise it's in frenzy mode.
+ * It also includes the player's hand, with guncards and powerups
+ *
+ */
 public class PlayerBoard extends Observable  implements Serializable {
     private Color color;
     private int currentBoardValue; //equivalent to the amount of skulls, that reduce the value of the scored card
@@ -57,22 +63,8 @@ public class PlayerBoard extends Observable  implements Serializable {
         this.actionTileFrenzy= new ActionTileFrenzy(actions);
     }
 
-    public Ammo getAmmo() {
-        return ammo;
-    }
-
-    public DamageTracker getDamageTrack() {
-        return damageTrack;
-    }
-
-    public Hand getHand() {
-        return hand;
-    }
-
-    public int getCurrentBoardValue(){
-        return currentBoardValue;
-    }
     /**
+     * This method decreases the board value during the game
      * A fresh front playerboard is worth 8,6,4,2,1,1 points
      * A fresh back playerboard is worth 4,2,1,1,1 points
      */
@@ -97,11 +89,35 @@ public class PlayerBoard extends Observable  implements Serializable {
 
     }
 
+    /**
+     *
+     * @return the color of the board as a char
+     */
     public char getColorChar(){
         String color=this.color.toString().toLowerCase();
         return color.charAt(0);
     }
 
+    public Ammo getAmmo() {
+        return ammo;
+    }
+
+    public DamageTracker getDamageTrack() {
+        return damageTrack;
+    }
+
+    public Hand getHand() {
+        return hand;
+    }
+
+    public int getCurrentBoardValue(){
+        return currentBoardValue;
+    }
+
+    /**
+     *
+     * @return a deep clone of the playerboard
+     */
     @Override
     public PlayerBoard clone(){
         PlayerBoard playerBoard=new PlayerBoard(this.color);

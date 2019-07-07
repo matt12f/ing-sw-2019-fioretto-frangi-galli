@@ -22,7 +22,7 @@ public class AdrenalineClient {
     private static UserInteractionCLI userInteractionCLI = new UserInteractionCLI();
     private static boolean start = false;
     private static GameBoardGui gameBoardGui;
-    private static ArrayList<PlayerBoardView> opponentsBoards = new ArrayList<>() ;
+    private static ArrayList<PlayerBoardView> allPlayersBoards = new ArrayList<>() ;
     private static boolean connected = false;
     private static String[] answer;
     private static boolean last;
@@ -258,7 +258,7 @@ public class AdrenalineClient {
 
     private static void displayBoard() {
         if(isGUI()){
-            gameBoardGui.updateBoardGame(opponentsBoards,getLocalView().getPersonalPlayerBoardView(),getLocalView().getMapView().getBoardMatrix(),getLocalView().getMapView().getKillView(),getLocalView().getPlayerHand());
+            gameBoardGui.updateBoardGame(allPlayersBoards,getLocalView().getPersonalPlayerBoardView(),getLocalView().getMapView().getBoardMatrix(),getLocalView().getMapView().getKillView(),getLocalView().getPlayerHand());
         }
     }
 
@@ -390,13 +390,8 @@ public class AdrenalineClient {
     }
 
     private static void guiStarter () {
-        for(int i = 0; i< getLocalView().getPlayerBoardViews().size();i++){
-            if (getLocalView().getPlayerBoardViews().get(i) != getLocalView().getPersonalPlayerBoardView()){
-                opponentsBoards.add(getLocalView().getPlayerBoardViews().get(i));
-            }
-        }
-
-        gameBoardGui = new GameBoardGui(getLocalView().getMapView().getMapNumber(),opponentsBoards,getLocalView().getPersonalPlayerBoardView(),getLocalView().getMapView().getBoardMatrix() );
+        allPlayersBoards=getLocalView().getPlayerBoardViews();
+        gameBoardGui = new GameBoardGui(getLocalView().getMapView().getMapNumber(), allPlayersBoards,getLocalView().getPersonalPlayerBoardView(),getLocalView().getMapView().getBoardMatrix() );
     }
 
         /** This method creates the connection between Client and server

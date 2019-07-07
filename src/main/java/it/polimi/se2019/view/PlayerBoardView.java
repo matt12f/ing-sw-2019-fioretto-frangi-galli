@@ -14,9 +14,25 @@ public  class PlayerBoardView implements Serializable {
     private int score;
     private int frenzy; //this value is =0 if frenzy is off; =1 if you can use x2 frenzy actions; =2 if you can use x1 frenzy action
 
-    public PlayerBoardView() {
-        this.ammo=new AmmoView();
-        this.damageView=new DamageView();
+    /**
+     * this constructor builds the view counterpart of the player board based on the one it's given
+     * @param playerBoard is the playerboard to mimic
+     * @param score is the player's score
+     */
+    public PlayerBoardView(PlayerBoard playerBoard, int score) {
+        this.score=score;
+        this.color=playerBoard.getColor();
+
+        if(playerBoard.getActionTileFrenzy()==null)
+            this.frenzy=0;
+        else if(playerBoard.getActionTileFrenzy().getActionCounter()==2)
+            this.frenzy=1;
+        else
+            this.frenzy=2;
+
+        this.front=playerBoard.isFront();
+        this.ammo=new AmmoView(playerBoard.getAmmo());
+        this.damageView=new DamageView(playerBoard.getDamageTrack().getDamage());
     }
 
     public void setScore(int toSet){
@@ -65,6 +81,10 @@ public  class PlayerBoardView implements Serializable {
         return damageView;
     }
 
+    /**
+     * this updates the view board based on the one it's given
+     * @param playerBoard given board
+     */
     public void update(PlayerBoard playerBoard){
         this.front = playerBoard.isFront();
         try{

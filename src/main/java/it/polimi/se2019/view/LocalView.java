@@ -12,12 +12,14 @@ public class LocalView  extends View implements Observer, Serializable {
     private CellView playerPosition;
     private PlayerHandView playerHand;
 
-    public LocalView(ArrayList<PlayerBoardView> playerBoardViews, int playerId, MapView mapView, PlayerHandView playerHand) {
-        this.playerBoardViews = playerBoardViews;
-        this.playerId=playerId;
-        this.mapView = mapView;
-        this.playerHand = playerHand;
-        this.playerPosition = null;
+    public LocalView(int playerId, RemoteView remoteView){
+        this.playerBoardViews = remoteView.getPlayerBoardViews();
+        this.playerId = playerId;
+        this.mapView = remoteView.getMapView();
+        this.playerPosition=remoteView.getMapView().getPlayerPosition(
+                remoteView.getPlayerBoardViews().get(this.playerId).getColor());
+        this.playerHand = remoteView.getPlayerHands().get(playerId);
+
     }
 
     public void setPlayerPosition(CellView playerPosition) {
@@ -48,12 +50,6 @@ public class LocalView  extends View implements Observer, Serializable {
         return playerId;
     }
 
-    public LocalView(int playerId, RemoteView remoteView){
-        this.mapView = remoteView.getMapView();
-        this.playerBoardViews = remoteView.getPlayerBoardViews();
-        this.playerId = playerId;
-        this.playerHand = remoteView.getPlayerHands().get(playerId);
-    }
 
     @Override
     public void update(Observable o, Object remoteView) {

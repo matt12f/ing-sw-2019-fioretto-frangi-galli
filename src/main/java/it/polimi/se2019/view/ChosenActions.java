@@ -15,7 +15,8 @@ import java.util.ArrayList;
 import java.util.function.Predicate;
 
 /**
- * this class is going to send back the objects it received to "select" them
+ * this class is going to send back the objects it received to "select" them.
+ * It's meant to encapsulate the player's choices, asking it which of the available actions it wants to perform
  */
 public class ChosenActions implements Serializable {
     private UserInteraction askUser;

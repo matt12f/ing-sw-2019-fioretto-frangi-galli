@@ -40,10 +40,7 @@ public class Controller{
         return remoteView;
     }
 
-    @Deprecated
-    public LocalView getPlayerLocalView(int playerId) {
-        return new LocalView(remoteView.getPlayerBoardViews(),playerId,remoteView.getMapView(),remoteView.getPlayerHands().get(playerId));
-    }
+
     private void setupBoard(){
         NewCell[][] mapMatrixToFill=mainGameModel.getCurrentMap().getBoardMatrix();
         try {

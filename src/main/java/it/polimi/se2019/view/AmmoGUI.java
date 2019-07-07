@@ -7,15 +7,27 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * this class shows the player the amount of ammo it has.
+ * It also includes a button to send action requests that is not enabled when it's not the player's turn,
+ * it's turned on to invite the player to play its turn.
+ *
+ */
 public class AmmoGUI extends JPanel {
     private JButton actionButton;
 
     private JLabel blueAmmo;
     private JLabel redAmmo;
     private JLabel yellowAmmo;
+    private String turnMessage;
 
+    /**
+     * this constructor builds the graphics
+     * @param ammo is the ammo of the current player
+     */
     public AmmoGUI(AmmoView ammo){
-        this.actionButton = new JButton("ACTIONS");
+        this.turnMessage="Wait to select actions";
+        this.actionButton = new JButton(this.turnMessage);
         GridBagConstraints container =new GridBagConstraints();
         this.actionButton.setEnabled(false);
 
@@ -44,18 +56,27 @@ public class AmmoGUI extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 AdrenalineClient.setActionRequested( new ActionRequestView(AdrenalineClient.isLast()));
+                turnMessage="Wait to select actions";
                 actionButton.setEnabled(false);
             }
         });
     }
 
+    /**
+     * this updates the ammo counters
+     * @param ammo is the ammo to update them with
+     */
     public void updateAmmo(AmmoView ammo){
         this.blueAmmo.setText("BLUE:"+ ammo.getBLUE());
         this.redAmmo.setText("RED:"+ ammo.getRED());
         this.yellowAmmo.setText("YELLOW:"+ ammo.getYELLOW());
     }
 
+    /**
+     * this method enables the action button when it's the player's turn
+     */
     public void updateActionsButton(){
+        turnMessage="Premi per scegliere azione!";
         actionButton.setEnabled(true);
     }
 }

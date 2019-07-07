@@ -127,6 +127,7 @@ public class GameModel extends Observable{
             }
             if(player.getPlayerBoard().getDamageTrack().hasNoDamage()) //All players with no damage switch to final frenzy tiles
                 player.getPlayerBoard().flipPlayerBoard();
+
             player.getPlayerBoard().activateFrenzy(actions);
         }
     }

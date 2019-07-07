@@ -18,7 +18,7 @@ public class GameBoardGui  {
     private BoardZoneGUI boardZone;
     private boolean frenzyStatus = false;
 
-    public GameBoardGui(int config, ArrayList<PlayerBoardView> opponentBoards, PlayerBoardView ownerBoard, CellView[][] boardMatrix){
+    public GameBoardGui(int config, ArrayList<PlayerBoardView> allBoards, PlayerBoardView ownerBoard, CellView[][] boardMatrix){
         Frame frame = new Frame("ADRENALINE");
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
@@ -33,7 +33,7 @@ public class GameBoardGui  {
         mainPanel.add(map, container);
 
 
-        this.boardZone = new BoardZoneGUI(opponentBoards, ownerBoard, 0);
+        this.boardZone = new BoardZoneGUI(allBoards, ownerBoard, 0);
         container.gridx=1;
         container.gridy=1;
         mainPanel.add(boardZone, container);

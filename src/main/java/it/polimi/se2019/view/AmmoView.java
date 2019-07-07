@@ -1,5 +1,7 @@
 package it.polimi.se2019.view;
 
+import it.polimi.se2019.model.game.Ammo;
+
 import java.io.Serializable;
 
 public class AmmoView  implements Serializable {
@@ -7,10 +9,10 @@ public class AmmoView  implements Serializable {
     private int blue;
     private int yellow;
 
-    public AmmoView(){
-        this.blue = 1;
-        this.red = 1;
-        this.yellow = 1;
+    public AmmoView(Ammo ammo){
+        this.blue = ammo.getBlue();
+        this.red = ammo.getRed();
+        this.yellow = ammo.getYellow();
     }
 
     public void setRED(int red) {

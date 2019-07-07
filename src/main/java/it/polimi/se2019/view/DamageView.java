@@ -7,11 +7,11 @@ public class DamageView implements Serializable {
     private char[] damage;
     private ArrayList<Character> marks;
 
-    public DamageView(){
+    public DamageView(char [] damageFromModel){
         this.damage = new char[12];
-        for (int i = 0; i < 12; i++) {
-            this.damage[i] = 0;
-        }
+        for (int i = 0; i < 12; i++)
+            this.damage[i] = damageFromModel[i];
+
     }
 
     public void setDamage(char[] damage) {

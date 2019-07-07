@@ -22,7 +22,6 @@ import java.util.logging.Logger;
  */
 public class FictitiousPlayer implements Serializable {
     private Player correspondingPlayer;
-    private static final Logger LOGGER = Logger.getLogger(FictitiousPlayer.class.getName());
     private int playerId;
     private Color playerColor;
     private NewCell position;
