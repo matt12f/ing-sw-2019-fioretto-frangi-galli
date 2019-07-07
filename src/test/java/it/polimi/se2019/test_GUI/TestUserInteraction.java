@@ -17,6 +17,7 @@ public class TestUserInteraction {
     public static void main(String[] args) {
 
         askUser=new UserInteractionGUI();
+        testShowMessage();
         //askUser=new UserInteractionCLI();
 
        // testGunReload();

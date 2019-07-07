@@ -221,11 +221,13 @@ public class UserInteractionGUI extends UserInteraction {
 
     @Override
     public void showMessage(String message) {
+        JLabel mex = new JLabel(message);
+
         JDialog dialog = new JDialog();
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         dialog.setModal(true);
         dialog.setTitle("Finestra di selezione");
-        dialog.getContentPane().add(new JLabel(message));
+        dialog.getContentPane().add(mex);
         dialog.pack();
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
