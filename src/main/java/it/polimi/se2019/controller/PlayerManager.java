@@ -29,7 +29,7 @@ public class PlayerManager  {
                 playersAlive.add(player);
 
         for(Player player:playersAlive)
-            adrenalineManager(player);
+            adrenalineManager(currentController, player);
 
         //scoring section
         //if there are dead players we must score their boards
@@ -51,7 +51,7 @@ public class PlayerManager  {
 
         //adrenaline and damage track reset
         for (Player deadPlayer: currentController.getMainGameModel().getDeadPlayers())
-            adrenalineReset(deadPlayer);
+            adrenalineReset(currentController, deadPlayer);
 
         //here we'll update the RemoteView
         currentController.getMainGameModel().notifyRemoteView();
@@ -343,7 +343,10 @@ public class PlayerManager  {
     /**
      * this method enables the adrenaline modes in the player boards of a given player
      */
-    private static void adrenalineManager(Player player){
+    private static void adrenalineManager(Controller currentController, Player player){
+        player=currentController.getMainGameModel().getPlayerList().get(
+                currentController.getMainGameModel().getPlayerList().indexOf(player));
+
         if(player.getPlayerBoard().getDamageTrack().getDamage().length >= 3)
             player.getPlayerBoard().getActionTileNormal().setAdrenalineMode1(true);
 
@@ -356,7 +359,10 @@ public class PlayerManager  {
      * this method deactivates both adrenaline modes for players that have died
      * and also resets their damage tracks
      */
-    private static void adrenalineReset(Player player){
+    private static void adrenalineReset(Controller currentController, Player player){
+        player=currentController.getMainGameModel().getPlayerList().get(
+                currentController.getMainGameModel().getPlayerList().indexOf(player));
+
         player.getPlayerBoard().getDamageTrack().resetDmgTrack();
         player.getPlayerBoard().getActionTileNormal().setAdrenalineMode1(false);
         player.getPlayerBoard().getActionTileNormal().setAdrenalineMode2(false);

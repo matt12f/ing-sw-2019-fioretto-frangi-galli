@@ -311,13 +311,13 @@ public class UserInteractionGUI extends UserInteraction {
 
 
         JPanel buttons = new JPanel();
-        if(cards[0] != null && reloadableCards[0]){
+        if(cards[0] != null && !reloadableCards[0]){
             buttons.add(weapon1Check);
         }
-        if(cards[1] != null && reloadableCards[1]){
+        if(cards[1] != null && !reloadableCards[1]){
             buttons.add(weapon2Check);
         }
-        if(cards[2] != null && reloadableCards[2]){
+        if(cards[2] != null && !reloadableCards[2]){
             buttons.add(weapon3Check);
         }
 

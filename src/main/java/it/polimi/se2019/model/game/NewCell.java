@@ -43,7 +43,7 @@ public class NewCell implements Serializable {
 
         if(cellType.equals(CellType.SPAWN)){
             this.drop=null;
-            this.weaponCards= new ArrayList<>();
+            this.weaponCards= new ArrayList<>(3);
         }
     }
 

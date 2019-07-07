@@ -120,7 +120,8 @@ public class MapViewGUI extends JPanel {
         weaponblue1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(0) != null){
+                if(!boardMatrix[0][2].getCorrespondingCell().getWeaponCards().isEmpty() && boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(0)!=null)
+                {
                     WeaponMenuGUI frame =new WeaponMenuGUI(boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(0));
                     frame.setVisible(true);
                 }
@@ -128,7 +129,8 @@ public class MapViewGUI extends JPanel {
         weaponblue2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(1) != null){
+                if(!boardMatrix[0][2].getCorrespondingCell().getWeaponCards().isEmpty() && boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(1)!=null)
+                {
                     WeaponMenuGUI frame =new WeaponMenuGUI(boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(1));
                     frame.setVisible(true);
                 }
@@ -136,7 +138,8 @@ public class MapViewGUI extends JPanel {
         weaponblue3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(2) != null){
+                if(!boardMatrix[0][2].getCorrespondingCell().getWeaponCards().isEmpty() && boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(2)!=null)
+                {
                     WeaponMenuGUI frame =new WeaponMenuGUI(boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(2));
                     frame.setVisible(true);
                 }
@@ -146,8 +149,9 @@ public class MapViewGUI extends JPanel {
         weaponred1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(0) != null){
-                    WeaponMenuGUI frame =new WeaponMenuGUI(boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(0));
+                if(!boardMatrix[1][0].getCorrespondingCell().getWeaponCards().isEmpty() && boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(0)!=null)
+                {
+                    WeaponMenuGUI frame =new WeaponMenuGUI(boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(0));
                     frame.setVisible(true);
                 }
             }});
@@ -155,16 +159,18 @@ public class MapViewGUI extends JPanel {
         weaponred2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(1) != null){
-                    WeaponMenuGUI frame =new WeaponMenuGUI(boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(1));
+                if(!boardMatrix[1][0].getCorrespondingCell().getWeaponCards().isEmpty() && boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(1)!=null)
+                {
+                    WeaponMenuGUI frame =new WeaponMenuGUI(boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(1));
                     frame.setVisible(true);
                 }
             }});
         weaponred3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(2) != null){
-                    WeaponMenuGUI frame =new WeaponMenuGUI(boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(2));
+                if(!boardMatrix[1][0].getCorrespondingCell().getWeaponCards().isEmpty() && boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(2)!=null)
+                {
+                    WeaponMenuGUI frame =new WeaponMenuGUI(boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(2));
                     frame.setVisible(true);
                 }
             }});
@@ -176,8 +182,9 @@ public class MapViewGUI extends JPanel {
         weaponyellow1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(0) != null){
-                    WeaponMenuGUI frame =new WeaponMenuGUI(boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(0));
+                if(!boardMatrix[2][3].getCorrespondingCell().getWeaponCards().isEmpty() && boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(0)!=null)
+                {
+                    WeaponMenuGUI frame =new WeaponMenuGUI(boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(0));
                     frame.setVisible(true);
                 }
             }});
@@ -185,8 +192,9 @@ public class MapViewGUI extends JPanel {
         weaponyellow2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(1) != null){
-                    WeaponMenuGUI frame =new WeaponMenuGUI(boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(1));
+                if(!boardMatrix[2][3].getCorrespondingCell().getWeaponCards().isEmpty() && boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(1)!=null)
+                {
+                    WeaponMenuGUI frame =new WeaponMenuGUI(boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(1));
                     frame.setVisible(true);
                 }
             }});
@@ -194,8 +202,9 @@ public class MapViewGUI extends JPanel {
         weaponyellow3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(2) != null){
-                    WeaponMenuGUI frame =new WeaponMenuGUI(boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(2));
+                if(!boardMatrix[2][3].getCorrespondingCell().getWeaponCards().isEmpty() && boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(2)!=null)
+                {
+                    WeaponMenuGUI frame =new WeaponMenuGUI(boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(2));
                     frame.setVisible(true);
                 }
             }});
@@ -215,24 +224,55 @@ public class MapViewGUI extends JPanel {
         //section that updates weapons
         if(!boardMatrix[0][2].getCorrespondingCell().getWeaponCards().isEmpty() && boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(0)!=null)
             weaponblue1.updateImage(boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(0), false);
+        else
+            weaponblue1.updateImage(null, false);
+
         if(boardMatrix[0][2].getCorrespondingCell().getWeaponCards().size()>=2 && boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(1)!=null)
             weaponblue2.updateImage(boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(1), false);
+        else
+            weaponblue2.updateImage(null, false);
+
+
         if(boardMatrix[0][2].getCorrespondingCell().getWeaponCards().size()>=3 && boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(2)!=null)
             weaponblue3.updateImage(boardMatrix[0][2].getCorrespondingCell().getWeaponCards().get(2), false);
+        else
+            weaponblue3.updateImage(null, false);
+
 
         if(!boardMatrix[1][0].getCorrespondingCell().getWeaponCards().isEmpty() && boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(0)!=null)
             weaponred1.updateImage(boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(0), true);
+        else
+            weaponred1.updateImage(null, false);
+
+
         if(boardMatrix[1][0].getCorrespondingCell().getWeaponCards().size()>=2 && boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(1)!=null)
             weaponred2.updateImage(boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(1), true);
+        else
+            weaponred2.updateImage(null, false);
+
+
         if(boardMatrix[1][0].getCorrespondingCell().getWeaponCards().size()>=3 && boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(2)!=null)
             weaponred3.updateImage(boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(2), true);
+        else
+            weaponred3.updateImage(null, false);
+
 
         if(!boardMatrix[2][3].getCorrespondingCell().getWeaponCards().isEmpty() && boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(0)!=null)
             weaponyellow1.updateImage(boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(0), true);
+        else
+            weaponyellow1.updateImage(null, false);
+
+
         if(boardMatrix[2][3].getCorrespondingCell().getWeaponCards().size()>=2 && boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(1)!=null)
             weaponyellow2.updateImage(boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(1), true);
+        else
+            weaponyellow2.updateImage(null, false);
+
+
         if(boardMatrix[2][3].getCorrespondingCell().getWeaponCards().size()>=3 && boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(2)!=null)
             weaponyellow3.updateImage(boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(2), true);
+        else
+            weaponyellow3.updateImage(null, false);
 
 
 
