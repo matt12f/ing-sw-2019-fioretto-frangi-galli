@@ -495,14 +495,7 @@ public class GameHandler implements Runnable {
         try {
             clientTurn.setTagBackUsage();
         } catch (IOException e) {
-            System.out.println("problemi granta");
-        }
-        while(clientTurn.getStatus() == Status.TAGBACKUSAGE){
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-                LOGGER.log(Level.FINE,"get tagback usage",e);
-            }
+            e.printStackTrace();
         }
     }
     private void getTargettingScopeUsage(ClientHandler clientTurn){
@@ -512,14 +505,6 @@ public class GameHandler implements Runnable {
             System.out.println("problemi IO granata");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        }
-        clientTurn.setStatus(Status.TRGSCOPE);
-        while(clientTurn.getStatus() == Status.TRGSCOPE){
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-                LOGGER.log(Level.FINE,"get targetting scope usage",e);
-            }
         }
     }
 
