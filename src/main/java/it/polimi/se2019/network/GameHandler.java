@@ -135,8 +135,13 @@ public class GameHandler implements Runnable {
                 PlayerManager.choiceExecutor(controller, clientTurn.getChosenAction());
                 managePowerUps(PlayerManager.choiceExecutor(controller, clientTurn.getChosenAction()));
                 MapManager.refillEmptiedCells(controller.getMainGameModel().getCurrentMap().getBoardMatrix(),controller.getMainGameModel().getCurrentDecks());
+                this.controller.getMainGameModel().notifyRemoteView();
                 try {
-                    postAction();
+                    try {
+                        postAction();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 } catch (InterruptedException e) {
                     LOGGER.log(Level.FINE,"3rd exception",e);
                 }
@@ -238,13 +243,13 @@ public class GameHandler implements Runnable {
         }
     }
 
-    private void postAction() throws InterruptedException {
+    private void postAction() throws InterruptedException, IOException {
         for (ClientHandler player: players) {
-            try {
+            //try {
                 player.sendLocalView();
-            } catch (IOException e) {
+            /*} catch (IOException e) {
                 System.out.println("problema invio local view a fine turno");
-            }
+            }*/
         }
     }
 

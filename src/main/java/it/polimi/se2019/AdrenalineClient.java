@@ -243,9 +243,7 @@ public class AdrenalineClient {
                 if(isGUI()){
                     PowerupCard cardForSpawn = userInteractionGUI.spawnChooser(localView.getPlayerHand().getPowerups(), localView.getPlayerHand().getAdditionalPowerup());
                     connection.getOutput().writeObject(cardForSpawn);
-                    String mxg = (String) connection.getInput().readObject();
-                    connection.getOutput().writeBoolean(true);
-                    connection.getOutput().flush();
+                    connection.getInput().readObject();
                     updateLocalView();
                     displayBoard();
                 }
@@ -279,7 +277,6 @@ public class AdrenalineClient {
                 connection.getOutput().flush();
                 System.out.println("b");
                 actionNumber = connection.getInput().readInt();
-                System.out.println("numero azioni");
                 while(actionNumber > 0){
                     gameBoardGui.enableActionsButton();
                     actionNumber --;
@@ -293,12 +290,15 @@ public class AdrenalineClient {
                         e.printStackTrace();
                     }
                     status = (String) connection.getInput().readObject();
-                    if(status.equals("TARGETINGSCOPE"))
+                    if(status.equals("TARGETINGSCOPE")) {
                         targetScope();
-                    connection.getInput().readObject();
+                        connection.getInput().readObject();
+                    }
                     updateLocalView();
+                    System.out.println("update aggiornata");
                     if (actionNumber == 0)
                         last = true;
+                    displayBoard();
                 }
                 actionRequested = new ActionRequestView(true);
                 connection.getOutput().writeObject(actionRequested);
@@ -341,8 +341,10 @@ public class AdrenalineClient {
     private static void waitForInfo() throws IOException, ClassNotFoundException {
         String message;
         message = (String) connection.getInput().readObject();
-        if (message.equals("TAGBACKUSAGE"))
+        if (message.equals("TAGBACKUSAGE")){
             granade();
+            connection.getInput().readObject();
+        }
     }
 
     private static void granade() throws IOException {
@@ -364,6 +366,8 @@ public class AdrenalineClient {
     }
 
     private static void updateLocalView() throws IOException, ClassNotFoundException {
+        connection.getOutput().writeBoolean(true);
+        connection.getOutput().flush();
         localView = (LocalView) connection.getInput().readObject();
     }
 
