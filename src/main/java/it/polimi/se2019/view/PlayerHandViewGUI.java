@@ -153,11 +153,4 @@ public class PlayerHandViewGUI extends JPanel {
 
     }
 
-    /**
-     *
-     * @return  the data of the ammo in the player's hand
-     */
-    protected AmmoGUI getAmmo() {
-        return ammo;
-    }
 }

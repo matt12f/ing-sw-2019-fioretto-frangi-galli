@@ -92,10 +92,4 @@ public class GameBoardGUI {
         //TODO aggiornare il frenzy
     }
 
-    /**
-     * this method enables the action button for the player that will select the actions to
-     */
-    public void enableActionsButton(){
-        this.playerZone.getHand().getAmmo().updateActionsButton();
-    }
 }

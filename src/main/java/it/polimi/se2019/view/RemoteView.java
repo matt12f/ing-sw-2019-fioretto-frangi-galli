@@ -64,20 +64,23 @@ public class RemoteView  extends View {
         GunCard gunCard;
         this.mapView.getKillView().update(model.getKillshotTrack());
         this.mapView.uploadBoardMatrix(model.getCurrentMap().getBoardMatrix());
-
+        int indexOfPlayer;
         for (PlayerBoardView player: playerBoardViews) {
-            player.update(model.getPlayerList().get(playerBoardViews.indexOf(player)).getPlayerBoard());
+            indexOfPlayer=playerBoardViews.indexOf(player);
 
-            this.playerHands.get(playerBoardViews.indexOf(player)).setPowerups(model.getPlayerList().get(playerBoardViews.indexOf(player)).getPlayerBoard().getHand().getPowerups());
-            this.playerHands.get(playerBoardViews.indexOf(player)).setAdditionalPowerup(model.getPlayerList().get(playerBoardViews.indexOf(player)).getPlayerBoard().getHand().getAdditionalPowerup());
-            this.playerHands.get(playerBoardViews.indexOf(player)).setGuns(model.getPlayerList().get(playerBoardViews.indexOf(player)).getPlayerBoard().getHand().getGuns());
+            player.update(model.getPlayerList().get(indexOfPlayer).getPlayerBoard());
+
+
+            this.playerHands.get(indexOfPlayer).setPowerups(model.getPlayerList().get(indexOfPlayer).getPlayerBoard().getHand().getPowerups());
+            this.playerHands.get(indexOfPlayer).setAdditionalPowerup(model.getPlayerList().get(indexOfPlayer).getPlayerBoard().getHand().getAdditionalPowerup());
+            this.playerHands.get(indexOfPlayer).setGuns(model.getPlayerList().get(indexOfPlayer).getPlayerBoard().getHand().getGuns());
+
             for (int i = 0; i < Hand.getMaxcards() ; i++) {
-                gunCard = model.getPlayerList().get(playerBoardViews.indexOf(player)).getPlayerBoard().getHand().getGuns()[i];
+                gunCard = model.getPlayerList().get(indexOfPlayer).getPlayerBoard().getHand().getGuns()[i];
                 if(gunCard != null)
                     loaded[i] = gunCard.isLoaded();
             }
-            this.playerHands.get(playerBoardViews.indexOf(player)).setPowerups(model.getPlayerList().get(playerBoardViews.indexOf(player)).getPlayerBoard().getHand().getPowerups());
-            this.playerHands.get(playerBoardViews.indexOf(player)).setLoadedGuns(loaded);
+            this.playerHands.get(indexOfPlayer).setLoadedGuns(loaded);
         }
         notifyLocalViews();
     }
