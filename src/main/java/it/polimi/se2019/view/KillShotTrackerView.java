@@ -11,7 +11,7 @@ public class KillShotTrackerView  implements Serializable {
     private ArrayList<Character> extraKills;
 
     /**
-     * create view structure for the killshot tracking
+     * create view structure for the killshot track
      * @param skulls number of maximum kills
      */
     public KillShotTrackerView(int skulls){
@@ -49,7 +49,6 @@ public class KillShotTrackerView  implements Serializable {
 
     /**
      * update the number of kills
-     * @param kills
      */
     public void setKills(String[] kills) {
         this.kills = kills;
@@ -68,7 +67,6 @@ public class KillShotTrackerView  implements Serializable {
 
     /**
      * set the number of the maxmum kills allowed
-     * @param skulls
      */
     public void setSkulls(int skulls) {
         this.skulls = skulls;

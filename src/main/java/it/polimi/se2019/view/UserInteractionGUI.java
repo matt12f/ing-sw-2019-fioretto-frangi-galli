@@ -26,7 +26,7 @@ public class UserInteractionGUI extends UserInteraction {
      * @return the player's choice
      */
     @Override
-    public String actionToRequest(int frenzy){
+    public String actionToRequest(int frenzy,String playerColor){
 
         JLabel label = new JLabel("Che macro azione vuoi fare?");
 
@@ -347,7 +347,7 @@ public class UserInteractionGUI extends UserInteraction {
     public void ammoTileViewer(String content){
 
         JPanel body = new JPanel(new BorderLayout(8, 8));
-        ImageIcon pic = new ImageIcon(new ImageIcon("src/main/sprite/ammo/ammo_"+ content +".png").getImage().getScaledInstance(150,150, Image.SCALE_DEFAULT));
+        ImageIcon pic = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/ammo/ammo_"+ content +".png")).getImage().getScaledInstance(150,150, Image.SCALE_DEFAULT));
         JLabel image = new JLabel(pic);
         image.setIcon(pic);
 
