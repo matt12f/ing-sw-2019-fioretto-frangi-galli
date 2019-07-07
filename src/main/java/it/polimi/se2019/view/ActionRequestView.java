@@ -46,6 +46,7 @@ public class ActionRequestView implements Serializable {
 
     /**
      * this method covers the offer of the powerups newton and teleporter before the macro actions
+     * @param localView is the localview
      */
     private ArrayList<PowerupUse> powerupManagerView(LocalView localView) {
         ArrayList<PowerupUse> temp=new ArrayList<>();
@@ -75,7 +76,7 @@ public class ActionRequestView implements Serializable {
             }
             else if(cardView[i]!=null && cardView[i].getPowerupType().equals("Teleporter") && this.askUser.yesOrNo("vuoi usare un PowerUp Teletrasporto?","Si","No")){
 
-                CellView yourPosition = localView.getMapView().getPlayerPosition(localView.getPersonalPlayerBoardView().getColor());
+                CellView yourPosition = localView.getPlayerPosition();
                 ArrayList<Coordinates> coordinates = localView.getMapView().availableCoordinates(yourPosition);
 
                 ArrayList<String> coordToChooseFrom=new ArrayList<>();
@@ -140,24 +141,23 @@ public class ActionRequestView implements Serializable {
     private ArrayList<Integer> getMaxDistance(ArrayList<String> directionsAvailable, CellView positionOfTarget) {
         ArrayList<Integer> distances =new ArrayList<>();
 
-        for(int i=0;i<directionsAvailable.size();i++){
-            distances.add(i,1);
+        for(int i=0;i < directionsAvailable.size();i++){
             //Checks if the next cell in the same direction has a wall or if the player can be moved there
             switch (directionsAvailable.get(i)){
                 case "Up": {
-                    if (AdrenalineClient.getLocalView().getMapView().getCell(positionOfTarget.getLineIndex() - 1, positionOfTarget.getColumnIndex()).getCorrespondingCell().getEdge(0).equals(CellEdge.WALL))
+                    if (!AdrenalineClient.getLocalView().getMapView().getCell(positionOfTarget.getLineIndex() - 1, positionOfTarget.getColumnIndex()).getCorrespondingCell().getEdge(0).equals(CellEdge.WALL))
                         distances.set(i,2);
                 }break;
                 case "Down": {
-                    if (AdrenalineClient.getLocalView().getMapView().getCell(positionOfTarget.getLineIndex() + 1, positionOfTarget.getColumnIndex()).getCorrespondingCell().getEdge(1).equals(CellEdge.WALL))
+                    if (!AdrenalineClient.getLocalView().getMapView().getCell(positionOfTarget.getLineIndex() + 1, positionOfTarget.getColumnIndex()).getCorrespondingCell().getEdge(1).equals(CellEdge.WALL))
                         distances.set(i,2);
                 }break;
                 case "Left": {
-                    if (AdrenalineClient.getLocalView().getMapView().getCell(positionOfTarget.getLineIndex(), positionOfTarget.getColumnIndex()-1).getCorrespondingCell().getEdge(2).equals(CellEdge.WALL))
+                    if (!AdrenalineClient.getLocalView().getMapView().getCell(positionOfTarget.getLineIndex(), positionOfTarget.getColumnIndex()-1).getCorrespondingCell().getEdge(2).equals(CellEdge.WALL))
                         distances.set(i,2);
                 }break;
                 case "Right": {
-                    if (AdrenalineClient.getLocalView().getMapView().getCell(positionOfTarget.getLineIndex(), positionOfTarget.getColumnIndex()+1).getCorrespondingCell().getEdge(3).equals(CellEdge.WALL))
+                    if (!AdrenalineClient.getLocalView().getMapView().getCell(positionOfTarget.getLineIndex(), positionOfTarget.getColumnIndex()+1).getCorrespondingCell().getEdge(3).equals(CellEdge.WALL))
                         distances.set(i,2);
                 }break;
             }

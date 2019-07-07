@@ -65,6 +65,8 @@ public class GameHandler implements Runnable {
     @Override
     public void run() {
         ClientHandler clientTurn;
+        boolean accepted;
+        String confirm = "";
         //scelta rotazione e assegnamento pedina
         setClientColor();
         for (ClientHandler player: players) {
@@ -140,6 +142,7 @@ public class GameHandler implements Runnable {
                 e.printStackTrace();
             }
             for(int i = 0; i<controller.getActiveTurn().getActivePlayer().getPlayerBoard().getActionTileNormal().getActionCounter(); i++) {
+                accepted = false;
                 lastAction = (i == (controller.getActiveTurn().getActivePlayer().getPlayerBoard().getActionTileNormal().getActionCounter() -1));
                 for (ClientHandler client: players) {
                     if (!clientTurn.getNickname().equals(client.getNickname())) {
@@ -151,9 +154,20 @@ public class GameHandler implements Runnable {
                         }
                     }
                 }
-                waitingRequest(clientTurn);
-                calculateActions(clientTurn);
-                sendAvailable(clientTurn);
+                do {
+                    waitingRequest(clientTurn);
+                    calculateActions(clientTurn);
+                    sendAvailable(clientTurn);
+                    try {
+                        confirm = (String) clientTurn.getInput().readObject();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    if(confirm.equals("OK"))
+                        accepted = true;
+                }while(!accepted);
                 getChosenAction(clientTurn);
                 managePowerUps(PlayerManager.choiceExecutor(controller, clientTurn.getChosenAction()));
                 this.controller.getMainGameModel().notifyRemoteView();
@@ -245,6 +259,7 @@ public class GameHandler implements Runnable {
                 e.printStackTrace();
             }
             for(int i = 0; i<controller.getActiveTurn().getActivePlayer().getPlayerBoard().getActionTileNormal().getActionCounter(); i++) {
+                accepted = false;
                 lastAction = (i == (controller.getActiveTurn().getActivePlayer().getPlayerBoard().getActionTileNormal().getActionCounter() -1));
                 for (ClientHandler client: players) {
                     if (!clientTurn.getNickname().equals(client.getNickname())) {
@@ -256,11 +271,25 @@ public class GameHandler implements Runnable {
                         }
                     }
                 }
-                waitingRequest(clientTurn);
-                calculateActions(clientTurn);
-                sendAvailable(clientTurn);
+                do {
+                    waitingRequest(clientTurn);
+                    calculateActions(clientTurn);
+                    sendAvailable(clientTurn);
+                    try {
+                        confirm = (String) clientTurn.getInput().readObject();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    if(confirm.equals("OK"))
+                        accepted = true;
+
+                }while(!accepted);
                 getChosenAction(clientTurn);
                 managePowerUps(PlayerManager.choiceExecutor(controller, clientTurn.getChosenAction()));
+                if(lastAction)
+                    MapManager.refillEmptiedCells(controller.getMainGameModel().getCurrentMap().getBoardMatrix(),controller.getMainGameModel().getCurrentDecks());
                 this.controller.getMainGameModel().notifyRemoteView();
                 try {
                     try {
@@ -317,7 +346,6 @@ public class GameHandler implements Runnable {
                     }
                 }
             }
-            MapManager.refillEmptiedCells(controller.getMainGameModel().getCurrentMap().getBoardMatrix(),controller.getMainGameModel().getCurrentDecks());
             controller.getActiveTurn().nextTurn(controller);
             for (ClientHandler clientHandler: players) {
                 try {

@@ -121,7 +121,7 @@ public class RocketLauncher extends GunCardAddEff {
     }
 
     /**
-     * this applies the base/base+Opt2 && moves you after that
+     * this applies the base/base+Opt2 and moves you after that
 
      * @param currentController it the current controller of the game
      * @param playersChoice are the choices the player wants to apply
@@ -210,7 +210,7 @@ public class RocketLauncher extends GunCardAddEff {
     /**
      * During the basic effect, deal 1 damage to every player on your target's original square – including the target, even if you move it.
      *
-     * adds to actions: cells where you can move & hit a target + cells where you can move the target after you've hit it
+     * adds to actions: cells where you can move and hit a target + cells where you can move the target after you've hit it
      * @param currentController it the current controller of the game
      * @param actions is the container of the actions
      * @param player contains the attributes of the player to calculate the actions upon

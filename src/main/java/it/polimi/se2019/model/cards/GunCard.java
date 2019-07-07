@@ -52,60 +52,26 @@ public abstract class GunCard implements Serializable {
     /**
      * This method calls the single effects method and applies the player's choices, using the methods below
      */
-    /**
-     *
-     * @param currentController
-     * @param playersChoices
-     */
     public abstract void applyEffects(Controller currentController, ChosenActions playersChoices);
 
     /**
      *This method builds the available actions, returning an exception in case there are no targets
-     */
-    /**
-     *
-     * @param currentController
-     * @param player
-     * @param effectsCombination
-     * @return
-     * @throws UnavailableEffectCombinationException
      */
     public abstract SingleEffectsCombinationActions buildAvailableActions(Controller currentController, FictitiousPlayer player, ArrayList<String> effectsCombination) throws UnavailableEffectCombinationException;
 
     /**
      * methods that apply the individual effects, with the selections of the player as inputs
      */
-    /**
-     *
-     * @param currentController
-     * @param playersChoice
-     */
     abstract void applyBaseEffect(Controller currentController, ChosenActions playersChoice);
 
-    /**
-     *
-     * @param currentController
-     * @param playersChoice
-     */
+
     abstract void applySecondaryEffect(Controller currentController, ChosenActions playersChoice);
 
-    /**
-     * Methods to calculate the possible targets that return a SingleEffectAction
-     */
-    /**
-     *
-     * @param currentController
-     * @param actions
-     * @param player
-     */
+
+    //Methods to calculate the possible targets that return a SingleEffectAction
+
     abstract void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player);
 
-    /**
-     *
-     * @param currentController
-     * @param actions
-     * @param player
-     */
     abstract void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player);
 
 

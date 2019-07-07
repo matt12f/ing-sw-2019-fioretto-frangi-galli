@@ -51,4 +51,14 @@ public class GunDeck {
         activeDeck.remove(0);
         return drawn;
     }
+
+
+     /**
+      * @return shows the first card without removing it
+     */
+    public GunCard peek(){
+        return activeDeck.get(0);
+    }
+
+
 }

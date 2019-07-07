@@ -113,7 +113,7 @@ public class NewCell implements Serializable {
 
     public AmmoTileCard getDrop(){
         if(this.getCellType().equals(CellType.DROP))
-            return  drop;
+            return drop;
         else
             return null;
     }

@@ -3,6 +3,7 @@ package it.polimi.se2019.network;
 import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.enums.Status;
 
+import java.io.IOException;
 import java.util.Timer;
 
 //this class monitors the lobby to check if there are the conditions to start the game
@@ -17,8 +18,8 @@ public class LobbyMonitor implements Runnable{
         boolean timerStarted = false;
         Timer timer = new Timer();
         Thread thread;
-        long time = 10; //todo settare tempo timer prendendolo da file
-        GameStarter gameToStart = new GameStarter();
+        long time = 1000*10; //todo settare tempo timer prendendolo da file
+        GameStarter gameToStart;
         while(condition) {
             try {
                 Thread.sleep(100);

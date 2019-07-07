@@ -19,7 +19,7 @@ public class PlayerManager  {
     /**
      * This method scores all of the boards at the end of a turn
      *
-     * Note: more than one killshot in one turn -> awards you a point
+     * Note: more than one killshot in one turn : awards you a point
      */
     public static void scoringProcess(Controller currentController){
         //activating adrenaline modes for alive players
@@ -29,7 +29,7 @@ public class PlayerManager  {
                 playersAlive.add(player);
 
         for(Player player:playersAlive)
-            adrenalineManager(player);
+            adrenalineManager(currentController, player);
 
         //scoring section
         //if there are dead players we must score their boards
@@ -51,7 +51,7 @@ public class PlayerManager  {
 
         //adrenaline and damage track reset
         for (Player deadPlayer: currentController.getMainGameModel().getDeadPlayers())
-            adrenalineReset(deadPlayer);
+            adrenalineReset(currentController, deadPlayer);
 
         //here we'll update the RemoteView
         currentController.getMainGameModel().notifyRemoteView();
@@ -66,8 +66,8 @@ public class PlayerManager  {
      * update of killshot track:
      *      - 1 damage token of color of player that dealt the killshot; 2 if it dealt also overkill
      *
-     * Note: a kill happens on the 11th damage given -> 1 token on the KST; -> the board gets scored at the end of the turn
-     * Note: an overkill happens on the 12th damage given -> double token on the KST; you get a mark from the player you overkilled
+     * Note: a kill happens on the 11th damage given : 1 token on the KST; : the board gets scored at the end of the turn
+     * Note: an overkill happens on the 12th damage given : double token on the KST; you get a mark from the player you overkilled
      * Note: in frenzy, boards in frenzy mode do not offer first blood points
      *
      * @param board is the board to score
@@ -343,7 +343,10 @@ public class PlayerManager  {
     /**
      * this method enables the adrenaline modes in the player boards of a given player
      */
-    private static void adrenalineManager(Player player){
+    private static void adrenalineManager(Controller currentController, Player player){
+        player=currentController.getMainGameModel().getPlayerList().get(
+                currentController.getMainGameModel().getPlayerList().indexOf(player));
+
         if(player.getPlayerBoard().getDamageTrack().getDamage().length >= 3)
             player.getPlayerBoard().getActionTileNormal().setAdrenalineMode1(true);
 
@@ -356,7 +359,10 @@ public class PlayerManager  {
      * this method deactivates both adrenaline modes for players that have died
      * and also resets their damage tracks
      */
-    private static void adrenalineReset(Player player){
+    private static void adrenalineReset(Controller currentController, Player player){
+        player=currentController.getMainGameModel().getPlayerList().get(
+                currentController.getMainGameModel().getPlayerList().indexOf(player));
+
         player.getPlayerBoard().getDamageTrack().resetDmgTrack();
         player.getPlayerBoard().getActionTileNormal().setAdrenalineMode1(false);
         player.getPlayerBoard().getActionTileNormal().setAdrenalineMode2(false);

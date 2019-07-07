@@ -23,7 +23,7 @@ public class CellViewGUI extends JPanel {
                 }else
                     matrixGUI[i][j]=new SquareGUI("EMPTY","");
 
-        if(!cell.getDrop().equals("spawn"))
+        if(cell.getDrop()!=null && !cell.getDrop().equals("spawn"))
             matrixGUI[2][2].updateContent("DROP",cell.getDrop());
         else
             matrixGUI[2][2].updateContent("EMPTY","");
@@ -58,7 +58,7 @@ public class CellViewGUI extends JPanel {
                 }else 
                     matrixGUI[i][j].updateContent("EMPTY","");
 
-        if(!cell.getDrop().equals("spawn") && cell.getDrop()!=null)
+        if(cell.getDrop()!=null && !cell.getDrop().equals("spawn"))
             matrixGUI[2][2].updateContent("DROP",cell.getDrop());
         else
             matrixGUI[2][2].updateContent("EMPTY","");
