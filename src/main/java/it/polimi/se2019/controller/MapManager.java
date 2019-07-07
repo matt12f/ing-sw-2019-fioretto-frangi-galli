@@ -131,8 +131,7 @@ public class MapManager {
     /**
      * this method evaluates if a move in the board is valid
      * NOTE: it does not allow movement through an internal wall
-     */
-    /**
+
      *
      * @param visited
      * @param previousCell
@@ -147,8 +146,7 @@ public class MapManager {
 
     /**
      * This methos calculates the distance between startCell and destinationCell with a Lee BFS algorithm
-     */
-    /**
+
      *
      * @param board
      * @param startCell
@@ -190,8 +188,7 @@ public class MapManager {
 
     /**
      * this method returns a list of cells that are 2 moves away, without yours
-     */
-    /**
+
      *
      * @param currentController
      * @param player

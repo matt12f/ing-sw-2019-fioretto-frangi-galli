@@ -48,8 +48,7 @@ public class Zx2 extends GunCardAltEff {
 
     /**
      * Deal 1 damage and 2 marks to 1 target you can see.
-     */
-    /**
+     *
      *
      *
      * @param currentController
@@ -67,8 +66,7 @@ public class Zx2 extends GunCardAltEff {
 
     /**
      * Choose up to 3 targets you can see and deal 1 mark to each.
-     */
-    /**
+     *
      *
      * @param currentController
      * @param actions

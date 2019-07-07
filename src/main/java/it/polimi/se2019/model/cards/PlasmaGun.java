@@ -118,8 +118,6 @@ public class PlasmaGun extends GunCardAddEff {
 
     /**
      * manages Base and Base + Opt2 combinations
-     */
-    /**
      *
      * @param currentController the current controller of the game
      * @param playersChoice are the choices the player wants to apply
@@ -135,8 +133,7 @@ public class PlasmaGun extends GunCardAddEff {
 
     /**
      * this applies the base/base+opt2 + opt 1
-     */
-    /**
+     *
      *
      * @param currentController the current controller of the game
      * @param playersChoice are the choices the player wants to apply
@@ -150,8 +147,7 @@ public class PlasmaGun extends GunCardAddEff {
     /**
      * this applies the opt1 + base/base+opt2
      *
-     */
-    /**
+     *
      *
      * @param currentController the current controller of the game
      * @param playersChoice are the choices the player wants to apply

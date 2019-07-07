@@ -51,8 +51,7 @@ public class Shotgun extends GunCardAltEff {
 
     /**
      * Deal 3 damage to 1 target on your square. If you want, you may then move the target 1 square.
-     */
-    /**
+     *
      * find targets
      * @param currentController
      * @param actions
@@ -81,8 +80,7 @@ public class Shotgun extends GunCardAltEff {
 
     /**
      * Deal 2 damage to 1 target on any square exactly one move away.
-     */
-    /**
+     *
      * find targets
      * @param currentController
      * @param actions

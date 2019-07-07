@@ -49,8 +49,7 @@ public class TractorBeam extends GunCardAltEff {
 
     /**
      * Move a target 0, 1, or 2 squares to a square you can see, and give it 1 damage.
-     */
-    /**
+     *
      *
      * @param currentController
      * @param actions
@@ -78,8 +77,7 @@ public class TractorBeam extends GunCardAltEff {
 
     /**
      * Choose a target 0, 1, or 2 moves away from you. Move the target to your square and deal 3 damage to it.
-     */
-    /**
+     *
      *
      * @param currentController
      * @param actions

@@ -69,8 +69,7 @@ public class LockRifle extends GunCardAddEff {
 
     /**
      * Deal 1 mark to a different target you can see.
-     */
-    /**find targets
+     **find targets
      *
      * @param currentController
      * @param actions

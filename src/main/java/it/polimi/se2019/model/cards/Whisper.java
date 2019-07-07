@@ -34,8 +34,7 @@ public class Whisper extends GunCardAddEff {
 
     /**
      * Deal 3 damage and 1 mark to 1 target you can see. Your target must be at least 2 moves away from you.
-     */
-    /**
+     *
      *
      * @param currentController
      * @param actions
