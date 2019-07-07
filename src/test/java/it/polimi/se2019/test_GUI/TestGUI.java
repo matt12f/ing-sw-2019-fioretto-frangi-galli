@@ -44,9 +44,9 @@ class TestGUI {
         position1.addPlayers(player3);
 
         ArrayList<PlayerBoardView> testBoards=new ArrayList<>();
-        PlayerBoardView pb1=new PlayerBoardView();
-        PlayerBoardView pb2=new PlayerBoardView();
-        PlayerBoardView pb3=new PlayerBoardView();
+        PlayerBoardView pb1=new PlayerBoardView(player1.getPlayerBoard(),player1.getScore());
+        PlayerBoardView pb2=new PlayerBoardView(player2.getPlayerBoard(),player2.getScore());
+        PlayerBoardView pb3=new PlayerBoardView(player3.getPlayerBoard(),player3.getScore());
 
         pb1.update(player1.getPlayerBoard());
         pb2.update(player2.getPlayerBoard());
