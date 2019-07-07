@@ -517,8 +517,8 @@ public class UserInteractionGUI extends UserInteraction {
         JButton pw3 = new JButton();
         JButton pw4 = new JButton();
 
-        ImageIcon im1 = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/powerups/powerups_"+ list[0].getPowerupType() + "_"+list[0].getCubeColor()+ ".png")).getImage().getScaledInstance(70,92,Image.SCALE_DEFAULT));
-        ImageIcon im2 = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/powerups/powerups_"+ list[1].getPowerupType() + "_"+list[1].getCubeColor()+ ".png")).getImage().getScaledInstance(70,92,Image.SCALE_DEFAULT));
+        ImageIcon im1 = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/powerups/powerups_"+ list[0].getPowerupType().toLowerCase() + "_"+list[0].getCubeColor()+ ".png")).getImage().getScaledInstance(70,92,Image.SCALE_DEFAULT));
+        ImageIcon im2 = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/powerups/powerups_"+ list[1].getPowerupType().toLowerCase() + "_"+list[1].getCubeColor()+ ".png")).getImage().getScaledInstance(70,92,Image.SCALE_DEFAULT));
         pw1.setIcon(im1);
         pw2.setIcon(im2);
 
@@ -535,14 +535,14 @@ public class UserInteractionGUI extends UserInteraction {
         mainPanel.add(pw2,container);
 
         if(list[2]!= null){
-            ImageIcon im3 = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/powerups/powerups_"+ list[2].getPowerupType() + "_"+list[2].getCubeColor()+ ".png")).getImage().getScaledInstance(70,92,Image.SCALE_DEFAULT));
+            ImageIcon im3 = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/powerups/powerups_"+ list[2].getPowerupType().toLowerCase() + "_"+list[2].getCubeColor()+ ".png")).getImage().getScaledInstance(70,92,Image.SCALE_DEFAULT));
             pw3.setIcon(im3);
             container.gridx=2;
             container.gridy=1;
             mainPanel.add(pw3,container);
         }
         if (optional != null){
-            ImageIcon im4 = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/powerups/powerups_"+ optional.getPowerupType() + "_"+list[3].getCubeColor()+ ".png")).getImage().getScaledInstance(70,92,Image.SCALE_DEFAULT));
+            ImageIcon im4 = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/powerups/powerups_"+ optional.getPowerupType().toLowerCase() + "_"+list[3].getCubeColor()+ ".png")).getImage().getScaledInstance(70,92,Image.SCALE_DEFAULT));
             pw4.setIcon(im4);
             container.gridx=3;
             container.gridy=1;

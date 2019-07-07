@@ -11,37 +11,70 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class UserInteractionCLI extends UserInteraction {
-
+    /**
+     * shows to the user the weapons that could be reloaded and the user can choose to reload them
+     * @param cards
+     * @param reloadableCards
+     * @return
+     */
     @Override
     public boolean[] cardsToReload(GunCard[] cards, boolean[] reloadableCards) {
         //TODO scrivere metodo
         return new boolean[0];
     }
 
+    /**
+     * ask to th player if he wants to do or accept a situation or not
+     * @param message
+     * @param textYesButton
+     * @param textNoButton
+     * @return
+     */
     @Override
     public boolean yesOrNo(String message, String textYesButton, String textNoButton) {
         //TODO scrivere metodo
         return false;
     }
 
+    /**
+     * allows the user to choose from a list of possible decisions
+     * @param message
+     * @param listToChooseFrom
+     * @return
+     */
     @Override
     public String stringSelector(String message, ArrayList<String> listToChooseFrom) {
         //TODO scrivere metodo
         return null;
     }
 
+    /**
+     * allows the user to choose a map configuration and the maximum of kill in the game
+     * @return
+     */
     @Override
     public int[] mapChooser() {
         //TODO scrivere metodo
         return new int[0];
     }
 
+    /**
+     * ask to the user which powerup card he want to discard
+     * @param list
+     * @param optional
+     * @return
+     */
     @Override
     public PowerupCard spawnChooser(PowerupCard[] list, PowerupCard optional) {
         //TODO scrivere metodo
         return null;
     }
 
+    /**
+     *  ask to the player wich action he wants to perform
+     * @param frenzy
+     * @return
+     */
     @Override
     public String actionToRequest(int frenzy) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -78,11 +111,19 @@ public class UserInteractionCLI extends UserInteraction {
         return action;
     }
 
+    /**
+     * show a message to the user
+     * @param message
+     */
     @Override
     public void showMessage(String message) {
         System.out.println(message);
     }
 
+    /**
+     * show the payer's ammo
+     * @param content
+     */
     @Override
     public void ammoTileViewer(String content) {
         StringBuilder builder=new StringBuilder("La AmmoTile che hai raccolto contiene: ");
@@ -97,7 +138,10 @@ public class UserInteractionCLI extends UserInteraction {
         System.out.println(builder.toString());
     }
 
-
+    /**
+     * ask the server's ip
+     * @return
+     */
     public String ipRequest(){
         String ipServer;
         Scanner scanner = new Scanner(System.in);
@@ -106,6 +150,11 @@ public class UserInteractionCLI extends UserInteraction {
         return ipServer;
     }
 
+    /**
+     * ask the player's nick
+     * @param FirstTime
+     * @return
+     */
     public String nicknameRequest(boolean FirstTime){
         if(!FirstTime)
             System.out.println("Mi spiace, il nick che hai inserito non è disponibile, scegline un altro");
@@ -116,6 +165,10 @@ public class UserInteractionCLI extends UserInteraction {
         return nickname;
     }
 
+    /**
+     * show the waiting list
+     * @param otherPlayers
+     */
     public void displayQue(ArrayList<String> otherPlayers) {
         if(!otherPlayers.isEmpty()){
             System.out.print("Sei in coda, al momento i giocatori connessi (oltre a te) sono:");

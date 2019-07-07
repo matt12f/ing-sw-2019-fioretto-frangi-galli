@@ -35,48 +35,90 @@ public  class PlayerBoardView implements Serializable {
         this.damageView=new DamageView(playerBoard.getDamageTrack().getDamage());
     }
 
+    /**
+     * update the score
+     * @param toSet
+     */
     public void setScore(int toSet){
         this.score=toSet;
     }
 
+    /**
+     * set the  board color
+     * @param color
+     */
     public void setColor(Color color) {
         this.color = color;
     }
 
+    /**
+     *
+     * @param front
+     */
     public void setFront(boolean front) {
         this.front = front;
     }
 
+    /**
+     * update the board damage
+     * @param damageView
+     */
     public void setDamageView(DamageView damageView) {
         this.damageView = damageView;
     }
 
-
+    /**
+     *
+     * @return the player's score
+     */
     public int getScore(){
         return this.score;
     }
 
+    /**
+     *
+     * @return the player's ammo
+     */
     public AmmoView getAmmo(){
         return ammo;
     }
 
+    /**
+     *
+     * @return if the board is in frenzy mode or not
+     */
     public int getFrenzy(){
         return frenzy;
     }
 
+    /**
+     * update frenzy  mode
+     * @param x
+     */
     public void  setFrenzy(int x){
         frenzy = x;
     }
 
+    /**
+     * update player's ammo
+     * @param toSet
+     */
     public void setAmmo(AmmoView toSet){
         this.ammo=toSet;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isFront() {
         return front;
     }
 
-
+    /**
+     *
+     * @return player's damage
+     */
     public DamageView getDamageView() {
         return damageView;
     }
@@ -103,10 +145,19 @@ public  class PlayerBoardView implements Serializable {
         this.getDamageView().setMarks(playerBoard.getDamageTrack().getMarks());
     }
 
+    /**
+     *
+     * @return board's color
+     */
     public Color getColor() {
         return color;
     }
 
+    /**
+     *
+     * @param item
+     * @return
+     */
     @Override
     public boolean equals(Object item) {
         if (item == null)
