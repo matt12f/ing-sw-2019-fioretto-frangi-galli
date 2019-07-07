@@ -2,6 +2,7 @@ package it.polimi.se2019.view;
 
 import it.polimi.se2019.enums.CellType;
 import it.polimi.se2019.enums.Color;
+import it.polimi.se2019.exceptions.FullException;
 import it.polimi.se2019.model.game.Figure;
 import it.polimi.se2019.model.game.GameModel;
 import it.polimi.se2019.model.game.Map;
@@ -130,7 +131,7 @@ public class MapView implements Serializable {
      *  upload the cell view matrix
      * @param newBoard
      */
-    public void uploadBoardMatrix(NewCell[][] newBoard){
+    public void uploadBoardMatrix(NewCell[][] newBoard)  {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 4; j++) {
                 this.getCell(i, j).setPlayerFigures(newBoard[i][j]);
