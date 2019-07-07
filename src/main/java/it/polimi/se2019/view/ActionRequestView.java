@@ -46,6 +46,7 @@ public class ActionRequestView implements Serializable {
 
     /**
      * this method covers the offer of the powerups newton and teleporter before the macro actions
+     * @param localView is the localview
      */
     private ArrayList<PowerupUse> powerupManagerView(LocalView localView) {
         ArrayList<PowerupUse> temp=new ArrayList<>();

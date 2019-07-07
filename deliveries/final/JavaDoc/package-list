@@ -6,6 +6,7 @@ it.polimi.se2019.model.cards
 it.polimi.se2019.model.game
 it.polimi.se2019.network
 it.polimi.se2019.test_GUI
+it.polimi.se2019.test_VIEW
 it.polimi.se2019.test_controller
 it.polimi.se2019.test_model.test_cards
 it.polimi.se2019.test_model.test_game

@@ -242,37 +242,37 @@ public class MapViewGUI extends JPanel {
         if(!boardMatrix[1][0].getCorrespondingCell().getWeaponCards().isEmpty() && boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(0)!=null)
             weaponred1.updateImage(boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(0), true);
         else
-            weaponred1.updateImage(null, false);
+            weaponred1.updateImage(null, true);
 
 
         if(boardMatrix[1][0].getCorrespondingCell().getWeaponCards().size()>=2 && boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(1)!=null)
             weaponred2.updateImage(boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(1), true);
         else
-            weaponred2.updateImage(null, false);
+            weaponred2.updateImage(null, true);
 
 
         if(boardMatrix[1][0].getCorrespondingCell().getWeaponCards().size()>=3 && boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(2)!=null)
             weaponred3.updateImage(boardMatrix[1][0].getCorrespondingCell().getWeaponCards().get(2), true);
         else
-            weaponred3.updateImage(null, false);
+            weaponred3.updateImage(null, true);
 
 
         if(!boardMatrix[2][3].getCorrespondingCell().getWeaponCards().isEmpty() && boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(0)!=null)
             weaponyellow1.updateImage(boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(0), true);
         else
-            weaponyellow1.updateImage(null, false);
+            weaponyellow1.updateImage(null, true);
 
 
         if(boardMatrix[2][3].getCorrespondingCell().getWeaponCards().size()>=2 && boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(1)!=null)
             weaponyellow2.updateImage(boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(1), true);
         else
-            weaponyellow2.updateImage(null, false);
+            weaponyellow2.updateImage(null, true);
 
 
         if(boardMatrix[2][3].getCorrespondingCell().getWeaponCards().size()>=3 && boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(2)!=null)
             weaponyellow3.updateImage(boardMatrix[2][3].getCorrespondingCell().getWeaponCards().get(2), true);
         else
-            weaponyellow3.updateImage(null, false);
+            weaponyellow3.updateImage(null, true);
 
 
 

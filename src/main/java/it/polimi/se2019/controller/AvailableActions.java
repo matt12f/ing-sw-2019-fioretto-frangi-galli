@@ -31,7 +31,7 @@ public class AvailableActions implements Serializable {
      * Method that calculates the actions available to a player during a certain turn (after the selection of a macro action)
      * @param macroAction player's selection (in ActionRequestView through GUI or CLI)
      * @param playerId player's number (ID)
-     * @return available actions depending on the game status
+     * builds available actions depending on the game status
      */
     public AvailableActions(ActionRequestView macroAction, int playerId, Controller currentController) {
         Player player=currentController.getMainGameModel().getPlayerList().get(playerId);
@@ -60,7 +60,7 @@ public class AvailableActions implements Serializable {
      * @param shoot: if there is a shoot option (sometimes it's the only action possible)
      * @param frenzyReload: if there's a frenzy action with the possibility to reload a gun before shooting it must
      *                      be considered when evaluating which cards the player can use
-     * @return available actions object to return to the player (CLIENT)
+     * returns available actions object to return to the player (CLIENT)
      */
     private void buildActions(Controller currentController, Player player, ActionRequestView macroAction, int maxMoveDistance, boolean grab, boolean shoot, boolean frenzyReload){
         NewCell[][] board=currentController.getMainGameModel().getCurrentMap().getBoardMatrix();

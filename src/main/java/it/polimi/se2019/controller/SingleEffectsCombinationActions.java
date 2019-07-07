@@ -87,7 +87,7 @@ public class SingleEffectsCombinationActions implements Serializable {
     }
 
     /**
-     * if there are no targets on every cell there's something wrong -> it will return true
+     * if there are no targets on every cell there's something wrong : it will return true
      * returns false otherwise
      */
     private boolean validateCellsWithTargets(){

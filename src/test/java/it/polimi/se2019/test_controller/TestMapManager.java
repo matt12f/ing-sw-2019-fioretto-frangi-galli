@@ -208,34 +208,10 @@ public class TestMapManager {
                 if(board[i][j].getCellType().equals(CellType.DROP))
                     assertNotNull(board[i][j].getDrop());
                 else if(board[i][j].getCellType().equals(CellType.SPAWN))
-                    assertEquals(1,board[i][j].getWeaponCards().size());
-                else
-                    assertEquals(board[i][j].getCellType(),CellType.OUTSIDEBOARD);
-
-        MapManager.refillEmptiedCells(controller.getMainGameModel().getCurrentMap().getBoardMatrix(),
-                controller.getMainGameModel().getCurrentDecks());
-
-        for(int i=0;i<board.length;i++)
-            for(int j=0;j<board[i].length;j++)
-                if(board[i][j].getCellType().equals(CellType.DROP))
-                    assertNotNull(board[i][j].getDrop());
-                else if(board[i][j].getCellType().equals(CellType.SPAWN))
-                    assertEquals(2,board[i][j].getWeaponCards().size());
-                else
-                    assertEquals(board[i][j].getCellType(),CellType.OUTSIDEBOARD);
-
-
-        MapManager.refillEmptiedCells(controller.getMainGameModel().getCurrentMap().getBoardMatrix(),
-                controller.getMainGameModel().getCurrentDecks());
-
-        for(int i=0;i<board.length;i++)
-            for(int j=0;j<board[i].length;j++)
-                if(board[i][j].getCellType().equals(CellType.DROP))
-                    assertNotNull(board[i][j].getDrop());
-                else if(board[i][j].getCellType().equals(CellType.SPAWN))
                     assertEquals(3,board[i][j].getWeaponCards().size());
                 else
                     assertEquals(board[i][j].getCellType(),CellType.OUTSIDEBOARD);
+
     }
 
     @Test
