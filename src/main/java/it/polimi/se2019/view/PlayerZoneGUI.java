@@ -34,13 +34,6 @@ public class PlayerZoneGUI extends JPanel {
 
     }
 
-    /**
-     *
-     * @return the player's hand GUI
-     */
-    protected PlayerHandViewGUI getHand(){
-        return this.hand;
-    }
 
     /**
      * set the frenzy mode to "on"

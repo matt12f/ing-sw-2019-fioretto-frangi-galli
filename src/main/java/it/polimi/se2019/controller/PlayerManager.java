@@ -349,11 +349,11 @@ public class PlayerManager  {
     }
 
 
-    public static void payGunCardCost(Player player, char [] cost, boolean fullOrReload){
-        if(fullOrReload)
+    public static void payGunCardCost(Player player, char [] cost, boolean pickOrFullReload){
+        if(!pickOrFullReload)
             player.getPlayerBoard().getAmmo().subtractAmmo(cost);
         else{
-            char [] reloadCost=new char[cost.length-1];
+            char [] reloadCost = new char[cost.length-1];
             for (int i = 0; i < cost.length-1; i++)
                 reloadCost[i]=cost[i+1];
             player.getPlayerBoard().getAmmo().subtractAmmo(reloadCost);

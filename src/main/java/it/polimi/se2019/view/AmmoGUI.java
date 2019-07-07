@@ -1,11 +1,7 @@
 package it.polimi.se2019.view;
 
-import it.polimi.se2019.AdrenalineClient;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * this class shows the player the amount of ammo it has.
@@ -14,8 +10,6 @@ import java.awt.event.ActionListener;
  *
  */
 public class AmmoGUI extends JPanel {
-    private JButton actionButton;
-
     private JLabel blueAmmo;
     private JLabel redAmmo;
     private JLabel yellowAmmo;
@@ -25,9 +19,7 @@ public class AmmoGUI extends JPanel {
      * @param ammo is the ammo of the current player
      */
     public AmmoGUI(AmmoView ammo){
-        this.actionButton = new JButton("Request Actions");
         GridBagConstraints container =new GridBagConstraints();
-        this.actionButton.setEnabled(false);
 
         setLayout(new GridBagLayout());
 
@@ -46,17 +38,6 @@ public class AmmoGUI extends JPanel {
         container.gridy=2;
         add(this.yellowAmmo,container);
 
-        container.gridx=0;
-        container.gridy=3;
-        add(this.actionButton,container);
-
-        actionButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                AdrenalineClient.setActionRequested( new ActionRequestView(AdrenalineClient.isLast()));
-                actionButton.setEnabled(false);
-            }
-        });
     }
 
     /**
@@ -69,11 +50,4 @@ public class AmmoGUI extends JPanel {
         this.yellowAmmo.setText("YELLOW:"+ ammo.getYELLOW());
     }
 
-    /**
-     * this method enables the action button when it's the player's turn
-     */
-    public void updateActionsButton(){
-        actionButton.setEnabled(true);
-        //TODO rivedere perché il setenabled clicca il pusante
-    }
 }

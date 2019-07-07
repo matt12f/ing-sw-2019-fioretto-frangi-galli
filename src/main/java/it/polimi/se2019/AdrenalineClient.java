@@ -274,7 +274,6 @@ public class AdrenalineClient {
                 System.out.println("b");
                 actionNumber = connection.getInput().readInt();
                 while(actionNumber > 0){
-                    gameBoardGUI.enableActionsButton();
                     actionNumber --;
                     actionRequested = getActionFromUser(last);
                     System.out.println("azione ricevuta");
@@ -297,7 +296,7 @@ public class AdrenalineClient {
                         last = true;
                     displayBoard();
                 }
-                actionRequested = new ActionRequestView(true);
+                actionRequested = getActionFromUser(last);
                 connection.getOutput().writeObject(actionRequested);
                 connection.getInput().readObject();
                 updateLocalView();
