@@ -17,14 +17,14 @@ public class TestUserInteraction {
     public static void main(String[] args) {
 
         askUser=new UserInteractionGUI();
-        testShowMessage();
+
         //askUser=new UserInteractionCLI();
 
        // testGunReload();
         //testActionSelection();
         //testYesOrNo();
         //testShowMessage();
-        //testSelectionFromList();
+        testSelectionFromList();
 
         testMap();
     }

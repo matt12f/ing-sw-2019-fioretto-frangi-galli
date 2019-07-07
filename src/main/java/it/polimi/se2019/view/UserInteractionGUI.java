@@ -208,7 +208,11 @@ public class UserInteractionGUI extends UserInteraction {
         JComboBox chooseList = new JComboBox(listToChooseFrom.toArray(new String[listToChooseFrom.size()]));
         chooseList.setSelectedIndex(0);
 
-        JLabel label = new JLabel(message);
+        JPanel mainPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints container = new GridBagConstraints();
+        mainPanel.setLayout(new GridBagLayout());
+
+        JLabel labelMessage = new JLabel(message);
         JButton selectButton = new JButton("Select");
 
         selectButton.addActionListener(new ActionListener() {
@@ -223,16 +227,21 @@ public class UserInteractionGUI extends UserInteraction {
         JPanel buttons = new JPanel();
         buttons.add(selectButton);
 
-        JPanel panel = new JPanel(new BorderLayout(8, 8));
-        panel.add(label, BorderLayout.CENTER);
-        panel.add(chooseList, BorderLayout.SOUTH);
-        panel.add(buttons);
+        container.gridx = 0;
+        container.gridy = 0;
+        mainPanel.add(labelMessage, container);
+        container.gridx = 0;
+        container.gridy = 1;
+        mainPanel.add(chooseList, container);
+        container.gridx = 0;
+        container.gridy = 2;
+        mainPanel.add(buttons, container);
 
         JDialog dialog = new JDialog();
         dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
         dialog.setModal(true);
         dialog.setTitle("Finestra di selezione");
-        dialog.getContentPane().add(panel);
+        dialog.getContentPane().add(mainPanel);
         dialog.pack();
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
