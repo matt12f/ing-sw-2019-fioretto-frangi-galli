@@ -21,7 +21,7 @@ public class AdrenalineClient {
     private static UserInteractionGUI userInteractionGUI = new UserInteractionGUI();
     private static UserInteractionCLI userInteractionCLI = new UserInteractionCLI();
     private static boolean start = false;
-    private static GameBoardGui gameBoardGui;
+    private static GameBoardGUI gameBoardGUI;
     private static ArrayList<PlayerBoardView> allPlayersBoards = new ArrayList<>() ;
     private static boolean connected = false;
     private static String[] answer;
@@ -256,7 +256,7 @@ public class AdrenalineClient {
 
     private static void displayBoard() {
         if(isGUI()){
-            gameBoardGui.updateBoardGame(allPlayersBoards,getLocalView().getPersonalPlayerBoardView(),getLocalView().getMapView().getBoardMatrix(),getLocalView().getMapView().getKillView(),getLocalView().getPlayerHand());
+            gameBoardGUI.updateBoardGame(allPlayersBoards,getLocalView().getPersonalPlayerBoardView(),getLocalView().getMapView().getBoardMatrix(),getLocalView().getMapView().getKillView(),getLocalView().getPlayerHand());
         }
     }
 
@@ -278,7 +278,7 @@ public class AdrenalineClient {
                 System.out.println("b");
                 actionNumber = connection.getInput().readInt();
                 while(actionNumber > 0){
-                    gameBoardGui.enableActionsButton();
+                    gameBoardGUI.enableActionsButton();
                     actionNumber --;
                     actionRequested = getActionFromUser(last);
                     System.out.println("azione ricevuta");
@@ -395,7 +395,7 @@ public class AdrenalineClient {
 
     private static void guiStarter () {
         allPlayersBoards=getLocalView().getPlayerBoardViews();
-        gameBoardGui = new GameBoardGui(getLocalView().getMapView().getMapNumber(), allPlayersBoards,getLocalView().getPersonalPlayerBoardView(),getLocalView().getMapView().getBoardMatrix() );
+        gameBoardGUI = new GameBoardGUI(getLocalView().getMapView().getMapNumber(), allPlayersBoards,getLocalView().getPersonalPlayerBoardView(),getLocalView().getMapView().getBoardMatrix() );
     }
 
         /** This method creates the connection between Client and server

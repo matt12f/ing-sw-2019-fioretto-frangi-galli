@@ -2,23 +2,25 @@ package it.polimi.se2019.view;
 
 import javax.swing.*;
 import java.awt.*;
-import javax.imageio.*;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;	//for CloseListener()
 import java.awt.event.WindowAdapter;	//for CloseListener()
-import java.lang.Integer;		//int from Model is passed as an Integer
 import java.util.ArrayList;
-import java.util.Observable;		//for update();
-import java.util.Observer;
-import java.awt.*;
 
-public class GameBoardGui  {
+
+public class GameBoardGUI {
     private MapViewGUI map;
     private PlayerZoneGUI playerZone;
     private BoardZoneGUI boardZone;
     private boolean frenzyStatus = false;
 
-    public GameBoardGui(int config, ArrayList<PlayerBoardView> allBoards, PlayerBoardView ownerBoard, CellView[][] boardMatrix){
+    /**
+     * this builds the main window of the gameplay
+     * @param mapNumber is the number of the map chosen
+     * @param allBoards is the set of all the playerboards of the player of the game
+     * @param ownerBoard is the player board of the current user (subject who's running the Adrenaline Client)
+     * @param boardMatrix is the board matrix of the current game
+     */
+    public GameBoardGUI(int mapNumber, ArrayList<PlayerBoardView> allBoards, PlayerBoardView ownerBoard, CellView[][] boardMatrix){
         Frame frame = new Frame("ADRENALINE");
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
@@ -26,7 +28,7 @@ public class GameBoardGui  {
         mainPanel.setLayout(new GridBagLayout());
 
 
-        this.map = new MapViewGUI(config, boardMatrix);
+        this.map = new MapViewGUI(mapNumber, boardMatrix);
         container.gridx=0;
         container.gridy=0;
         container.gridheight = 2;
@@ -47,7 +49,7 @@ public class GameBoardGui  {
         container.gridwidth = 2;
         mainPanel.add(playerZone, container);
 
-        frame.addWindowListener(new GameBoardGui.CloseListener());
+        frame.addWindowListener(new GameBoardGUI.CloseListener());
         frame.add(mainPanel);
         frame.setSize(1280,720);
         frame.setLocation(0,0);
@@ -71,8 +73,16 @@ public class GameBoardGui  {
         frenzyStatus = true;
     }
 
-    public void updateBoardGame(ArrayList<PlayerBoardView> opponentBoards,PlayerBoardView ownerBoard, CellView[][] boardMatrix, KillShotTrackerView kills, PlayerHandView ownerHand){
-        boardZone.updateBoards(opponentBoards, ownerBoard, frenzyStatus, kills.getNumKills());
+    /**
+     * This method updates the board with new information
+     * @param allBoards is the set of all the playerboards of the player of the game
+     * @param ownerBoard is the player board of the current user (subject who's running the Adrenaline Client)
+     * @param boardMatrix is the board matrix of the current game
+     * @param kills is the killshot track
+     * @param ownerHand is the hand of the current user, containing its cards (guns and powerups)
+     */
+    public void updateBoardGame(ArrayList<PlayerBoardView> allBoards,PlayerBoardView ownerBoard, CellView[][] boardMatrix, KillShotTrackerView kills, PlayerHandView ownerHand){
+        boardZone.updateBoards(allBoards, ownerBoard, frenzyStatus, kills.getNumKills());
         map.setBoard(boardMatrix);
         playerZone.updateElements(ownerBoard, ownerHand, frenzyStatus);
     }

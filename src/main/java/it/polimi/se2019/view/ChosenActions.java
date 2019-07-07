@@ -19,7 +19,7 @@ import java.util.function.Predicate;
  * It's meant to encapsulate the player's choices, asking it which of the available actions it wants to perform
  */
 public class ChosenActions implements Serializable {
-    private UserInteraction askUser;
+    private UserInteractionGUI askUser;
 
     private ArrayList<String> orderOfExecution;
 
@@ -51,10 +51,8 @@ public class ChosenActions implements Serializable {
         if(checkEmptyActions(actions))
             throw new NoActionsException("no actions available, try again");
 
-        if(AdrenalineClient.isGUI())
-            this.askUser=new UserInteractionGUI();
-        else
-            this.askUser=new UserInteractionCLI();
+        this.askUser=new UserInteractionGUI();
+
         LocalView localView= AdrenalineClient.getLocalView();
 
         //Section for selection of cells where the fictitious player will be

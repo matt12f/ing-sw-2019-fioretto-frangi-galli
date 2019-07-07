@@ -50,7 +50,7 @@ public class ClientHandler extends Thread {
             this.output.writeObject("START");
             status = Status.WAITING;
             waitForView();
-            sendLocalView(); //invio la view al client
+            sendLocalView(); //sends the local view to the client
             while(status != Status.START){
                 status = Status.WAITING;
                 waitForView();
@@ -62,7 +62,7 @@ public class ClientHandler extends Thread {
                     switch (this.status) {
                         case MYTURN:
                             reload = true;
-                            this.output.writeObject(this.actionsNumber); //comunica quante azioni può fare il giocatore
+                            this.output.writeObject(this.actionsNumber); //communicates how many actions the player can perform
                             for (int j = 0; j < this.actionsNumber; j++) {
                                 requestView = (ActionRequestView) this.input.readObject();
                                 statusChanged();
@@ -80,7 +80,7 @@ public class ClientHandler extends Thread {
                             break;
                     }
                 }
-                //gestione di fine turno
+                //end of turn management
                 if(reload){
                     this.requestView = (ActionRequestView) this.input.readObject();
                     statusChanged();

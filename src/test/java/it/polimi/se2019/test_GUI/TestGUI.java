@@ -60,7 +60,7 @@ class TestGUI {
 
         CellView [][] board = testMap.getBoardMatrix();
 
-        GameBoardGui testGUI=new GameBoardGui(1,testBoards,testBoards.get(0), board);
+        GameBoardGUI testGUI=new GameBoardGUI(1,testBoards,testBoards.get(0), board);
 
         try {
             Thread.sleep(1000);
