@@ -48,6 +48,7 @@ public class AmmoTilesDeck {
         activeDeck.add(new AmmoTileCard("pyb"));
         activeDeck.add(new AmmoTileCard("prb"));
 
+        this.shuffle();
     }
 
     public ArrayList<AmmoTileCard> getActiveDeck() {
@@ -89,8 +90,10 @@ public class AmmoTilesDeck {
      */
     public AmmoTileCard draw(){
         AmmoTileCard drawn;
+
         if(activeDeck.isEmpty())
            this.setActiveDeck();
+
         drawn=activeDeck.get(0);
         activeDeck.remove(0);
         return drawn;

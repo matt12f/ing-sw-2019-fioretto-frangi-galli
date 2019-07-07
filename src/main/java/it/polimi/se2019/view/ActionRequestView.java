@@ -146,19 +146,27 @@ public class ActionRequestView implements Serializable {
             switch (directionsAvailable.get(i)){
                 case "Up": {
                     if (!AdrenalineClient.getLocalView().getMapView().getCell(positionOfTarget.getLineIndex() - 1, positionOfTarget.getColumnIndex()).getCorrespondingCell().getEdge(0).equals(CellEdge.WALL))
-                        distances.set(i,2);
+                        distances.add(2);
+                    else
+                        distances.add(1);
                 }break;
                 case "Down": {
                     if (!AdrenalineClient.getLocalView().getMapView().getCell(positionOfTarget.getLineIndex() + 1, positionOfTarget.getColumnIndex()).getCorrespondingCell().getEdge(1).equals(CellEdge.WALL))
-                        distances.set(i,2);
+                        distances.add(2);
+                    else
+                        distances.add(1);
                 }break;
                 case "Left": {
                     if (!AdrenalineClient.getLocalView().getMapView().getCell(positionOfTarget.getLineIndex(), positionOfTarget.getColumnIndex()-1).getCorrespondingCell().getEdge(2).equals(CellEdge.WALL))
-                        distances.set(i,2);
+                        distances.add(2);
+                    else
+                        distances.add(1);
                 }break;
                 case "Right": {
                     if (!AdrenalineClient.getLocalView().getMapView().getCell(positionOfTarget.getLineIndex(), positionOfTarget.getColumnIndex()+1).getCorrespondingCell().getEdge(3).equals(CellEdge.WALL))
-                        distances.set(i,2);
+                        distances.add(2);
+                    else
+                        distances.add(1);
                 }break;
             }
 

@@ -87,9 +87,13 @@ public class CellView implements Serializable {
      * @return the drop inside the cell
      */
     public String getDrop(){
-        if(this.correspondingCell.getCellType().equals(CellType.DROP))
+        if(this.correspondingCell.getCellType().equals(CellType.SPAWN))
+            return "spawn";
+        else if(this.correspondingCell.getDrop()==null)
+            return null;
+        else
             return this.correspondingCell.getDrop().getContent();
-        return "spawn";
+
     }
 
 }

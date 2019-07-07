@@ -37,4 +37,17 @@ public class TestNewCell{
 
     }
 
+    @Test
+    public void testDrop(){
+        NewCell position1= new NewCell(Color.BLUE, CellEdge.WALL,CellEdge.DOOR,CellEdge.ROOM,CellEdge.ROOM, CellType.DROP);
+
+        assertNull(position1.getDrop());
+        AmmoTileCard tile=new AmmoTileCard("yyb");
+        assertDoesNotThrow(()->position1.setItem(tile));
+
+        assertEquals(tile, position1.pickItem());
+
+        assertNull(position1.getDrop());
+    }
+
 }

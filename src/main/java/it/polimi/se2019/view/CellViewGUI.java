@@ -25,8 +25,7 @@ public class CellViewGUI extends JPanel {
 
         if(cell.getDrop()!=null && !cell.getDrop().equals("spawn"))
             matrixGUI[2][2].updateContent("DROP",cell.getDrop());
-        else
-            matrixGUI[2][2].updateContent("EMPTY","");
+
 
         //add on gui interface
         int x = 0, y= 0;
