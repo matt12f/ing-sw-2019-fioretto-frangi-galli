@@ -87,7 +87,7 @@ public class ActionRequestView implements Serializable {
 
                 Coordinates coordinates1=coordinates.get(coordToChooseFrom.indexOf(coordChoosenCell));
 
-                CellView destCell=localView.getMapView().getCell(coordinates1.getX(),coordinates1.getY());
+                CellView destCell=localView.getMapView().getCell(coordinates1.getX()-1,coordinates1.getY()-1);
 
                 temp.add(new PowerupUse(i,localView.getPersonalPlayerBoardView().getColor(),0,"None",destCell));
             }

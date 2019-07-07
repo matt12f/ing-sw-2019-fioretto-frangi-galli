@@ -134,7 +134,7 @@ public class RocketLauncher extends GunCardAddEff {
     }
 
     /**
-     * you will have selected cells where you want move & hit a target + cells where you can move the target after you've hit it
+     * you will have selected cells where you want move and hit a target + cells where you can move the target after you've hit it
      *
      * This applies the tertiary effect
      * @param currentController it the current controller of the game

@@ -147,7 +147,7 @@ public class MapView implements Serializable {
         ArrayList<Coordinates> coordinates=new ArrayList<>();
         for (int i=0;i<boardMatrix.length;i++)
             for (int j=0;j<boardMatrix[i].length;j++){
-                if( (i!=position.getLineIndex() && j!=position.getColumnIndex()) &&
+                if( !(i==position.getLineIndex() && j==position.getColumnIndex()) &&
                         !boardMatrix[i][j].getCorrespondingCell().getCellType().equals(CellType.OUTSIDEBOARD))
                     coordinates.add(new Coordinates(i,j));
             }
