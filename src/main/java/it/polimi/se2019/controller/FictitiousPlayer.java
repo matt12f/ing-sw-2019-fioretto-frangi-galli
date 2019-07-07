@@ -58,7 +58,7 @@ public class FictitiousPlayer implements Serializable {
         //this is done for grab/move+grab actions where you may want to just pick a card
         if(cell.isCanGrabCard())
             for(int i=0; i<this.position.getWeaponCards().size();i++)
-                if(this.position.getWeaponCards().get(i)!=null && ActionManager.canAffordCost(player,this.availableAmmo,this.position.getWeaponCards().get(i).getAmmoCost(),true))
+                if(this.position.getWeaponCards().get(i)!=null && ActionManager.canAffordCost(player,this.availableAmmo, this.position.getWeaponCards().get(i).getAmmoCost(),true))
                     this.pickableCards.add(this.position.getWeaponCards().get(i));
 
         //the "pickable" cards can ALL be added to the cards a player can choose from, if it's noted that
