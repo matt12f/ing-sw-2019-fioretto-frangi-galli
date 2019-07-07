@@ -48,8 +48,7 @@ public class Sledgehammer extends GunCardAltEff {
 
     /**
      * Deal 2 damage to 1 target on your square.
-     */
-    /**
+     *
      * find targets
      * @param currentController
      * @param actions
@@ -71,8 +70,7 @@ public class Sledgehammer extends GunCardAltEff {
 
     /**
      * Deal 3 damage to 1 target on your square, then move that target 0, 1, or 2 squares in one direction.
-     */
-    /**
+
      * find targets
      * @param currentController
      * @param actions

@@ -44,8 +44,7 @@ public class Shockwave extends GunCardAltEff {
 
     /**
      * Choose up to 3 targets on different squares, each exactly 1 move away. Deal 1 damage to each target.
-     */
-    /**
+     *
      *
      * @param currentController it the current controller of the game
      * @param actions
@@ -64,8 +63,7 @@ public class Shockwave extends GunCardAltEff {
 
     /**
      * Deal 1 damage to all targets that are exactly 1 move away.
-     */
-    /**
+     *
      * find targets
      * @param currentController it the current controller of the game
      * @param actions

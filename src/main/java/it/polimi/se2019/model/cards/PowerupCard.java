@@ -8,8 +8,7 @@ public class PowerupCard implements Serializable {
     private char cubeColor;
     /**
      * Available Types: TargettingScope, Newton, TagbackGrenade, Teleporter
-     */
-    /**
+     *
      *
      * @param type
      * @param color

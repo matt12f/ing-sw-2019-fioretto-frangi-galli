@@ -62,8 +62,7 @@ public class PowerGlove extends GunCardAltEff {
 
     /**
      * Choose 1 target on any square exactly 1 move away. Move onto that square and give the target 1 damage and 2 marks.
-     */
-    /**
+     *
      * This applies the secondary effect
      * @param currentController
      * @param actions
@@ -96,8 +95,7 @@ public class PowerGlove extends GunCardAltEff {
      *
      * If you want, you may move 1 more square in that same direction (but only if it is a legal move).
      * You may deal 2 damage to 1 target there, as well.
-     */
-    /**
+     *
      *
      * @param currentController
      * @param actions

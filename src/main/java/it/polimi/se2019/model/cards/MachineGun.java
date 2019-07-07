@@ -82,8 +82,7 @@ public class MachineGun extends GunCardAddEff {
 
     /**
      * Choose 1 or 2 targets you can see and deal 1 damage to each.
-     */
-    /**
+     *
      * find targets
      * @param currentController
      * @param actions
@@ -113,8 +112,7 @@ public class MachineGun extends GunCardAddEff {
 
     /**
      * Deal 1 additional damage to the other of those targets and/or deal 1 damage to a different target you can see.
-     */
-    /**
+     *
      * find targets
      * @param currentController
      * @param actions

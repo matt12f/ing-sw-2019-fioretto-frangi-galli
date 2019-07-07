@@ -70,8 +70,7 @@ public class Thor extends GunCardAddEff {
 
     /**
      * Deal 2 damage to 1 target you can see.
-     */
-    /**
+     *
      *
      * @param currentController
      * @param actions
@@ -90,8 +89,7 @@ public class Thor extends GunCardAddEff {
 
     /**
      * Deal 1 damage to a second target that your first target can see.
-     */
-    /**
+     *
      *
      * @param currentController
      * @param actions
@@ -117,8 +115,7 @@ public class Thor extends GunCardAddEff {
 
     /**
      * Deal 2 damage to a third target that your second target can see. You cannot use this effect unless you first use the chain reaction.
-     */
-    /**
+     *
      *
      * @param currentController
      * @param actions
@@ -145,8 +142,6 @@ public class Thor extends GunCardAddEff {
     /**
      * checks if a Player is in the list of targets with targets
      *
-     */
-    /**
      *
      * @param target designed player to inflict the effect
      * @param list  list of players
