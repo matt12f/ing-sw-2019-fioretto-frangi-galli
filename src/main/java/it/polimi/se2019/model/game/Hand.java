@@ -46,6 +46,11 @@ public class Hand implements Serializable {
 
     /**this method puts a gun in the player's hand
      * */
+    /**
+     *
+     * @param gun
+     * @throws FullException
+     */
     public void setGun(GunCard gun) throws FullException {
         int i=0;
         boolean set=false;
@@ -59,6 +64,10 @@ public class Hand implements Serializable {
         if(!set) throw new FullException("guns");
     }
 
+    /**
+     * set the 4th powerup to add to the hand
+     * @param additionalPowerup
+     */
     public void setAdditionalPowerup(PowerupCard additionalPowerup) {
         this.additionalPowerup = additionalPowerup;
     }
@@ -104,6 +113,12 @@ public class Hand implements Serializable {
         return false;
     }
 
+    /**
+     * substitute a powerup in the hand with another powerup
+     * @param discarded
+     * @param newPowerup
+     * @throws CardNotFoundException
+     */
     public void substitutionPowerup (PowerupCard discarded,PowerupCard newPowerup) throws CardNotFoundException {
         int i=0;
         boolean substituted=false;
@@ -118,6 +133,13 @@ public class Hand implements Serializable {
         if(!substituted) throw new CardNotFoundException("powerup swap");
     }
 
+    /**
+     *  substitute a weapon in the hand with another weapon
+     * @param spawnPoint cell from the weapon come
+     * @param discarded
+     * @param newGunCard
+     * @throws CardNotFoundException
+     */
     public void substitutionGunCard (NewCell spawnPoint, GunCard discarded, GunCard newGunCard) throws CardNotFoundException{
         int i=0;
         boolean substituted=false;

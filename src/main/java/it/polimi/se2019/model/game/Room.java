@@ -10,6 +10,10 @@ public class Room implements Serializable {
     private ArrayList<Player> players;
     private ArrayList<NewCell> cells;
 
+    /**
+     *
+     * @return if a room has n players
+     */
     public boolean isEmpty(){
         if (players==null)
             return true;

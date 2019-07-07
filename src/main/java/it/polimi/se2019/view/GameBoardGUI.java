@@ -67,12 +67,12 @@ public class GameBoardGUI {
     } //CloseListener
 
     /**
-     * this method set the franzy mode on the gui layout
-     * @param opponentBoards arraylist with the opponents' boards
+     * this method set the frenzy mode on the gui layout
+     * @param allBoards arraylist with the all boards
      * @param ownerBoard BoardView with the info about the owner player's board
      */
-    public void setFrenzy(ArrayList<PlayerBoardView> opponentBoards,PlayerBoardView ownerBoard){
-        boardZone.updateBoards(opponentBoards, ownerBoard, true, 0);
+    public void setFrenzy(ArrayList<PlayerBoardView> allBoards,PlayerBoardView ownerBoard){
+        boardZone.updateBoards(allBoards, ownerBoard, true, 0);
         playerZone.setFrenzy(ownerBoard);
         frenzyStatus = true;
     }
@@ -87,9 +87,8 @@ public class GameBoardGUI {
      */
     public void updateBoardGame(ArrayList<PlayerBoardView> allBoards,PlayerBoardView ownerBoard, CellView[][] boardMatrix, KillShotTrackerView kills, PlayerHandView ownerHand){
         boardZone.updateBoards(allBoards, ownerBoard, frenzyStatus, kills.getNumKills());
-        map.setBoard(boardMatrix);
         playerZone.updateElements(ownerBoard, ownerHand, frenzyStatus);
-        //TODO aggiornare il frenzy
+        map.setBoard(boardMatrix);
     }
 
 }

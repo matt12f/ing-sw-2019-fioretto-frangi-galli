@@ -26,12 +26,20 @@ public class Zx2 extends GunCardAltEff {
         this.secondaryEffectCost = new char[1];
         secondaryEffectCost[0] = 'n';
     }
-
+    /**
+     * This applies the base effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
         ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,1,2);
     }
-
+    /**
+     * This applies the secondary effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
         ActionManager.giveDmgandMksToPlayers(currentController,playersChoice.getTargetsFromList1(),playersChoice,0,1);
@@ -40,6 +48,13 @@ public class Zx2 extends GunCardAltEff {
 
     /**
      * Deal 1 damage and 2 marks to 1 target you can see.
+     */
+    /**
+     *
+     *
+     * @param currentController
+     * @param actions
+     * @param player
      */
     @Override
     void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
@@ -52,6 +67,12 @@ public class Zx2 extends GunCardAltEff {
 
     /**
      * Choose up to 3 targets you can see and deal 1 mark to each.
+     */
+    /**
+     *
+     * @param currentController
+     * @param actions
+     * @param player
      */
     @Override
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {

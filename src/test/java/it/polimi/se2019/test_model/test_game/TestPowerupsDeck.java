@@ -42,10 +42,9 @@ public class TestPowerupsDeck {
     public void testDraw(){
         PowerupsDeck testDeck=new PowerupsDeck();
         PowerupCard testCard=testDeck.draw();
-        assertNotEquals(testDeck.draw(),testCard);
+        assertEquals(testCard.getClass(),testDeck.draw().getClass());
         int size=emptyActiveDeck(testDeck);
         assertEquals(size,testDeck.getDiscardedDeck().size()); //not useful but since the method returns an int... (that here doesn't serve a purpose)
-        testCard=testDeck.draw();
-        assertNotEquals(testDeck.draw(),testCard);
+        assertEquals(testCard.getClass(),testDeck.draw().getClass());
     }
 }

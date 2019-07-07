@@ -45,7 +45,11 @@ public class MachineGun extends GunCardAddEff {
         this.tertiaryEffectCost = new char[1];
         tertiaryEffectCost[0] = 'b';
     }
-
+    /**
+     * This applies the base effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
         ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,1,0);
@@ -53,13 +57,21 @@ public class MachineGun extends GunCardAddEff {
             ActionManager.giveDmgandMksToOnePlayer(currentController, playersChoice.getTargetsFromList1().get(1), playersChoice, 1, 0);
         }
     }
-
+    /**
+     * This applies the secondary effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
         //always applied to the first target
         ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,1,0);
     }
-
+    /**
+     * This applies the tertiary effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applyTertiaryEffect(Controller currentController, ChosenActions playersChoice) {
         ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(1),playersChoice,1,0);
@@ -70,6 +82,12 @@ public class MachineGun extends GunCardAddEff {
 
     /**
      * Choose 1 or 2 targets you can see and deal 1 damage to each.
+     */
+    /**
+     * find targets
+     * @param currentController
+     * @param actions
+     * @param player
      */
     @Override
     void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
@@ -82,6 +100,12 @@ public class MachineGun extends GunCardAddEff {
     /**
      * Deal 1 additional damage to one of those targets.
      */
+    /**
+     * find targets
+     * @param currentController
+     * @param actions
+     * @param player
+     */
     @Override
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         //nothing to do, the check of its offerability is done in SingleEffectCombinationActions class
@@ -89,6 +113,12 @@ public class MachineGun extends GunCardAddEff {
 
     /**
      * Deal 1 additional damage to the other of those targets and/or deal 1 damage to a different target you can see.
+     */
+    /**
+     * find targets
+     * @param currentController
+     * @param actions
+     * @param player
      */
     @Override
     void targetsOfTertiaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {

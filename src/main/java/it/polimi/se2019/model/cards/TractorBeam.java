@@ -26,13 +26,21 @@ public class TractorBeam extends GunCardAltEff {
         secondaryEffectCost[1] = 'y';
     }
 
-
+    /**
+     * This applies the base effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
         ActionManager.movePlayer(currentController,playersChoice.getTargetsFromCell().get(0),playersChoice.getCellToMoveOpponent());
         ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromCell().get(0),playersChoice,1,0);
     }
-
+    /**
+     * This applies the secondary effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
         ActionManager.movePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice.getFictitiousPlayer().getPosition());
@@ -41,6 +49,12 @@ public class TractorBeam extends GunCardAltEff {
 
     /**
      * Move a target 0, 1, or 2 squares to a square you can see, and give it 1 damage.
+     */
+    /**
+     *
+     * @param currentController
+     * @param actions
+     * @param player
      */
     @Override
     void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
@@ -64,6 +78,12 @@ public class TractorBeam extends GunCardAltEff {
 
     /**
      * Choose a target 0, 1, or 2 moves away from you. Move the target to your square and deal 3 damage to it.
+     */
+    /**
+     *
+     * @param currentController
+     * @param actions
+     * @param player
      */
     @Override
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {

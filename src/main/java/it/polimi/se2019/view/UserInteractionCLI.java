@@ -19,7 +19,6 @@ public class UserInteractionCLI extends UserInteraction {
      */
     @Override
     public boolean[] cardsToReload(GunCard[] cards, boolean[] reloadableCards) {
-        //TODO scrivere metodo
         return new boolean[0];
     }
 
@@ -32,7 +31,6 @@ public class UserInteractionCLI extends UserInteraction {
      */
     @Override
     public boolean yesOrNo(String message, String textYesButton, String textNoButton) {
-        //TODO scrivere metodo
         return false;
     }
 
@@ -44,7 +42,6 @@ public class UserInteractionCLI extends UserInteraction {
      */
     @Override
     public String stringSelector(String message, ArrayList<String> listToChooseFrom) {
-        //TODO scrivere metodo
         return null;
     }
 
@@ -54,7 +51,6 @@ public class UserInteractionCLI extends UserInteraction {
      */
     @Override
     public int[] mapChooser() {
-        //TODO scrivere metodo
         return new int[0];
     }
 
@@ -66,7 +62,6 @@ public class UserInteractionCLI extends UserInteraction {
      */
     @Override
     public PowerupCard spawnChooser(PowerupCard[] list, PowerupCard optional) {
-        //TODO scrivere metodo
         return null;
     }
 
@@ -76,7 +71,7 @@ public class UserInteractionCLI extends UserInteraction {
      * @return
      */
     @Override
-    public String actionToRequest(int frenzy) {
+    public String actionToRequest(int frenzy,String playerColor) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         ArrayList<String> available = new ArrayList<>();
         switch (frenzy) {

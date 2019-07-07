@@ -29,6 +29,12 @@ public class GameModel extends Observable{
     private int turn;
     private List<modelChanged> viewObserver = new ArrayList<>();
 
+    /**
+     * creation of the game
+     * @param playerList list of the players
+     * @param mapNumber map configuration id
+     * @param skulls max kills allowed
+     */
     public GameModel(ArrayList<Player> playerList, int mapNumber, int skulls){
         this.currentDecks=new Decks();
         this.playerList = playerList;

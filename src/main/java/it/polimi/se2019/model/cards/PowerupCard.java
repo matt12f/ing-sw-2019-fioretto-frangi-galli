@@ -9,6 +9,11 @@ public class PowerupCard implements Serializable {
     /**
      * Available Types: TargettingScope, Newton, TagbackGrenade, Teleporter
      */
+    /**
+     *
+     * @param type
+     * @param color
+     */
     public PowerupCard(String type, char color) {
         this.cubeColor=color;
         this.powerupType=type;

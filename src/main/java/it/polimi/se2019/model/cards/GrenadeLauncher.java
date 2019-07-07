@@ -39,7 +39,11 @@ public class GrenadeLauncher extends GunCardAddEff {
         secondaryEffectCost[0] = 'r';
         this.tertiaryEffectCost =null;
     }
-
+    /**
+     * This applies the base effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applyBaseEffect(Controller currentController, ChosenActions playersChoice){
         Player target=playersChoice.getTargetsFromList1().get(0);
@@ -47,7 +51,11 @@ public class GrenadeLauncher extends GunCardAddEff {
         if(playersChoice.getCellToMoveOpponent()!=null) //it chose to move the player
             ActionManager.movePlayer(currentController,target,playersChoice.getCellToMoveOpponent());
     }
-
+    /**
+     * This applies the optional1 effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
         ActionManager.giveDmgandMksToPlayers(currentController,playersChoice.getTargetCell().getPlayers(),playersChoice,1,0);
@@ -84,10 +92,22 @@ public class GrenadeLauncher extends GunCardAddEff {
            actions.setOfferableOpt1(false);
     }
 
+    /**
+     * This applies the optional2 effect
+     * @param currentController
+     * @param playersChoice
+     */
     @Override
     void applyTertiaryEffect(Controller currentController, ChosenActions playersChoice) {
         throw new UnsupportedOperationException();
     }
+
+    /**
+     * find the target for theoptional 2
+     * @param currentController
+     * @param actions
+     * @param player
+     */
     @Override
     void targetsOfTertiaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         throw new UnsupportedOperationException();

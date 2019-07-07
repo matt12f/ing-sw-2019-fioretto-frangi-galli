@@ -29,7 +29,7 @@ public class PlayerManager  {
                 playersAlive.add(player);
 
         for(Player player:playersAlive)
-            adrenalineManager(player);
+            adrenalineManager(currentController, player);
 
         //scoring section
         //if there are dead players we must score their boards
@@ -51,7 +51,7 @@ public class PlayerManager  {
 
         //adrenaline and damage track reset
         for (Player deadPlayer: currentController.getMainGameModel().getDeadPlayers())
-            adrenalineReset(deadPlayer);
+            adrenalineReset(currentController, deadPlayer);
 
         //here we'll update the RemoteView
         currentController.getMainGameModel().notifyRemoteView();
@@ -151,6 +151,13 @@ public class PlayerManager  {
 
     }
 
+    /**
+     * method that allows  to spawn players in the right spawn point
+     * @param controller
+     * @param id player id
+     * @param spawn color that indicates the spawn point
+     * @throws CardNotFoundException
+     */
     public static void spawnPlayers(Controller controller, int id, PowerupCard spawn) throws CardNotFoundException {
         NewCell[][] map = controller.getMainGameModel().getCurrentMap().getBoardMatrix();
         Color cellNeeded;
@@ -185,6 +192,13 @@ public class PlayerManager  {
         controller.getMainGameModel().notifyRemoteView();
     }
 
+    /**
+     *
+     * @param setUpGame
+     * @param controller
+     * @param id player's id
+     * @throws FullException
+     */
     public static void getCardsToSpawn(boolean setUpGame, Controller controller, int id) throws FullException {
         PowerupCard card;
         if(setUpGame){
@@ -329,7 +343,10 @@ public class PlayerManager  {
     /**
      * this method enables the adrenaline modes in the player boards of a given player
      */
-    private static void adrenalineManager(Player player){
+    private static void adrenalineManager(Controller currentController, Player player){
+        player=currentController.getMainGameModel().getPlayerList().get(
+                currentController.getMainGameModel().getPlayerList().indexOf(player));
+
         if(player.getPlayerBoard().getDamageTrack().getDamage().length >= 3)
             player.getPlayerBoard().getActionTileNormal().setAdrenalineMode1(true);
 
@@ -342,13 +359,21 @@ public class PlayerManager  {
      * this method deactivates both adrenaline modes for players that have died
      * and also resets their damage tracks
      */
-    private static void adrenalineReset(Player player){
+    private static void adrenalineReset(Controller currentController, Player player){
+        player=currentController.getMainGameModel().getPlayerList().get(
+                currentController.getMainGameModel().getPlayerList().indexOf(player));
+
         player.getPlayerBoard().getDamageTrack().resetDmgTrack();
         player.getPlayerBoard().getActionTileNormal().setAdrenalineMode1(false);
         player.getPlayerBoard().getActionTileNormal().setAdrenalineMode2(false);
     }
 
-
+    /**
+     * method that allows the player to pay the ammocost for a weapon
+     * @param player
+     * @param cost
+     * @param pickOrFullReload
+     */
     public static void payGunCardCost(Player player, char [] cost, boolean pickOrFullReload){
         if(!pickOrFullReload)
             player.getPlayerBoard().getAmmo().subtractAmmo(cost);
@@ -360,6 +385,11 @@ public class PlayerManager  {
         }
     }
 
+    /**
+     * method that allows to recharge weapons
+     * @param player
+     * @param reload
+     */
     public static void reloadManager(Player player, boolean[] reload) {
         for(int i=0;i<player.getPlayerBoard().getHand().getGuns().length;i++)
             if(player.getPlayerBoard().getHand().getGuns()[i]!=null && reload[i]) {

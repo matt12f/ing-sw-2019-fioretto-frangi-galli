@@ -399,7 +399,7 @@ public class ChosenActions implements Serializable {
     }
 
     private String cellToText(LocalView localView, NewCell cell) {
-        return ("Cell in position ("+localView.getMapView().getXIndex(cell) +", "+localView.getMapView().getYIndex(cell)+")");
+        return ("Cella in coordinate (visive) ("+localView.getMapView().getXIndex(cell) +", "+localView.getMapView().getYIndex(cell)+")");
     }
 
 

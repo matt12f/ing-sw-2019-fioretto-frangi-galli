@@ -26,9 +26,9 @@ public class UserInteractionGUI extends UserInteraction {
      * @return the player's choice
      */
     @Override
-    public String actionToRequest(int frenzy){
+    public String actionToRequest(int frenzy,String playerColor){
 
-        JLabel label = new JLabel("Che macro azione vuoi fare?");
+        JLabel label = new JLabel( playerColor.toLowerCase() + " player turn: Select the Macro action");
 
         JButton moveButton = new JButton("Move");
         moveButton.addActionListener(new ActionListener() {
@@ -311,13 +311,13 @@ public class UserInteractionGUI extends UserInteraction {
 
 
         JPanel buttons = new JPanel();
-        if(cards[0] != null && reloadableCards[0]){
+        if(cards[0] != null && !reloadableCards[0]){
             buttons.add(weapon1Check);
         }
-        if(cards[1] != null && reloadableCards[1]){
+        if(cards[1] != null && !reloadableCards[1]){
             buttons.add(weapon2Check);
         }
-        if(cards[2] != null && reloadableCards[2]){
+        if(cards[2] != null && !reloadableCards[2]){
             buttons.add(weapon3Check);
         }
 
@@ -347,7 +347,7 @@ public class UserInteractionGUI extends UserInteraction {
     public void ammoTileViewer(String content){
 
         JPanel body = new JPanel(new BorderLayout(8, 8));
-        ImageIcon pic = new ImageIcon(new ImageIcon("src/main/sprite/ammo/ammo_"+ content +".png").getImage().getScaledInstance(150,150, Image.SCALE_DEFAULT));
+        ImageIcon pic = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/ammo/ammo_"+ content +".png")).getImage().getScaledInstance(150,150, Image.SCALE_DEFAULT));
         JLabel image = new JLabel(pic);
         image.setIcon(pic);
 

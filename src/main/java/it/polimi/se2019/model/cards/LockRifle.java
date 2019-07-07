@@ -30,12 +30,20 @@ public class LockRifle extends GunCardAddEff {
         this.tertiaryEffectCost =null;
 
     }
-
+    /**
+     * This applies the base effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
         ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,2,1);
     }
-
+    /**
+     * This applies the secondary effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
         ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(1),playersChoice,0,1);
@@ -44,6 +52,11 @@ public class LockRifle extends GunCardAddEff {
 
     /**
      * Deal 2 damage and 1 mark to 1 target you can see.
+
+     * find targets
+     * @param currentController
+     * @param actions
+     * @param player
      */
     @Override
     void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
@@ -56,6 +69,12 @@ public class LockRifle extends GunCardAddEff {
 
     /**
      * Deal 1 mark to a different target you can see.
+     */
+    /**find targets
+     *
+     * @param currentController
+     * @param actions
+     * @param player
      */
     @Override
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {

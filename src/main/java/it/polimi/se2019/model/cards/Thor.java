@@ -40,17 +40,29 @@ public class Thor extends GunCardAddEff {
         this.tertiaryEffectCost = new char[1];
         tertiaryEffectCost[0] = 'b';
     }
-
+    /**
+     * This applies the base effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
         ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,2,0);
     }
-
+    /**
+     * This applies the secondary effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
         ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(1),playersChoice,1,0);
     }
-
+    /**
+     * This applies the third effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applyTertiaryEffect(Controller currentController, ChosenActions playersChoice) {
         ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(2),playersChoice,2,0);
@@ -58,6 +70,12 @@ public class Thor extends GunCardAddEff {
 
     /**
      * Deal 2 damage to 1 target you can see.
+     */
+    /**
+     *
+     * @param currentController
+     * @param actions
+     * @param player
      */
     @Override
     void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player){
@@ -72,6 +90,12 @@ public class Thor extends GunCardAddEff {
 
     /**
      * Deal 1 damage to a second target that your first target can see.
+     */
+    /**
+     *
+     * @param currentController
+     * @param actions
+     * @param player
      */
     @Override
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player){
@@ -94,6 +118,12 @@ public class Thor extends GunCardAddEff {
     /**
      * Deal 2 damage to a third target that your second target can see. You cannot use this effect unless you first use the chain reaction.
      */
+    /**
+     *
+     * @param currentController
+     * @param actions
+     * @param player
+     */
     @Override
     void targetsOfTertiaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         if(actions.isOfferableOpt1()){ //I already have a two-link chain of targets available
@@ -115,6 +145,12 @@ public class Thor extends GunCardAddEff {
     /**
      * checks if a Player is in the list of targets with targets
      *
+     */
+    /**
+     *
+     * @param target designed player to inflict the effect
+     * @param list  list of players
+     * @return
      */
     private boolean itIsInTheList(Player target,ArrayList<PlayerWithTargets> list){
         for(PlayerWithTargets playerWithTargets:list)

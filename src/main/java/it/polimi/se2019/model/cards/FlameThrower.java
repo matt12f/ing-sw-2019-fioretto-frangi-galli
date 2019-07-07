@@ -25,12 +25,20 @@ public class FlameThrower extends GunCardAltEff {
         secondaryEffectCost[0] = 'y';
         secondaryEffectCost[1] = 'y';
     }
-
+    /**
+     * This applies the base effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
         ActionManager.giveDmgandMksToPlayers(currentController,playersChoice.getTargetsFromCell(),playersChoice,1,0);
     }
-
+    /**
+     * This applies the alternative effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
         NewCell[][] board =currentController.getMainGameModel().getCurrentMap().getBoardMatrix();
@@ -51,6 +59,13 @@ public class FlameThrower extends GunCardAltEff {
         }
     }
 
+    /**
+     * allow to choose the attack direction
+     * @param board map matrix
+     * @param originalCell start cell
+     * @param otherCell chosencell
+     * @return
+     */
     private int getDirection(NewCell[][]board,NewCell originalCell, NewCell otherCell){
         int x=MapManager.getLineOrColumnIndex(board,originalCell,true);
         int y=MapManager.getLineOrColumnIndex(board,originalCell,false);

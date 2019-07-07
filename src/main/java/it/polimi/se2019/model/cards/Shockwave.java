@@ -22,12 +22,20 @@ public class Shockwave extends GunCardAltEff {
         this.secondaryEffectCost = new char[1];
         secondaryEffectCost[0] = 'y';
     }
-
+    /**
+     * This applies the base effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
         ActionManager.giveDmgandMksToPlayers(currentController,playersChoice.getTargetsFromCell(),playersChoice,1,0);
     }
-
+    /**
+     * This applies the secondary effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
         ActionManager.giveDmgandMksToPlayers(currentController,ActionManager.targetsOneMoveAway(currentController,
@@ -36,6 +44,12 @@ public class Shockwave extends GunCardAltEff {
 
     /**
      * Choose up to 3 targets on different squares, each exactly 1 move away. Deal 1 damage to each target.
+     */
+    /**
+     *
+     * @param currentController it the current controller of the game
+     * @param actions
+     * @param player
      */
     @Override
     void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
@@ -50,6 +64,12 @@ public class Shockwave extends GunCardAltEff {
 
     /**
      * Deal 1 damage to all targets that are exactly 1 move away.
+     */
+    /**
+     * find targets
+     * @param currentController it the current controller of the game
+     * @param actions
+     * @param player
      */
     @Override
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {

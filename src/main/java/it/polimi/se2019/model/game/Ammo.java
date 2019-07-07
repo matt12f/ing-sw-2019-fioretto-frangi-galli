@@ -30,7 +30,11 @@ public class Ammo  implements Serializable {
         return yellow;
     }
 
-
+    /**
+     * add a number and a type of ammo depending on the string content
+     * @param ammo is the number and type of ammo to add
+     * @return
+     */
     public boolean addAmmo(String ammo){
         boolean isTherePwUp=false;
         for(int i=0;i<ammo.length();i++){
@@ -46,6 +50,10 @@ public class Ammo  implements Serializable {
         return isTherePwUp;
     }
 
+    /**
+     * take an amount of ammo to recharge or to use an effects
+     * @param ammo ammo to take
+     */
     public void subtractAmmo(char [] ammo){
         for(int i=0;i<ammo.length;i++){
             if(ammo[i]=='b')

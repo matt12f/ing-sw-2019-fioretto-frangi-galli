@@ -92,8 +92,7 @@ public class LocalView  extends View implements Observer, Serializable {
 
     /**
      * update the local view
-     * @param o
-     * @param remoteView
+     * @param remoteView is the updated remoteView
      */
     @Override
     public void update(Observable o, Object remoteView) {

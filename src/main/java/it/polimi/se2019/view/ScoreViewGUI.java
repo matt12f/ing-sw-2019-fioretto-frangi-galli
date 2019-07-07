@@ -11,11 +11,11 @@ public class ScoreViewGUI extends JFrame  {
 
     /**
      * buid a frame hat shows every player's score and the total kills in the game
-     * @param opponentBoards board of the opponents
+     * @param allBoards board of the opponents
      * @param ownerBoard board of the user
      * @param kills  number of kills
      */
-    public ScoreViewGUI(ArrayList<PlayerBoardView> opponentBoards, PlayerBoardView ownerBoard, int kills){
+    public ScoreViewGUI(ArrayList<PlayerBoardView> allBoards, PlayerBoardView ownerBoard, int kills){
         JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints container = new GridBagConstraints();
         mainPanel.setLayout(new GridBagLayout());
@@ -27,11 +27,11 @@ public class ScoreViewGUI extends JFrame  {
 
         int x=1;
 
-        for (int i = 0; i< opponentBoards.size();i++){
+        for (int i = 0; i< allBoards.size();i++){
             container.gridx=0;
             container.gridy=x;
-            mainPanel.add(new Label(opponentBoards.get(i).getColor().toString()+" Player:"+
-                    opponentBoards.get(i).getScore() + " points"), container);
+            mainPanel.add(new Label(allBoards.get(i).getColor().toString()+" Player:"+
+                    allBoards.get(i).getScore() + " points"), container);
             x+=1;
         }
         container.gridx=0;

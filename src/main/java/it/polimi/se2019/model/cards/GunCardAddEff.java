@@ -15,6 +15,7 @@ public abstract class GunCardAddEff extends GunCard{
     protected boolean hasAlternativeEffect=false;
     protected char[] tertiaryEffectCost;
 
+
     public GunCardAddEff() {
         super();
     }

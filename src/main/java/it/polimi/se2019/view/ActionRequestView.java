@@ -23,7 +23,7 @@ public class ActionRequestView implements Serializable {
         this.askUser=new UserInteractionGUI();
 
         if(!turnConclusion){
-        String action=this.askUser.actionToRequest(localView.getPersonalPlayerBoardView().getFrenzy());
+        String action=this.askUser.actionToRequest(localView.getPersonalPlayerBoardView().getFrenzy(),localView.getPersonalPlayerBoardView().getColor().toString());
         switch (action){
             case "move": this.actionToRequest=ActionType.NORMAL1;break;
             case "grab": this.actionToRequest=ActionType.NORMAL2;break;
@@ -79,7 +79,7 @@ public class ActionRequestView implements Serializable {
                 ArrayList<Coordinates> coordinates = localView.getMapView().availableCoordinates(yourPosition);
 
                 ArrayList<String> coordToChooseFrom=new ArrayList<>();
-                for(Coordinates coord:coordinates)
+                for(Coordinates coord: coordinates)
                     coordToChooseFrom.add(coord.toString());
 
                 String coordChoosenCell=this.askUser.stringSelector("In quale cella ti vuoi muovere?",coordToChooseFrom);
@@ -137,11 +137,11 @@ public class ActionRequestView implements Serializable {
         return directions;
     }
 
-    private ArrayList<Integer> getMaxDistance(ArrayList<String> directionsAvailable,CellView positionOfTarget) {
+    private ArrayList<Integer> getMaxDistance(ArrayList<String> directionsAvailable, CellView positionOfTarget) {
         ArrayList<Integer> distances =new ArrayList<>();
 
         for(int i=0;i<directionsAvailable.size();i++){
-            distances.add(1);
+            distances.add(i,1);
             //Checks if the next cell in the same direction has a wall or if the player can be moved there
             switch (directionsAvailable.get(i)){
                 case "Up": {
