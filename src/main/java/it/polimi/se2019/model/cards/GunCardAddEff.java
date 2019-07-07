@@ -81,14 +81,14 @@ public abstract class GunCardAddEff extends GunCard{
         this.tertiaryEffectCost = tertiaryEffectCost;
     }
 
-    /**
-     * methods that apply the individual effects, with the selections of the player as inputs
-     */
+
+     //methods that apply the individual effects, with the selections of the player as inputs
+
     abstract void applyTertiaryEffect(Controller currentController, ChosenActions playersChoice);
 
-    /**
-     * Methods called by available actions builder to calculate the possible targets
-     */
+
+     //Methods called by available actions builder to calculate the possible targets
+
     abstract void targetsOfTertiaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player);
 
 

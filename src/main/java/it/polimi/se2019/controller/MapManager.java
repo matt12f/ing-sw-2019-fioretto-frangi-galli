@@ -58,8 +58,16 @@ public class MapManager {
         try {
             if (cell.getCellType().equals(CellType.DROP))
                 cell.setItem(decks.getAmmotilesDeck().draw());
-            else
-                cell.setItem(decks.getGunDeck().draw());
+            else{
+                try{
+                for(int i=0;i<3;i++){
+                    cell.setItem(decks.getGunDeck().peek());
+                    decks.getGunDeck().draw();
+                }
+                }catch (FullException e){
+                    //won't be inserted
+                }
+            }
         } catch (FullException e) {
             LOGGER.log(Level.FINE, "MapManager refill", e);
         }
