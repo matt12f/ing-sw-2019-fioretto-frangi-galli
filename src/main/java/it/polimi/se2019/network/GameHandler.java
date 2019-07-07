@@ -134,6 +134,11 @@ public class GameHandler implements Runnable {
             } catch (IOException e) {
                 System.out.println("problema comunicazione turno");
             }
+            try {
+                notifyFrenzy(clientTurn);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             for(int i = 0; i<controller.getActiveTurn().getActivePlayer().getPlayerBoard().getActionTileNormal().getActionCounter(); i++) {
                 lastAction = (i == (controller.getActiveTurn().getActivePlayer().getPlayerBoard().getActionTileNormal().getActionCounter() -1));
                 for (ClientHandler client: players) {
@@ -147,7 +152,6 @@ public class GameHandler implements Runnable {
                     }
                 }
                 waitingRequest(clientTurn);
-                notifyClient(clientTurn);
                 calculateActions(clientTurn);
                 sendAvailable(clientTurn);
                 getChosenAction(clientTurn);
@@ -220,27 +224,112 @@ public class GameHandler implements Runnable {
             controller.getMainGameModel().getDeadPlayers().clear();
         }
         TurnManager.frenzyActivator(controller);
+        Player firstOfFrenzy = this.controller.getActiveTurn().getActivePlayer();
         for (int j = 0; j<players.size(); j++){
-            clientTurn = players.get(this.controller.getMainGameModel().getTurn());
             turnPreparation(this.controller.getMainGameModel().getTurn());
-            for (int i = 0; i < controller.getActiveTurn().getActivePlayer().getPlayerBoard().getActionTileFrenzy().getActionCounter(); i ++) {
+            clientTurn = this.players.get(this.controller.getMainGameModel().getTurn());
+            clientTurn.setActionsNumber( this.controller.getActiveTurn().getActivePlayer().getPlayerBoard().getActionTileNormal().getActionCounter());
+            System.out.println("turno FRENZY di: " + clientTurn.getColor());
+            try {
+                clientTurn.notifyTurn();
+                for (ClientHandler client: players) {
+                    if (!clientTurn.getNickname().equals(client.getNickname()))
+                        client.getOutput().writeObject("NOTMYTURN");
+                }
+            } catch (IOException e) {
+                System.out.println("problema comunicazione turno");
+            }
+            try {
+                notifyFrenzy(clientTurn);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            for(int i = 0; i<controller.getActiveTurn().getActivePlayer().getPlayerBoard().getActionTileNormal().getActionCounter(); i++) {
+                lastAction = (i == (controller.getActiveTurn().getActivePlayer().getPlayerBoard().getActionTileNormal().getActionCounter() -1));
+                for (ClientHandler client: players) {
+                    if (!clientTurn.getNickname().equals(client.getNickname())) {
+                        try {
+                            client.getOutput().writeBoolean(lastAction);
+                            client.getOutput().flush();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
                 waitingRequest(clientTurn);
                 calculateActions(clientTurn);
-                waitingRequest(clientTurn);
-                ChosenActions chosenActions = clientTurn.getChosenAction();
-                managePowerUps(PlayerManager.choiceExecutor(controller, chosenActions));
-                notifyView(clientTurn);
+                sendAvailable(clientTurn);
+                getChosenAction(clientTurn);
+                managePowerUps(PlayerManager.choiceExecutor(controller, clientTurn.getChosenAction()));
+                this.controller.getMainGameModel().notifyRemoteView();
+                try {
+                    try {
+                        postAction();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } catch (InterruptedException e) {
+                    LOGGER.log(Level.FINE,"3rd exception",e);
+                }
+                if (this.controller.getMainGameModel().getKillshotTrack().getSkulls() == 0)
+                    break;
+                //fine azione
             }
             waitingRequest(clientTurn);
-            calculateActions(clientTurn);
+            reload(clientTurn);
             try {
-                notifyEndTurn();
-            } catch (InterruptedException e) {
-                LOGGER.log(Level.FINE,"7th exception",e);
+                clientTurn.sendLocalView();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            controller.getActiveTurn().nextTurn(controller);
-            MapManager.refillEmptiedCells(controller.getMainGameModel().getCurrentMap().getBoardMatrix(),controller.getMainGameModel().getCurrentDecks());
+            //fine turno
             this.turns++;
+            PlayerManager.scoringProcess(controller);
+            try {
+                for (ClientHandler clientHandler: players) {
+                    clientHandler.getOutput().writeObject(this.controller.getMainGameModel().getDeadPlayers().size());
+                }
+                System.out.println("inviati morti: " +  this.controller.getMainGameModel().getDeadPlayers().size());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            for (Player player: this.controller.getMainGameModel().getDeadPlayers()) {
+                for (ClientHandler client: this.players) {
+                    if(player.getNickname().equals(client.getNickname())){
+                        client.setStatus(Status.DEAD);
+                        client.setDeadsPlayer(this.controller.getMainGameModel().getDeadPlayers().size());
+                        try {
+                            PlayerManager.getCardsToSpawn(false, controller, player.getId());
+                            waitForReSpawn(client);
+                            PlayerManager.spawnPlayers(controller, client.getLocalView().getPlayerId(), client.getSpawn());
+                            setSpawn(client);
+                        } catch (FullException | CardNotFoundException e) {
+                            LOGGER.log(Level.FINE,"5th exception",e);
+                        }
+
+                    }
+                }
+                for (ClientHandler client: players) {
+                    try {
+                        client.sendLocalView();
+                    } catch (IOException e) {
+                        LOGGER.log(Level.FINE,"6th exception",e);
+                    }
+                }
+            }
+            MapManager.refillEmptiedCells(controller.getMainGameModel().getCurrentMap().getBoardMatrix(),controller.getMainGameModel().getCurrentDecks());
+            controller.getActiveTurn().nextTurn(controller);
+            for (ClientHandler clientHandler: players) {
+                try {
+                    if(this.controller.getActiveTurn().getActivePlayer().getNickname().equals(firstOfFrenzy.getNickname()))
+                        clientHandler.getOutput().writeObject("ENDGAME");
+                    else
+                        clientHandler.getOutput().writeObject("START");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            controller.getMainGameModel().getDeadPlayers().clear();
         }
         for (ClientHandler player: players) {
             player.setStatus(Status.ENDGAME);
@@ -253,11 +342,16 @@ public class GameHandler implements Runnable {
         }
     }
 
-    private void reload(ClientHandler clientTurn) {
-        new AvailableActions(clientTurn.getRequestView(), this.players.indexOf(clientTurn) ,controller);
+    private void notifyFrenzy(ClientHandler clientTurn) throws IOException {
+        if(this.controller.getMainGameModel().getFinalFrenzy()){
+            clientTurn.getOutput().writeObject("FRENZY");
+        }else{
+            clientTurn.getOutput().writeObject("MELONI");
+        }
     }
 
-    private void notifyClient(ClientHandler clientTurn) {
+    private void reload(ClientHandler clientTurn) {
+        new AvailableActions(clientTurn.getRequestView(), this.players.indexOf(clientTurn) ,controller);
     }
 
     private void getChosenAction(ClientHandler clientTurn) {
@@ -489,7 +583,6 @@ public class GameHandler implements Runnable {
         }
         ClientHandler clientTurn = this.players.get(turn);
         clientTurn.setActionsNumber(controller.getActiveTurn().getActivePlayer().getPlayerBoard().getActionTileNormal().getActionCounter());
-        clientTurn.setStatus(Status.MYTURN);
     }
 
     private void waitForSpawn(ClientHandler player) throws InterruptedException {
