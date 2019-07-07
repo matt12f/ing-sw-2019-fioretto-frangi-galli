@@ -12,6 +12,10 @@ public class KillShotTrack {
      * Default constructor
      *
      */
+    /**
+     *
+     * @param skulls max kills allowed
+     */
     public KillShotTrack(int skulls){
         this.kills=new String[skulls];
         this.skulls = skulls;
@@ -24,6 +28,10 @@ public class KillShotTrack {
 
     /**
      * this method adds kills to the killshot track and extra kills during frenzy
+     */
+    /**
+     *
+     * @param kill
      */
     public void setKills( String kill) {
         boolean found = false;

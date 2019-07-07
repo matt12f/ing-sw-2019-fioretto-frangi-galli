@@ -68,14 +68,25 @@ public class AmmoTilesDeck {
         this.shuffle();
     }
 
+    /**
+     *
+     * @param card card to add at the discarded deck
+     */
     public void setDiscardedDeck(AmmoTileCard card) {
         this.discardedDeck.add(card);
     }
 
+    /**
+     * shuffle the deck
+     */
     public void shuffle(){
         Collections.shuffle(activeDeck);
     }
 
+    /**
+     * draw a card from the deck
+     * @return the picked card
+     */
     public AmmoTileCard draw(){
         AmmoTileCard drawn;
         if(activeDeck.isEmpty())

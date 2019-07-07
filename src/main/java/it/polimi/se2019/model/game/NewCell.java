@@ -23,7 +23,13 @@ public class NewCell implements Serializable {
     private ArrayList<GunCard> weaponCards;
 
     /**
-     * This constructor will serve as a super for its two sub classes
+     * build a cell with the input parameters
+     * @param color
+     * @param top
+     * @param bottom
+     * @param left
+     * @param right
+     * @param cellType
      */
     public NewCell(Color color, CellEdge top, CellEdge bottom, CellEdge left, CellEdge right, CellType cellType) {
         this.color = color;
@@ -77,6 +83,11 @@ public class NewCell implements Serializable {
             throw new FullException("gun hand already full");
     }
 
+    /**
+     *
+     * @param emptyDeck
+     * @return if there's need to refill the slots
+     */
     public boolean needsRefill(boolean emptyDeck){
         if(this.cellType.equals(CellType.SPAWN)){
             if (this.weaponCards.size()<3 && !emptyDeck)
@@ -129,6 +140,11 @@ public class NewCell implements Serializable {
         return temp;
     }
 
+    /**
+     *
+     * @param edgeNumber
+     * @return what edge the user is looking for
+     */
     public CellEdge getEdge(int edgeNumber){
         switch (edgeNumber){
             case 0: return this.top;

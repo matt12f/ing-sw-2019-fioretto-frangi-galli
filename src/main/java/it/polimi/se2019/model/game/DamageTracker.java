@@ -23,6 +23,11 @@ public class DamageTracker implements Serializable {
      * if it returns false: it's damage over 12, meaning  it's wasted
      * if it returns true: everything is ok
      */
+    /**
+     *
+     * @param damage
+     * @return if there's space in the damage list
+     */
     public boolean addDamage(char damage){
         boolean spotFound = false;
         int i = 0;
@@ -53,6 +58,10 @@ public class DamageTracker implements Serializable {
      * this method adds the single mark it receives
      * NOTE: there can only be up to three marks of each color on a player board
      */
+    /**
+     *
+     * @param mark
+     */
     public void addMark(char mark){
         if(markCounter(mark)<3)
             this.marks.add(mark);
@@ -73,6 +82,11 @@ public class DamageTracker implements Serializable {
     /**
      * This method counts the amount of marks of a given color
      */
+    /**
+     *
+     * @param color
+     * @return the amount of marks of the same color
+     */
     private int markCounter(char color){
         sort(this.marks); //this orders the marks in alphabetical order
         int firstOccurrence=this.marks.indexOf(color);
@@ -92,6 +106,10 @@ public class DamageTracker implements Serializable {
         return damage;
     }
 
+    /**
+     *
+     * @return if there's no damage on a player
+     */
     public boolean hasNoDamage(){
         for (int i=0; i<12; i++)
             if(this.damage[i]!=' ')

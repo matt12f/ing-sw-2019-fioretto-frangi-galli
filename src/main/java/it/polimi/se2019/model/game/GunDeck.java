@@ -41,6 +41,10 @@ public class GunDeck {
         return activeDeck;
     }
 
+    /**
+     *
+     * @return the first card
+     */
     public GunCard draw(){
         GunCard drawn;
         drawn =  activeDeck.get(0);
