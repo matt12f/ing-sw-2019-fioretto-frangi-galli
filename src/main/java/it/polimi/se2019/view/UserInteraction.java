@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public abstract class UserInteraction implements Serializable {
-    public abstract String actionToRequest(int frenzy);
+    public abstract String actionToRequest(int frenzy,String playerColor);
     public abstract boolean[]cardsToReload(GunCard [] cards, boolean[] reloadableCards);
     public abstract boolean yesOrNo(String message,String textYesButton, String textNoButton);
     public abstract String stringSelector(String message, ArrayList<String> listToChooseFrom);

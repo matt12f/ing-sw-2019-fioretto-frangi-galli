@@ -45,7 +45,7 @@ public class CellViewGUI extends JPanel {
     }
 
     /**
-     * update of the single cell and all of it's elements
+     * update of the single cell and all of its elements
      * @param cell is the object cellview with all the  data
      */
     public void updateCell(CellView cell) {
@@ -58,7 +58,7 @@ public class CellViewGUI extends JPanel {
                 }else 
                     matrixGUI[i][j].updateContent("EMPTY","");
 
-        if(!cell.getDrop().equals("spawn"))
+        if(!cell.getDrop().equals("spawn") && cell.getDrop()!=null)
             matrixGUI[2][2].updateContent("DROP",cell.getDrop());
         else
             matrixGUI[2][2].updateContent("EMPTY","");

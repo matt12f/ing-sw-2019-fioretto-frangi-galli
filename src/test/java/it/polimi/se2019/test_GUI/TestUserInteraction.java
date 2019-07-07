@@ -24,9 +24,9 @@ public class TestUserInteraction {
         //testActionSelection();
         //testYesOrNo();
         //testShowMessage();
-        //testSelectionFromList();
+        testSelectionFromList();
 
-        testMap();
+        //testMap();
     }
 
     private static void testSelectionFromList(){
@@ -48,9 +48,9 @@ public class TestUserInteraction {
     }
 
     private static void testActionSelection() {
-        System.out.println(askUser.actionToRequest(0));
-        System.out.println(askUser.actionToRequest(1));
-        System.out.println(askUser.actionToRequest(2));
+        System.out.println(askUser.actionToRequest(0,"ROSSO"));
+        System.out.println(askUser.actionToRequest(1,"BLU"));
+        System.out.println(askUser.actionToRequest(2,"VERDE"));
     }
 
     private static void testGunReload(){
