@@ -12,6 +12,12 @@ public class RemoteView  extends View {
     private MapView mapView;
     private ArrayList<PlayerHandView> playerHands;
 
+    /**
+     * create a view representation of the game
+     * @param model model data
+     * @param mapNum map configuration
+     * @param skulls maximum kills allowed
+     */
     public RemoteView (GameModel model, int mapNum, int skulls){
         this.playerHands = new ArrayList<>();
         this.playerBoardViews = new ArrayList<>();
@@ -34,6 +40,9 @@ public class RemoteView  extends View {
         return playerHands;
     }
 
+    /**
+     * method that notify changes to all the clients
+     */
     public void notifyLocalViews(){
         setChanged();
         notifyObservers(this);

@@ -16,6 +16,12 @@ public class MapView implements Serializable {
     private CellView[][] boardMatrix;
     private KillShotTrackerView killView;
 
+    /**
+     * create a view representation of the map
+     * @param mapNum number of the map configuration
+     * @param skulls maximum kills allowed
+     * @param model model data
+     */
     public MapView(int mapNum, int skulls, GameModel model){
         this.mapNumber = mapNum;
         this.killView = new KillShotTrackerView(skulls);
@@ -26,21 +32,46 @@ public class MapView implements Serializable {
             }
         }
     }
+
+    /**
+     *
+     * @return the number of the map config
+     */
     public int getMapNumber(){
         return mapNumber;
     }
+
+    /**
+     *
+     * @return the kill tracker view
+     */
     public KillShotTrackerView getKillView() {
         return killView;
     }
 
+    /**
+     *
+     * @param i row
+     * @param j column
+     * @return the chosen cell view
+     */
     public CellView getCell (int i, int j){
         return this.boardMatrix[i][j];
     }
 
+    /**
+     *
+     * @return the cell view matrix
+     */
     public CellView[][] getBoardMatrix() {
         return boardMatrix;
     }
 
+    /**
+     *
+     * @param playerColor
+     * @return the cell of the player with that color
+     */
     public CellView getPlayerPosition(Color playerColor){
         for (CellView[] row: boardMatrix)
             for (CellView singleCell: row) {
@@ -81,6 +112,11 @@ public class MapView implements Serializable {
         return -1;
     }
 
+    /**
+     *
+     * @param cell
+     * @return the corrispondent cell
+     */
     private CellView getViewCell(NewCell cell){
         for (CellView[] row: boardMatrix)
             for (CellView singleCell: row) {
@@ -90,6 +126,10 @@ public class MapView implements Serializable {
         return null;
     }
 
+    /**
+     *  upload the cell view matrix
+     * @param newBoard
+     */
     public void uploadBoardMatrix(NewCell[][] newBoard){
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 4; j++) {
@@ -131,6 +171,10 @@ class Coordinates{
         return y;
     }
 
+    /**
+     *
+     * @return the coordinates in Sting form
+     */
     @Override
     public String toString() {
         StringBuilder stringBuilder=new StringBuilder("Cella in coordinate (visive) x: ");
