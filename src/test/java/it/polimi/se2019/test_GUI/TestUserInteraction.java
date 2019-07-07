@@ -24,7 +24,7 @@ public class TestUserInteraction {
         //testActionSelection();
         //testYesOrNo();
         //testShowMessage();
-        testSelectionFromList();
+        //testSelectionFromList();
 
         testMap();
     }

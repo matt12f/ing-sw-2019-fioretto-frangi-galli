@@ -28,14 +28,22 @@ public class Shotgun extends GunCardAltEff {
         this.secondaryEffectCost = new char[1];
         secondaryEffectCost[0] = 'n';
     }
-
+    /**
+     * This applies the base effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
         ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,3,0);
         if(playersChoice.getCellToMoveOpponent()!=null) //it chose to move the player
             ActionManager.movePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice.getCellToMoveOpponent());
     }
-
+    /**
+     * This applies the secondary effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
         ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,2,0);
@@ -43,6 +51,12 @@ public class Shotgun extends GunCardAltEff {
 
     /**
      * Deal 3 damage to 1 target on your square. If you want, you may then move the target 1 square.
+     */
+    /**
+     * find targets
+     * @param currentController
+     * @param actions
+     * @param player
      */
     @Override
     void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
@@ -67,6 +81,12 @@ public class Shotgun extends GunCardAltEff {
 
     /**
      * Deal 2 damage to 1 target on any square exactly one move away.
+     */
+    /**
+     * find targets
+     * @param currentController
+     * @param actions
+     * @param player
      */
     @Override
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {

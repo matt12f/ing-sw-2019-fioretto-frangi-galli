@@ -26,12 +26,20 @@ public class Sledgehammer extends GunCardAltEff {
         this.secondaryEffectCost = new char[1];
         secondaryEffectCost[0] = 'r';
     }
-
+    /**
+     * This applies the base/base+opt2 effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
         ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,2,0);
     }
-
+    /**
+     * This applies the  secondary effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
         ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,3,0);
@@ -40,6 +48,12 @@ public class Sledgehammer extends GunCardAltEff {
 
     /**
      * Deal 2 damage to 1 target on your square.
+     */
+    /**
+     * find targets
+     * @param currentController
+     * @param actions
+     * @param player
      */
     @Override
     void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
@@ -57,6 +71,12 @@ public class Sledgehammer extends GunCardAltEff {
 
     /**
      * Deal 3 damage to 1 target on your square, then move that target 0, 1, or 2 squares in one direction.
+     */
+    /**
+     * find targets
+     * @param currentController
+     * @param actions
+     * @param player
      */
     @Override
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {

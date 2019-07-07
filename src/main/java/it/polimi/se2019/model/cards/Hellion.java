@@ -27,13 +27,21 @@ public class Hellion extends GunCardAltEff{
         this.secondaryEffectCost = new char[1];
         secondaryEffectCost[0] = 'r';
     }
-
+    /**
+     * This applies the base effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
         ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,1,1);
         ActionManager.giveDmgandMksToPlayers(currentController,playersChoice.getTargetsFromList1().get(0).getFigure().getCell().getPlayers(),playersChoice,0,1);
     }
-
+    /**
+     * This applies the second effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
         ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,1,2);
@@ -42,6 +50,10 @@ public class Hellion extends GunCardAltEff{
 
     /**
      * Deal 1 damage to 1 target you can see at least 1 move away. Then give 1 mark to that target and everyone else on that square.
+     *
+     * @param currentController
+     * @param actions
+     * @param player
      */
     @Override
     void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
@@ -55,6 +67,10 @@ public class Hellion extends GunCardAltEff{
     }
     /**
      * Deal 1 damage to 1 target you can see at least 1 move away. Then give 2 marks to that target and everyone else on that square.
+     *
+     * @param currentController
+     * @param actions
+     * @param player
      */
     @Override
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {

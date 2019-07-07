@@ -104,7 +104,9 @@ public class RocketLauncher extends GunCardAddEff {
 
 
     /**
-     * this applies only the base or base + Opt2 effects
+     * This applies the base/base+opt2 effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
      */
     @Override
     void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
@@ -120,6 +122,9 @@ public class RocketLauncher extends GunCardAddEff {
 
     /**
      * this applies the base/base+Opt2 && moves you after that
+
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
      */
     @Override
     void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
@@ -130,6 +135,11 @@ public class RocketLauncher extends GunCardAddEff {
 
     /**
      * you will have selected cells where you want move & hit a target + cells where you can move the target after you've hit it
+     */
+    /**
+     * This applies the tertiary effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
      */
     @Override
     void applyTertiaryEffect(Controller currentController, ChosenActions playersChoice) {
@@ -148,6 +158,12 @@ public class RocketLauncher extends GunCardAddEff {
 
     /**
      * this method applies only the third effect
+     */
+    /**
+     *
+     * @param currentController
+     * @param playersChoice
+     * @param cell
      */
     private void applyThird(Controller currentController, ChosenActions playersChoice, NewCell cell) {
         ActionManager.giveDmgandMksToPlayers(currentController,cell.getPlayers(),playersChoice,1,0);

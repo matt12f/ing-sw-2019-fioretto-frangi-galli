@@ -26,12 +26,20 @@ public class Furnace extends GunCardAltEff {
         this.secondaryEffectCost = new char[1];
         secondaryEffectCost[0] = 'n';
     }
-
+    /**
+     * This applies the base/base effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
         ActionManager.giveDmgandMksToPlayers(currentController,playersChoice.getTargetRoom().getPlayers(),playersChoice,1,0);
     }
-
+    /**
+     * This applies the alternative effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
         ActionManager.giveDmgandMksToPlayers(currentController,playersChoice.getTargetCell().getPlayers(),playersChoice,1,1);
@@ -39,6 +47,9 @@ public class Furnace extends GunCardAltEff {
 
     /**
      * Choose a room you can see, but not the room you are in. Deal 1 damage to everyone in that room.
+     * @param currentController it the current controller of the game
+     * @param actions
+     * @param player
      */
     @Override
     void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
@@ -58,6 +69,10 @@ public class Furnace extends GunCardAltEff {
 
     /**
      * Choose a square exactly one move away. Deal 1 damage and 1 mark to everyone on that square.
+     * @param currentController it the current controller of the game
+     * @param  actions
+     * @param player
+     *
      */
     @Override
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {

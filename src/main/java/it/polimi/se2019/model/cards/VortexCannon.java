@@ -34,7 +34,11 @@ public class VortexCannon extends GunCardAddEff {
         secondaryEffectCost[0] = 'r';
         this.tertiaryEffectCost =null;
     }
-
+    /**
+     * This applies the base effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
         NewCell vortex = playersChoice.getCellFromCellWithTrg();
@@ -45,7 +49,11 @@ public class VortexCannon extends GunCardAddEff {
 
         playersChoice.getTargetsFromList1().remove(0);
     }
-
+    /**
+     * This applies the secondary effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
         NewCell vortex = playersChoice.getCellFromCellWithTrg();
@@ -62,6 +70,12 @@ public class VortexCannon extends GunCardAddEff {
      * Choose a square you can see, but not your square. Call it "the vortex".
      * Choose a target on the vortex or 1 move away from it. Move it onto the vortex and give it 2 damage.
      */
+    /**
+     *
+     * @param currentController
+     * @param actions
+     * @param player
+     */
     @Override
     void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         targetFiller(currentController,actions,player,1);
@@ -70,6 +84,12 @@ public class VortexCannon extends GunCardAddEff {
     /**
      * Choose up to 2 other targets on the vortex or 1 move away from it.
      * Move them onto the vortex and give them each 1 damage.
+     */
+    /**
+     *
+     * @param currentController
+     * @param actions
+     * @param player
      */
      @Override
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
@@ -96,11 +116,22 @@ public class VortexCannon extends GunCardAddEff {
         actions.setMaxCellToSelect(1);
         actions.setMinCellToSelect(1);
     }
-
+    /**
+     * This applies the third effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applyTertiaryEffect(Controller currentController, ChosenActions playersChoice) {
         throw new UnsupportedOperationException();
     }
+
+    /**
+     * find targets
+     * @param currentController
+     * @param actions
+     * @param player
+     */
     @Override
     void targetsOfTertiaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         throw new UnsupportedOperationException();

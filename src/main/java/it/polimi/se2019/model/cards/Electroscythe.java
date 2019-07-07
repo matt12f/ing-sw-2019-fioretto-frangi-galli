@@ -24,14 +24,22 @@ public class Electroscythe extends GunCardAltEff {
         secondaryEffectCost[0] = 'b';
         secondaryEffectCost[1] = 'r';
     }
-
+    /**
+     * This applies the base effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
         ArrayList<Player> targets=new ArrayList<>(Player.duplicateList(currentController.getActiveTurn().getActivePlayer().getFigure().getCell().getPlayers()));
         targets.remove(playersChoice.getFictitiousPlayer().getCorrespondingPlayer());
         ActionManager.giveDmgandMksToPlayers(currentController,targets,playersChoice,1,0);
     }
-
+    /**
+     * This applies the alternative effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
         ArrayList<Player> targets=new ArrayList<>(Player.duplicateList(currentController.getActiveTurn().getActivePlayer().getFigure().getCell().getPlayers()));

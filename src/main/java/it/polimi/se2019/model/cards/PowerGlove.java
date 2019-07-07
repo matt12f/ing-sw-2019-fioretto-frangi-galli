@@ -31,13 +31,21 @@ public class PowerGlove extends GunCardAltEff {
         this.secondaryEffectCost = new char[1];
         secondaryEffectCost[0] = 'b';
     }
-
+    /**
+     * This applies the base/base+opt2 effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
         ActionManager.movePlayer(currentController,currentController.getActiveTurn().getActivePlayer(),playersChoice.getTargetsFromList1().get(0).getFigure().getCell());
         ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,1,2);
     }
-
+    /**
+     * This applies the secondary effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
 
@@ -54,6 +62,12 @@ public class PowerGlove extends GunCardAltEff {
 
     /**
      * Choose 1 target on any square exactly 1 move away. Move onto that square and give the target 1 damage and 2 marks.
+     */
+    /**
+     * This applies the secondary effect
+     * @param currentController
+     * @param actions
+     * @param player
      */
     @Override
     void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
@@ -82,6 +96,12 @@ public class PowerGlove extends GunCardAltEff {
      *
      * If you want, you may move 1 more square in that same direction (but only if it is a legal move).
      * You may deal 2 damage to 1 target there, as well.
+     */
+    /**
+     *
+     * @param currentController
+     * @param actions
+     * @param player
      */
     @Override
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {

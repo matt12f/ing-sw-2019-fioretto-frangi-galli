@@ -119,6 +119,11 @@ public class PlasmaGun extends GunCardAddEff {
     /**
      * manages Base and Base + Opt2 combinations
      */
+    /**
+     *
+     * @param currentController the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
         if(playersChoice.getOrderOfExecution().contains("Optional2"))
@@ -131,6 +136,11 @@ public class PlasmaGun extends GunCardAddEff {
     /**
      * this applies the base/base+opt2 + opt 1
      */
+    /**
+     *
+     * @param currentController the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
         applyBaseEffect(currentController,playersChoice);
@@ -140,6 +150,11 @@ public class PlasmaGun extends GunCardAddEff {
     /**
      * this applies the opt1 + base/base+opt2
      *
+     */
+    /**
+     *
+     * @param currentController the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
      */
     @Override
     void applyTertiaryEffect(Controller currentController, ChosenActions playersChoice) {

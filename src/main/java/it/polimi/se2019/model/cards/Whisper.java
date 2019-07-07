@@ -22,7 +22,11 @@ public class Whisper extends GunCardAddEff {
         this.secondaryEffectCost=null;
         this.tertiaryEffectCost =null;
     }
-
+    /**
+     * This applies the base  effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
         ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,3,1);
@@ -30,6 +34,12 @@ public class Whisper extends GunCardAddEff {
 
     /**
      * Deal 3 damage and 1 mark to 1 target you can see. Your target must be at least 2 moves away from you.
+     */
+    /**
+     *
+     * @param currentController
+     * @param actions
+     * @param player
      */
     @Override
     void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
@@ -43,19 +53,42 @@ public class Whisper extends GunCardAddEff {
         actions.setMinNumPlayerTargets(1);
 
     }
-
+    /**
+     * This applies the third effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applyTertiaryEffect(Controller currentController, ChosenActions playersChoice) {
         throw new UnsupportedOperationException();
     }
+
+    /**
+     * find targets
+     * @param currentController
+     * @param actions
+     * @param player
+     */
     @Override
     void targetsOfTertiaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         throw new UnsupportedOperationException();
     }
+    /**
+     * This applies the secondary effect
+     * @param currentController it the current controller of the game
+     * @param playersChoice are the choices the player wants to apply
+     */
     @Override
     void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
         throw new UnsupportedOperationException();
     }
+
+    /**
+     * find targets
+     * @param currentController
+     * @param actions
+     * @param player
+     */
     @Override
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         throw new UnsupportedOperationException();
