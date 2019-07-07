@@ -147,7 +147,8 @@ public class MapView implements Serializable {
         ArrayList<Coordinates> coordinates=new ArrayList<>();
         for (int i=0;i<boardMatrix.length;i++)
             for (int j=0;j<boardMatrix[i].length;j++){
-                if(i!=position.getLineIndex() && j!=position.getColumnIndex() && !boardMatrix[i][j].getCorrespondingCell().getCellType().equals(CellType.OUTSIDEBOARD))
+                if( (i!=position.getLineIndex() && j!=position.getColumnIndex()) &&
+                        !boardMatrix[i][j].getCorrespondingCell().getCellType().equals(CellType.OUTSIDEBOARD))
                     coordinates.add(new Coordinates(i,j));
             }
         return coordinates;
@@ -181,7 +182,7 @@ class Coordinates{
         StringBuilder stringBuilder=new StringBuilder("Cella in coordinate (visive) x: ");
         stringBuilder.append(this.x+1);
         stringBuilder.append(" y: ");
-        stringBuilder.append(this.x+1);
+        stringBuilder.append(this.y+1);
         return stringBuilder.toString();
     }
 }
