@@ -22,7 +22,7 @@ public class ActionManager {
         if(numDmg!=0)
             PlayerManager.damageDealer(currentController,target,playersChoice.damageSequence(numDmg));
         if(numMks!=0)
-            PlayerManager.markerDealer(target,playersChoice.damageSequence(numMks));
+            PlayerManager.markerDealer(currentController, target,playersChoice.damageSequence(numMks));
     }
 
     /**
@@ -41,7 +41,7 @@ public class ActionManager {
         }
         if(numMks!=0){
             for(Player target: targetList)
-                PlayerManager.markerDealer(target,playersChoice.damageSequence(numMks));
+                PlayerManager.markerDealer(currentController,target,playersChoice.damageSequence(numMks));
         }
     }
 

@@ -23,8 +23,10 @@ public class PlayerManager  {
      */
     public static void scoringProcess(Controller currentController){
         //activating adrenaline modes for alive players
-        ArrayList<Player> playersAlive=new ArrayList<>(Player.duplicateList(currentController.getMainGameModel().getPlayerList()));
-        playersAlive.removeAll(currentController.getMainGameModel().getDeadPlayers());
+        ArrayList<Player> playersAlive=new ArrayList<>();
+        for(Player player:currentController.getMainGameModel().getPlayerList())
+            if(!currentController.getMainGameModel().getDeadPlayers().contains(player)) //selects alive players
+                playersAlive.add(player);
 
         for(Player player:playersAlive)
             adrenalineManager(player);
@@ -222,7 +224,6 @@ public class PlayerManager  {
         ActionManager.movePlayer(currentController, player, fictitiousPlayer.getPosition());
 
         //grab management, ammo first, then gun cards
-        GunCard cardToDiscard;
         if(fictitiousPlayer.isGrabbedAmmo()) {
             if(player.getPlayerBoard().getAmmo().addAmmo(fictitiousPlayer.getPosition().pickItem().getContent())){ //checks if you can draw a powerup
                 try { //tries to place the powerup in your hand and then removing the card from the deck if it succeeded
@@ -233,17 +234,26 @@ public class PlayerManager  {
                 }
             }
 
-        }else if(actions.getCardToPick()!=null) {
-            if(actions.getCardToDiscard()==null)
-                cardToDiscard = currentController.getMainGameModel().getCurrentDecks().getGunDeck().draw();
-            else
-                cardToDiscard=actions.getCardToDiscard();
-            try {
-                payGunCardCost(player,actions.getCardToPick().getAmmoCost(),true);
-                player.getPlayerBoard().getHand().substitutionGunCard(player.getFigure().getCell(),cardToDiscard, actions.getCardToPick());
-                } catch (CardNotFoundException e) {
-                //nothing to see here
+        }else if(actions.getCardToPick()!=null) {//there's a card you can pick
+            //cardToDiscard is the card to put back on the spawn slot
+            if(actions.getCardToDiscard()==null) {
+                //you simply pick the card from the slot and pay the cost
+                try {
+                    player.getPlayerBoard().getHand().setGun(player.getFigure().getCell().pickItem(actions.getCardToPick()));
+                    payGunCardCost(player, actions.getCardToPick().getAmmoCost(), true);
+                }catch (FullException e){
+                   //won't happen
                 }
+            }else {
+                //you  pick the card from the slot, putting the discarded one there and pay the cost
+                try {
+                    player.getPlayerBoard().getHand().substitutionGunCard(player.getFigure().getCell(), actions.getCardToDiscard(), actions.getCardToPick());
+                    payGunCardCost(player,actions.getCardToPick().getAmmoCost(),true);
+                } catch (CardNotFoundException e) {
+                    //won't happen
+                }
+            }
+
         }
 
         ArrayList<Player> playersBefore=Player.duplicateList(currentController.getMainGameModel().getPlayerList());
@@ -283,6 +293,9 @@ public class PlayerManager  {
      *                     Note that the damage drops "to be dealt" here come from a single player.
      */
     public static void damageDealer(Controller currentController, Player target, char[] damageToDeal){
+        //here we update the real player to be damaged
+        target=currentController.getMainGameModel().getPlayerList().get(
+                currentController.getMainGameModel().getPlayerList().indexOf(target));
 
         //Deal the damage first and if it's still alive deal marks too
         if(target.getPlayerBoard().getDamageTrack().dealDamage(damageToDeal).equals("alive")){
@@ -304,9 +317,13 @@ public class PlayerManager  {
     /**
      * this method adds new marks to a player's player board
      */
-    public static void markerDealer(Player player, char[] add) {
+    public static void markerDealer(Controller currentController, Player target, char[] add) {
+        //here we update the real player to be damaged
+        target=currentController.getMainGameModel().getPlayerList().get(
+                currentController.getMainGameModel().getPlayerList().indexOf(target));
+
         for (char mark: add)
-            player.getPlayerBoard().getDamageTrack().addMark(mark);
+            target.getPlayerBoard().getDamageTrack().addMark(mark);
     }
 
     /**
