@@ -12,6 +12,11 @@ public class LocalView  extends View implements Observer, Serializable {
     private CellView playerPosition;
     private PlayerHandView playerHand;
 
+    /**
+     * create a local representation of the game
+     * @param playerId id of the player
+     * @param remoteView remote view data in the server
+     */
     public LocalView(int playerId, RemoteView remoteView){
         this.playerBoardViews = remoteView.getPlayerBoardViews();
         this.playerId = playerId;
@@ -22,6 +27,10 @@ public class LocalView  extends View implements Observer, Serializable {
 
     }
 
+    /**
+     * set the position cell of the user
+     * @param playerPosition
+     */
     public void setPlayerPosition(CellView playerPosition) {
         this.playerPosition = playerPosition;
     }
@@ -41,27 +50,51 @@ public class LocalView  extends View implements Observer, Serializable {
         return temp;
     }
 
+    /**
+     *
+     * @return the user board
+     */
     public PlayerBoardView getPersonalPlayerBoardView() {
         return playerBoardViews.get(playerId);
     }
 
+    /**
+     *
+     * @return the view map data
+     */
     public MapView getMapView() {
         return mapView;
     }
 
+    /**
+     *
+     * @return the player's hand
+     */
     public PlayerHandView getPlayerHand() {
         return playerHand;
     }
 
+    /**
+     *
+     * @return the cell the player's figure is staying
+     */
     public CellView getPlayerPosition() {
         return playerPosition;
     }
 
+    /**
+     *
+     * @return the player's id
+     */
     public int getPlayerId() {
         return playerId;
     }
 
-
+    /**
+     * update the local view
+     * @param o
+     * @param remoteView
+     */
     @Override
     public void update(Observable o, Object remoteView) {
             RemoteView remote = (RemoteView) remoteView;
