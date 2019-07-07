@@ -211,7 +211,11 @@ public class PlayerManager  {
      * @return list of IDs of players that received damage
      */
     public static ArrayList<Player> choiceExecutor(Controller currentController, ChosenActions actions){
-        Player player = currentController.getActiveTurn().getActivePlayer();
+        //Here I'm extracting the player from the list in the controller
+        Player player = currentController.getMainGameModel().getPlayerList().get(
+                currentController.getMainGameModel().getPlayerList().
+                        indexOf(currentController.getActiveTurn().getActivePlayer()));
+
         FictitiousPlayer fictitiousPlayer=actions.getFictitiousPlayer();
         //moves the player
 

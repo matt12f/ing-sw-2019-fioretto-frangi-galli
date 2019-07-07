@@ -254,8 +254,7 @@ public class AdrenalineClient {
     }
 
     private static void displayBoard() {
-            gameBoardGUI.updateBoardGame(getLocalView().getPlayerBoardViews(),getLocalView().getPersonalPlayerBoardView(),getLocalView().getMapView().getBoardMatrix(),getLocalView().getMapView().getKillView(),getLocalView().getPlayerHand());
-
+        gameBoardGUI.updateBoardGame(getLocalView().getPlayerBoardViews(),getLocalView().getPersonalPlayerBoardView(),getLocalView().getMapView().getBoardMatrix(),getLocalView().getMapView().getKillView(),getLocalView().getPlayerHand());
     }
 
     private static void matchPhase() throws IOException, ClassNotFoundException {
