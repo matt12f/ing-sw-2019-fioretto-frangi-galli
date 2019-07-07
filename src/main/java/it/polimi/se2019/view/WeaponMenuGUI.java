@@ -17,7 +17,10 @@ public class WeaponMenuGUI extends JFrame{
     private Label weaponCharge;
     private ImageIcon img;
 
-
+    /**
+     * create a frame that shows the weapon's information
+     * @param weaponType guncard with the data
+     */
     public WeaponMenuGUI(GunCard weaponType){
         this.weaponName = new Label(weaponType.getClass().getSimpleName().toUpperCase());
         this.weaponInfo = new TextArea(weaponType.getDescription());

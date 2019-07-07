@@ -6,6 +6,10 @@ public class CellViewGUI extends JPanel {
     private SquareGUI[][] matrixGUI;
     private String type;
 
+    /**
+     * builder of the single cell GUI
+     * @param cell is the object cellview with all the  data
+     */
     public CellViewGUI(CellView cell) {
         this.matrixGUI = new SquareGUI[3][3];
         //creates the square based on the content
@@ -40,6 +44,10 @@ public class CellViewGUI extends JPanel {
         setSize(100, 90);
     }
 
+    /**
+     * update of the single cell and all of it's elements
+     * @param cell is the object cellview with all the  data
+     */
     public void updateCell(CellView cell) {
         int z = 0;
         for (int i = 0; i < 3; i++)
@@ -57,10 +65,18 @@ public class CellViewGUI extends JPanel {
 
     }
 
+    /**
+     *
+     * @return the cell type
+     */
     public String getType() {
         return type;
     }
 
+    /**
+     * allow to set the cell type (in board or outboard)
+     * @param type cell type
+     */
     public void setType(String type) {
         this.type = type;
     }

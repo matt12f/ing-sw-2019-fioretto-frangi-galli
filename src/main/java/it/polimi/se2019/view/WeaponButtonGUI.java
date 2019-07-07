@@ -11,6 +11,12 @@ public class WeaponButtonGUI extends JButton {
     private int sizey;
     private ImageIcon pic;
 
+    /**
+     * create a button  with the image of the back of a weapon card
+     * @param x button width
+     * @param y button height
+     * @param rotate indicate if the button is vertical or not
+     */
     public WeaponButtonGUI(int x, int y, boolean rotate){
         sizex=x;
         sizey=y;
@@ -24,6 +30,11 @@ public class WeaponButtonGUI extends JButton {
         setIcon(pic);
     }
 
+    /**
+     * update the image of the button
+     * @param weapon indicate the weapon type
+     * @param rotate indicate if the button is vertical or not
+     */
     public void updateImage(GunCard weapon, boolean rotate ){
          try{
              this.weaponType = weapon.getClass().getSimpleName().toLowerCase();
@@ -49,6 +60,10 @@ public class WeaponButtonGUI extends JButton {
 
     }
 
+    /**
+     *
+     * @return the weapon type
+     */
     public String getWeaponType(){
         return weaponType;
     }

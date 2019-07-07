@@ -7,6 +7,10 @@ public class PlayerZoneGUI extends JPanel {
     private PlayerHandViewGUI hand;
     private PlayerBoardViewGUI board;
 
+    /**
+     * vreate the zone with the player's hand and the player's hand
+     * @param ownerBoard data of the player's board
+     */
     public PlayerZoneGUI (PlayerBoardView ownerBoard){
 
         GridBagConstraints container = new GridBagConstraints();
@@ -30,14 +34,28 @@ public class PlayerZoneGUI extends JPanel {
 
     }
 
+    /**
+     *
+     * @return the player's hand GUI
+     */
     protected PlayerHandViewGUI getHand(){
         return this.hand;
     }
 
+    /**
+     * set the frenzy mode to "on"
+     * @param ownerBoard  data of the player's board
+     */
     public void setFrenzy(PlayerBoardView ownerBoard){
         this.board.setBoard(420, 109, true, ownerBoard);
     }
 
+    /**
+     * udate board and hand with the data in input
+     * @param ownerBoard data of the player's board
+     * @param handView data of the player's hand
+     * @param frenzy boolean parameter that indicate if frenzy mode is on or not
+     */
     public void updateElements(PlayerBoardView ownerBoard, PlayerHandView handView, boolean frenzy){
         this.board.setBoard(420, 109, frenzy, ownerBoard);
         this.hand.updateHand(handView.getGuns(), handView.getPowerups(), ownerBoard.getAmmo());
