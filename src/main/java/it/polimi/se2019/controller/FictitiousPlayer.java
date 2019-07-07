@@ -134,4 +134,9 @@ public class FictitiousPlayer implements Serializable {
     public ArrayList<SingleCardActions> getAvailableCardActions() {
         return availableCardActions;
     }
+
+    public void setPosition(NewCell position) {
+        this.position = position;
+    }
 }
+

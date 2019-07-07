@@ -88,7 +88,7 @@ public class TractorBeam extends GunCardAltEff {
         NewCell[][] board=currentController.getMainGameModel().getCurrentMap().getBoardMatrix();
         ArrayList<Player> targets = new ArrayList<>();
         for(Player target:currentController.getMainGameModel().getPlayerList())
-            if(MapManager.distanceBetweenCells(board,target.getFigure().getCell(),player.getPosition())<=2)
+            if(!target.equals(player.getCorrespondingPlayer())&& MapManager.distanceBetweenCells(board,target.getFigure().getCell(),player.getPosition())<=2)
                 targets.add(target);
 
         actions.addToPlayerTargetList(targets);
