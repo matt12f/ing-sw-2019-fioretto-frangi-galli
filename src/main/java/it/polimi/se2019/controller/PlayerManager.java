@@ -281,8 +281,9 @@ public class PlayerManager  {
             actions.getChosenGun().applyEffects(currentController, actions);
             //Unloads the card
             for (int i = 0; i < player.getPlayerBoard().getHand().getGuns().length; i++)
-                if (player.getPlayerBoard().getHand().getGuns()[i].equals(actions.getChosenGun()))
-                    player.getPlayerBoard().getHand().getGuns()[i].setLoaded(false);
+                if(player.getPlayerBoard().getHand().getGuns()[i] != null)
+                    if (player.getPlayerBoard().getHand().getGuns()[i].equals(actions.getChosenGun()))
+                        player.getPlayerBoard().getHand().getGuns()[i].setLoaded(false);
         }
         ArrayList<Player> playersAfter = Player.duplicateList(currentController.getMainGameModel().getPlayerList());
 
