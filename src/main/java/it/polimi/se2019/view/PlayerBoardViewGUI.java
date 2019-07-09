@@ -104,9 +104,11 @@ PlayerBoardViewGUI extends JPanel{
         GridBagConstraints container = new GridBagConstraints();
         mainPanel.setLayout(new GridBagLayout());
 
-        if(marks.isEmpty())
+        if(marks.isEmpty()) {
+            container.gridx=0;
+            container.gridy=0;
             mainPanel.add(new JLabel("no marks, you're good!"));
-        else{
+        }else{
         for (int i=0 ; i< marks.size();i++){
             container.gridx=0;
             container.gridy=i;

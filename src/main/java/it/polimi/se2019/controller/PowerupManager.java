@@ -27,6 +27,10 @@ public class PowerupManager {
      * @param directionIndex
      */
     public static void newtonManager(Controller currentController,int cardIndexInHand, Player player, int distance, int directionIndex){
+
+        player = currentController.getMainGameModel().getPlayerList().get(
+                currentController.getMainGameModel().getPlayerList().indexOf(player));
+
         NewCell cell= null;
         try {
             cell = MapManager.getCellInDirection(currentController.getMainGameModel().getCurrentMap().getBoardMatrix(),player.getFigure().getCell(),distance,directionIndex);
@@ -50,7 +54,15 @@ public class PowerupManager {
      * @param destinationCell
      */
     public static void teleporterManager(Controller currentController, int cardIndexInHand, NewCell destinationCell){
-        ActionManager.movePlayer(currentController,currentController.getActiveTurn().getActivePlayer(),destinationCell);
+        Player player = currentController.getMainGameModel().getPlayerList().get(
+                currentController.getMainGameModel().getPlayerList()
+                        .indexOf(currentController.getActiveTurn().getActivePlayer()));
+
+        NewCell[][] board=currentController.getMainGameModel().getCurrentMap().getBoardMatrix();
+        destinationCell = board[MapManager.getLineOrColumnIndex(board,destinationCell,true)]
+                [MapManager.getLineOrColumnIndex(board,destinationCell,false)];
+
+        ActionManager.movePlayer(currentController,player,destinationCell);
         removeFromHand(currentController, cardIndexInHand);
     }
 
@@ -66,6 +78,11 @@ public class PowerupManager {
      * @param ammoToPay
      */
     public static void targetingScopeManager(Controller currentController, Player playerDamaged, int cardIndexInHand,char ammoToPay) {
+
+        playerDamaged = currentController.getMainGameModel().getPlayerList().get(
+                currentController.getMainGameModel().getPlayerList().indexOf(playerDamaged));
+
+
         char [] cost=new char[1];
         cost [0]=ammoToPay;
         currentController.getActiveTurn().getActivePlayer().getPlayerBoard().getAmmo().subtractAmmo(cost);
@@ -87,6 +104,9 @@ public class PowerupManager {
      * @param cardIndexInHand
      */
     public static void grenadeManager(Controller currentController, Player playerDamaged, Player playerGivingDamage, int cardIndexInHand){
+        playerDamaged = currentController.getMainGameModel().getPlayerList().get(
+                currentController.getMainGameModel().getPlayerList().indexOf(playerDamaged));
+
         char [] marks=new char[1];
         marks[0]=playerGivingDamage.getFigure().getColorChar();
         PlayerManager.markerDealer(currentController, playerDamaged,marks);
@@ -99,6 +119,10 @@ public class PowerupManager {
      * @param cardIndexInHand
      */
     private static void removeFromHand(Controller currentController,int cardIndexInHand) {
-        currentController.getActiveTurn().getActivePlayer().getPlayerBoard().getHand().removePowerUp(cardIndexInHand);
+        Player player = currentController.getMainGameModel().getPlayerList().get(
+                currentController.getMainGameModel().getPlayerList()
+                        .indexOf(currentController.getActiveTurn().getActivePlayer()));
+
+        player.getPlayerBoard().getHand().removePowerUp(cardIndexInHand);
     }
 }

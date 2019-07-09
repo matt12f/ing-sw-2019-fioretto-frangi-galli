@@ -63,6 +63,7 @@ public class ActionRequestView implements Serializable {
                 Color color=colorConverter(colorString);
 
                 CellView cellOfTarget = localView.getMapView().getPlayerPosition(color);
+
                 ArrayList<String> directionsAvailable=getDirection(cellOfTarget);
                 ArrayList<Integer> maxDistanceForDirection=getMaxDistance(directionsAvailable,cellOfTarget);
 
@@ -87,7 +88,7 @@ public class ActionRequestView implements Serializable {
 
                 Coordinates coordinates1=coordinates.get(coordToChooseFrom.indexOf(coordChoosenCell));
 
-                CellView destCell=localView.getMapView().getCell(coordinates1.getX()-1,coordinates1.getY()-1);
+                CellView destCell=localView.getMapView().getCell(coordinates1.getX(),coordinates1.getY());
 
                 temp.add(new PowerupUse(i,localView.getPersonalPlayerBoardView().getColor(),0,"None",destCell));
             }

@@ -100,30 +100,29 @@ public class GameStats {
 
     @Override
     public String toString() {
-        StringBuilder gameStats= new StringBuilder("<html>Game results<br><br>");
+        StringBuilder gameStats= new StringBuilder("Game results\n\n");
 
         gameStats.append("The game was ");
         gameStats.append(this.numberOfTurns);
-        gameStats.append(" turns long<br><br>");
+        gameStats.append(" turns long\n\n");
 
         if(this.singleWinner) {
             gameStats.append("There's a single winner: ");
             gameStats.append(this.ranking.get(0).toString());
         }
         else{
-            gameStats.append("There's a tie between Player: <br>");
+            gameStats.append("There's a tie between Player: \n");
             gameStats.append(this.ranking.get(0).toString());
-            gameStats.append("<br>");
+            gameStats.append("\n");
             gameStats.append(this.ranking.get(1).toString());
         }
-        gameStats.append("<br><br>Ranking: <br>");
+        gameStats.append("\n\nRanking: \n");
 
         //listing players
         for(Player player:this.ranking){
             gameStats.append(this.ranking.indexOf(player)+1);
             gameStats.append("° place: ");
             gameStats.append(player.toString());
-            gameStats.append("<br></html>");
         }
         return gameStats.toString();
     }

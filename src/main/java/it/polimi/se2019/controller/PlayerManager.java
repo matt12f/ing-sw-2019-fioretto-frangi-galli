@@ -277,14 +277,13 @@ public class PlayerManager  {
         ArrayList<Player> playersBefore=Player.duplicateList(currentController.getMainGameModel().getPlayerList());
 
         //applies shoot actions with the card selected if you have selected an action to shoot
-        if(actions.getChosenGun()!=null)
+        if(actions.getChosenGun()!=null) {
             actions.getChosenGun().applyEffects(currentController, actions);
-
-        //Unloads the card
-        for(int i=0;i<player.getPlayerBoard().getHand().getGuns().length;i++)
-            if(player.getPlayerBoard().getHand().getGuns()[i].equals(actions.getChosenGun()))
-                player.getPlayerBoard().getHand().getGuns()[i].setLoaded(false);
-
+            //Unloads the card
+            for (int i = 0; i < player.getPlayerBoard().getHand().getGuns().length; i++)
+                if (player.getPlayerBoard().getHand().getGuns()[i].equals(actions.getChosenGun()))
+                    player.getPlayerBoard().getHand().getGuns()[i].setLoaded(false);
+        }
         ArrayList<Player> playersAfter = Player.duplicateList(currentController.getMainGameModel().getPlayerList());
 
         //it's necessary for powerup tagback grenade

@@ -255,7 +255,7 @@ public class UserInteractionGUI extends UserInteraction {
      */
     @Override
     public void showMessage(String message) {
-        JLabel mex = new JLabel(message);
+        TextArea mex = new TextArea(message);
 
         JDialog dialog = new JDialog();
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);

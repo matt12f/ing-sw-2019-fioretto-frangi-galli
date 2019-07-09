@@ -38,7 +38,14 @@ public class TestGameStats {
 
         GameStats testRanking=new GameStats(controller,25);
 
-        assertEquals("<html>Game results<br><br>The game was 25 turns long<br><br>There's a single winner: WHITE Player with id: 3; with nickname: miles; Scored 42 points!<br><br>Ranking: <br>1° place: WHITE Player with id: 3; with nickname: miles; Scored 42 points!<br></html>2° place: BLUE Player with id: 1; with nickname: frank; Scored 31 points!<br></html>3° place: GREEN Player with id: 4; with nickname: carl; Scored 27 points!<br></html>4° place: YELLOW Player with id: 2; with nickname: george; Scored 16 points!<br></html>",testRanking.toString());
+        assertEquals("Game results\n" +
+                "\n" +
+                "The game was 25 turns long\n" +
+                "\n" +
+                "There's a single winner: WHITE Player with id: 3; with nickname: miles; Scored 42 points!\n" +
+                "\n" +
+                "Ranking: \n" +
+                "1° place: WHITE Player with id: 3; with nickname: miles; Scored 42 points!2° place: BLUE Player with id: 1; with nickname: frank; Scored 31 points!3° place: GREEN Player with id: 4; with nickname: carl; Scored 27 points!4° place: YELLOW Player with id: 2; with nickname: george; Scored 16 points!", testRanking.toString());
 
         assertEquals(25, testRanking.getNumberOfTurns());
         assertEquals(player3,testRanking.getRanking().get(0));
@@ -75,7 +82,16 @@ public class TestGameStats {
 
         GameStats testRanking=new GameStats(controller,25);
 
-        assertEquals("<html>Game results<br><br>The game was 25 turns long<br><br>There's a tie between Player: <br>BLUE Player with id: 1; with nickname: frank; Scored 31 points!<br>YELLOW Player with id: 2; with nickname: george; Scored 31 points!<br><br>Ranking: <br>1° place: BLUE Player with id: 1; with nickname: frank; Scored 31 points!<br></html>2° place: YELLOW Player with id: 2; with nickname: george; Scored 31 points!<br></html>3° place: WHITE Player with id: 3; with nickname: miles; Scored 12 points!<br></html>4° place: GREEN Player with id: 4; with nickname: carl; Scored 9 points!<br></html>",testRanking.toString());
+        assertEquals("Game results\n" +
+                "\n" +
+                "The game was 25 turns long\n" +
+                "\n" +
+                "There's a tie between Player: \n" +
+                "BLUE Player with id: 1; with nickname: frank; Scored 31 points!\n" +
+                "YELLOW Player with id: 2; with nickname: george; Scored 31 points!\n" +
+                "\n" +
+                "Ranking: \n" +
+                "1° place: BLUE Player with id: 1; with nickname: frank; Scored 31 points!2° place: YELLOW Player with id: 2; with nickname: george; Scored 31 points!3° place: WHITE Player with id: 3; with nickname: miles; Scored 12 points!4° place: GREEN Player with id: 4; with nickname: carl; Scored 9 points!",testRanking.toString());
 
         assertEquals(25, testRanking.getNumberOfTurns());
         assertEquals(player1,testRanking.getRanking().get(0));
@@ -115,7 +131,14 @@ public class TestGameStats {
 
         GameStats testRanking=new GameStats(controller,25);
 
-        assertEquals("<html>Game results<br><br>The game was 25 turns long<br><br>There's a single winner: YELLOW Player with id: 2; with nickname: george; Scored 27 points!<br><br>Ranking: <br>1° place: YELLOW Player with id: 2; with nickname: george; Scored 27 points!<br></html>2° place: BLUE Player with id: 1; with nickname: frank; Scored 27 points!<br></html>3° place: WHITE Player with id: 3; with nickname: miles; Scored 18 points!<br></html>4° place: GREEN Player with id: 4; with nickname: carl; Scored 9 points!<br></html>",testRanking.toString());
+        assertEquals("Game results\n" +
+                "\n" +
+                "The game was 25 turns long\n" +
+                "\n" +
+                "There's a single winner: YELLOW Player with id: 2; with nickname: george; Scored 27 points!\n" +
+                "\n" +
+                "Ranking: \n" +
+                "1° place: YELLOW Player with id: 2; with nickname: george; Scored 27 points!2° place: BLUE Player with id: 1; with nickname: frank; Scored 27 points!3° place: WHITE Player with id: 3; with nickname: miles; Scored 18 points!4° place: GREEN Player with id: 4; with nickname: carl; Scored 9 points!",testRanking.toString());
 
         assertEquals(25, testRanking.getNumberOfTurns());
         assertEquals(player2,testRanking.getRanking().get(0));
