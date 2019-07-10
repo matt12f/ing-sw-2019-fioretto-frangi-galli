@@ -12,6 +12,7 @@ public class DamageView implements Serializable {
      * @param damageFromModel list of the player's damage
      */
     public DamageView(char [] damageFromModel){
+        this.marks=new ArrayList<>();
         this.damage = new char[12];
         for (int i = 0; i < 12; i++)
             this.damage[i] = damageFromModel[i];

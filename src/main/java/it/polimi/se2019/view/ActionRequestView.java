@@ -73,7 +73,7 @@ public class ActionRequestView implements Serializable {
                 if(maxDistanceForDirection.get(directionsAvailable.indexOf(direction))==2 && this.askUser.yesOrNo("Di quante celle vuoi muoverlo?","2 celle","1 cella"))
                     distance=2;
 
-                temp.add(new PowerupUse(i,color,distance,direction,null));
+                temp.add(new PowerupUse(i,color,distance,direction,-1,-1));
             }
             else if(cardView[i]!=null && cardView[i].getPowerupType().equals("Teleporter") && this.askUser.yesOrNo("vuoi usare un PowerUp Teletrasporto?","Si","No")){
 
@@ -88,9 +88,7 @@ public class ActionRequestView implements Serializable {
 
                 Coordinates coordinates1=coordinates.get(coordToChooseFrom.indexOf(coordChoosenCell));
 
-                CellView destCell=localView.getMapView().getCell(coordinates1.getX(),coordinates1.getY());
-
-                temp.add(new PowerupUse(i,localView.getPersonalPlayerBoardView().getColor(),0,"None",destCell));
+                temp.add(new PowerupUse(i,localView.getPersonalPlayerBoardView().getColor(),0,"None",coordinates1.getX(),coordinates1.getY()));
             }
         return temp;
     }

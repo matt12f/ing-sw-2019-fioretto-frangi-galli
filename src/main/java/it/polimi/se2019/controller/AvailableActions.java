@@ -66,8 +66,7 @@ public class AvailableActions implements Serializable {
         NewCell[][] board=currentController.getMainGameModel().getCurrentMap().getBoardMatrix();
         for (PowerupUse powerupUse : macroAction.getPowerupUse()){
             if(powerupUse.getDirectionOfMove().equals("None"))
-                PowerupManager.teleporterManager(currentController,powerupUse.getIndexInHand(),
-                        MapManager.cellViewToNewCell(currentController, powerupUse.getCellForSelfMovement()));
+                PowerupManager.teleporterManager(currentController,powerupUse.getIndexInHand(),powerupUse.getLineForMove(),powerupUse.getColumnForMove());
             else
                 PowerupManager.newtonManager(currentController,powerupUse.getIndexInHand(),
                         currentController.getMainGameModel().getPlayerByColor(powerupUse.getColorPlayerToMove()),

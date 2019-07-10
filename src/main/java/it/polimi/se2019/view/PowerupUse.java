@@ -9,14 +9,16 @@ public class PowerupUse  implements Serializable {
     private Color colorPlayerToMove;
     private String directionOfMove;
     private int movementDistance;
-    private CellView cellForSelfMovement;
+    private int lineForMove;
+    private int columnForMove;
 
-    PowerupUse(int indexInHand, Color colorPlayerToMove, int movementDistance, String directionOfMove, CellView cellForSelfMovement) {
+    PowerupUse(int indexInHand, Color colorPlayerToMove, int movementDistance, String directionOfMove, int lineForMove,int columnForMove) {
         this.indexInHand=indexInHand;
         this.colorPlayerToMove = colorPlayerToMove ;
         this.directionOfMove = directionOfMove;
         this.movementDistance = movementDistance;
-        this.cellForSelfMovement = cellForSelfMovement;
+        this.lineForMove=lineForMove;
+        this.columnForMove=columnForMove;
     }
 
     public int getIndexInHand() {
@@ -35,7 +37,11 @@ public class PowerupUse  implements Serializable {
         return movementDistance;
     }
 
-    public CellView getCellForSelfMovement() {
-        return cellForSelfMovement;
+    public int getLineForMove() {
+        return lineForMove;
+    }
+
+    public int getColumnForMove() {
+        return columnForMove;
     }
 }

@@ -180,9 +180,9 @@ class Coordinates{
     @Override
     public String toString() {
         StringBuilder stringBuilder=new StringBuilder("Cella in coordinate (visive) x: ");
-        stringBuilder.append(this.x+1);
+        stringBuilder.append(this.getX()+1);
         stringBuilder.append(" y: ");
-        stringBuilder.append(this.y+1);
+        stringBuilder.append(this.getY()+1);
         return stringBuilder.toString();
     }
 }

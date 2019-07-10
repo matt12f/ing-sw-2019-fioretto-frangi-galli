@@ -73,15 +73,6 @@ public class MapManager {
         }
     }
 
-    /**
-     * convert a view into model data
-     * @param currentController
-     * @param cellView
-     * @return
-     */
-    public static NewCell cellViewToNewCell(Controller currentController, CellView cellView) {
-        return currentController.getMainGameModel().getCurrentMap().getBoardMatrix()[cellView.getLineIndex()][cellView.getColumnIndex()];
-    }
 
     public static int getLineOrColumnIndex(NewCell[][] board, NewCell referenceCell, boolean lineOrColumn) {
         for (int i = 0; i < board.length; i++)
