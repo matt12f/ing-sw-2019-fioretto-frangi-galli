@@ -165,15 +165,14 @@ public class GameHandler implements Runnable {
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     }
-                    if(confirm.equals("OK")) {
-                        getChosenAction(clientTurn);
+                    if(confirm.equals("OK"))
                         accepted = true;
-                    }else{
-                        accepted = false;
-                    }
-                }while(!accepted);
 
+                }while(!accepted);
+                getChosenAction(clientTurn);
                 managePowerUps(PlayerManager.choiceExecutor(controller, clientTurn.getChosenAction()));
+                if(lastAction)
+                    MapManager.refillEmptiedCells(controller.getMainGameModel().getCurrentMap().getBoardMatrix(),controller.getMainGameModel().getCurrentDecks());
                 this.controller.getMainGameModel().notifyRemoteView();
                 try {
                     try {
