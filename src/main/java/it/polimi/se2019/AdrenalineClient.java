@@ -297,7 +297,7 @@ public class AdrenalineClient {
                             connection.getOutput().writeObject(chosen);
                             action = true;
                         } catch (NoActionsException e) {
-                            userInteractionGUI.showMessage("Mi spiace, non hai nessuna azione disponibile, riprova.");
+                            userInteractionGUI.showMessage(e.getMessage());
                             connection.getOutput().writeObject("KO");
                         }
                     }while(!action);

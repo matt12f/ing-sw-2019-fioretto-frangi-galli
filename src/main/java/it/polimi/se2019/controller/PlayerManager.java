@@ -28,7 +28,7 @@ public class PlayerManager  {
             if(!currentController.getMainGameModel().getDeadPlayers().contains(player)) //selects alive players
                 playersAlive.add(player);
 
-        for(Player player:playersAlive)
+        for(Player player: playersAlive)
             adrenalineManager(currentController, player);
 
         //scoring section
@@ -356,10 +356,10 @@ public class PlayerManager  {
         player=currentController.getMainGameModel().getPlayerList().get(
                 currentController.getMainGameModel().getPlayerList().indexOf(player));
 
-        if(player.getPlayerBoard().getDamageTrack().getDamage().length >= 3)
+        if(player.getPlayerBoard().getDamageTrack().getDamage()[2]!=' ')
             player.getPlayerBoard().getActionTileNormal().setAdrenalineMode1(true);
 
-        else if(player.getPlayerBoard().getDamageTrack().getDamage().length >= 6)
+        else if(player.getPlayerBoard().getDamageTrack().getDamage()[5]!=' ')
             player.getPlayerBoard().getActionTileNormal().setAdrenalineMode2(true);
 
     }
@@ -400,6 +400,7 @@ public class PlayerManager  {
      * @param reload
      */
     public static void reloadManager(Player player, boolean[] reload) {
+        //TODO controllare che funzioni
         for(int i=0;i<player.getPlayerBoard().getHand().getGuns().length;i++)
             if(player.getPlayerBoard().getHand().getGuns()[i]!=null && reload[i]) {
                 player.getPlayerBoard().getHand().getGuns()[i].setLoaded(true);

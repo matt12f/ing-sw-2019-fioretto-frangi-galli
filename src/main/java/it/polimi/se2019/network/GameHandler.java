@@ -461,17 +461,17 @@ public class GameHandler implements Runnable {
 
                     //building list of available ammo cubes
                     ArrayList<String> choices=new ArrayList<>();
+                    choices.add("Non voglio usare il powerup Targetting Scope");
                     if(activePlayer.getPlayerBoard().getAmmo().getBlue()>0)
                         choices.add("Blue");
                     if(activePlayer.getPlayerBoard().getAmmo().getRed()>0)
                         choices.add("Red");
                     if(activePlayer.getPlayerBoard().getAmmo().getYellow()>0)
                         choices.add("Yellow");
-                    choices.add("Nothing");
 
                         players.get(activePlayer.getId()).setChoices(choices);
                         getTargettingScopeUsage(this.players.get(activePlayer.getId()));
-                    if(!this.colorReceived.equals("Nothing")){
+                    if(!this.colorReceived.equals("Non voglio usare il powerup Targetting Scope")){
                         char ammoToPay=this.colorReceived.toLowerCase().charAt(0);
 
                         choices.clear();

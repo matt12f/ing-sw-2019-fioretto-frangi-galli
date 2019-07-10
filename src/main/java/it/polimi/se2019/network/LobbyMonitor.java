@@ -18,7 +18,7 @@ public class LobbyMonitor implements Runnable{
         boolean timerStarted = false;
         Timer timer = new Timer();
         Thread thread;
-        long time = 1000*10; //todo settare tempo timer prendendolo da file
+        long time = 1000*10;
         GameStarter gameToStart;
         while(condition) {
             try {

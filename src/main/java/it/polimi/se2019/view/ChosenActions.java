@@ -5,7 +5,6 @@ import it.polimi.se2019.controller.*;
 import it.polimi.se2019.enums.CellType;
 import it.polimi.se2019.exceptions.NoActionsException;
 import it.polimi.se2019.model.cards.GunCard;
-import it.polimi.se2019.model.cards.PowerupCard;
 import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.model.game.Room;
@@ -49,7 +48,7 @@ public class ChosenActions implements Serializable {
      */
     public ChosenActions(AvailableActions actions) throws NoActionsException {
         if(checkEmptyActions(actions))
-            throw new NoActionsException("no actions available, try again");
+            throw new NoActionsException("Non ci sono target disponibili con nessuna delle carte che hai, prova ancora");
 
         this.askUser=new UserInteractionGUI();
 
@@ -75,6 +74,10 @@ public class ChosenActions implements Serializable {
                 if(localView.getPlayerHand().isGunHandFull())//this happens if you already have three cards in your hand and you want to pick a fourth one
                     this.cardToDiscard = cardDiscardSelector(localView);
             }
+            //if you haven't picked anything and didn't move, you can retry
+            if((!this.fictitiousPlayer.isGrabbedAmmo() && this.cardToPick==null) &&
+                    this.fictitiousPlayer.getPosition().equals(fictitiousPlayer.getCorrespondingPlayer().getFigure().getCell()))
+                throw new NoActionsException("Non ti sei spostato e non hai raccolto nulla, rifai l'azione");
 
         }
         else //Section for actions that include shooting
@@ -403,20 +406,6 @@ public class ChosenActions implements Serializable {
     }
 
 
-    /**
-     * checks if there are no actions available
-     * Cases: shoot with no guns available
-     *        shoot without targets
-     *
-     * They're evaluated inside FictitiousPlayer
-     */
-    private boolean checkEmptyActions(AvailableActions actions) {
-        for(FictitiousPlayer player: actions.getFictitiousPlayers())
-           if(!player.isNoTargets())
-               return false;
-           return true;
-    }
-
     private GunCard cardDiscardSelector(LocalView localView) {
         ArrayList<String> listOfGuns=new ArrayList<>();
         for(GunCard gunCard: localView.getPlayerHand().getGuns())
@@ -433,6 +422,21 @@ public class ChosenActions implements Serializable {
         String selection=this.askUser.stringSelector("Seleziona la carta da pescare",listOfGuns);
 
         return pickableCards.get(listOfGuns.indexOf(selection));
+    }
+
+    /**
+     * checks if there are no actions available for shoot
+     * Cases: shoot with no guns available
+     *        shoot without targets
+     *        returns false
+
+     * They're evaluated inside FictitiousPlayer
+     */
+    private boolean checkEmptyActions(AvailableActions actions) {
+        for(FictitiousPlayer player: actions.getFictitiousPlayers())
+            if(!player.isNoTargets())
+                return false;
+        return true;
     }
 
     /**--------------- GETTERS -----------------------*/

@@ -41,6 +41,7 @@ public class ActionRequestView implements Serializable {
             this.actionToRequest=null;
             this.powerupUse=powerupManagerView(localView);
             this.reload=this.askUser.cardsToReload(localView.getPlayerHand().getGuns(),localView.getPlayerHand().getLoadedGuns());
+            //TODO controllo se puoi pagare la ricarica della carta
         }
     }
 

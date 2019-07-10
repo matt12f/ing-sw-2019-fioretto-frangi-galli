@@ -74,9 +74,7 @@ public class PowerupManager {
      */
     public static void targetingScopeManager(Controller currentController, Player playerDamaged, int cardIndexInHand,char ammoToPay) {
 
-        playerDamaged = currentController.getMainGameModel().getPlayerList().get(
-                currentController.getMainGameModel().getPlayerList().indexOf(playerDamaged));
-
+        //TODO non sembra ci sia bisogno di riestrarre il player QUI
 
         char [] cost=new char[1];
         cost [0]=ammoToPay;

@@ -73,6 +73,8 @@ public class AvailableActions implements Serializable {
                         powerupUse.getMovementDistance(),MapManager.getIndexOfMove(powerupUse.getDirectionOfMove()));
         }
 
+        //TODO sembra non essere necessario ri-estrarre il player QUI
+
         //checks for adrenaline modes
         if(player.getPlayerBoard().getActionTileNormal().getAdrenalineMode1() && grab)
             maxMoveDistance++;
@@ -88,6 +90,7 @@ public class AvailableActions implements Serializable {
 
         //for move and grab actions
         ArrayList<CellInfo> singleArrivalCells=createArrivalCells(board,player,minMoveDistance,maxMoveDistance,grab);
+
 
         this.fictitiousPlayers=new ArrayList<>();
         for(CellInfo cell: singleArrivalCells)
