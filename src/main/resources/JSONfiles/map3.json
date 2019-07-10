@@ -47,7 +47,7 @@
         "color": "BLUE",
         "players": [],
         "top": "WALL",
-        "bottom": "WALL",
+        "bottom": "DOOR",
         "left": "DOOR",
         "right": "ROOM"
       },
