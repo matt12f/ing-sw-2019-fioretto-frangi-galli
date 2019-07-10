@@ -109,6 +109,7 @@ public class GameModel extends Observable{
      * @param deadPlayer the player that has just been killed
      */
     public void addDeadPlayer(Player deadPlayer) {
+        deadPlayer = this.playerList.get(this.playerList.indexOf(deadPlayer));
         for(Room room: this.currentMap.getRooms())
             if(room.getColor().equals(deadPlayer.getFigure().getCell().getColor()))
                 room.removePlayers(deadPlayer);

@@ -22,11 +22,9 @@ public class DamageTracker implements Serializable {
      * this method finds the first empty cell in damage and adds the damage drop to the damage track.
      * if it returns false: it's damage over 12, meaning  it's wasted
      * if it returns true: everything is ok
-     */
-    /**
      *
-     * @param damage
-     * @return if there's space in the damage list
+     * @param damage is the damage to deal
+     * @return true if the damage was actually added
      */
     public boolean addDamage(char damage){
         boolean spotFound = false;
@@ -63,7 +61,7 @@ public class DamageTracker implements Serializable {
      * @param mark
      */
     public void addMark(char mark){
-        if(markCounter(mark)<3)
+        if(markCounter(mark)< 3)
             this.marks.add(mark);
     }
 

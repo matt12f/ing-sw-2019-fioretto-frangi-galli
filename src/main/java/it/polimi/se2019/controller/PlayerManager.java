@@ -400,9 +400,9 @@ public class PlayerManager  {
      * @param reload
      */
     public static void reloadManager(Player player, boolean[] reload) {
-        //TODO controllare che funzioni
         for(int i=0;i<player.getPlayerBoard().getHand().getGuns().length;i++)
-            if(player.getPlayerBoard().getHand().getGuns()[i]!=null && reload[i]) {
+            if(player.getPlayerBoard().getHand().getGuns()[i]!=null && reload[i]&&
+                    ActionManager.canAffordCost(player,player.getPlayerBoard().getAmmo(),player.getPlayerBoard().getHand().getGuns()[i].getAmmoCost(),false)){
                 player.getPlayerBoard().getHand().getGuns()[i].setLoaded(true);
                 payGunCardCost(player, player.getPlayerBoard().getHand().getGuns()[i].getAmmoCost(), false);
             }

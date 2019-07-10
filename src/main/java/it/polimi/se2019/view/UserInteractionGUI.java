@@ -276,50 +276,39 @@ public class UserInteractionGUI extends UserInteraction {
      */
     @Override
     public boolean[] cardsToReload(GunCard[] cards, boolean[] reloadableCards) {
-        //n    Jdialog sullo stesso concetto del metodo di sopra, con 3 checkbox, dove vengono attivate a seconda
-        // se ci sono carte arma che possono essere ricaricate.
-
-        //In particolare scorrere cards, dove se un elemento è null la carta non c'è e abilitare la checkbox se
-        // la carta è presente e scarica (lo vedi dall'altro vettore passato)
-
-        JLabel label = new JLabel("Which weapons do you want to reload?");
+        JLabel label = new JLabel("Quali carte arma vuoi ricaricare?");
         boolean[] chosen = new boolean[3];
-        JCheckBox weapon1Check = new JCheckBox("Weapon 1");
-        JCheckBox weapon2Check = new JCheckBox("Weapon 2");
-        JCheckBox weapon3Check = new JCheckBox("Weapon 3");
 
+        JCheckBox weapon1Check=new JCheckBox();
+        JCheckBox weapon2Check=new JCheckBox();
+        JCheckBox weapon3Check=new JCheckBox();
 
+        JPanel buttons = new JPanel();
+        if(cards[0] != null && reloadableCards[0]){
+            weapon1Check.setText(cards[0].getClass().getSimpleName());
+            buttons.add(weapon1Check);
+        }
+        if(cards[1] != null && reloadableCards[1]){
+            weapon2Check.setText(cards[1].getClass().getSimpleName());
+            buttons.add(weapon2Check);
+        }
+        if(cards[2] != null && reloadableCards[2]){
+            weapon3Check.setText(cards[2].getClass().getSimpleName());
+            buttons.add(weapon3Check);
+        }
 
-        JButton buttonToSend = new JButton("Send");
+        JButton buttonToSend = new JButton("Invia");
         buttonToSend.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(weapon1Check.isSelected()){
-                    chosen[0]= true;
-                }
-                if(weapon2Check.isSelected()){
-                    chosen[1]= true;
-                }
-                if(weapon3Check.isSelected()){
-                    chosen[2]= true;
-                }
+                chosen[0]=weapon1Check.isSelected();
+                chosen[1]=weapon2Check.isSelected();
+                chosen[2]=weapon3Check.isSelected();
 
                 JButton button = (JButton)e.getSource();
                 SwingUtilities.getWindowAncestor(button).dispose();
             }
         });
-
-
-        JPanel buttons = new JPanel();
-        if(cards[0] != null && !reloadableCards[0]){
-            buttons.add(weapon1Check);
-        }
-        if(cards[1] != null && !reloadableCards[1]){
-            buttons.add(weapon2Check);
-        }
-        if(cards[2] != null && !reloadableCards[2]){
-            buttons.add(weapon3Check);
-        }
 
         buttons.add(buttonToSend);
 

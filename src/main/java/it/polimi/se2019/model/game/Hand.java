@@ -177,6 +177,8 @@ public class Hand implements Serializable {
         Hand hand=new Hand();
         hand.guns=this.guns.clone();
         hand.powerups=this.powerups.clone();
+        if(hand.additionalPowerup!=null)
+            hand.additionalPowerup=this.additionalPowerup.clone();
         return hand;
     }
 }

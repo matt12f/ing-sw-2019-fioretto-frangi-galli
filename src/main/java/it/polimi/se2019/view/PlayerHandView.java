@@ -47,11 +47,14 @@ public  class PlayerHandView implements Serializable {
     }
 
     /**
-     * update weapons hand
+     * update weapons hand and the loaded ones
      * @param guns
      */
     public void setGuns(GunCard[] guns) {
         this.guns = guns;
+        for (int i = 0; i < guns.length; i++)
+            if(guns[i]!=null)
+                this.loadedGuns[i]=guns[i].isLoaded();
     }
 
     /**
@@ -66,6 +69,7 @@ public  class PlayerHandView implements Serializable {
      * update of the loaded weaons
      * @param loadedGuns
      */
+    //TODO rimuovere
     public void setLoadedGuns(boolean[] loadedGuns) {
         this.loadedGuns = loadedGuns;
     }

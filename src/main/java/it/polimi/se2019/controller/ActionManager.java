@@ -87,6 +87,7 @@ public class ActionManager {
         else
             start=0;
 
+        //TODO considerare effetti senza costo, che hanno il char 'n' come costo
         for(int i=start;i<ammoCost.length;i++){
             switch (ammoCost[i]) {
                 case 'b':blue++;break;

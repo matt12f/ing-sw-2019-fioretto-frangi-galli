@@ -40,8 +40,7 @@ public class ActionRequestView implements Serializable {
         else{ //here we are at the end of the turn
             this.actionToRequest=null;
             this.powerupUse=powerupManagerView(localView);
-            this.reload=this.askUser.cardsToReload(localView.getPlayerHand().getGuns(),localView.getPlayerHand().getLoadedGuns());
-            //TODO controllo se puoi pagare la ricarica della carta
+            this.reload=reloadManager(localView);
         }
     }
 
@@ -94,6 +93,14 @@ public class ActionRequestView implements Serializable {
         return temp;
     }
 
+    private boolean [] reloadManager(LocalView localView){
+        boolean [] reloadableCards=new boolean[3];
+        //inverts the
+        for (int i = 0; i < localView.getPlayerHand().getLoadedGuns().length; i++)
+            reloadableCards[i]=!localView.getPlayerHand().getLoadedGuns()[i];
+        return this.askUser.cardsToReload(localView.getPlayerHand().getGuns(), reloadableCards);
+    }
+
     public ActionType getActionToRequest() {
         return actionToRequest;
     }
@@ -116,9 +123,7 @@ public class ActionRequestView implements Serializable {
             default:return Color.RED;
         }
     }
-    /**
-     * @return the other player's colors
-     */
+
     private ArrayList<String> getPlayerColors(){
         ArrayList<String> colors=new ArrayList<>();
         for(PlayerBoardView playerBoard: AdrenalineClient.getLocalView().getPlayerBoardViews())

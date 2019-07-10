@@ -44,7 +44,7 @@ public class Whisper extends GunCardAddEff {
     void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         ArrayList<Player> targets=new ArrayList<>();
         for(Player target: ActionManager.visibleTargets(currentController,player))
-            if(MapManager.distanceBetweenCells(currentController.getMainGameModel().getCurrentMap().getBoardMatrix(),player.getPosition(),target.getFigure().getCell())>2)
+            if(MapManager.distanceBetweenCells(currentController.getMainGameModel().getCurrentMap().getBoardMatrix(),player.getPosition(),target.getFigure().getCell())>=2)
                 targets.add(target);
 
         actions.addToPlayerTargetList(targets);
