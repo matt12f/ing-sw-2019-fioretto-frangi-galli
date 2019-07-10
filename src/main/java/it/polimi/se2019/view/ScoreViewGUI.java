@@ -20,10 +20,7 @@ public class ScoreViewGUI extends JFrame  {
         GridBagConstraints container = new GridBagConstraints();
         mainPanel.setLayout(new GridBagLayout());
 
-        container.gridx=0;
-        container.gridy=0;
 
-        mainPanel.add(new Label("your score: "+ownerBoard.getScore()+" points"), container);
 
         int x=1;
 
