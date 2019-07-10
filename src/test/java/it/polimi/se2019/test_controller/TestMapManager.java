@@ -312,7 +312,7 @@ public class TestMapManager {
                 " Left: DOOR\n" +
                 " Right: ROOM, Cella BLUE di tipo: DROP\n" +
                 " Top: WALL\n" +
-                " Bottom: WALL\n" +
+                " Bottom: DOOR\n" +
                 " Left: DOOR\n" +
                 " Right: ROOM, Cella RED di tipo: SPAWN\n" +
                 " Top: ROOM\n" +
