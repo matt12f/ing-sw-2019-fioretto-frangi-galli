@@ -279,7 +279,7 @@ public class ChosenActions implements Serializable {
         if(cellWithTargets.getMaxTargetsInCell()==0 && cellWithTargets.getMinTargetsInCell()==0)
             return targets;
 
-        targets.addAll(selectTargets(cellWithTargets.getTargets(),1, cellWithTargets.getMaxTargetsInCell()));
+        targets.addAll(selectTargets(cellWithTargets.getTargets(),cellWithTargets.getMinTargetsInCell(), cellWithTargets.getMaxTargetsInCell()));
 
         return targets;
     }
