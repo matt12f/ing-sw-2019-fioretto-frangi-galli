@@ -128,7 +128,7 @@ public class UserInteractionGUI extends UserInteraction {
         content.add(label, BorderLayout.CENTER);
         content.add(buttons, BorderLayout.SOUTH);
 
-        JDialog dialog = new JDialog();
+        JDialog dialog = new JDialog(this,false);
         dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
         dialog.setModal(true);
         dialog.setTitle("Selettore Mossa");
