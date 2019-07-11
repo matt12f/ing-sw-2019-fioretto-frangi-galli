@@ -157,7 +157,7 @@ public class ChosenActions implements Serializable {
             if(combination.isCanMoveYourself())
                 this.cellToMoveYourself=selectCellWithTargets(localView, combination,"MoveYourself");
             if(combination.isCanMoveOpponent())
-                this.cellToMoveOpponent=selectCellWithTargets(localView, combination,cardName);
+                this.cellToMoveOpponent=selectCellWithTargets(localView, combination, cardName);
             if(!combination.isCanMoveOpponent() && !combination.isCanMoveYourself())
                 this.cellFromCellWithTrg=selectCellWithTargets(localView, combination, cardName);
         }
@@ -219,7 +219,7 @@ public class ChosenActions implements Serializable {
                 stringList = listCellWithTargets(localView, possibleCells);
 
                 arrivalCell = possibleCells.get(stringList.indexOf(this.askUser.stringSelector("Scegli la cella in cui vuoi spostare il target precendente", stringList)));
-                this.targetsFromCell.addAll(targetSelectionFromCell(arrivalCell));
+                return arrivalCell.getTargetCell();
             }else
                 return null;
         }else if((mode.equals("Sledgehammer")||mode.equals("TractorBeam"))){

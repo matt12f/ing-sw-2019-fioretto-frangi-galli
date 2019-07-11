@@ -52,6 +52,10 @@ public class ActionManager {
      * @param arrivalCell is the cell to move the player into
      */
     public static void movePlayer(Controller currentController, Player player, NewCell arrivalCell) {
+        //extraction of real player (seems necessary)
+        player = currentController.getMainGameModel().getPlayerList().get(
+                currentController.getMainGameModel().getPlayerList().indexOf(player));
+
         //if the room has changed
         if(!player.getFigure().getCell().getColor().equals(arrivalCell.getColor())){
             MapManager.getRoom(currentController,player.getFigure().getCell()).removePlayers(player);
@@ -87,7 +91,6 @@ public class ActionManager {
         else
             start=0;
 
-        //TODO considerare effetti senza costo, che hanno il char 'n' come costo
         for(int i=start;i<ammoCost.length;i++){
             switch (ammoCost[i]) {
                 case 'b':blue++;break;

@@ -66,15 +66,6 @@ public  class PlayerHandView implements Serializable {
     }
 
     /**
-     * update of the loaded weaons
-     * @param loadedGuns
-     */
-    //TODO rimuovere
-    public void setLoadedGuns(boolean[] loadedGuns) {
-        this.loadedGuns = loadedGuns;
-    }
-
-    /**
      *
      * @return pw hand
      */

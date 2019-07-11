@@ -284,6 +284,12 @@ public class PlayerManager  {
                 if(player.getPlayerBoard().getHand().getGuns()[i] != null &&
                         player.getPlayerBoard().getHand().getGuns()[i].equals(actions.getChosenGun()))
                     player.getPlayerBoard().getHand().getGuns()[i].setLoaded(false);
+
+            //if there's a frenzy reload the card can be used even if it's unloaded and it stays unloaded
+            //but you must pay the cost of the reload
+            if(actions.getFictitiousPlayer().isFrenzyReload())
+                payGunCardCost(player,actions.getChosenGun().getAmmoCost(),false);
+
         }
         ArrayList<Player> playersAfter = Player.duplicateList(currentController.getMainGameModel().getPlayerList());
 

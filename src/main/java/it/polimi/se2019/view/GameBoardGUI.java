@@ -87,7 +87,6 @@ public class GameBoardGUI {
      */
     public void updateBoardGame(ArrayList<PlayerBoardView> allBoards,PlayerBoardView ownerBoard, CellView[][] boardMatrix, KillShotTrackerView kills, PlayerHandView ownerHand){
         boardZone.updateBoards(allBoards, ownerBoard, frenzyStatus, kills.getNumKills());
-        //TODO le carte nella owner hand sono loaded come il vettore loaded?
         playerZone.updateElements(ownerBoard, ownerHand, frenzyStatus);
         map.setBoard(boardMatrix);
     }

@@ -45,7 +45,7 @@ public class CellWithTargets implements Serializable {
     }
 
     public ArrayList<Player> getTargets() {
-        return targets;
+        return this.targets;
     }
 
     public int getMaxTargetsInCell() {

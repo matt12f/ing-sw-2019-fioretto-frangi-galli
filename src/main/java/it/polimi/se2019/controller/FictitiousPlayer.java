@@ -30,6 +30,7 @@ public class FictitiousPlayer implements Serializable {
     private ArrayList<GunCard> pickableCards;
     private ArrayList<SingleCardActions> availableCardActions; //for the actions you can do with one card
     private boolean noTargets;
+    private boolean frenzyReload;
 
     /**
      * This method creates a fictitious player that has supposedly taken the choices contained in the parameter cell
@@ -38,6 +39,7 @@ public class FictitiousPlayer implements Serializable {
      * returns fictitious player
      */
     public FictitiousPlayer (Controller currentController, Player player, CellInfo cell, boolean shoot, boolean frenzyReload){
+        this.frenzyReload=frenzyReload;
         this.correspondingPlayer=player;
         this.playerId=player.getId();
         ArrayList<GunCard> usableCards;
@@ -137,6 +139,10 @@ public class FictitiousPlayer implements Serializable {
 
     public void setPosition(NewCell position) {
         this.position = position;
+    }
+
+    public boolean isFrenzyReload() {
+        return frenzyReload;
     }
 }
 

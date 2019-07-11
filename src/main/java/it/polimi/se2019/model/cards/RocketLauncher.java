@@ -201,7 +201,7 @@ public class RocketLauncher extends GunCardAddEff {
     @Override
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         for(NewCell cell:MapManager.squaresInRadius2(currentController,player))
-            actions.addCellsWithTargets(cell,new ArrayList<>(),0,0,true,false);
+            actions.addCellsWithTargets(cell, new ArrayList<>(),0,0,true,false);
         actions.setCanMoveYourself(true);
         actions.setMaxCellToSelect(1);
         actions.setMinCellToSelect(1);
@@ -220,7 +220,14 @@ public class RocketLauncher extends GunCardAddEff {
         for(NewCell cell:MapManager.squaresInRadius2(currentController,player)){
             ArrayList<Player> targets = new ArrayList<>(ActionManager.visibleTargets(currentController,cell));
             targets.removeAll(cell.getPlayers());
-            actions.addCellsWithTargets(cell, targets, 1, 1, true, false);
+            if (!targets.isEmpty())
+                actions.addCellsWithTargets(cell, targets, 1, 1, true, false);
+        }
+
+        if(actions.getCellsWithTargets().isEmpty()){
+            actions.setOfferableOpt1(false);
+            actions.setOfferableBase(false);
+            actions.setOfferableOpt2(false);
         }
 
         for(CellWithTargets cellWithTarget: actions.getCellsWithTargets()){

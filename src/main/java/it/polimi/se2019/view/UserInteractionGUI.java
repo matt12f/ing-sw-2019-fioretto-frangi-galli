@@ -128,7 +128,7 @@ public class UserInteractionGUI extends UserInteraction {
         content.add(label, BorderLayout.CENTER);
         content.add(buttons, BorderLayout.SOUTH);
 
-        JDialog dialog = new JDialog(this,false);
+        JDialog dialog = new JDialog();
         dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
         dialog.setModal(true);
         dialog.setTitle("Selettore Mossa");
@@ -277,6 +277,8 @@ public class UserInteractionGUI extends UserInteraction {
     @Override
     public boolean[] cardsToReload(GunCard[] cards, boolean[] reloadableCards) {
         JLabel label = new JLabel("Quali carte arma vuoi ricaricare?");
+        JLabel label2 = new JLabel("Nota: di queste selezionate saranno ricaricate solo le carte di cui puoi pagare il costo di ricarica");
+
         boolean[] chosen = new boolean[3];
 
         JCheckBox weapon1Check=new JCheckBox();
@@ -313,7 +315,8 @@ public class UserInteractionGUI extends UserInteraction {
         buttons.add(buttonToSend);
 
         JPanel content = new JPanel(new BorderLayout(8, 8));
-        content.add(label, BorderLayout.CENTER);
+        content.add(label, BorderLayout.NORTH);
+        content.add(label2,BorderLayout.CENTER);
         content.add(buttons, BorderLayout.SOUTH);
 
         JDialog dialog = new JDialog();

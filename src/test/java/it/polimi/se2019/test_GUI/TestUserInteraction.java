@@ -20,10 +20,10 @@ public class TestUserInteraction {
 
         //askUser=new UserInteractionCLI();
 
-       // testGunReload();
-        //testActionSelection();
+       testGunReload();
+        testActionSelection();
         //testYesOrNo();
-        testShowMessage();
+        //testShowMessage();
         //testSelectionFromList();
 
         //testMap();
@@ -48,9 +48,13 @@ public class TestUserInteraction {
     }
 
     private static void testActionSelection() {
-        System.out.println(askUser.actionToRequest(0,"ROSSO"));
-        System.out.println(askUser.actionToRequest(1,"BLU"));
-        System.out.println(askUser.actionToRequest(2,"VERDE"));
+        String response=askUser.actionToRequest(0,"ROSSO");
+        System.out.println(response);
+        response=askUser.actionToRequest(1,"BLU");
+        System.out.println(response);
+        response=askUser.actionToRequest(2,"VERDE");
+        System.out.println(response);
+
     }
 
     private static void testGunReload(){

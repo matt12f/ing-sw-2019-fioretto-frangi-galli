@@ -78,7 +78,7 @@ public class SingleEffectsCombinationActions implements Serializable {
             throw new UnavailableEffectCombinationException("Optional2");
 
         //there are no targets
-        if (this.playersTargetList.isEmpty() && this.targetCells.isEmpty() && this.targetRooms.isEmpty())
+        if (this.playersTargetList.isEmpty() && this.targetCells.isEmpty() && this.targetRooms.isEmpty() && this.cellsWithTargets.isEmpty())
             throw new UnavailableEffectCombinationException("No targets");
 
         //apposite validation for CellsWithTargets
@@ -93,9 +93,12 @@ public class SingleEffectsCombinationActions implements Serializable {
     private boolean validateCellsWithTargets(){
         for(CellWithTargets cellWithTargets: this.cellsWithTargets){
             //case where the cell is meant to have targets on it
-            if(cellWithTargets.getMinTargetsInCell()!=0 && cellWithTargets.getMaxTargetsInCell()!=0)
-                if(!cellWithTargets.getTargets().isEmpty()) //means there's a list with targets in it
+            if(cellWithTargets.getMinTargetsInCell()!=0 && cellWithTargets.getMaxTargetsInCell()!=0) {
+                if (!cellWithTargets.getTargets().isEmpty()) //means there's a list with targets in it
                     return false;
+            } //case where even one (because they don't mix) cell is to move targets/yoursel on it
+            else if(cellWithTargets.isCanMoveOthersHere() || cellWithTargets.isCanMoveYourselfHere())
+                return false;
         }
         return true;
 

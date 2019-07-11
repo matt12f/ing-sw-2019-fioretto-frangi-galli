@@ -56,7 +56,7 @@ public class Sledgehammer extends GunCardAltEff {
      */
     @Override
     void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        ArrayList<Player> targets =Player.duplicateList(player.getPosition().getPlayers());
+        ArrayList<Player> targets = Player.duplicateList(player.getPosition().getPlayers());
         targets.remove(player.getCorrespondingPlayer());
 
         actions.addToPlayerTargetList(targets);
@@ -83,14 +83,15 @@ public class Sledgehammer extends GunCardAltEff {
         if(actions.getPlayersTargetList().isEmpty())
             actions.setOfferableOpt1(false);
         else {
-        NewCell [][] board= currentController.getMainGameModel().getCurrentMap().getBoardMatrix();
+        NewCell [][] board = currentController.getMainGameModel().getCurrentMap().getBoardMatrix();
 
         ArrayList<NewCell> cellsToMoveTargetOn=new ArrayList<>();
         for (int i = 0; i < 4 ; i++) {
             try {
                 if (!player.getPosition().getEdge(i).equals(CellEdge.WALL))
                     cellsToMoveTargetOn.add(MapManager.getCellInDirection(board,player.getPosition(),1,i));
-                if(!cellsToMoveTargetOn.get(cellsToMoveTargetOn.size()-1).getEdge(i).equals(CellEdge.WALL))
+
+                if(!cellsToMoveTargetOn.isEmpty() && !cellsToMoveTargetOn.get(cellsToMoveTargetOn.size()-1).getEdge(i).equals(CellEdge.WALL))
                     cellsToMoveTargetOn.add(MapManager.getCellInDirection(board,cellsToMoveTargetOn.get(cellsToMoveTargetOn.size()-1),1,i));
             }catch (OuterWallException e){
                 //Won't happen

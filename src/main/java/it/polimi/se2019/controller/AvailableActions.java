@@ -47,8 +47,10 @@ public class AvailableActions implements Serializable {
             case FRENZY4:  buildActions(currentController,player,macroAction,2,false,true,true);break;
             case FRENZY5:  buildActions(currentController,player,macroAction,3,true,false,false);break;
         }
-        }else
+        }else{
             PlayerManager.reloadManager(player,macroAction.isReload());
+            currentController.getMainGameModel().notifyRemoteView();
+        }
 
     }
 

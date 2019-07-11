@@ -3,6 +3,7 @@ package it.polimi.se2019.model.cards;
 import it.polimi.se2019.controller.ActionManager;
 import it.polimi.se2019.controller.Controller;
 import it.polimi.se2019.controller.FictitiousPlayer;
+import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
@@ -31,7 +32,7 @@ public class Electroscythe extends GunCardAltEff {
      */
     @Override
     void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
-        ArrayList<Player> targets=new ArrayList<>(Player.duplicateList(currentController.getActiveTurn().getActivePlayer().getFigure().getCell().getPlayers()));
+        ArrayList<Player> targets=new ArrayList<>(Player.duplicateList(playersChoice.getTargetCell().getPlayers()));
         targets.remove(playersChoice.getFictitiousPlayer().getCorrespondingPlayer());
         ActionManager.giveDmgandMksToPlayers(currentController,targets,playersChoice,1,0);
     }
@@ -42,7 +43,7 @@ public class Electroscythe extends GunCardAltEff {
      */
     @Override
     void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
-        ArrayList<Player> targets=new ArrayList<>(Player.duplicateList(currentController.getActiveTurn().getActivePlayer().getFigure().getCell().getPlayers()));
+        ArrayList<Player> targets=new ArrayList<>(Player.duplicateList(playersChoice.getTargetCell().getPlayers()));
         targets.remove(currentController.getActiveTurn().getActivePlayer());
         ActionManager.giveDmgandMksToPlayers(currentController,targets,playersChoice,2,0);
     }
@@ -52,6 +53,9 @@ public class Electroscythe extends GunCardAltEff {
      */
     @Override
     void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
+        ArrayList<NewCell> oneCell=new ArrayList<>();
+        oneCell.add(player.getPosition());
+        actions.addToTargetCells(oneCell);
         if(player.getPosition().getPlayers().size()==1)
             actions.setOfferableBase(false);
     }
@@ -60,9 +64,8 @@ public class Electroscythe extends GunCardAltEff {
      * Deal 2 damage to every other player on your square.
      */
     @Override
-    void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
-        if(player.getPosition().getPlayers().size()==1)
-            actions.setOfferableOpt1(false);
+    void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player){
+        targetsOfBaseEffect(currentController,actions,player);
     }
 
 
