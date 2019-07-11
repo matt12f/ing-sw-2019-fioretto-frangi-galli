@@ -383,6 +383,7 @@ public class AdrenalineClient {
     private static void granade() throws IOException {
         boolean reply = userInteractionGUI.yesOrNo("Sei stato colpito, vuoi usare il PowerUP TagBack Grenade?", "Si", "No");
         connection.getOutput().writeBoolean(reply);
+        connection.getOutput().flush();
     }
 
     private static void reSpawn() throws IOException, ClassNotFoundException {

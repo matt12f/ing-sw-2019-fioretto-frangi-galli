@@ -431,7 +431,7 @@ public class GameHandler implements Runnable {
             //offering tag back grenade to players hit
             for(Player player:playersHit){
                 //check if the active player (the one that hit others) is visible from their position
-                if(!ActionManager.visibleTargets(this.controller,player.getFigure().getCell()).contains(activePlayer)){
+                if(ActionManager.visibleTargets(this.controller,player.getFigure().getCell()).contains(activePlayer)){
 
                     for(int i=0;i< player.getPlayerBoard().getHand().getPowerups().length;i++)
                         if(player.getPlayerBoard().getHand().getPowerups()[i]!=null &&
