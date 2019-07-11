@@ -95,8 +95,7 @@ public class PowerupManager {
      * @param cardIndexInHand is the index of the card in the player hand
      */
     public static void grenadeManager(Controller currentController, Player playerDamaged, Player playerGivingDamage, int cardIndexInHand){
-        playerDamaged = currentController.getMainGameModel().getPlayerList().get(
-                currentController.getMainGameModel().getPlayerList().indexOf(playerDamaged));
+        playerDamaged = currentController.getMainGameModel().getPlayerList().get(currentController.getActiveTurn().getActivePlayer().getId());
 
         char [] marks=new char[1];
         marks[0]=playerGivingDamage.getFigure().getColorChar();

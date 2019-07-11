@@ -23,21 +23,21 @@ public class ActionRequestView implements Serializable {
         this.askUser=new UserInteractionGUI();
 
         if(!turnConclusion){
-        String action=this.askUser.actionToRequest(localView.getPersonalPlayerBoardView().getFrenzy(),localView.getPersonalPlayerBoardView().getColor().toString());
-        switch (action){
-            case "move": this.actionToRequest=ActionType.NORMAL1;break;
-            case "grab": this.actionToRequest=ActionType.NORMAL2;break;
-            case "shoot": this.actionToRequest=ActionType.NORMAL3;break;
-            case "frenzy1": this.actionToRequest=ActionType.FRENZY1;break;
-            case "frenzy2": this.actionToRequest=ActionType.FRENZY2;break;
-            case "frenzy3": this.actionToRequest=ActionType.FRENZY3;break;
-            case "frenzy4": this.actionToRequest=ActionType.FRENZY4;break;
-            case "frenzy5": this.actionToRequest=ActionType.FRENZY5;break;
-            default: break; //won't happen, the player must chose one of the above
-        }
-        this.powerupUse=powerupManagerView(localView);
-        }
-        else{ //here we are at the end of the turn
+            String action=this.askUser.actionToRequest(localView.getPersonalPlayerBoardView().getFrenzy(),localView.getPersonalPlayerBoardView().getColor().toString());
+            switch (action){
+                case "move": this.actionToRequest=ActionType.NORMAL1; break;
+                case "grab": this.actionToRequest=ActionType.NORMAL2; break;
+                case "shoot": this.actionToRequest=ActionType.NORMAL3; break;
+                case "frenzy1": this.actionToRequest=ActionType.FRENZY1; break;
+                case "frenzy2": this.actionToRequest=ActionType.FRENZY2; break;
+                case "frenzy3": this.actionToRequest=ActionType.FRENZY3; break;
+                case "frenzy4": this.actionToRequest=ActionType.FRENZY4; break;
+                case "frenzy5": this.actionToRequest=ActionType.FRENZY5; break;
+                default: break; //won't happen, the player must chose one of the above
+            }
+            this.powerupUse=powerupManagerView(localView);
+        }else{
+            //here we are at the end of the turn
             this.actionToRequest=null;
             this.powerupUse=powerupManagerView(localView);
             this.reload=reloadManager(localView);

@@ -347,6 +347,7 @@ public class PlayerManager  {
 
         for (char mark: add)
             target.getPlayerBoard().getDamageTrack().addMark(mark);
+        currentController.getMainGameModel().notifyRemoteView();
     }
 
     /**
