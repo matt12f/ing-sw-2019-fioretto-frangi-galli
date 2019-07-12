@@ -66,6 +66,9 @@ public class Electroscythe extends GunCardAltEff {
     @Override
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player){
         targetsOfBaseEffect(currentController,actions,player);
+
+        if(player.getPosition().getPlayers().size()==1)
+            actions.setOfferableOpt1(false);
     }
 
 
