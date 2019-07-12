@@ -1,12 +1,11 @@
 package it.polimi.se2019.view;
 
+import it.polimi.se2019.controller.CellWithTargets;
+import it.polimi.se2019.enums.CellEdge;
 import it.polimi.se2019.enums.CellType;
 import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.exceptions.FullException;
-import it.polimi.se2019.model.game.Figure;
-import it.polimi.se2019.model.game.GameModel;
-import it.polimi.se2019.model.game.Map;
-import it.polimi.se2019.model.game.NewCell;
+import it.polimi.se2019.model.game.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -152,6 +151,36 @@ public class MapView implements Serializable {
                     coordinates.add(new Coordinates(i,j));
             }
         return coordinates;
+    }
+
+    /**
+     * this method reduces the list of cells to move an opponent on to only the cells that the opponent can be actually
+     * moved on (the cells one move away from him)
+     * @param cells
+     * @param target
+     * @return
+     */
+    public ArrayList<CellWithTargets> reduceToCellsOneMoveAway(ArrayList<CellWithTargets> cells, Player target){
+        NewCell targetCell= target.getFigure().getCell();
+        int xPlayer= getXIndex(target.getFigure().getCell());
+        int yPlayer= getYIndex(target.getFigure().getCell());
+
+        ArrayList<CellWithTargets> cellsOk = new ArrayList<>();
+
+        //cells one move away are: (xPlayer -1; yPlayer) (xPlayer +1; yPlayer) (xPlayer; yPlayer-1) (xPlayer; yPlayer+1)
+        //with no wall in that direction
+        for (CellWithTargets singleCell: cells) {
+            if(getXIndex(singleCell.getTargetCell())==(xPlayer -1) && getYIndex(singleCell.getTargetCell())==(yPlayer) && !targetCell.getEdge(0).equals(CellEdge.WALL))
+                cellsOk.add(singleCell);
+            else if(getXIndex(singleCell.getTargetCell())==(xPlayer +1) && getYIndex(singleCell.getTargetCell())==(yPlayer) && !targetCell.getEdge(1).equals(CellEdge.WALL))
+                cellsOk.add(singleCell);
+            else if(getXIndex(singleCell.getTargetCell())==(xPlayer) && getYIndex(singleCell.getTargetCell())==(yPlayer-1) && !targetCell.getEdge(2).equals(CellEdge.WALL))
+                cellsOk.add(singleCell);
+            else if(getXIndex(singleCell.getTargetCell())==(xPlayer) && getYIndex(singleCell.getTargetCell())==(yPlayer+1) && !targetCell.getEdge(3).equals(CellEdge.WALL))
+                cellsOk.add(singleCell);
+        }
+
+        return cellsOk;
     }
 
 }

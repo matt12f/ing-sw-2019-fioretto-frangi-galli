@@ -9,6 +9,8 @@ import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.controller.SingleEffectsCombinationActions;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class GrenadeLauncher extends GunCardAddEff {
     /**
@@ -71,9 +73,17 @@ public class GrenadeLauncher extends GunCardAddEff {
         actions.setMaxNumPlayerTargets(1);
         actions.setMinNumPlayerTargets(1);
 
+
         if(!targets.isEmpty()){
-        for(NewCell cell: ActionManager.cellsOneMoveAway(currentController, player.getPosition()))
-            actions.addCellsWithTargets(cell,new ArrayList<>(),0,0,false,true);
+            ArrayList<NewCell> cellsToMoveTargetOn=new ArrayList<>();
+
+            for(Player target: actions.getPlayersTargetList())
+                    cellsToMoveTargetOn.addAll(ActionManager.cellsOneMoveAway(currentController,target.getFigure().getCell()));
+
+            List<NewCell> cellsOk= cellsToMoveTargetOn.stream().distinct().collect(Collectors.toList());
+
+            for(NewCell cell: cellsOk)
+                actions.addCellsWithTargets(cell,new ArrayList<>(),0,0,false,true);
 
         actions.setCanMoveOpponent(true);
         actions.setMaxCellToSelect(1);

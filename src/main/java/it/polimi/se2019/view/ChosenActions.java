@@ -220,11 +220,14 @@ public class ChosenActions implements Serializable {
                     if (cellWithTargets.isCanMoveOthersHere())
                         possibleCells.add(cellWithTargets);
                 });
-                //TODO qui va valutato se la cella è a distanza 1 dal player effettivo
-                //lists as strings the cells for the player to then select one
-                stringList = listCellWithTargets(localView, possibleCells);
 
-                arrivalCell = possibleCells.get(stringList.indexOf(this.askUser.stringSelector("Scegli la cella in cui vuoi spostare il target precendente", stringList)));
+                //this evaluates the cells one move away from the target
+                ArrayList <CellWithTargets> cellsOneMoveAway=localView.getMapView().reduceToCellsOneMoveAway(possibleCells,this.targetsFromList1.get(0));
+
+                //lists as strings the cells for the player to then select one
+                stringList = listCellWithTargets(localView, cellsOneMoveAway);
+
+                arrivalCell = cellsOneMoveAway.get(stringList.indexOf(this.askUser.stringSelector("Scegli la cella in cui vuoi spostare il target precendente", stringList)));
                 return arrivalCell.getTargetCell();
             }else
                 return null;
@@ -238,7 +241,7 @@ public class ChosenActions implements Serializable {
             //lists as strings the cells for the player to then select one
             stringList = listCellWithTargets(localView, possibleCells);
 
-            arrivalCell = possibleCells.get(stringList.indexOf(this.askUser.stringSelector("Scegli la cella in cui vuoi spostare il target precendente", stringList)));
+            arrivalCell = possibleCells.get(stringList.indexOf(this.askUser.stringSelector("Scegli la cella in cui vuoi spostare il target", stringList)));
             this.targetsFromCell.addAll(targetSelectionFromCell(arrivalCell));
 
         }else if(mode.equals("VortexCannon")||mode.equals("FlameThrower") && combination.getEffectsCombination().contains("Optional1")){

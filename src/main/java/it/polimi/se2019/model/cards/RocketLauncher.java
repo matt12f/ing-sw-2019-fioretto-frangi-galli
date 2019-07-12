@@ -7,6 +7,8 @@ import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class RocketLauncher extends GunCardAddEff {
     /**
@@ -186,9 +188,18 @@ public class RocketLauncher extends GunCardAddEff {
             actions.setOfferableBase(false);
         else{
             actions.setCanMoveOpponent(true);
-            for (NewCell cell : ActionManager.cellsOneMoveAway(currentController, player.getPosition()))
-                actions.addCellsWithTargets(cell, new ArrayList<>(), 0, 0, false, true);
+            actions.setMaxCellToSelect(1);
+            actions.setMinCellToSelect(1);
 
+            ArrayList<NewCell> cellsToMoveTargetOn=new ArrayList<>();
+
+            for(Player target: actions.getPlayersTargetList())
+                cellsToMoveTargetOn.addAll(ActionManager.cellsOneMoveAway(currentController,target.getFigure().getCell()));
+
+            List<NewCell> cellsOk= cellsToMoveTargetOn.stream().distinct().collect(Collectors.toList());
+
+            for(NewCell cell: cellsOk)
+                actions.addCellsWithTargets(cell,new ArrayList<>(),0,0,false,true);
         }
     }
 
