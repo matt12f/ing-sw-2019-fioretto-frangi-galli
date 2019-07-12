@@ -220,7 +220,7 @@ public class ChosenActions implements Serializable {
                     if (cellWithTargets.isCanMoveOthersHere())
                         possibleCells.add(cellWithTargets);
                 });
-
+                //TODO qui va valutato se la cella è a distanza 1 dal player effettivo
                 //lists as strings the cells for the player to then select one
                 stringList = listCellWithTargets(localView, possibleCells);
 
@@ -357,7 +357,7 @@ public class ChosenActions implements Serializable {
      */
     private NewCell selectOneCell(LocalView localView, ArrayList<NewCell> targetCells) {
         ArrayList<String> listedCells=listCells(localView,targetCells);
-        return targetCells.get(listedCells.indexOf(this.askUser.stringSelector("Scegli una cella in cui colpire tutti",listedCells)));
+        return targetCells.get(listedCells.indexOf(this.askUser.stringSelector("Scegli cella target (se è la tua colpirai i target di competenza della carta)",listedCells)));
     }
 
     /**

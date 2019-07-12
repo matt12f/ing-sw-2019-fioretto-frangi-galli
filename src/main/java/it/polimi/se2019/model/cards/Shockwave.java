@@ -40,7 +40,8 @@ public class Shockwave extends GunCardAltEff {
      */
     @Override
     void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
-        ActionManager.giveDmgandMksToPlayers(currentController,playersChoice.getTargetCell().getPlayers(),playersChoice,1,0);
+        ArrayList<Player> targets = ActionManager.targetsOneMoveAway(currentController,playersChoice.getFictitiousPlayer().getPosition());
+        ActionManager.giveDmgandMksToPlayers(currentController,targets,playersChoice,1,0);
     }
 
     /**
@@ -48,8 +49,6 @@ public class Shockwave extends GunCardAltEff {
      *
      *
      * @param currentController it the current controller of the game
-     * @param actions
-     * @param player
      */
     @Override
     void targetsOfBaseEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
@@ -67,24 +66,16 @@ public class Shockwave extends GunCardAltEff {
      *
      * find targets
      * @param currentController it the current controller of the game
-     * @param actions
-     * @param player
      */
     @Override
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         //here we must create a fictitious cell that will look like the cell of the player, but once selected
         // will harm all of the players on
-        NewCell fictitiousCell=player.getPosition().clone();
-        fictitiousCell.getPlayers().clear();
-
-        for(Player target: ActionManager.targetsOneMoveAway(currentController,player.getPosition()))
-            fictitiousCell.addPlayers(target);
-
         ArrayList<NewCell> oneCell=new ArrayList<>();
-        oneCell.add(fictitiousCell);
+        oneCell.add(player.getPosition());
         actions.addToTargetCells(oneCell);
 
-        if(fictitiousCell.getPlayers().isEmpty())
+        if(ActionManager.targetsOneMoveAway(currentController,player.getPosition()).isEmpty())
             actions.setOfferableOpt1(false);
     }
 
