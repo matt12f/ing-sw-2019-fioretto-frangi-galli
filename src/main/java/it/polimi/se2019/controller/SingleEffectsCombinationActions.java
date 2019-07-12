@@ -208,6 +208,10 @@ public class SingleEffectsCombinationActions implements Serializable {
         this.cellsWithTargets.add(new CellWithTargets(targetCell, targets, maxTargets, minTargets,canMoveYourSelfHere,canMoveOthersHere));
     }
 
+    public void addCellsWithTargets(ArrayList<CellWithTargets> cellsWithTargets){
+        this.cellsWithTargets.addAll(cellsWithTargets);
+    }
+
     public void setMinCellToSelect(int minCellToSelect) {
         this.minCellToSelect = minCellToSelect;
     }

@@ -45,9 +45,9 @@ public class AmmoGUI extends JPanel {
      * @param ammo is the ammo to update them with
      */
     public void updateAmmo(AmmoView ammo){
-        this.blueAmmo.setText("BLUE:"+ ammo.getBLUE());
-        this.redAmmo.setText("RED:"+ ammo.getRED());
-        this.yellowAmmo.setText("YELLOW:"+ ammo.getYELLOW());
+        this.blueAmmo.setText("Blue cubes:"+ ammo.getBLUE());
+        this.redAmmo.setText("Red cubes:"+ ammo.getRED());
+        this.yellowAmmo.setText("Yellow cubes:"+ ammo.getYELLOW());
     }
 
 }

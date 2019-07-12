@@ -23,7 +23,7 @@ public class CellWithTargets implements Serializable {
      * @param canMoveYourselfHere says if it's possible to move in targetCell
      * @param canMoveOthersHere says if it's possible to move other players in targetCell
      */
-    CellWithTargets(NewCell targetCell, ArrayList<Player> targets, int maxTargetsInCell, int minTargetsInCell, boolean canMoveYourselfHere, boolean canMoveOthersHere) {
+    public CellWithTargets(NewCell targetCell, ArrayList<Player> targets, int maxTargetsInCell, int minTargetsInCell, boolean canMoveYourselfHere, boolean canMoveOthersHere) {
         this.targetCell = targetCell;
         this.targets = targets;
         this.maxTargetsInCell = maxTargetsInCell;

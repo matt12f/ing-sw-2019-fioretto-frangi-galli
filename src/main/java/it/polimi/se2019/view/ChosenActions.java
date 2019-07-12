@@ -185,7 +185,13 @@ public class ChosenActions implements Serializable {
      * @return cell to move yourself/a Player in
      */
     private NewCell selectCellWithTargets(LocalView localView, SingleEffectsCombinationActions combination, String mode) {
-        int maxCell=combination.getMaxCellToSelect();
+        int maxCell;
+        //this evaluates and sets the maximum number of cells to select
+        if(combination.getCellsWithTargets().size() < combination.getMaxCellToSelect())
+            maxCell=combination.getCellsWithTargets().size();
+        else
+            maxCell=combination.getMaxCellToSelect();
+
         ArrayList<CellWithTargets> cellList=combination.getCellsWithTargets();
         CellWithTargets arrivalCell;
 

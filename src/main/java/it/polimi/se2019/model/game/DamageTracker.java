@@ -97,7 +97,7 @@ public class DamageTracker implements Serializable {
     }
 
     public ArrayList<Character> getMarks() {
-        return marks;
+        return this.marks;
     }
 
     public char[] getDamage() {

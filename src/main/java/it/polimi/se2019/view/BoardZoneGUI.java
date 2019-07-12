@@ -37,14 +37,14 @@ public class BoardZoneGUI extends JPanel {
         add(score,container);
 
 
-       //creating board zone dinamically
+       //creating board zone dynamically
         this.boardsGUI = new ArrayList<>();
 
         for (int i = 1; i< boards.size();i++)
            boardsGUI.add(new PlayerBoardViewGUI( boards.get(i),420,109 ));
 
 
-        //adding board zone dinamically
+        //adding board zone dynamically
         for (int i = 0; i < boardsGUI.size(); i++){
             container.gridx=0;
             container.gridy=i+1;
@@ -70,7 +70,7 @@ public class BoardZoneGUI extends JPanel {
      * @param frenzy is the boolean indicator that says if frenzy mode is on or off
      * @param kills number of the actual kills in the game
      */
-    public void updateBoards(ArrayList<PlayerBoardView> boards,PlayerBoardView ownerBoard, boolean frenzy, int kills){
+    public void updateBoards(ArrayList<PlayerBoardView> boards, PlayerBoardView ownerBoard, boolean frenzy, int kills){
 
         for (int i = 0; i< boardsGUI.size(); i++){
             boardsGUI.get(i).setBoard( 420,109, frenzy, boards.get(i+1));

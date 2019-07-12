@@ -16,6 +16,7 @@ PlayerBoardViewGUI extends JPanel{
     protected  JButton markerButton;
 
     private DamageIconGUI[] damageVector;
+    private ArrayList<Character> marks;
 
     /**
      * builder that create a single player's board
@@ -65,7 +66,7 @@ PlayerBoardViewGUI extends JPanel{
         markerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               showMarkers(boardView.getDamageView().getMarks());
+               showMarkers();
             }});
 
 
@@ -91,28 +92,27 @@ PlayerBoardViewGUI extends JPanel{
         for (int i = 0; i< 12; i++){
             damageVector[i].setDamageImage(boardDamage[i]);
         }
-
+        this.marks=boardView.getDamageView().getMarks();
 
     }
 
     /**
-     * mathod that allows to see the list of the markers on the board
-     * @param marks
+     * method that allows to see the list of the markers on the board
      */
-    public void showMarkers(ArrayList<Character> marks){
+    public void showMarkers(){
         JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints container = new GridBagConstraints();
         mainPanel.setLayout(new GridBagLayout());
 
-        if(marks.isEmpty()) {
+        if(this.marks.isEmpty()) {
             container.gridx=0;
             container.gridy=0;
             mainPanel.add(new JLabel("no marks, you're good!"));
         }else{
-        for (int i=0 ; i< marks.size();i++){
+        for (int i=0 ; i< this.marks.size();i++){
             container.gridx=0;
             container.gridy=i;
-            mainPanel.add(new JLabel( "1 " + colorSwitch(marks.get(i))),container);
+            mainPanel.add(new JLabel( "1 " + colorSwitch(this.marks.get(i))),container);
         }
         }
 

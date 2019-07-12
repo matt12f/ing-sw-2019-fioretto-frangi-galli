@@ -220,6 +220,7 @@ public class RocketLauncher extends GunCardAddEff {
         for(NewCell cell:MapManager.squaresInRadius2(currentController,player)){
             ArrayList<Player> targets = new ArrayList<>(ActionManager.visibleTargets(currentController,cell));
             targets.removeAll(cell.getPlayers());
+            targets.remove(player.getCorrespondingPlayer());
             if (!targets.isEmpty())
                 actions.addCellsWithTargets(cell, targets, 1, 1, true, false);
         }
@@ -230,10 +231,15 @@ public class RocketLauncher extends GunCardAddEff {
             actions.setOfferableOpt2(false);
         }
 
+        ArrayList<CellWithTargets> temp=new ArrayList<>();
         for(CellWithTargets cellWithTarget: actions.getCellsWithTargets()){
             for(NewCell cell: ActionManager.cellsOneMoveAway(currentController,cellWithTarget.getTargetCell()))
-                actions.addCellsWithTargets(cell, new ArrayList<>(),0,0,false,true);
+                temp.add(new CellWithTargets(cell, new ArrayList<>(),0,0,false,true));
         }
+
+        actions.addCellsWithTargets(temp);
+
+        actions.setCanMoveOpponent(true);
         actions.setCanMoveYourself(true);
         actions.setMaxCellToSelect(1);
         actions.setMinCellToSelect(1);
