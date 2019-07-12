@@ -47,7 +47,7 @@ public class VortexCannon extends GunCardAddEff {
         ActionManager.movePlayer(currentController,target1,vortex);
         ActionManager.giveDmgandMksToOnePlayer(currentController,target1,playersChoice,2,0);
 
-        playersChoice.getTargetsFromList1().remove(0);
+        playersChoice.getTargetsFromCell().remove(0);
     }
     /**
      * This applies the secondary effect
@@ -105,9 +105,10 @@ public class VortexCannon extends GunCardAddEff {
         for(NewCell cell:ActionManager.visibleSquares(currentController,player)){
             if (!cell.equals(player.getPosition())){
                 ArrayList<Player> targets=new ArrayList<>(Player.duplicateList(cell.getPlayers()));
-                targets.remove(player.getCorrespondingPlayer());
 
                 targets.addAll(ActionManager.targetsOneMoveAway(currentController,cell));
+                targets.remove(player.getCorrespondingPlayer());
+
                 actions.addCellsWithTargets(cell, targets, maxTargetCell, 1,false,false);
             }
         }
