@@ -8,6 +8,8 @@ import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Sledgehammer extends GunCardAltEff {
     /**
@@ -100,7 +102,10 @@ public class Sledgehammer extends GunCardAltEff {
 
         cellsToMoveTargetOn.add(player.getPosition());
 
-        for(NewCell cell:cellsToMoveTargetOn)
+        //removes duplicates
+        List<NewCell> cells= cellsToMoveTargetOn.stream().distinct().collect(Collectors.toList());
+
+        for(NewCell cell:cells)
             actions.addCellsWithTargets(cell,new ArrayList<>(),0,0,false,true);
 
         actions.setCanMoveOpponent(true);
