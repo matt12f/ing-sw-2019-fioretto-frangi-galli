@@ -239,6 +239,7 @@ public class RocketLauncher extends GunCardAddEff {
 
         actions.addCellsWithTargets(temp);
 
+        actions.setCanMoveOpponent(true);
         actions.setCanMoveYourself(true);
         actions.setMaxCellToSelect(1);
         actions.setMinCellToSelect(1);
