@@ -188,12 +188,12 @@ public class ActionManager {
 
     /**
      * @param currentController is the controller of the game
-     * @param player is the player from which to calculate the targets
+     * @param position is the player's position from which to calculate the targets
      * @return  a list of players one move away
      */
-    public static ArrayList<Player> targetsOneMoveAway(Controller currentController, FictitiousPlayer player){
+    public static ArrayList<Player> targetsOneMoveAway(Controller currentController, NewCell position){
         ArrayList<Player> targets=new ArrayList<>();
-        for(NewCell cell: cellsOneMoveAway(currentController,player.getPosition()))
+        for(NewCell cell: cellsOneMoveAway(currentController,position))
             targets.addAll(Player.duplicateList(cell.getPlayers()));
         return targets;
     }

@@ -278,6 +278,7 @@ public class PlayerManager  {
 
         //applies shoot actions with the card selected if you have selected an action to shoot
         if(actions.getChosenGun()!=null) {
+            payEffectsCosts(player,actions.getChosenGun(),actions.getOrderOfExecution());
             actions.getChosenGun().applyEffects(currentController, actions);
             //Unloads the card, by looking for the card selected in the player's hand (avoiding null spots!)
             for (int i = 0; i < player.getPlayerBoard().getHand().getGuns().length; i++)
@@ -295,6 +296,25 @@ public class PlayerManager  {
 
         //it's necessary for powerup tagback grenade
         return  checkForDamage(playersBefore, playersAfter);
+    }
+
+    /**
+     * This method makes the player pay for the optional effects used that have a cost
+     * @param player
+     * @param chosenGun
+     * @param effectsUsed
+     */
+    private static void payEffectsCosts(Player player, GunCard chosenGun, ArrayList<String> effectsUsed) {
+        for(String effect: effectsUsed)
+            switch (effect){
+                case "Optional1":
+                    payGunCardCost(player,chosenGun.getSecondaryEffectCost(),false);
+                break;
+                case "Optional2":
+                    payGunCardCost(player,chosenGun.getTertiaryEffectCost(),false);
+                    break;
+                default:break;
+            }
     }
 
     /**

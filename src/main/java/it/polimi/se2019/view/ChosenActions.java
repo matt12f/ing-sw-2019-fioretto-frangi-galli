@@ -262,7 +262,7 @@ public class ChosenActions implements Serializable {
                 cont++;
                 //lists as strings all of the cells, for the player to then select one to choose targets on
                 stringList = listCellWithTargets(localView, cellList);
-
+                //TODO magari sposta while prima, da eccezione con shockwave
                 arrivalCell = possibleCells.get(stringList.indexOf(this.askUser.stringSelector("Scegli la cella in cui poi selezionare il " + cont + "° target da colpire", stringList)));
                 cellList.remove(arrivalCell); //removes cell already selected
                 this.targetsFromCell.addAll(targetSelectionFromCell(arrivalCell));

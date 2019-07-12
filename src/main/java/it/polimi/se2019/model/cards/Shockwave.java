@@ -77,7 +77,7 @@ public class Shockwave extends GunCardAltEff {
         NewCell fictitiousCell=player.getPosition().clone();
         fictitiousCell.getPlayers().clear();
 
-        for(Player target: ActionManager.targetsOneMoveAway(currentController,player))
+        for(Player target: ActionManager.targetsOneMoveAway(currentController,player.getPosition()))
             fictitiousCell.addPlayers(target);
 
         ArrayList<NewCell> oneCell=new ArrayList<>();
