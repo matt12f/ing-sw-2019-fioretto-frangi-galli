@@ -99,8 +99,9 @@ public class PowerupManager {
 
         char [] marks=new char[1];
         marks[0]=playerGivingDamage.getFigure().getColorChar();
-        PlayerManager.markerDealer(currentController, playerDamaged,marks);
+        PlayerManager.markerDealer(currentController, playerDamaged, marks);
         removeFromHand(currentController,cardIndexInHand);
+        currentController.getMainGameModel().notifyRemoteView();
     }
 
     /**

@@ -116,8 +116,6 @@ public class ClientHandler extends Thread {
         this.status = Status.WAITING;
         while(status != Status.MYTURN && status != Status.NOTMYTURN && status != Status.ENDGAME && status != Status.ENDTURN){
             sleep(1);
-            if(status == Status.TAGBACKUSAGE)
-                setTagBackUsage();
             if(status == Status.TRGSCOPE)
                 setTargetingUsage();
             if(status == Status.VIEW)
@@ -230,8 +228,6 @@ public class ClientHandler extends Thread {
                 setMapSkull();
             if(this.status == Status.START)
                 break;
-            if(this.status == Status.TAGBACKUSAGE)
-                setTagBackUsage();
 
         }
     }

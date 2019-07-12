@@ -376,7 +376,8 @@ public class AdrenalineClient {
         System.out.println(message);
         if (message.equals("TAGBACKUSAGE")){
             granade();
-            connection.getInput().readObject();
+            message = (String) connection.getInput().readObject();
+            System.out.println(message);
         }
     }
 
