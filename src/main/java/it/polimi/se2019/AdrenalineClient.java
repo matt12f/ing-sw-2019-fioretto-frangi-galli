@@ -361,7 +361,7 @@ public class AdrenalineClient {
         ArrayList<String> choices = (ArrayList<String>) connection.getInput().readObject();
         String reply = userInteractionGUI.stringSelector("Scegli il colore del cubo da pagare: ", choices);
         connection.getOutput().writeObject(reply);
-        if(!reply.equals("Nothing")) {
+        if(!reply.equals("Non voglio usare il powerup Targetting Scope")) {
             connection.getInput().readObject();
             choices = (ArrayList<String>) connection.getInput().readObject();
             reply = userInteractionGUI.stringSelector("Scegli il colore del player da colpire tra i seguenti: ", choices);
