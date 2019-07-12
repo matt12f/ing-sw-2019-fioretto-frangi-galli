@@ -8,10 +8,8 @@ import it.polimi.se2019.model.cards.GunCard;
 import it.polimi.se2019.model.cards.PowerupCard;
 import it.polimi.se2019.model.game.*;
 import it.polimi.se2019.view.ChosenActions;
-import it.polimi.se2019.view.LocalView;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 
 public class PlayerManager  {
@@ -346,20 +344,28 @@ public class PlayerManager  {
         target=currentController.getMainGameModel().getPlayerList().get(
                 currentController.getMainGameModel().getPlayerList().indexOf(target));
 
-        //Deal the damage first and if it's still alive deal marks too
-        if(target.getPlayerBoard().getDamageTrack().dealDamage(damageToDeal).equals("alive")){
+        //it's initialized like this in case the marks are not used
+        String markResponse="notOverkill";
+
+        //Deal the damage first. Then IF it's still alive deal marks too (skipped otherwise)
+        if(target.getPlayerBoard().getDamageTrack().dealDamage(damageToDeal).equals("notOverkill")){
             //here we "pull" the marks this player has left before
             int markNumber = target.getPlayerBoard().getDamageTrack().pullMarks(damageToDeal[0]);
+
+            if(markNumber!=0){
             //i'll build the array of chars to deal the marks
             char[] marks=new char[markNumber];
             for (int i = 0; i <markNumber ; i++)
                 marks[i]=damageToDeal[0];
 
-            //If the player dies after the marks are dealt we put it aside to score his board later
-            if(!target.getPlayerBoard().getDamageTrack().dealDamage(marks).equals("alive"))
-                currentController.getMainGameModel().addDeadPlayer(target);
+            //this deals the marks
+            markResponse = target.getPlayerBoard().getDamageTrack().dealDamage(marks);
+            }
         }
-        else
+
+        //If the player dies after the damage and/or marks are dealt we put it aside to score his board later
+        //if the player is overkill OR the kill box is not empty: it's added to the dead players
+        if(markResponse.equals("overkill") || target.getPlayerBoard().getDamageTrack().getDamage()[10]!=' ')
             currentController.getMainGameModel().addDeadPlayer(target);
     }
 

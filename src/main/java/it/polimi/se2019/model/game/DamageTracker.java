@@ -49,7 +49,7 @@ public class DamageTracker implements Serializable {
             if (!addDamage(damageToDeal[i])) //the rest of the damage is wasted
                 return "overkill";
 
-        return "alive";
+        return "notOverkill";
     }
 
     /**

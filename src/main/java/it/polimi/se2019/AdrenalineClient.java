@@ -359,7 +359,7 @@ public class AdrenalineClient {
 
     private static void targetScope() throws IOException, ClassNotFoundException {
         ArrayList<String> choices = (ArrayList<String>) connection.getInput().readObject();
-        String reply = userInteractionGUI.stringSelector("Scegli il colore del cubo da pagare: ", choices);
+        String reply = userInteractionGUI.stringSelector("Scegli il colore del cubo da pagare per usare il PWUP MIRINO: ", choices);
         connection.getOutput().writeObject(reply);
         if(!reply.equals("Non voglio usare il powerup Targetting Scope")) {
             connection.getInput().readObject();
