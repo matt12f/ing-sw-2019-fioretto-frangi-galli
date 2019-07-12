@@ -245,13 +245,13 @@ public class ChosenActions implements Serializable {
             //lists as strings all of the cells, for the player to then select one to become a vortex
             stringList=listCellWithTargets(localView,cellList);
 
-            arrivalCell = possibleCells.get(stringList.indexOf(this.askUser.stringSelector("Scegli la cella per l'effetto",stringList)));
+            arrivalCell = cellList.get(stringList.indexOf(this.askUser.stringSelector("Scegli la cella per l'effetto",stringList)));
             this.targetsFromCell.addAll(targetSelectionFromCell(arrivalCell));
 
         }else if(mode.equals("FlameThrower")&&combination.getEffectsCombination().contains("Base")){
             //lists as strings all of the cells, for the player to then select one to choose targets on
             stringList = listCellWithTargets(localView, cellList);
-            arrivalCell = possibleCells.get(stringList.indexOf(this.askUser.stringSelector("Scegli la cella in cui poi selezionare i target da colpire", stringList)));
+            arrivalCell = cellList.get(stringList.indexOf(this.askUser.stringSelector("Scegli la cella in cui poi selezionare i target da colpire", stringList)));
             arrivalCell.setMaxTargetsInCell(1);
             this.targetsFromCell.addAll(targetSelectionFromCell(arrivalCell));
 
@@ -269,7 +269,7 @@ public class ChosenActions implements Serializable {
                 //lists as strings all of the cells, for the player to then select one to choose targets on
                 stringList = listCellWithTargets(localView, cellList);
 
-                arrivalCell = possibleCells.get(stringList.indexOf(this.askUser.stringSelector("Scegli la cella in cui poi selezionare il " + cont + "° target da colpire", stringList)));
+                arrivalCell = cellList.get(stringList.indexOf(this.askUser.stringSelector("Scegli la cella in cui poi selezionare il " + cont + "° target da colpire", stringList)));
                 cellList.remove(arrivalCell); //removes cell already selected
                 this.targetsFromCell.addAll(targetSelectionFromCell(arrivalCell));
             } while (maxCell > cont && this.askUser.yesOrNo("vuoi selezionare altri target? " + "\nTarget restanti: " + (maxCell - cont), "Si", "No"));
@@ -369,7 +369,7 @@ public class ChosenActions implements Serializable {
     private void selectPlayerAndThenTargets(ArrayList<PlayerWithTargets> playersWithTargets, int targetsToAdd) {
 
         //I'm extracting the previous target with the targetsFromList1 it can see
-        PlayerWithTargets target1 = getPlayerWithTargets(playersWithTargets,this.targetsFromList1.get(0));
+        PlayerWithTargets target1 = getPlayerWithTargets(playersWithTargets, this.targetsFromList1.get(0));
 
         //I'm listing the targetsFromList1 it can see to be chosen from
         try {

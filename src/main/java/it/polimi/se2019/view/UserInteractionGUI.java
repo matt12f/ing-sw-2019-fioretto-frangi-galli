@@ -60,7 +60,7 @@ public class UserInteractionGUI extends UserInteraction {
             }
         });
 
-        JButton frenzy1Button = new JButton("Frenzy move 1");
+        JButton frenzy1Button = new JButton("Frenzy action 1");
         frenzy1Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -70,7 +70,7 @@ public class UserInteractionGUI extends UserInteraction {
             }
         });
 
-        JButton frenzy2Button = new JButton("Frenzy move 2");
+        JButton frenzy2Button = new JButton("Frenzy action 2");
         frenzy2Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -80,7 +80,7 @@ public class UserInteractionGUI extends UserInteraction {
             }
         });
 
-        JButton frenzy3Button = new JButton("Frenzy move 3");
+        JButton frenzy3Button = new JButton("Frenzy action 3");
         frenzy3Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -90,7 +90,7 @@ public class UserInteractionGUI extends UserInteraction {
             }
         });
 
-        JButton frenzy4Button = new JButton("Frenzy move 4");
+        JButton frenzy4Button = new JButton("Frenzy action 4");
         frenzy4Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -100,7 +100,7 @@ public class UserInteractionGUI extends UserInteraction {
             }
         });
 
-        JButton frenzy5Button = new JButton("Frenzy move 5");
+        JButton frenzy5Button = new JButton("Frenzy action 5");
         frenzy5Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -278,6 +278,7 @@ public class UserInteractionGUI extends UserInteraction {
     public boolean[] cardsToReload(GunCard[] cards, boolean[] reloadableCards) {
         JLabel label = new JLabel("Quali carte arma vuoi ricaricare?");
         JLabel label2 = new JLabel("Nota: di queste selezionate saranno ricaricate solo le carte di cui puoi pagare il costo di ricarica");
+        JLabel label3 = new JLabel("Nota2: se le ammo non bastano saranno usati i pwup per ricaricare! scegli con attenzione");
 
         boolean[] chosen = new boolean[3];
 
@@ -314,10 +315,12 @@ public class UserInteractionGUI extends UserInteraction {
 
         buttons.add(buttonToSend);
 
-        JPanel content = new JPanel(new BorderLayout(8, 8));
-        content.add(label, BorderLayout.NORTH);
-        content.add(label2,BorderLayout.CENTER);
-        content.add(buttons, BorderLayout.SOUTH);
+        JPanel content = new JPanel();
+        content.setLayout(new GridLayout(4,1));
+        content.add(label);
+        content.add(label2);
+        content.add(label3);
+        content.add(buttons);
 
         JDialog dialog = new JDialog();
         dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);

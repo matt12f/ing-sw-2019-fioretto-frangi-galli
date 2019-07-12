@@ -92,22 +92,25 @@ public class FlameThrower extends GunCardAltEff {
         NewCell[][] board= currentController.getMainGameModel().getCurrentMap().getBoardMatrix();
 
         NewCell cellOneMoveAway;
-        ArrayList<Player> targetsInOneDirection=new ArrayList<>();
 
         for (int i = 0; i < 4 ; i++){ //selects a direction
-            targetsInOneDirection.clear();
-            try{
-                cellOneMoveAway = MapManager.getCellInDirection(board, player.getPosition(), 1, i);
+            ArrayList<Player> targetsInOneDirection = new ArrayList<>();
+            if(!player.getPosition().getEdge(i).equals(CellEdge.WALL)){
+                try{
 
-                    targetsInOneDirection.addAll(Player.duplicateList(cellOneMoveAway.getPlayers()));
-                    if(!cellOneMoveAway.getEdge(i).equals(CellEdge.WALL)) {
-                        targetsInOneDirection.addAll(Player.duplicateList(MapManager.getCellInDirection(board, player.getPosition(), 2, i).getPlayers()));
-                        actions.addCellsWithTargets(cellOneMoveAway,targetsInOneDirection,2,1,false,false);
-                    }else
-                        actions.addCellsWithTargets(cellOneMoveAway,targetsInOneDirection,1,1,false,false);
+                    cellOneMoveAway = MapManager.getCellInDirection(board, player.getPosition(), 1, i);
 
-            }catch (OuterWallException e2){
+                        targetsInOneDirection.addAll(Player.duplicateList(cellOneMoveAway.getPlayers()));
+
+                        if(!cellOneMoveAway.getEdge(i).equals(CellEdge.WALL)) {
+                            targetsInOneDirection.addAll(Player.duplicateList(MapManager.getCellInDirection(board, cellOneMoveAway, 1, i).getPlayers()));
+                            actions.addCellsWithTargets(cellOneMoveAway,targetsInOneDirection,2,1,false,false);
+                        }else
+                            actions.addCellsWithTargets(cellOneMoveAway,targetsInOneDirection,1,1,false,false);
+
+                }catch (OuterWallException e2){
                 //this happens if you are close to an edge and try to move outside of the board
+                }
             }
         }
         actions.setMinCellToSelect(1);

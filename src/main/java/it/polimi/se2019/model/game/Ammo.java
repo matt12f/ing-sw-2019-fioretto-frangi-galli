@@ -51,18 +51,22 @@ public class Ammo  implements Serializable {
     }
 
     /**
-     * take an amount of ammo to recharge or to use an effects
-     * @param ammo ammo to take
+     * this method deducts one ammo from the player, only if it has the ammo to pay for it
+     * otherwise it will return false and the rest of the cost will be paid with powerups
+     * @param ammo is the single ammo to pay
+     * @return true if the ammo has been paid correctly, false otherwise
      */
-    public void subtractAmmo(char [] ammo){
-        for(int i=0;i<ammo.length;i++){
-            if(ammo[i]=='b')
-                setBlue(-1);
-            else if(ammo[i]=='y')
-                setYellow(-1);
-            else if(ammo[i]=='r')
-                setRed(-1);
-        }
+    public boolean payOneAmmo(char ammo){
+        if(ammo=='b' && this.blue>0)
+            setBlue(-1);
+        else if(ammo=='y' && this.yellow>0)
+            setYellow(-1);
+        else if(ammo=='r' && this.red>0)
+            setRed(-1);
+        else
+            return false;
+
+        return true;
     }
 
     /**

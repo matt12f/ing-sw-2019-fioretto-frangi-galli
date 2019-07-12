@@ -76,9 +76,7 @@ public class PowerupManager {
 
         //TODO non sembra ci sia bisogno di riestrarre il player QUI
 
-        char [] cost=new char[1];
-        cost [0]=ammoToPay;
-        currentController.getActiveTurn().getActivePlayer().getPlayerBoard().getAmmo().subtractAmmo(cost);
+        currentController.getActiveTurn().getActivePlayer().getPlayerBoard().getAmmo().payOneAmmo(ammoToPay);
 
         char [] dmg=new char[1];
         dmg[0]=currentController.getActiveTurn().getActivePlayer().getFigure().getColorChar();

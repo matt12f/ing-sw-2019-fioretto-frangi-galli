@@ -411,14 +411,77 @@ public class PlayerManager  {
      * @param pickOrFullReload
      */
     public static void payGunCardCost(Player player, char [] cost, boolean pickOrFullReload){
+        //Here it extracts the real amount to pay
+        char [] toPay;
         if(!pickOrFullReload)
-            player.getPlayerBoard().getAmmo().subtractAmmo(cost);
+            toPay=cost;
         else{
-            char [] reloadCost = new char[cost.length-1];
+            char [] pickCost = new char[cost.length-1];
             for (int i = 0; i < cost.length-1; i++)
-                reloadCost[i]=cost[i+1];
-            player.getPlayerBoard().getAmmo().subtractAmmo(reloadCost);
+                pickCost[i]=cost[i+1];
+            toPay=pickCost;
         }
+
+        //this excludes payments of nothing (a pick of card with one cube already loaded)
+        // and payments of effects with no cost (indicated by a char 'n')
+        if(toPay.length!=0 && toPay[0]!='n') {
+            int blue = 0;
+            int yellow = 0;
+            int red = 0;
+
+            //calculating the price to pay of each ammo
+            for (int i = 0; i < toPay.length; i++) {
+                if (toPay[i] == 'b')
+                    blue++;
+                else if (toPay[i] == 'y')
+                    yellow++;
+                else if (toPay[i] == 'r')
+                    red++;
+            }
+
+            payOneColor(player, red, 'r');
+            payOneColor(player, yellow, 'y');
+            payOneColor(player, blue, 'b');
+        }
+    }
+
+    /**
+     * this method pays one color of ammos using cubes and powerups
+     * @param player is the player who must pay
+     * @param amount is the amount to pay of that color
+     * @param color is the color to pay
+     */
+    private static void payOneColor(Player player, int amount, char color) {
+
+        boolean thereIsAmmo;
+
+        //evaluates if there actually is ammo of this color
+        switch (color) {
+            case 'y':thereIsAmmo=player.getPlayerBoard().getAmmo().getYellow() > 0;break;
+            case 'b':thereIsAmmo=player.getPlayerBoard().getAmmo().getBlue() > 0;break;
+            case 'r':thereIsAmmo=player.getPlayerBoard().getAmmo().getRed() > 0;break;
+            default:thereIsAmmo=false; break;
+        }
+
+        while(amount>0 && thereIsAmmo){
+            thereIsAmmo = player.getPlayerBoard().getAmmo().payOneAmmo(color);
+            amount--;
+        }
+
+        //this is the section that pays with powerups
+        for (int i = 0; i < amount; i++) {
+            int indexInHand;
+            //it searches for a pwup of that color to pay with
+            for(indexInHand=0;indexInHand<player.getPlayerBoard().getHand().getPowerups().length;indexInHand++)
+                if(player.getPlayerBoard().getHand().getPowerups()[indexInHand]!=null &&
+                        player.getPlayerBoard().getHand().getPowerups()[indexInHand].getCubeColor()==color)
+                    break;
+
+            //redundant check if the index is "legal to apply"
+            if(indexInHand<player.getPlayerBoard().getHand().getPowerups().length)
+                player.getPlayerBoard().getHand().removePowerUp(indexInHand);
+        }
+
     }
 
     /**

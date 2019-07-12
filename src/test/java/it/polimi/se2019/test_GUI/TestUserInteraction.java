@@ -21,7 +21,7 @@ public class TestUserInteraction {
         //askUser=new UserInteractionCLI();
 
        testGunReload();
-        testActionSelection();
+        //testActionSelection();
         //testYesOrNo();
         //testShowMessage();
         //testSelectionFromList();
