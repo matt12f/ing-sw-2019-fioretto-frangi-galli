@@ -1,4 +1,6 @@
 package it.polimi.se2019.model.game;
+import it.polimi.se2019.controller.Controller;
+import it.polimi.se2019.controller.MapManager;
 import it.polimi.se2019.model.cards.GunCard;
 import it.polimi.se2019.model.cards.PowerupCard;
 
@@ -140,21 +142,25 @@ public class Hand implements Serializable {
      * @param newGunCard
      * @throws CardNotFoundException
      */
-    public void substitutionGunCard (NewCell spawnPoint, GunCard discarded, GunCard newGunCard) throws CardNotFoundException{
+    public void substitutionGunCard ( NewCell spawnPoint, GunCard discarded, GunCard newGunCard) throws CardNotFoundException{
         int i=0;
-        boolean substituted=false;
-        while(!substituted && i<MAXCARDS){
-            if(this.guns[i] == discarded) {
+        boolean found=false;
+        while(!found && i<MAXCARDS){
+            if(this.guns[i].equals(discarded)){
                 this.guns[i] = newGunCard;
-                substituted = true;
+                found = true;
             }
             else i++;
         }
-        if(!substituted)
+
+
+        if(!found)
             throw new CardNotFoundException("gun swap");
         else {//the cards have been swapped in the player's hand, now they must be swapped in the spawn point
+
             spawnPoint.pickItem(newGunCard);
             try {
+                discarded.setLoaded(true);
                 spawnPoint.setItem(discarded);
             }catch (FullException e){
                 //nothing to see here
