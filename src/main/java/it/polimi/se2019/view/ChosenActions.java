@@ -222,8 +222,14 @@ public class ChosenActions implements Serializable {
                         possibleCells.add(cellWithTargets);
                 });
 
+                //the target can be from targetsFromList1 for the first two cards, and from targetsFromCell for the third card
+                Player target;
+                if(this.targetsFromList1.isEmpty())
+                    target=this.targetsFromCell.get(0);
+                else
+                    target=this.targetsFromList1.get(0);
                 //this evaluates the cells one move away from the target
-                ArrayList <CellWithTargets> cellsOneMoveAway=localView.getMapView().reduceToCellsOneMoveAway(possibleCells,this.targetsFromList1.get(0));
+                ArrayList <CellWithTargets> cellsOneMoveAway=localView.getMapView().reduceToCellsOneMoveAway(possibleCells, target);
 
                 //lists as strings the cells for the player to then select one
                 stringList = listCellWithTargets(localView, cellsOneMoveAway);
