@@ -74,7 +74,7 @@ public class PowerupManager {
      */
     public static void targetingScopeManager(Controller currentController, Player playerDamaged, int cardIndexInHand,char ammoToPay) {
 
-        //TODO non sembra ci sia bisogno di riestrarre il player QUI
+        //non sembra ci sia bisogno di ri-estrarre il player QUI
 
         currentController.getActiveTurn().getActivePlayer().getPlayerBoard().getAmmo().payOneAmmo(ammoToPay);
 

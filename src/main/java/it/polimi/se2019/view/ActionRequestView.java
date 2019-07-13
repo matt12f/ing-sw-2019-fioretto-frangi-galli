@@ -23,6 +23,7 @@ public class ActionRequestView implements Serializable {
         this.askUser=new UserInteractionGUI();
 
         if(!turnConclusion){
+            this.powerupUse=powerupManagerView(localView);
             String action=this.askUser.actionToRequest(localView.getPersonalPlayerBoardView().getFrenzy(),localView.getPersonalPlayerBoardView().getColor().toString());
             switch (action){
                 case "move": this.actionToRequest=ActionType.NORMAL1; break;
@@ -35,7 +36,6 @@ public class ActionRequestView implements Serializable {
                 case "frenzy5": this.actionToRequest=ActionType.FRENZY5; break;
                 default: break; //won't happen, the player must chose one of the above
             }
-            this.powerupUse=powerupManagerView(localView);
         }else{
             //here we are at the end of the turn
             this.actionToRequest=null;
@@ -56,7 +56,7 @@ public class ActionRequestView implements Serializable {
         for(int i=0;i<cardView.length;i++)
 
             if (cardView[i]!=null && cardView[i].getPowerupType().equals("Newton") &&
-                    this.askUser.yesOrNo("Vuoi usare un PowerUp Raggio Cinetico?","Si","No")){
+                    this.askUser.yesOrNo(localView.getPersonalPlayerBoardView().getColor().toString().toLowerCase() + " Player: Vuoi usare un PowerUp Raggio Cinetico prima della macro azione?","Si","No")){
                 ArrayList<String> playerColors = getPlayerColors();
                 String colorString = this.askUser.stringSelector("Quale player vuoi spostare? scegline il colore", playerColors);
 
@@ -74,8 +74,10 @@ public class ActionRequestView implements Serializable {
                     distance=2;
 
                 temp.add(new PowerupUse(i,color,distance,direction,-1,-1));
+                cardView[i]=null;
             }
-            else if(cardView[i]!=null && cardView[i].getPowerupType().equals("Teleporter") && this.askUser.yesOrNo("vuoi usare un PowerUp Teletrasporto?","Si","No")){
+            else if(cardView[i]!=null && cardView[i].getPowerupType().equals("Teleporter") &&
+                    this.askUser.yesOrNo(localView.getPersonalPlayerBoardView().getColor().toString().toLowerCase() + " Player: vuoi usare un PowerUp Teletrasporto prima della macro azione?","Si","No")){
 
                 CellView yourPosition = localView.getPlayerPosition();
                 ArrayList<Coordinates> coordinates = localView.getMapView().availableCoordinates(yourPosition);
@@ -89,6 +91,7 @@ public class ActionRequestView implements Serializable {
                 Coordinates coordinates1=coordinates.get(coordToChooseFrom.indexOf(coordChoosenCell));
 
                 temp.add(new PowerupUse(i,localView.getPersonalPlayerBoardView().getColor(),0,"None",coordinates1.getX(),coordinates1.getY()));
+                cardView[i]=null;
             }
         return temp;
     }

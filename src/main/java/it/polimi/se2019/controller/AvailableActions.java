@@ -36,8 +36,10 @@ public class AvailableActions implements Serializable {
     public AvailableActions(ActionRequestView macroAction, int playerId, Controller currentController) {
         Player player=currentController.getMainGameModel().getPlayerList().get(playerId);
 
+        applyPowerups(currentController, macroAction);
+
         if(macroAction.getActionToRequest()!=null){
-        switch (macroAction.getActionToRequest()){
+            switch (macroAction.getActionToRequest()){
             case NORMAL1:  buildActions(currentController,player,macroAction,3,false,false,false);break;
             case NORMAL2:  buildActions(currentController,player,macroAction,1,true,false,false);break;
             case NORMAL3:  buildActions(currentController,player,macroAction,0,false,true,false);break;
@@ -48,10 +50,21 @@ public class AvailableActions implements Serializable {
             case FRENZY5:  buildActions(currentController,player,macroAction,3,true,false,false);break;
         }
         }else{
-            PlayerManager.reloadManager(player,macroAction.isReload());
+            PlayerManager.reloadManager(player, macroAction.isReload());
             currentController.getMainGameModel().notifyRemoteView();
-        }
 
+        }
+    }
+
+    private void applyPowerups(Controller currentController, ActionRequestView macroAction){
+        for (PowerupUse powerupUse : macroAction.getPowerupUse()){
+            if(powerupUse.getDirectionOfMove().equals("None"))
+                PowerupManager.teleporterManager(currentController, powerupUse.getIndexInHand(),powerupUse.getLineForMove(),powerupUse.getColumnForMove());
+            else
+                PowerupManager.newtonManager(currentController,powerupUse.getIndexInHand(),
+                        currentController.getMainGameModel().getPlayerByColor(powerupUse.getColorPlayerToMove()),
+                        powerupUse.getMovementDistance(),MapManager.getIndexOfMove(powerupUse.getDirectionOfMove()));
+        }
     }
 
     /**
@@ -66,16 +79,6 @@ public class AvailableActions implements Serializable {
      */
     private void buildActions(Controller currentController, Player player, ActionRequestView macroAction, int maxMoveDistance, boolean grab, boolean shoot, boolean frenzyReload){
         NewCell[][] board=currentController.getMainGameModel().getCurrentMap().getBoardMatrix();
-        for (PowerupUse powerupUse : macroAction.getPowerupUse()){
-            if(powerupUse.getDirectionOfMove().equals("None"))
-                PowerupManager.teleporterManager(currentController,powerupUse.getIndexInHand(),powerupUse.getLineForMove(),powerupUse.getColumnForMove());
-            else
-                PowerupManager.newtonManager(currentController,powerupUse.getIndexInHand(),
-                        currentController.getMainGameModel().getPlayerByColor(powerupUse.getColorPlayerToMove()),
-                        powerupUse.getMovementDistance(),MapManager.getIndexOfMove(powerupUse.getDirectionOfMove()));
-        }
-
-        //TODO sembra non essere necessario ri-estrarre il player QUI
 
         //checks for adrenaline modes
         if(player.getPlayerBoard().getActionTileNormal().getAdrenalineMode1() && grab)
@@ -97,6 +100,7 @@ public class AvailableActions implements Serializable {
         this.fictitiousPlayers=new ArrayList<>();
         for(CellInfo cell: singleArrivalCells)
             this.fictitiousPlayers.add(new FictitiousPlayer(currentController, player, cell, shoot, frenzyReload));
+
     }
 
     /**

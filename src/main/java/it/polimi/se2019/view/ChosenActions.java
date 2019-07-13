@@ -286,11 +286,11 @@ public class ChosenActions implements Serializable {
                 cont++;
                 //lists as strings all of the cells, for the player to then select one to choose targets on
                 stringList = listCellWithTargets(localView, cellList);
-
                 arrivalCell = cellList.get(stringList.indexOf(this.askUser.stringSelector("Scegli la cella in cui poi selezionare il " + cont + "° target da colpire", stringList)));
+
                 cellList.remove(arrivalCell); //removes cell already selected
                 this.targetsFromCell.addAll(targetSelectionFromCell(arrivalCell));
-            } while (maxCell > cont && this.askUser.yesOrNo("vuoi selezionare altri target? " + "\nTarget restanti: " + (maxCell - cont), "Si", "No"));
+            } while (!cellList.isEmpty() && maxCell > cont && this.askUser.yesOrNo("vuoi selezionare altri target? " + "\nTarget restanti: " + (maxCell - cont), "Si", "No"));
             return null;
         }
         return arrivalCell.getTargetCell();

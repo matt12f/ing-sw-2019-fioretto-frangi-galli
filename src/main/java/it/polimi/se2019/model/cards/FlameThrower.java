@@ -100,12 +100,14 @@ public class FlameThrower extends GunCardAltEff {
 
                         targetsInOneDirection.addAll(Player.duplicateList(cellOneMoveAway.getPlayers()));
 
-                        if(!cellOneMoveAway.getEdge(i).equals(CellEdge.WALL) && !MapManager.getCellInDirection(board, cellOneMoveAway, 1, i).getPlayers().isEmpty()){
-                            targetsInOneDirection.addAll(Player.duplicateList(MapManager.getCellInDirection(board, cellOneMoveAway, 1, i).getPlayers()));
-                            actions.addCellsWithTargets(cellOneMoveAway,targetsInOneDirection,2,1,false,false);
-                        }else
-                            actions.addCellsWithTargets(cellOneMoveAway,targetsInOneDirection,1,1,false,false);
-
+                        //doesn't consider a direction if there are no player in the cell 1 move away
+                        if(!targetsInOneDirection.isEmpty()) {
+                            if (!cellOneMoveAway.getEdge(i).equals(CellEdge.WALL) && !MapManager.getCellInDirection(board, cellOneMoveAway, 1, i).getPlayers().isEmpty()) {
+                                targetsInOneDirection.addAll(Player.duplicateList(MapManager.getCellInDirection(board, cellOneMoveAway, 1, i).getPlayers()));
+                                actions.addCellsWithTargets(cellOneMoveAway, targetsInOneDirection, 2, 1, false, false);
+                            } else
+                                actions.addCellsWithTargets(cellOneMoveAway, targetsInOneDirection, 1, 1, false, false);
+                        }
                 }catch (OuterWallException e2){
                 //this happens if you are close to an edge and try to move outside of the board
                 }

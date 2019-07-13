@@ -20,10 +20,10 @@ public class TestUserInteraction {
 
         //askUser=new UserInteractionCLI();
 
-       testGunReload();
+        //testGunReload();
+        testShowMessage();
         //testActionSelection();
-        //testYesOrNo();
-        //testShowMessage();
+        testYesOrNo();
         //testSelectionFromList();
 
         //testMap();
