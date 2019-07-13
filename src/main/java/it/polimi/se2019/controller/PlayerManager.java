@@ -179,7 +179,7 @@ public class PlayerManager  {
         if(optional == null){
             controller.getMainGameModel().getPlayerList().get(id).getPlayerBoard().getHand().substitutionPowerup(spawn, null);
         }else{
-            if(optional == spawn)
+            if(optional.getPowerupType().equals(spawn.getPowerupType()) && optional.getCubeColor() == spawn.getCubeColor())
                 controller.getMainGameModel().getPlayerList().get(id).getPlayerBoard().getHand().setAdditionalPowerup(null);
             else{
                 controller.getMainGameModel().getPlayerList().get(id).getPlayerBoard().getHand().substitutionPowerup(spawn, optional);
