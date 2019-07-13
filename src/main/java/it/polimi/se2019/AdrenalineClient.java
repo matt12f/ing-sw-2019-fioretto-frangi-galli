@@ -229,6 +229,7 @@ public class AdrenalineClient {
             if(message.equals("VIEW")){
                 connection.getOutput().reset();
                 localView = (LocalView) connection.getInput().readObject();
+                System.out.println(localView.getPersonalPlayerBoardView().getColor());
                 if(guiStarted)
                     displayBoard();
                 else{
@@ -336,6 +337,7 @@ public class AdrenalineClient {
                     connection.getInput().readObject();
                 }
                 updateLocalView();
+                displayBoard();
             }
             temp = (String) connection.getInput().readObject();
             start  = temp.equals("START");

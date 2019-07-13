@@ -173,6 +173,11 @@ public class Hand implements Serializable {
         return additionalPowerup;
     }
 
+    public boolean isEmptyPU(){
+        boolean empty;
+        empty = this.powerups[0] == null && this.powerups[1] == null && this.powerups[2] == null;
+        return empty;
+    }
 
     public void removePowerUp(int indexInHand){
         this.powerups[indexInHand]=null;

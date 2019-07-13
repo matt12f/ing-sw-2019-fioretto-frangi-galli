@@ -546,7 +546,7 @@ public class UserInteractionGUI extends UserInteraction {
             mainPanel.add(pw3,container);
         }
         if (optional != null){
-            ImageIcon im4 = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/powerups/powerups_"+ optional.getPowerupType().toLowerCase() + "_"+list[3].getCubeColor()+ ".png")).getImage().getScaledInstance(70,92,Image.SCALE_DEFAULT));
+            ImageIcon im4 = new ImageIcon(new ImageIcon(getClass().getResource("/sprite/cards/powerups/powerups_"+ optional.getPowerupType().toLowerCase() + "_"+optional.getCubeColor()+ ".png")).getImage().getScaledInstance(70,92,Image.SCALE_DEFAULT));
             pw4.setIcon(im4);
             container.gridx=3;
             container.gridy=1;

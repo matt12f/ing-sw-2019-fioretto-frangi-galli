@@ -205,14 +205,12 @@ public class PlayerManager  {
             card= controller.getMainGameModel().getCurrentDecks().getPowerupsDeck().draw();
             controller.getMainGameModel().getPlayerList().get(id).getPlayerBoard().getHand().setPowerup(card);
         }else{
-            card = controller.getMainGameModel().getPlayerList().get(id).getPlayerBoard().getHand().getPowerup(2);
-            if(card == null){
+            if(!controller.getMainGameModel().getPlayerList().get(id).getPlayerBoard().getHand().isPowerUpHandFull()){
                 card = controller.getMainGameModel().getCurrentDecks().getPowerupsDeck().draw();
                 controller.getMainGameModel().getPlayerList().get(id).getPlayerBoard().getHand().setPowerup(card);
             }else{
                 card = controller.getMainGameModel().getCurrentDecks().getPowerupsDeck().draw();
                 controller.getMainGameModel().getPlayerList().get(id).getPlayerBoard().getHand().setAdditionalPowerup(card);
-
             }
         }
         controller.getMainGameModel().notifyRemoteView();
