@@ -335,4 +335,7 @@ public class ClientHandler extends Thread {
     ObjectInputStream getInput() {
         return this.input;
     }
+
+    public void notifyKill() {
+    }
 }

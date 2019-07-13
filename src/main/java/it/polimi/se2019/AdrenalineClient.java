@@ -327,16 +327,14 @@ public class AdrenalineClient {
             }
             //questo è il fine turno
             deadPlayers = (int) connection.getInput().readObject();
-            if(deadPlayers > 0){
-                status = (String) connection.getInput().readObject();
-                if (!status.equals("ALIVE")){
+            while(deadPlayers > 0){
+                deadPlayers -= 1;
+                temp = (String) connection.getInput().readObject();
+                if(temp.equals("SPAWN")){
                     reSpawn();
-                    deadPlayers -= 1;
+                    connection.getInput().readObject();
                 }
-                for (int i = 0; i < deadPlayers; i++) {
-                    localView = (LocalView) connection.getInput().readObject();
-                    displayBoard();
-                }
+                updateLocalView();
             }
             temp = (String) connection.getInput().readObject();
             start  = temp.equals("START");
@@ -392,7 +390,7 @@ public class AdrenalineClient {
         PowerupCard card = null;
         if(isGUI())
             card = userInteractionGUI.spawnChooser(localView.getPlayerHand().getPowerups(), localView.getPlayerHand().getAdditionalPowerup());
-        connection.getInput().reset();
+        connection.getOutput().reset();
         connection.getOutput().writeObject(card);
     }
 

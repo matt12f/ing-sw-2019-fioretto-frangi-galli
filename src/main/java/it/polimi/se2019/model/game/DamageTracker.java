@@ -48,6 +48,8 @@ public class DamageTracker implements Serializable {
         for (int i = 0; i < damageToDeal.length ; i++)
             if (!addDamage(damageToDeal[i])) //the rest of the damage is wasted
                 return "overkill";
+        if (this.damage[this.damage.length-2] != ' ')
+                return "dead";
 
         return "notOverkill";
     }
