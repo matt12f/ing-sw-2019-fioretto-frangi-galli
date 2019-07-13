@@ -317,6 +317,7 @@ public class AdrenalineClient {
                 connection.getOutput().writeObject(actionRequested);
                 connection.getInput().readObject();
                 updateLocalView();
+                displayBoard();
             }else{
                 do{
                     lastAction = connection.getInput().readBoolean();

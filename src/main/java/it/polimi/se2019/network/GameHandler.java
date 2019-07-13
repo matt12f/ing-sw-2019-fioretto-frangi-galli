@@ -336,27 +336,35 @@ public class GameHandler implements Runnable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            for (Player player: this.controller.getMainGameModel().getDeadPlayers()) {
-                for (ClientHandler client: this.players) {
+            for (ClientHandler client: players) {
+                for (Player player: this.controller.getMainGameModel().getDeadPlayers()) {
                     if(player.getNickname().equals(client.getNickname())){
-                        client.setStatus(Status.DEAD);
-                        client.setDeadsPlayer(this.controller.getMainGameModel().getDeadPlayers().size());
                         try {
-                            PlayerManager.getCardsToSpawn(false, controller, player.getId());
-                            waitForReSpawn(client);
-                            PlayerManager.spawnPlayers(controller, client.getLocalView().getPlayerId(), client.getSpawn());
-                            setSpawn(client);
-                        } catch (FullException | CardNotFoundException e) {
-                            LOGGER.log(Level.FINE,"5th exception",e);
+                            PlayerManager.getCardsToSpawn(false, this.controller, player.getId());
+                        } catch (FullException e) {
+                            e.printStackTrace();
                         }
-
-                    }
-                }
-                for (ClientHandler client: players) {
-                    try {
-                        client.sendLocalView();
-                    } catch (IOException e) {
-                        LOGGER.log(Level.FINE,"6th exception",e);
+                        try {
+                            client.setSpawn();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (ClassNotFoundException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            PlayerManager.spawnPlayers(this.controller, player.getId(), client.getSpawn());
+                        } catch (CardNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                        for (ClientHandler playerTemp : players) {
+                            try {
+                                playerTemp.sendLocalView();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
                 }
             }

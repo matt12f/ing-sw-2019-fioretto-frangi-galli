@@ -91,26 +91,42 @@ public class ActionManager {
         else
             start=0;
 
-        for(int i=start;i<ammoCost.length;i++){
+        for(int i=start; i<ammoCost.length; i++){
             switch (ammoCost[i]) {
-                case 'b':blue++;break;
-                case 'y':yellow++;break;
-                case 'r':red++;break;
-                default:break;
+                case 'b':
+                    blue++;
+                    break;
+                case 'y':
+                    yellow++;
+                    break;
+                case 'r':
+                    red++;
+                    break;
+                default:
+                    break;
             }
         }
-        int availableBlue=availableAmmo.getBlue();
-        int availableRed=availableAmmo.getRed();
-        int availableYellow=availableAmmo.getYellow();
+        int availableBlue = availableAmmo.getBlue();
+        int availableRed = availableAmmo.getRed();
+        int availableYellow = availableAmmo.getYellow();
 
-        for(int i=0;i<activePlayer.getPlayerBoard().getHand().getPowerups().length;i++)
-            if(activePlayer.getPlayerBoard().getHand().getPowerups()[i]!=null)
+        for(int i=0; i<activePlayer.getPlayerBoard().getHand().getPowerups().length ; i++)
+            if(activePlayer.getPlayerBoard().getHand().getPowerups()[i] != null)
                 switch (activePlayer.getPlayerBoard().getHand().getPowerups()[i].getCubeColor()){
-                    case 'b':availableBlue++;break;
-                    case 'y':availableYellow++;break;
-                    case 'r':availableRed++;break;
-                    default:break;
-            }
+                    case 'b':
+                        availableBlue++;
+                        break;
+                    case 'y':
+                        availableYellow++;
+                        break;
+                    case 'r':
+                        availableRed++;
+                        break;
+                    default:
+                        break;
+                }
+
+
         return availableBlue>=blue&&availableRed>=red&&availableYellow>=yellow;
     }
 
