@@ -83,17 +83,21 @@ public class CyberBlade extends GunCardAddEff {
             case "[Base]":targetsOfBaseEffect(currentController, actions, player);break;
             case "[Base, Optional2]":{
                 targetsOfBaseEffect(currentController, actions, player);
-                if(actions.getPlayersTargetList().size()<2){
+                if(actions.getPlayersTargetList().size()>=2){
                     actions.setMaxNumPlayerTargets(2);
-                    actions.setOfferableOpt2(false);
+                    actions.setOfferableOpt2(true);
                 }
+                else
+                    actions.setOfferableOpt2(false);
             }break;
             case "[Base, Optional2, Optional1]":{
                 targetsOfBaseEffect(currentController, actions, player);
-                if(actions.getPlayersTargetList().size()<2){
+                if(actions.getPlayersTargetList().size()>=2){
                     actions.setMaxNumPlayerTargets(2);
-                    actions.setOfferableOpt2(false);
+                    actions.setOfferableOpt2(true);
                 }
+                else
+                    actions.setOfferableOpt2(false);
                 targetsOfSecondaryEffect(currentController, actions, player);
             }break;
             case "[Base, Optional1]":{
@@ -179,7 +183,7 @@ public class CyberBlade extends GunCardAddEff {
     void applyBaseEffect(Controller currentController, ChosenActions playersChoice){
         ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,2,0);
 
-        if(playersChoice.getOrderOfExecution().contains("Optional2"))
+        if(playersChoice.getOrderOfExecution().contains("Optional2") && playersChoice.getTargetsFromList1().get(1)!=null)
             ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(1),playersChoice,2,0);
     }
 
@@ -237,7 +241,7 @@ public class CyberBlade extends GunCardAddEff {
     @Override
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         for(NewCell cell: ActionManager.cellsOneMoveAway(currentController,player.getPosition())){
-            actions.addCellsWithTargets(cell,Player.duplicateList(cell.getPlayers()),0,0,true,false);
+            actions.addCellsWithTargets(cell,new ArrayList<>(),0,0,true,false);
         }
         actions.setCanMoveYourself(true);
         actions.setMinCellToSelect(1);

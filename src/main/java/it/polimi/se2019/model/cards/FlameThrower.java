@@ -41,21 +41,19 @@ public class FlameThrower extends GunCardAltEff {
      */
     @Override
     void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
-        NewCell[][] board =currentController.getMainGameModel().getCurrentMap().getBoardMatrix();
 
-        NewCell cellOneMoveAway=playersChoice.getCellFromCellWithTrg();
-        if(MapManager.distanceBetweenCells(board,playersChoice.getCellFromCellWithTrg(),currentController.getActiveTurn().getActivePlayer().getFigure().getCell())==1)
-          ActionManager.giveDmgandMksToPlayers(currentController,playersChoice.getCellFromCellWithTrg().getPlayers(),playersChoice,2,0);
+        if(playersChoice.getTargetsFromCell().isEmpty())
+            ActionManager.giveDmgandMksToPlayers(currentController,playersChoice.getCellFromCellWithTrg().getPlayers(),playersChoice,2,0);
         else {
-            ActionManager.giveDmgandMksToPlayers(currentController,playersChoice.getCellFromCellWithTrg().getPlayers(),playersChoice,1,0);
+            ActionManager.giveDmgandMksToPlayers(currentController,playersChoice.getCellFromCellWithTrg().getPlayers(),playersChoice,2,0);
+            NewCell[][] board =currentController.getMainGameModel().getCurrentMap().getBoardMatrix();
             int dir= getDirection(board,currentController.getActiveTurn().getActivePlayer().getFigure().getCell(),playersChoice.getCellFromCellWithTrg());
             try {
-                cellOneMoveAway= MapManager.getCellInDirection(board, currentController.getActiveTurn().getActivePlayer().getFigure().getCell(), 1, dir);
+                NewCell cellBehind= MapManager.getCellInDirection(board, currentController.getActiveTurn().getActivePlayer().getFigure().getCell(), 2, dir);
+                ActionManager.giveDmgandMksToPlayers(currentController,cellBehind.getPlayers(),playersChoice,1,0);
             }catch (OuterWallException e){
                 //nothing to see here
             }
-            ActionManager.giveDmgandMksToPlayers(currentController,cellOneMoveAway.getPlayers(),playersChoice,2,0);
-
         }
     }
 
@@ -102,7 +100,7 @@ public class FlameThrower extends GunCardAltEff {
 
                         targetsInOneDirection.addAll(Player.duplicateList(cellOneMoveAway.getPlayers()));
 
-                        if(!cellOneMoveAway.getEdge(i).equals(CellEdge.WALL)) {
+                        if(!cellOneMoveAway.getEdge(i).equals(CellEdge.WALL) && !MapManager.getCellInDirection(board, cellOneMoveAway, 1, i).getPlayers().isEmpty()){
                             targetsInOneDirection.addAll(Player.duplicateList(MapManager.getCellInDirection(board, cellOneMoveAway, 1, i).getPlayers()));
                             actions.addCellsWithTargets(cellOneMoveAway,targetsInOneDirection,2,1,false,false);
                         }else
@@ -124,10 +122,6 @@ public class FlameThrower extends GunCardAltEff {
     @Override
     void targetsOfSecondaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         targetsOfBaseEffect(currentController,actions,player);
-        actions.getCellsWithTargets().forEach(p->{
-            p.setMaxTargetsInCell(0);
-            p.setMinTargetsInCell(0);
-        });
     }
 
     @Override

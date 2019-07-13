@@ -193,7 +193,7 @@ public class ChosenActions implements Serializable {
             maxCell=combination.getMaxCellToSelect();
 
         ArrayList<CellWithTargets> cellList=combination.getCellsWithTargets();
-        CellWithTargets arrivalCell;
+        CellWithTargets arrivalCell; //this is the cell that get selected
 
         ArrayList<String> stringList;
         ArrayList<CellWithTargets> possibleCells=new ArrayList<>();
@@ -212,8 +212,9 @@ public class ChosenActions implements Serializable {
             this.targetsFromCell.addAll(targetSelectionFromCell(arrivalCell));
 
         } //here we'll divide between the cards that offer opponent's movement as an option or not
+        //these are cards that can move the target only one cell away
         else if(mode.equals("GrenadeLauncher")||mode.equals("Shotgun")||mode.equals("RocketLauncher")){
-            if(this.askUser.yesOrNo("Vuoi spostare il player selezionato prima?","Si","No")){
+            if(this.askUser.yesOrNo("Vuoi spostare di una cella il player selezionato prima?","Si","No")){
 
                 //adds to a secondary list the cells where you can move the opponent
                 cellList.forEach(cellWithTargets -> {
@@ -244,26 +245,34 @@ public class ChosenActions implements Serializable {
             arrivalCell = possibleCells.get(stringList.indexOf(this.askUser.stringSelector("Scegli la cella in cui vuoi spostare il target", stringList)));
             this.targetsFromCell.addAll(targetSelectionFromCell(arrivalCell));
 
-        }else if(mode.equals("VortexCannon")||mode.equals("FlameThrower") && combination.getEffectsCombination().contains("Optional1")){
+        }else if(mode.equals("VortexCannon")||mode.equals("Railgun")||mode.equals("PowerGlove")){
             //lists as strings all of the cells, for the player to then select one to become a vortex
             stringList=listCellWithTargets(localView,cellList);
 
             arrivalCell = cellList.get(stringList.indexOf(this.askUser.stringSelector("Scegli la cella per l'effetto",stringList)));
             this.targetsFromCell.addAll(targetSelectionFromCell(arrivalCell));
 
-        }else if(mode.equals("FlameThrower")&&combination.getEffectsCombination().contains("Base")){
-            //lists as strings all of the cells, for the player to then select one to choose targets on
+        }else if(mode.equals("FlameThrower")){
+            //lists as string of all the cells, for the player to then select one to choose targets on
             stringList = listCellWithTargets(localView, cellList);
-            arrivalCell = cellList.get(stringList.indexOf(this.askUser.stringSelector("Scegli la cella in cui poi selezionare i target da colpire", stringList)));
-            arrivalCell.setMaxTargetsInCell(1);
-            this.targetsFromCell.addAll(targetSelectionFromCell(arrivalCell));
+            arrivalCell = cellList.get(stringList.indexOf(this.askUser.stringSelector("Scegli la cella dove colpire i target", stringList)));
 
-             if(this.askUser.yesOrNo("vuoi selezionare un secondo target? ", "Si", "No")){
-                 //It removes the players with the same position as the one selected before
-                 arrivalCell.getTargets().removeIf(p-> p.getFigure().getCell().equals(this.targetsFromCell.get(0).getFigure().getCell()));
+             if(combination.getEffectsCombination().contains("Base")){
+                 int max=arrivalCell.getMaxTargetsInCell();
+                 //selects one target and asks for a second if you want to
+                 arrivalCell.setMaxTargetsInCell(1);
                  this.targetsFromCell.addAll(targetSelectionFromCell(arrivalCell));
+                 if(max==2 && this.askUser.yesOrNo("vuoi selezionare un secondo target nella cella dietro?", "Si", "No")){
+                    //It removes the players with the same position as the one selected before
+                    arrivalCell.getTargets().removeIf(p-> p.getFigure().getCell().equals(this.targetsFromCell.get(0).getFigure().getCell()));
+                    this.targetsFromCell.addAll(targetSelectionFromCell(arrivalCell));
+                 }
              }
-            return null;
+             else if(combination.getEffectsCombination().contains("Optional1")){
+                 if(arrivalCell.getMaxTargetsInCell()==2 && this.askUser.yesOrNo("vuoi selezionare anche la cella dietro quella già scelta? ", "Si", "No"))
+                    this.targetsFromCell.add(arrivalCell.getTargets().get(0));
+             }
+            return arrivalCell.getTargetCell();
         }else {//it's the case where you must select a cell to then choose one target or more on it
             // (it works for any number of maxTargets). Note that the targets are selected on different cells
             int cont = 0;
@@ -323,7 +332,7 @@ public class ChosenActions implements Serializable {
             }else
                 cont = 1;
 
-            while(maxTargets>cont && !playersTargetList.isEmpty() && this.askUser.yesOrNo("vuoi selezionare altri target? "+"\nTarget restanti: "+(maxTargets-cont), "Si", "No")){
+            while(maxTargets>cont && !playersTargetList.isEmpty() && this.askUser.yesOrNo("vuoi selezionare altri target? ", "Si", "No")){
                 cont++;
                 targets.add(selectOneTarget(playersTargetList, "scegli il " + cont + "° target da colpire"));
                 playersTargetList.remove(targets.get(targets.size()-1)); //removes the player you just selected to avoid selecting someone twice

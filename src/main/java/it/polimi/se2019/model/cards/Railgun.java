@@ -59,6 +59,8 @@ public class Railgun extends GunCardAltEff {
             for (int i = 0; i < 4 ; i++){ //selects a direction
                 distance=1;
                 targetsInOneDirection.clear();
+                targetsInOneDirection.addAll(Player.duplicateList(player.getPosition().getPlayers()));
+                targetsInOneDirection.remove(player.getCorrespondingPlayer());
                 try{
                     cellOneMoveAway=MapManager.getCellInDirection(board, player.getPosition(), 1, i);
 
