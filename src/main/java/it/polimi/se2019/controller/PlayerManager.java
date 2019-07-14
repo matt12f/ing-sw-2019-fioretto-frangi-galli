@@ -361,7 +361,7 @@ public class PlayerManager  {
             }
         }
 
-        //If the player dies after the damage and/or marks are dealt we put it aside to score his board later
+        //If the player dies after the damage and/or marks are dealt, we put it aside to score his board later
         //if the player is overkill OR the kill box is not empty: it's added to the dead players
         if(markResponse.equals("overkill") || target.getPlayerBoard().getDamageTrack().getDamage()[10]!=' ')
             currentController.getMainGameModel().addDeadPlayer(target);
