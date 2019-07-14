@@ -133,7 +133,7 @@ public class ChosenActions implements Serializable {
         this.targetsFromCell = new ArrayList<>();
 
         if(combination.isOfferableExtra())
-            this.useExtra = this.askUser.yesOrNo("vuoi usare la parte extra dell'effetto?", "Si", "No");
+            this.useExtra = this.askUser.yesOrNo("vuoi usare la parte extra di CyberGuanto?", "Si", "No");
 
         //disabling the extra for PowerGlove card
         if(!this.useExtra && cardName.equals("PowerGlove"))
@@ -251,14 +251,25 @@ public class ChosenActions implements Serializable {
             arrivalCell = possibleCells.get(stringList.indexOf(this.askUser.stringSelector("Scegli la cella in cui vuoi spostare il target", stringList)));
             this.targetsFromCell.addAll(targetSelectionFromCell(arrivalCell));
 
-        }else if(mode.equals("VortexCannon")||mode.equals("Railgun")||mode.equals("PowerGlove")){
+        }else if(mode.equals("VortexCannon")||mode.equals("Railgun")){
             //lists as strings all of the cells, for the player to then select one to become a vortex
             stringList=listCellWithTargets(localView,cellList);
 
             arrivalCell = cellList.get(stringList.indexOf(this.askUser.stringSelector("Scegli la cella per l'effetto",stringList)));
             this.targetsFromCell.addAll(targetSelectionFromCell(arrivalCell));
 
-        }else if(mode.equals("FlameThrower")){
+        }else if(mode.equals("PowerGlove")){
+            //extracts the cell behind the one of the previous target (selected from list1)
+            arrivalCell = localView.getMapView().cellInSameDirection(cellList, this.fictitiousPlayer.getPosition(), this.targetsFromList1.get(0).getFigure().getCell());
+
+            //asks if it wants to use it (evaluating also if there's a cell to choose from)
+            if(arrivalCell!=null && this.askUser.yesOrNo("Vuoi colpire un altro target nella cella dietro, nella stessa direzione?", "Si","No")){
+                this.targetsFromCell.addAll(targetSelectionFromCell(arrivalCell));
+            }else {
+                return null;
+            }
+        }
+        else if(mode.equals("FlameThrower")){
             //lists as string of all the cells, for the player to then select one to choose targets on
             stringList = listCellWithTargets(localView, cellList);
             arrivalCell = cellList.get(stringList.indexOf(this.askUser.stringSelector("Scegli la cella dove colpire i target", stringList)));

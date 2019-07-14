@@ -48,12 +48,11 @@ public class PowerGlove extends GunCardAltEff {
      */
     @Override
     void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
-
         if(!playersChoice.isUseExtra())
             ActionManager.movePlayer(currentController,currentController.getActiveTurn().getActivePlayer(),playersChoice.getTargetsFromList1().get(0).getFigure().getCell());
-        else {
-            ActionManager.movePlayer(currentController,currentController.getActiveTurn().getActivePlayer(),playersChoice.getTargetsFromCell().get(0).getFigure().getCell());
-            ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromCell().get(0),playersChoice,2,0);
+        else if(playersChoice.getTargetsFromCell().get(0)!=null) {
+            ActionManager.movePlayer(currentController, currentController.getActiveTurn().getActivePlayer(), playersChoice.getTargetsFromCell().get(0).getFigure().getCell());
+            ActionManager.giveDmgandMksToOnePlayer(currentController, playersChoice.getTargetsFromCell().get(0), playersChoice, 2, 0);
         }
         //part of the normal secondary effect (it's important to move first and then hit)
         ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,2,0);
@@ -121,8 +120,11 @@ public class PowerGlove extends GunCardAltEff {
         }
         if(actions.getCellsWithTargets().isEmpty())
             actions.setOfferableExtra(false);
-        else
+        else{
             actions.setOfferableExtra(true);
+            actions.setMinCellToSelect(1);
+            actions.setMaxCellToSelect(1);
+        }
 
             //you'll then automatically move in the cell of the player you've hit
         }

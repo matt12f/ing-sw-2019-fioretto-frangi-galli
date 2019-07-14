@@ -2,6 +2,7 @@ package it.polimi.se2019.model.cards;
 
 import it.polimi.se2019.controller.*;
 import it.polimi.se2019.model.game.NewCell;
+import it.polimi.se2019.model.game.Player;
 import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.exceptions.UnavailableEffectCombinationException;
 
@@ -211,8 +212,11 @@ public class PlasmaGun extends GunCardAddEff {
     @Override
     void targetsOfTertiaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         for(NewCell cellToAddTargets: MapManager.squaresInRadius2(currentController,player)){
-            if(!ActionManager.visibleTargets(currentController,cellToAddTargets).isEmpty())
-                actions.addCellsWithTargets(cellToAddTargets,ActionManager.visibleTargets(currentController,cellToAddTargets),1,1,true,false);
+            ArrayList <Player> targets=new ArrayList<>(ActionManager.visibleTargets(currentController,cellToAddTargets));
+            targets.remove(player.getCorrespondingPlayer());
+            if(!targets.isEmpty())
+                actions.addCellsWithTargets(cellToAddTargets,targets, 1, 1, true, false);
+
         }
         actions.setCanMoveYourself(true);
         actions.setMinCellToSelect(1);

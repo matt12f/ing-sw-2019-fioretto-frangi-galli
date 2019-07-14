@@ -21,6 +21,7 @@ public class KillShotTrackerView  implements Serializable {
         for (int i = 0; i < skulls; i++) {
             this.kills[i] = null;
         }
+        this.extraKills=new ArrayList<>();
     }
 
     /**
