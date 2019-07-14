@@ -33,8 +33,10 @@ public class TractorBeam extends GunCardAltEff {
      */
     @Override
     void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
-        ActionManager.movePlayer(currentController,playersChoice.getTargetsFromCell().get(0),playersChoice.getCellToMoveOpponent());
         ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromCell().get(0),playersChoice,1,0);
+        if(!currentController.getMainGameModel().getDeadPlayers().contains(playersChoice.getTargetsFromCell().get(0)))
+            ActionManager.movePlayer(currentController,playersChoice.getTargetsFromCell().get(0),playersChoice.getCellToMoveOpponent());
+
     }
     /**
      * This applies the secondary effect
@@ -43,8 +45,10 @@ public class TractorBeam extends GunCardAltEff {
      */
     @Override
     void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
-        ActionManager.movePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice.getFictitiousPlayer().getPosition());
         ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,3,0);
+        if(!currentController.getMainGameModel().getDeadPlayers().contains(playersChoice.getTargetsFromList1().get(0)))
+            ActionManager.movePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice.getFictitiousPlayer().getPosition());
+
     }
 
     /**

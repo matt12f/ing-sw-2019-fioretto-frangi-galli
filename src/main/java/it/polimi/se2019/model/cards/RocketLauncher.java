@@ -118,7 +118,7 @@ public class RocketLauncher extends GunCardAddEff {
         if(playersChoice.getOrderOfExecution().contains("Optional2"))
             applyThird(currentController,playersChoice,playersChoice.getTargetsFromList1().get(0).getFigure().getCell());
 
-        if(playersChoice.getCellToMoveOpponent()!=null)
+        if(playersChoice.getCellToMoveOpponent()!=null&& !currentController.getMainGameModel().getDeadPlayers().contains(playersChoice.getTargetsFromList1().get(0)))
             ActionManager.movePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice.getCellToMoveOpponent());
     }
 
@@ -152,7 +152,7 @@ public class RocketLauncher extends GunCardAddEff {
         if(playersChoice.getOrderOfExecution().contains("Optional2"))
             applyThird(currentController,playersChoice,playersChoice.getTargetsFromCell().get(0).getFigure().getCell());
 
-        if(playersChoice.getCellToMoveOpponent()!=null)
+        if(playersChoice.getCellToMoveOpponent()!=null && !currentController.getMainGameModel().getDeadPlayers().contains(playersChoice.getTargetsFromCell().get(0)))
             ActionManager.movePlayer(currentController,playersChoice.getTargetsFromCell().get(0),playersChoice.getCellToMoveOpponent());
 
     }

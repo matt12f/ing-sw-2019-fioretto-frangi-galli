@@ -81,7 +81,7 @@ public class PowerupManager {
 
         char [] dmg=new char[1];
         dmg[0]=currentController.getActiveTurn().getActivePlayer().getFigure().getColorChar();
-        PlayerManager.damageDealer(currentController,playerDamaged,dmg);
+        PlayerManager.damageDealer(currentController,playerDamaged,dmg,true);
         removeFromHand(currentController, cardIndexInHand,currentController.getActiveTurn().getActivePlayer());
     }
 

@@ -45,7 +45,9 @@ public class Sledgehammer extends GunCardAltEff {
     @Override
     void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
         ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,3,0);
-        ActionManager.movePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice.getCellToMoveOpponent());
+
+        if(playersChoice.getCellToMoveOpponent()!=null && !currentController.getMainGameModel().getDeadPlayers().contains(playersChoice.getTargetsFromList1().get(0)))
+            ActionManager.movePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice.getCellToMoveOpponent());
     }
 
     /**

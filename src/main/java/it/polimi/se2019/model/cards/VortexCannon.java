@@ -24,8 +24,7 @@ public class VortexCannon extends GunCardAddEff {
         ammoCost[1]= 'b';
         this.description ="basic effect: Choose a square you can see, but not your\n" +
                 "square. Call it \"the vortex\". Choose a target on the vortex\n" +
-                "or 1 move away from it. Move it onto the vortex and give it\n" +
-                "2 damage.\n"+
+                "or 1 move away from it. Move it onto the vortex and give it 2 damage.\n"+
                 "with black hole: Choose up to 2 other targets on the\n" +
                 "vortex or 1 move away from it. Move them onto the vortex\n" +
                 "and give them each 1 damage.";
@@ -44,8 +43,9 @@ public class VortexCannon extends GunCardAddEff {
         NewCell vortex = playersChoice.getCellFromCellWithTrg();
         Player target1 = playersChoice.getTargetsFromCell().get(0);
 
-        ActionManager.movePlayer(currentController,target1,vortex);
         ActionManager.giveDmgandMksToOnePlayer(currentController,target1,playersChoice,2,0);
+        if(!currentController.getMainGameModel().getDeadPlayers().contains(target1))
+            ActionManager.movePlayer(currentController,target1,vortex);
 
         playersChoice.getTargetsFromCell().remove(0);
     }
@@ -60,8 +60,9 @@ public class VortexCannon extends GunCardAddEff {
 
         //we are assuming there is at least another target in the list
         for(Player target: playersChoice.getTargetsFromCell()){
-            ActionManager.movePlayer(currentController,target,vortex);
             ActionManager.giveDmgandMksToOnePlayer(currentController,target,playersChoice,1,0);
+            if(!currentController.getMainGameModel().getDeadPlayers().contains(target))
+                ActionManager.movePlayer(currentController,target,vortex);
         }
 
     }

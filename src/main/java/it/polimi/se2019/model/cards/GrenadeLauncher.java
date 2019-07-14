@@ -32,10 +32,8 @@ public class GrenadeLauncher extends GunCardAddEff {
         this.numberOfOptional = 1;
         this.ammoCost = new char[1];
         ammoCost[0]= 'r';
-        this.description ="basic effect: Deal 1 damage to 1 target you can see. Then you may move"+
-                "\nthe target 1 square."+
-                "\nwith extra grenade: Deal 1 damage to every player on a square you can"+
-                "\nsee. You can use this before or after the basic effect's move.";
+        this.description ="basic effect: Deal 1 damage to 1 target you can see. Then you may move the target 1 square."+
+                "\nwith extra grenade: Deal 1 damage to every player on a square you can see. \nYou can use this before or after the basic effect's move.";
 
         this.secondaryEffectCost = new char[1];
         secondaryEffectCost[0] = 'r';
@@ -50,7 +48,8 @@ public class GrenadeLauncher extends GunCardAddEff {
     void applyBaseEffect(Controller currentController, ChosenActions playersChoice){
         Player target=playersChoice.getTargetsFromList1().get(0);
         ActionManager.giveDmgandMksToOnePlayer(currentController,target,playersChoice,1,0);
-        if(playersChoice.getCellToMoveOpponent()!=null) //it chose to move the player
+        //it chose to move the player
+        if(playersChoice.getCellToMoveOpponent()!=null && !currentController.getMainGameModel().getDeadPlayers().contains(target))
             ActionManager.movePlayer(currentController,target,playersChoice.getCellToMoveOpponent());
     }
     /**

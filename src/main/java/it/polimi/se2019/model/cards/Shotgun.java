@@ -34,7 +34,8 @@ public class Shotgun extends GunCardAltEff {
     @Override
     void applyBaseEffect(Controller currentController, ChosenActions playersChoice) {
         ActionManager.giveDmgandMksToOnePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice,3,0);
-        if(playersChoice.getCellToMoveOpponent()!=null) //it chose to move the player
+        //it chose to move the player
+        if(playersChoice.getCellToMoveOpponent()!=null && !currentController.getMainGameModel().getDeadPlayers().contains(playersChoice.getTargetsFromList1().get(0)))
             ActionManager.movePlayer(currentController,playersChoice.getTargetsFromList1().get(0),playersChoice.getCellToMoveOpponent());
     }
     /**
