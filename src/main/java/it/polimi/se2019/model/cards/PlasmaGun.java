@@ -48,8 +48,7 @@ public class PlasmaGun extends GunCardAddEff {
         this.description ="basic effect: Deal 2 damage to 1 target you can see.\n"+
                 "with phase glide: Move 1 or 2 squares. This effect can be\n" +
                 "used either before or after the basic effect.\n"+
-                "with charged shot: Deal 1 additional damage to your\n" +
-                "target.";
+                "with charged shot: Deal 1 additional damage to your target.";
 
         this.secondaryEffectCost = new char[1];
         secondaryEffectCost[0] = 'n';
@@ -212,7 +211,8 @@ public class PlasmaGun extends GunCardAddEff {
     @Override
     void targetsOfTertiaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         for(NewCell cellToAddTargets: MapManager.squaresInRadius2(currentController,player)){
-            actions.addCellsWithTargets(cellToAddTargets,ActionManager.visibleTargets(currentController,cellToAddTargets),1,1,true,false);
+            if(!ActionManager.visibleTargets(currentController,cellToAddTargets).isEmpty())
+                actions.addCellsWithTargets(cellToAddTargets,ActionManager.visibleTargets(currentController,cellToAddTargets),1,1,true,false);
         }
         actions.setCanMoveYourself(true);
         actions.setMinCellToSelect(1);

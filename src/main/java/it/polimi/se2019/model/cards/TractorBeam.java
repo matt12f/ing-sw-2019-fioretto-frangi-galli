@@ -68,7 +68,9 @@ public class TractorBeam extends GunCardAltEff {
             for(Player target:currentController.getMainGameModel().getPlayerList())
                if(!target.equals(player.getCorrespondingPlayer()) && MapManager.distanceBetweenCells(board,target.getFigure().getCell(),visibleSquare) <= 2)
                    targetsYouCanMove.add(target);
-            actions.addCellsWithTargets(visibleSquare,targetsYouCanMove,1,1,false,true);
+
+               if(!targetsYouCanMove.isEmpty())
+                   actions.addCellsWithTargets(visibleSquare,targetsYouCanMove,1,1,false,true);
         }
         actions.setMaxCellToSelect(1);
         actions.setMinCellToSelect(1);

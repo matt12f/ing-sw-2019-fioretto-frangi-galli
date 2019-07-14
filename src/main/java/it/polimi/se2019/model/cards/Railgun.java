@@ -78,7 +78,8 @@ public class Railgun extends GunCardAltEff {
                             break;
                         }
                     }
-                    actions.addCellsWithTargets(cellOneMoveAway,targetsInOneDirection,1,1,false,false);
+                    if(!targetsInOneDirection.isEmpty())
+                        actions.addCellsWithTargets(cellOneMoveAway,targetsInOneDirection,1,1,false,false);
                 }catch (OuterWallException e2){
                     //this happens if you are close to an edge and try to move outside of the board
                 }

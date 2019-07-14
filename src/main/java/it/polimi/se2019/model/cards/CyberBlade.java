@@ -259,7 +259,8 @@ public class CyberBlade extends GunCardAddEff {
     @Override
     void targetsOfTertiaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         for(NewCell cell: ActionManager.cellsOneMoveAway(currentController,player.getPosition())){
-            actions.addCellsWithTargets(cell,Player.duplicateList(cell.getPlayers()),1,1,true,false);
+            if(!cell.getPlayers().isEmpty())
+                actions.addCellsWithTargets(cell,Player.duplicateList(cell.getPlayers()),1,1,true,false);
         }
         actions.setCanMoveYourself(true);
         actions.setMinCellToSelect(1);
