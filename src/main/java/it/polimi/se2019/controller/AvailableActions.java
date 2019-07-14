@@ -80,11 +80,14 @@ public class AvailableActions implements Serializable {
     private void buildActions(Controller currentController, Player player, ActionRequestView macroAction, int maxMoveDistance, boolean grab, boolean shoot, boolean frenzyReload){
         NewCell[][] board=currentController.getMainGameModel().getCurrentMap().getBoardMatrix();
 
-        //checks for adrenaline modes
-        if(player.getPlayerBoard().getActionTileNormal().getAdrenalineMode1() && grab)
-            maxMoveDistance++;
-        if(player.getPlayerBoard().getActionTileNormal().getAdrenalineMode2() && shoot)
-            maxMoveDistance++;
+        //if the player board is not in frenzy
+        if(player.getPlayerBoard().isFront()) {
+            //checks for adrenaline modes
+            if (player.getPlayerBoard().getActionTileNormal().getAdrenalineMode1() && grab)
+                maxMoveDistance++;
+            if (player.getPlayerBoard().getActionTileNormal().getAdrenalineMode2() && shoot)
+                maxMoveDistance++;
+        }
 
         //determines the minimum move distance
         int minMoveDistance;

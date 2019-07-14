@@ -78,7 +78,7 @@ public class Player implements Serializable {
 
         Player otherItem = (Player) item;
 
-        if(this.id!=otherItem.id||!this.nickname.equals(otherItem.nickname)||this.score!=otherItem.score)
+        if(this.id!=otherItem.id||!this.nickname.equals(otherItem.nickname)||!this.figure.getColor().equals(otherItem.figure.getColor()))
             return false;
 
         return true;

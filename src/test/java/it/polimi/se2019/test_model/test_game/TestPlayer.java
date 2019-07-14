@@ -35,11 +35,7 @@ public class TestPlayer {
         //this is a clone! it's not the same
         assertNotEquals(player1.getPlayerBoard(),player2.getPlayerBoard());
 
-        player1.setScore(22);
-        assertNotEquals(player1,player2);
-
-        player1.setScore(22);
-        assertNotEquals(player1,player2);
+        assertEquals(player1.getFigure().getColor(),player2.getFigure().getColor());
 
         assertNotEquals(null,player1);
 

@@ -110,13 +110,16 @@ public class GameModel extends Observable{
      */
     public void addDeadPlayer(Player deadPlayer) {
         deadPlayer = this.playerList.get(this.playerList.indexOf(deadPlayer));
+
         for (int i = 0; i < this.currentMap.getRooms().length; i++) {
             if(this.currentMap.getRooms()[i]!=null && this.currentMap.getRooms()[i].getColor()!=null)
                 if(this.currentMap.getRooms()[i].getColor().equals(deadPlayer.getFigure().getCell().getColor()))
                     this.currentMap.getRooms()[i].removePlayers(deadPlayer);
         }
+        NewCell realCell = this.currentMap.getBoardMatrix()[MapManager.getLineOrColumnIndex(this.currentMap.getBoardMatrix(),deadPlayer.getFigure().getCell(),true)]
+                [MapManager.getLineOrColumnIndex(this.currentMap.getBoardMatrix(),deadPlayer.getFigure().getCell(),false)];
 
-        deadPlayer.getFigure().getCell().removePlayers(deadPlayer);
+        realCell.removePlayers(deadPlayer);
         this.deadPlayers.add(deadPlayer);
     }
 
