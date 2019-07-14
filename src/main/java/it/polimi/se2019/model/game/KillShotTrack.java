@@ -29,11 +29,7 @@ public class KillShotTrack {
     /**
      * this method adds kills to the killshot track and extra kills during frenzy
      */
-    /**
-     *
-     * @param kill
-     */
-    public void setKills( String kill) {
+    public void setKills(String kill) {
         boolean found = false;
         int i = 0;
         do{
@@ -42,7 +38,7 @@ public class KillShotTrack {
                 found = true;
             }
             i++;
-        }while(!found &&i<this.kills.length);
+        }while(!found && i<this.kills.length);
         this.skulls--;
 
         if(!found){

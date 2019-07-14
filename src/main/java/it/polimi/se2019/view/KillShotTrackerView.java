@@ -59,7 +59,7 @@ public class KillShotTrackerView  implements Serializable {
      */
     public int getNumKills(){
         int cont=0;
-        for (int i = 0; i < skulls; i++)
+        for (int i = 0; i < this.kills.length; i++)
             if(this.kills[i]!=null)
                 cont++;
         return cont;
