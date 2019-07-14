@@ -272,6 +272,7 @@ public class AdrenalineClient {
         while(start){
             myturn = receiveServerMessage(connection);
             if(!activated && frenzy) {
+                System.out.println("siamo in frenzy");
                 gameBoardGUI.setFrenzy(localView.getPlayerBoardViews(), localView.getPersonalPlayerBoardView());
                 activated = true;
             }

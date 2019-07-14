@@ -185,8 +185,17 @@ public class GameHandler implements Runnable {
                 } catch (InterruptedException e) {
                     LOGGER.log(Level.FINE,"3rd exception",e);
                 }
-                if (this.controller.getMainGameModel().getKillshotTrack().getSkulls() == 0)
+                if (this.controller.getMainGameModel().getKillshotTrack().getSkulls() == 0){
+                    for (ClientHandler client: players) {
+                        try {
+                            client.getOutput().writeObject(true);
+                            client.sendLocalView();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                     break;
+                }
                 //fine azione
             }
             waitingRequest(clientTurn);
@@ -264,15 +273,17 @@ public class GameHandler implements Runnable {
                 }
             }
             MapManager.refillEmptiedCells(controller.getMainGameModel().getCurrentMap().getBoardMatrix(),controller.getMainGameModel().getCurrentDecks());
-            controller.getActiveTurn().nextTurn(controller);
+            if(this.getController().getMainGameModel().getKillshotTrack().getSkulls()>0)
+                controller.getActiveTurn().nextTurn(controller);
             controller.getMainGameModel().getDeadPlayers().clear();
         }
         TurnManager.frenzyActivator(controller);
         Player firstOfFrenzy = this.controller.getActiveTurn().getActivePlayer();
+        this.controller.getActiveTurn().nextTurn(controller);
         for (int j = 0; j<players.size(); j++){
             turnPreparation(this.controller.getMainGameModel().getTurn());
             clientTurn = this.players.get(this.controller.getMainGameModel().getTurn());
-            clientTurn.setActionsNumber( this.controller.getActiveTurn().getActivePlayer().getPlayerBoard().getActionTileNormal().getActionCounter());
+            clientTurn.setActionsNumber( this.controller.getActiveTurn().getActivePlayer().getPlayerBoard().getActionTileFrenzy().getActionCounter());
             System.out.println("turno FRENZY di: " + clientTurn.getColor());
             try {
                 clientTurn.notifyTurn();
@@ -288,9 +299,9 @@ public class GameHandler implements Runnable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            for(int i = 0; i<controller.getActiveTurn().getActivePlayer().getPlayerBoard().getActionTileNormal().getActionCounter(); i++) {
+            for(int i = 0; i<controller.getActiveTurn().getActivePlayer().getPlayerBoard().getActionTileFrenzy().getActionCounter(); i++) {
                 accepted = false;
-                lastAction = (i == (controller.getActiveTurn().getActivePlayer().getPlayerBoard().getActionTileNormal().getActionCounter() -1));
+                lastAction = (i == (controller.getActiveTurn().getActivePlayer().getPlayerBoard().getActionTileFrenzy().getActionCounter() -1));
                 for (ClientHandler client: players) {
                     if (!clientTurn.getNickname().equals(client.getNickname())) {
                         try {
@@ -637,12 +648,16 @@ public class GameHandler implements Runnable {
         this.controller = new Controller(players, this.mapNumber, this.skullsNumber);
     }
 
-    private synchronized void turnPreparation(int turn){
+    private void turnPreparation(int turn){
         for (ClientHandler client: players) {
             client.setStatus(Status.NOTMYTURN);
         }
         ClientHandler clientTurn = this.players.get(turn);
-        clientTurn.setActionsNumber(controller.getActiveTurn().getActivePlayer().getPlayerBoard().getActionTileNormal().getActionCounter());
+        if(this.controller.getMainGameModel().getKillshotTrack().getSkulls() > 0)
+            clientTurn.setActionsNumber(controller.getActiveTurn().getActivePlayer().getPlayerBoard().getActionTileNormal().getActionCounter());
+        else
+            clientTurn.setActionsNumber(controller.getActiveTurn().getActivePlayer().getPlayerBoard().getActionTileFrenzy().getActionCounter());
+
     }
 
     private void waitForSpawn(ClientHandler player) throws InterruptedException {

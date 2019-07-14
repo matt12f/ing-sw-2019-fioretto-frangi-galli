@@ -37,6 +37,7 @@ public class TurnManager {
      */
     public static void frenzyActivator(Controller currentController){
         currentController.getMainGameModel().activateFinalFrenzy(currentController.getActiveTurn().getActivePlayer().getId());
+        currentController.getMainGameModel().notifyRemoteView();
     }
 
 }
