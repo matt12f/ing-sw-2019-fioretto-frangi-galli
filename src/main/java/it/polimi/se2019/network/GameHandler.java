@@ -475,11 +475,7 @@ public class GameHandler implements Runnable {
                                 getTagBackUsage(this.players.get(player.getId()));
                                 if(this.useTagBack){
                                     this.players.get(player.getId()).setStatus(Status.TAGBACKUSAGE);
-                                    try {
-                                        PowerupManager.grenadeManager(this.controller,activePlayer,player,i);
-                                    } catch (CardNotFoundException e) {
-                                        System.out.println("granata non tolta");
-                                    }
+                                    PowerupManager.grenadeManager(this.controller,activePlayer,player,i);
                                     break;
                             }}
                             catch (InterruptedException e){

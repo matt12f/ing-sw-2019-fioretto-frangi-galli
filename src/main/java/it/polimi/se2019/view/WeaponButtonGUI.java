@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class WeaponButtonGUI extends JButton {
-    private String weaponType;
+    private GunCard weapon; //use
     private int sizex;
     private int sizey;
     private ImageIcon pic;
@@ -36,10 +36,13 @@ public class WeaponButtonGUI extends JButton {
      * @param rotate indicate if the button is vertical or not
      */
     public void updateImage(GunCard weapon, boolean rotate ){
+        String weaponType;
          try{
-             this.weaponType = weapon.getClass().getSimpleName().toLowerCase();
+             weaponType = weapon.getClass().getSimpleName().toLowerCase();
+             this.weapon=weapon;
          }catch (NullPointerException e){
-             this.weaponType="error";
+             weaponType="error";
+             this.weapon=null; //there is no card
          }
 
          if (!weaponType.equals("error")){
@@ -64,7 +67,7 @@ public class WeaponButtonGUI extends JButton {
      *
      * @return the weapon type
      */
-    public String getWeaponType(){
-        return weaponType;
+    public GunCard getWeapon(){
+        return weapon;
     }
 }

@@ -48,7 +48,7 @@ public class Player implements Serializable {
      * This method adds points to a player
      */
     public void setScore(int points) {
-       this.score += points;
+       this.score =this.score + points;
     }
 
     public Figure getFigure() {

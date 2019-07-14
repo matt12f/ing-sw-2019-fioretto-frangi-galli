@@ -38,7 +38,7 @@ public class PowerupManager {
         }
         if(cell!=null){
             ActionManager.movePlayer(currentController,player,cell);
-            removeFromHand(currentController,cardIndexInHand);
+            removeFromHand(currentController,cardIndexInHand,currentController.getActiveTurn().getActivePlayer());
         }
     }
 
@@ -61,7 +61,7 @@ public class PowerupManager {
         NewCell destinationCell = board[lineForMove][columnForMove];
 
         ActionManager.movePlayer(currentController,player,destinationCell);
-        removeFromHand(currentController, cardIndexInHand);
+        removeFromHand(currentController, cardIndexInHand, currentController.getActiveTurn().getActivePlayer());
     }
 
     /**
@@ -82,7 +82,7 @@ public class PowerupManager {
         char [] dmg=new char[1];
         dmg[0]=currentController.getActiveTurn().getActivePlayer().getFigure().getColorChar();
         PlayerManager.damageDealer(currentController,playerDamaged,dmg);
-        removeFromHand(currentController, cardIndexInHand);
+        removeFromHand(currentController, cardIndexInHand,currentController.getActiveTurn().getActivePlayer());
     }
 
 
@@ -93,14 +93,13 @@ public class PowerupManager {
      * @param playerGivingDamage is the player giving the damage
      * @param cardIndexInHand is the index of the card in the player hand
      */
-    public static void grenadeManager(Controller currentController, Player playerDamaged, Player playerGivingDamage, int cardIndexInHand) throws CardNotFoundException {
+    public static void grenadeManager(Controller currentController, Player playerDamaged, Player playerGivingDamage, int cardIndexInHand){
         playerDamaged = currentController.getMainGameModel().getPlayerList().get(currentController.getActiveTurn().getActivePlayer().getId());
 
         char [] marks=new char[1];
         marks[0]=playerGivingDamage.getFigure().getColorChar();
         PlayerManager.markerDealer(currentController, playerDamaged, marks);
-        playerGivingDamage.getPlayerBoard().getHand().substitutionPowerup(playerGivingDamage.getPlayerBoard().getHand().getPowerups()[cardIndexInHand], null);
-        //removeFromHand(currentController,cardIndexInHand);
+        removeFromHand(currentController,cardIndexInHand, playerGivingDamage);
         currentController.getMainGameModel().notifyRemoteView();
     }
 
@@ -109,10 +108,9 @@ public class PowerupManager {
      * @param currentController is the current controller
      * @param cardIndexInHand is the index of the card in the player hand
      */
-    private static void removeFromHand(Controller currentController,int cardIndexInHand) {
+    private static void removeFromHand(Controller currentController,int cardIndexInHand, Player playerUsingPwUp) {
         Player player = currentController.getMainGameModel().getPlayerList().get(
-                currentController.getMainGameModel().getPlayerList()
-                        .indexOf(currentController.getActiveTurn().getActivePlayer()));
+                currentController.getMainGameModel().getPlayerList().indexOf(playerUsingPwUp));
 
         player.getPlayerBoard().getHand().removePowerUp(cardIndexInHand);
     }

@@ -1,6 +1,5 @@
 package it.polimi.se2019.network;
 
-import com.sun.corba.se.pept.encoding.InputObject;
 import it.polimi.se2019.AdrenalineServer;
 import it.polimi.se2019.controller.AvailableActions;
 import it.polimi.se2019.controller.GameStats;
@@ -11,7 +10,6 @@ import it.polimi.se2019.view.ChosenActions;
 import it.polimi.se2019.view.LocalView;
 import it.polimi.se2019.enums.Status;
 
-import javax.rmi.CORBA.StubDelegate;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;

@@ -121,7 +121,7 @@ public class Hand implements Serializable {
      * @param newPowerup
      * @throws CardNotFoundException
      */
-    public void substitutionPowerup (PowerupCard discarded,PowerupCard newPowerup) throws CardNotFoundException {
+    public void substitutionPowerup (PowerupCard discarded, PowerupCard newPowerup) throws CardNotFoundException {
         int i=0;
         boolean substituted=false;
         while(!substituted && i<MAXCARDS){

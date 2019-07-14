@@ -62,15 +62,15 @@ public class Railgun extends GunCardAltEff {
                 targetsInOneDirection.addAll(Player.duplicateList(player.getPosition().getPlayers()));
                 targetsInOneDirection.remove(player.getCorrespondingPlayer());
                 try{
-                    cellOneMoveAway=MapManager.getCellInDirection(board, player.getPosition(), 1, i);
-
-                    NewCell temp=cellOneMoveAway;
+                    cellOneMoveAway=MapManager.getCellInDirection(board, player.getPosition(), distance, i);
+                    targetsInOneDirection.addAll(Player.duplicateList(cellOneMoveAway.getPlayers()));
 
                     while (inside){
+                        NewCell cellInDirection;
                         distance++;
                         try{
-                        targetsInOneDirection.addAll(Player.duplicateList(temp.getPlayers()));
-                        temp=MapManager.getCellInDirection(board, player.getPosition(), distance, i);
+                            cellInDirection=MapManager.getCellInDirection(board, player.getPosition(), distance, i);
+                            targetsInOneDirection.addAll(Player.duplicateList(cellInDirection.getPlayers()));
                         }
                         catch (OuterWallException e){
                             //This happens if you move out of the board while getting cells in one direction
