@@ -375,7 +375,7 @@ public class AdrenalineClient {
         String message;
         message = (String) connection.getInput().readObject();
         System.out.println(message);
-        if (message.equals("TAGBACKUSAGE")){
+        while (message.equals("TAGBACKUSAGE")){
             granade();
             message = (String) connection.getInput().readObject();
             System.out.println(message);

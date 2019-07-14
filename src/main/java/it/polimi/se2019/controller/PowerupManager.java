@@ -1,5 +1,6 @@
 package it.polimi.se2019.controller;
 
+import it.polimi.se2019.exceptions.CardNotFoundException;
 import it.polimi.se2019.exceptions.OuterWallException;
 import it.polimi.se2019.model.game.NewCell;
 import it.polimi.se2019.model.game.Player;
@@ -92,13 +93,14 @@ public class PowerupManager {
      * @param playerGivingDamage is the player giving the damage
      * @param cardIndexInHand is the index of the card in the player hand
      */
-    public static void grenadeManager(Controller currentController, Player playerDamaged, Player playerGivingDamage, int cardIndexInHand){
+    public static void grenadeManager(Controller currentController, Player playerDamaged, Player playerGivingDamage, int cardIndexInHand) throws CardNotFoundException {
         playerDamaged = currentController.getMainGameModel().getPlayerList().get(currentController.getActiveTurn().getActivePlayer().getId());
 
         char [] marks=new char[1];
         marks[0]=playerGivingDamage.getFigure().getColorChar();
         PlayerManager.markerDealer(currentController, playerDamaged, marks);
-        removeFromHand(currentController,cardIndexInHand);
+        playerGivingDamage.getPlayerBoard().getHand().substitutionPowerup(playerGivingDamage.getPlayerBoard().getHand().getPowerups()[cardIndexInHand], null);
+        //removeFromHand(currentController,cardIndexInHand);
         currentController.getMainGameModel().notifyRemoteView();
     }
 
