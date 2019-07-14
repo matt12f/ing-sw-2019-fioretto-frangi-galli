@@ -341,8 +341,6 @@ public class GameHandler implements Runnable {
                 } catch (InterruptedException e) {
                     LOGGER.log(Level.FINE,"3rd exception",e);
                 }
-                if (this.controller.getMainGameModel().getKillshotTrack().getSkulls() == 0)
-                    break;
                 //fine azione
             }
             waitingRequest(clientTurn);

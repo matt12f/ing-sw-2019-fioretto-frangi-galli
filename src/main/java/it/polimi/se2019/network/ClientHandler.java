@@ -312,6 +312,7 @@ public class ClientHandler extends Thread {
 
     void notifyTurn() throws IOException {
         this.output.writeObject("MYTURN");
+        this.output.writeObject(localView);
         this.input.readBoolean();
         System.out.println("b");
         this.output.writeInt(this.actionsNumber);

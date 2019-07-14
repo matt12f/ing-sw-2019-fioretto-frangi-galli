@@ -271,21 +271,23 @@ public class AdrenalineClient {
         System.out.println("a");
         while(start){
             myturn = receiveServerMessage(connection);
-            if(!activated && frenzy) {
-                System.out.println("siamo in frenzy");
-                gameBoardGUI.setFrenzy(localView.getPlayerBoardViews(), localView.getPersonalPlayerBoardView());
-                activated = true;
-            }
             System.out.println("Inizio del mio turno: " + myturn);
             if(myturn){
                 last = false;
+                localView = (LocalView) connection.getInput().readObject();
                 connection.getOutput().reset();
                 connection.getOutput().writeBoolean(true);
                 connection.getOutput().flush();
 
                 System.out.println("b");
                 actionNumber = connection.getInput().readInt();
+                System.out.println(actionNumber);
                 frenzy = isFrenzy();
+                if(!activated && frenzy) {
+                    System.out.println("siamo in frenzy");
+                    gameBoardGUI.setFrenzy(localView.getPlayerBoardViews(), localView.getPersonalPlayerBoardView());
+                    activated = true;
+                }
                 while(actionNumber > 0){
                     actionNumber --;
                     action = false;
