@@ -20,7 +20,7 @@ public class ActionManager {
      */
     public static void giveDmgandMksToOnePlayer(Controller currentController, Player target, ChosenActions playersChoice, int numDmg, int numMks){
         if(numDmg!=0)
-            PlayerManager.damageDealer(currentController,target,playersChoice.damageSequence(numDmg));
+            PlayerManager.damageDealer(currentController,target,playersChoice.damageSequence(numDmg),false);
         if(numMks!=0)
             PlayerManager.markerDealer(currentController, target,playersChoice.damageSequence(numMks));
     }
@@ -37,7 +37,7 @@ public class ActionManager {
     public static void giveDmgandMksToPlayers(Controller currentController, ArrayList<Player> targetList, ChosenActions playersChoice, int numDmg, int numMks){
         if(numDmg!=0){
             for(Player target:targetList)
-                PlayerManager.damageDealer(currentController,target,playersChoice.damageSequence(numDmg));
+                PlayerManager.damageDealer(currentController,target,playersChoice.damageSequence(numDmg),false);
         }
         if(numMks!=0){
             for(Player target: targetList)

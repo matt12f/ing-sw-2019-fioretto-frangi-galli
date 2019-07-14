@@ -337,16 +337,16 @@ public class PlayerManager  {
      * @param damageToDeal array of chars that contain the damage as characters representing the color of the offender.
      *                     Note that the damage drops "to be dealt" here come from a single player.
      */
-    public static void damageDealer(Controller currentController, Player target, char[] damageToDeal){
+    public static void damageDealer(Controller currentController, Player target, char[] damageToDeal, boolean targetingScope){
         //here we update the real player to be damaged
         target=currentController.getMainGameModel().getPlayerList().get(
                 currentController.getMainGameModel().getPlayerList().indexOf(target));
 
-        //it's initialized like this in case the marks are not used
-        String markResponse="notOverkill";
+        //it's initialized with the result of dealing the damage ( it will be "notOverkill" if it's alive/killed
+        String dealingResponse=target.getPlayerBoard().getDamageTrack().dealDamage(damageToDeal);
 
         //Deal the damage first. Then IF it's still alive deal marks too (skipped otherwise)
-        if(target.getPlayerBoard().getDamageTrack().dealDamage(damageToDeal).equals("notOverkill")){
+        if(dealingResponse.equals("notOverkill") && !targetingScope){
             //here we "pull" the marks this player has left before
             int markNumber = target.getPlayerBoard().getDamageTrack().pullMarks(damageToDeal[0]);
 
@@ -357,13 +357,13 @@ public class PlayerManager  {
                 marks[i]=damageToDeal[0];
 
             //this deals the marks
-            markResponse = target.getPlayerBoard().getDamageTrack().dealDamage(marks);
+            dealingResponse = target.getPlayerBoard().getDamageTrack().dealDamage(marks);
             }
         }
 
         //If the player dies after the damage and/or marks are dealt, we put it aside to score his board later
         //if the player is overkill OR the kill box is not empty: it's added to the dead players
-        if(markResponse.equals("overkill") || target.getPlayerBoard().getDamageTrack().getDamage()[10]!=' ')
+        if(dealingResponse.equals("overkill") || target.getPlayerBoard().getDamageTrack().getDamage()[10]!=' ')
             currentController.getMainGameModel().addDeadPlayer(target);
     }
 
