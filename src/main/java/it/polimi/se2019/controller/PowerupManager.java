@@ -100,7 +100,7 @@ public class PowerupManager {
         marks[0]=playerGivingDamage.getFigure().getColorChar();
         PlayerManager.markerDealer(currentController, playerDamaged, marks);
         playerGivingDamage.getPlayerBoard().getHand().substitutionPowerup(playerGivingDamage.getPlayerBoard().getHand().getPowerups()[cardIndexInHand], null);
-        removeFromHand(currentController,cardIndexInHand);
+        //removeFromHand(currentController,cardIndexInHand);
         currentController.getMainGameModel().notifyRemoteView();
     }
 
