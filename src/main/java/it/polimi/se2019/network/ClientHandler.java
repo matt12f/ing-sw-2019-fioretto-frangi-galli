@@ -335,4 +335,7 @@ public class ClientHandler extends Thread {
         return this.input;
     }
 
+    void sendFinale() throws IOException {
+        this.output.writeObject(this.finale.toString());
+    }
 }

@@ -343,6 +343,7 @@ public class AdrenalineClient {
                 displayBoard();
             }
             temp = (String) connection.getInput().readObject();
+            System.out.println(temp + " Fine turno");
             start  = temp.equals("START");
         }
         String finale = (String) connection.getInput().readObject();

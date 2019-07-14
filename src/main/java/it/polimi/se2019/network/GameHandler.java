@@ -278,8 +278,8 @@ public class GameHandler implements Runnable {
             controller.getMainGameModel().getDeadPlayers().clear();
         }
         TurnManager.frenzyActivator(controller);
-        Player firstOfFrenzy = this.controller.getActiveTurn().getActivePlayer();
         this.controller.getActiveTurn().nextTurn(controller);
+        Player firstOfFrenzy = this.controller.getActiveTurn().getActivePlayer();
         for (int j = 0; j<players.size(); j++){
             turnPreparation(this.controller.getMainGameModel().getTurn());
             clientTurn = this.players.get(this.controller.getMainGameModel().getTurn());
@@ -405,9 +405,6 @@ public class GameHandler implements Runnable {
                 }
             }
             controller.getMainGameModel().getDeadPlayers().clear();
-        }
-        for (ClientHandler player: players) {
-            player.setStatus(Status.ENDGAME);
         }
         PlayerManager.scoringProcess(controller); //last scoring of the game (after the final frenzy round)
         try {
@@ -562,10 +559,12 @@ public class GameHandler implements Runnable {
     private void winnerIs() throws InterruptedException {
         GameStats finale = new GameStats(controller, this.turns);
         for (ClientHandler player: players) {
-            while(player.getStatus() != Status.ENDGAME)
-                Thread.sleep(1);
             player.setGameStats(finale);
-            player.setStatus(Status.WINNERIS);
+            try {
+                player.sendFinale();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
     }
