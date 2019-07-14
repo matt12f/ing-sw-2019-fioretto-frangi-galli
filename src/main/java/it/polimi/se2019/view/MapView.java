@@ -1,6 +1,7 @@
 package it.polimi.se2019.view;
 
 import it.polimi.se2019.controller.CellWithTargets;
+import it.polimi.se2019.controller.MapManager;
 import it.polimi.se2019.enums.CellEdge;
 import it.polimi.se2019.enums.CellType;
 import it.polimi.se2019.enums.Color;
@@ -181,6 +182,42 @@ public class MapView implements Serializable {
         }
 
         return cellsOk;
+    }
+
+    /**
+     * this method returns the cell with targets in the same direction as the target cell sent
+     * @param cells is the list of cellsWT
+     * @param playerPosition is the position of the current player
+     * @param targetPosition is the position of the target of the previous effect
+     * @return the cell with targets in the direction of the cell with the previous target, null if there's not one
+     */
+    public CellWithTargets cellInSameDirection(ArrayList<CellWithTargets> cells, NewCell playerPosition, NewCell targetPosition){
+        int xPlayer= getXIndex(playerPosition);
+        int yPlayer= getYIndex(playerPosition);
+
+        int xTarget= getXIndex(targetPosition);
+        int yTarget= getYIndex(targetPosition);
+
+        int direction;
+
+        if(xPlayer-xTarget!=0)
+            if(xPlayer-xTarget>0)
+                direction=0; //up
+            else
+                direction=1;//bottom
+        else if(yPlayer-yTarget>0)
+            direction=2; //left
+        else
+            direction=3; //right
+
+        int [] dirX={-1,1,0,0};
+        int [] dirY={0,0,-1,1};
+
+        for (CellWithTargets singleCell: cells)
+            if(getXIndex(singleCell.getTargetCell())==(xTarget+dirX[direction]) && getYIndex(singleCell.getTargetCell())==(yTarget+dirY[direction]))
+                return singleCell;
+
+        return null;
     }
 
 }

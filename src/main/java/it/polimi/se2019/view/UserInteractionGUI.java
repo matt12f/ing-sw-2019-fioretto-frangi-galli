@@ -60,7 +60,7 @@ public class UserInteractionGUI extends UserInteraction {
             }
         });
 
-        JButton frenzy1Button = new JButton("Frenzy action 1");
+        JButton frenzy1Button = new JButton("(Move), (Reload), Shoot");
         frenzy1Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -70,7 +70,7 @@ public class UserInteractionGUI extends UserInteraction {
             }
         });
 
-        JButton frenzy2Button = new JButton("Frenzy action 2");
+        JButton frenzy2Button = new JButton("4xMove");
         frenzy2Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -80,7 +80,7 @@ public class UserInteractionGUI extends UserInteraction {
             }
         });
 
-        JButton frenzy3Button = new JButton("Frenzy action 3");
+        JButton frenzy3Button = new JButton("(2xMove), Grab");
         frenzy3Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -90,7 +90,7 @@ public class UserInteractionGUI extends UserInteraction {
             }
         });
 
-        JButton frenzy4Button = new JButton("Frenzy action 4");
+        JButton frenzy4Button = new JButton("(2xMove), (Reload), Shoot");
         frenzy4Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -100,7 +100,7 @@ public class UserInteractionGUI extends UserInteraction {
             }
         });
 
-        JButton frenzy5Button = new JButton("Frenzy action 5");
+        JButton frenzy5Button = new JButton("(3xMove), Grab");
         frenzy5Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -118,8 +118,8 @@ public class UserInteractionGUI extends UserInteraction {
         }else if(frenzy==1){
             buttons.add(frenzy1Button);
             buttons.add(frenzy2Button);
-        }else {
             buttons.add(frenzy3Button);
+        }else {
             buttons.add(frenzy4Button);
             buttons.add(frenzy5Button);
         }

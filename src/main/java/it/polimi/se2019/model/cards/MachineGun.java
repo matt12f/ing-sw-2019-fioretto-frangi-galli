@@ -122,8 +122,6 @@ public class MachineGun extends GunCardAddEff {
     void targetsOfTertiaryEffect(Controller currentController, SingleEffectsCombinationActions actions, FictitiousPlayer player) {
         actions.setMaxNumPlayerTargets(3);
         actions.setMinNumPlayerTargets(2);
-
-        actions.setOfferableExtra(true);
     }
 
     @Override

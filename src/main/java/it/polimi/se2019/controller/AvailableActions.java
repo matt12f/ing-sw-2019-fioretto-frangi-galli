@@ -91,7 +91,7 @@ public class AvailableActions implements Serializable {
 
         //determines the minimum move distance
         int minMoveDistance;
-        if(macroAction.getActionToRequest().equals(ActionType.NORMAL1))
+        if(macroAction.getActionToRequest().equals(ActionType.NORMAL1)||macroAction.getActionToRequest().equals(ActionType.FRENZY2))
             minMoveDistance=1;
         else
             minMoveDistance=0;
