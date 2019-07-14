@@ -69,6 +69,7 @@ public class RemoteView  extends View {
             indexOfPlayer=playerBoardViews.indexOf(player);
 
             player.update(model.getPlayerList().get(indexOfPlayer).getPlayerBoard());
+            player.setScore(model.getPlayerList().get(indexOfPlayer).getScore());
 
             this.playerHands.get(indexOfPlayer).setPowerups(model.getPlayerList().get(indexOfPlayer).getPlayerBoard().getHand().getPowerups());
             this.playerHands.get(indexOfPlayer).setAdditionalPowerup(model.getPlayerList().get(indexOfPlayer).getPlayerBoard().getHand().getAdditionalPowerup());
