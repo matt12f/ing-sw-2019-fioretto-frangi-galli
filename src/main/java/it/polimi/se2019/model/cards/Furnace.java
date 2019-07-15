@@ -58,7 +58,8 @@ public class Furnace extends GunCardAltEff {
         try{
         for (int i = 0; i < 4; i++){
             if(player.getPosition().getEdge(i).equals(CellEdge.DOOR))
-                rooms.add(MapManager.getRoom(currentController,MapManager.getCellInDirection(board, player.getPosition(), 1, i)));
+                if(!MapManager.getRoom(currentController,MapManager.getCellInDirection(board, player.getPosition(), 1, i)).getPlayers().isEmpty())
+                    rooms.add(MapManager.getRoom(currentController,MapManager.getCellInDirection(board, player.getPosition(), 1, i)));
         }
         }catch (OuterWallException e){
             //Won't ever happen

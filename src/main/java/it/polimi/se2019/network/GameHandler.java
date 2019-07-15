@@ -361,27 +361,42 @@ public class GameHandler implements Runnable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            //manage the respawn
             for (ClientHandler client: players) {
                 for (Player player: this.controller.getMainGameModel().getDeadPlayers()) {
                     if(player.getNickname().equals(client.getNickname())){
-                        try {
-                            PlayerManager.getCardsToSpawn(false, this.controller, player.getId());
-                        } catch (FullException e) {
-                            e.printStackTrace();
-                        }
-                        try {
-                            client.setSpawn();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        } catch (ClassNotFoundException e) {
-                            e.printStackTrace();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        try {
-                            PlayerManager.spawnPlayers(this.controller, player.getId(), client.getSpawn());
-                        } catch (CardNotFoundException e) {
-                            e.printStackTrace();
+                        if(player.getPlayerBoard().getHand().isEmptyPU()){
+                            try {
+                                PlayerManager.getCardsToSpawn(false, this.controller, player.getId());
+                            } catch (FullException e) {
+                                e.printStackTrace();
+                            }
+                            tempSpawn = player.getPlayerBoard().getHand().getPowerups()[0];
+                            try {
+                                PlayerManager.spawnPlayers(controller, player.getId(), tempSpawn);
+                            } catch (CardNotFoundException e) {
+                                e.printStackTrace();
+                            }
+                        }else{
+                            try {
+                                PlayerManager.getCardsToSpawn(false, this.controller, player.getId());
+                            } catch (FullException e) {
+                                e.printStackTrace();
+                            }
+                            try {
+                                client.setSpawn();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            } catch (ClassNotFoundException e) {
+                                e.printStackTrace();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            try {
+                                PlayerManager.spawnPlayers(this.controller, player.getId(), client.getSpawn());
+                            } catch (CardNotFoundException e) {
+                                e.printStackTrace();
+                            }
                         }
                         for (ClientHandler playerTemp : players) {
                             try {

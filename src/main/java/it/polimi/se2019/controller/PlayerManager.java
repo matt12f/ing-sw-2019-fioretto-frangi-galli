@@ -390,7 +390,7 @@ public class PlayerManager  {
         if(player.getPlayerBoard().getDamageTrack().getDamage()[2]!=' ')
             player.getPlayerBoard().getActionTileNormal().setAdrenalineMode1(true);
 
-        else if(player.getPlayerBoard().getDamageTrack().getDamage()[5]!=' ')
+        if(player.getPlayerBoard().getDamageTrack().getDamage()[5]!=' ')
             player.getPlayerBoard().getActionTileNormal().setAdrenalineMode2(true);
 
     }
