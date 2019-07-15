@@ -1,24 +1,17 @@
 package it.polimi.se2019.test_VIEW;
 
-import it.polimi.se2019.controller.Controller;
 import it.polimi.se2019.controller.MapManager;
-import it.polimi.se2019.controller.PlayerManager;
 import it.polimi.se2019.enums.Color;
 import it.polimi.se2019.exceptions.CardNotFoundException;
 import it.polimi.se2019.exceptions.FullException;
-import it.polimi.se2019.model.cards.PowerupCard;
 import it.polimi.se2019.model.game.GameModel;
 import it.polimi.se2019.model.game.Player;
-import it.polimi.se2019.network.ClientHandler;
-import it.polimi.se2019.network.GameHandler;
-import it.polimi.se2019.view.LocalView;
 import it.polimi.se2019.view.RemoteView;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 public class test_UpdateLocalView {
     @Test
     public void testView() throws FullException, CardNotFoundException {

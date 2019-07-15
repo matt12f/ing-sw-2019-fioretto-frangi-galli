@@ -123,6 +123,8 @@ public class GameStats {
             gameStats.append(this.ranking.indexOf(player)+1);
             gameStats.append("° place: ");
             gameStats.append(player.toString());
+            gameStats.append("\n");
+
         }
         return gameStats.toString();
     }
