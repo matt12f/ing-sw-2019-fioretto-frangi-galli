@@ -59,7 +59,9 @@ public class GrenadeLauncher extends GunCardAddEff {
      */
     @Override
     void applySecondaryEffect(Controller currentController, ChosenActions playersChoice) {
-        ActionManager.giveDmgandMksToPlayers(currentController,playersChoice.getTargetCell().getPlayers(),playersChoice,1,0);
+        ArrayList<Player> targets=new ArrayList<>(Player.duplicateList(playersChoice.getTargetCell().getPlayers()));
+        targets.remove(currentController.getActiveTurn().getActivePlayer());
+        ActionManager.giveDmgandMksToPlayers(currentController,targets,playersChoice,1,0);
     }
 
     /**
