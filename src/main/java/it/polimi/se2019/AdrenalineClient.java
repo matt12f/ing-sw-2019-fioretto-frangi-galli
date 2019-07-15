@@ -278,7 +278,7 @@ public class AdrenalineClient {
                 connection.getOutput().reset();
                 connection.getOutput().writeBoolean(true);
                 connection.getOutput().flush();
-
+                displayBoard();
                 System.out.println("b");
                 actionNumber = connection.getInput().readInt();
                 System.out.println(actionNumber);
@@ -286,6 +286,7 @@ public class AdrenalineClient {
                 if(!activated && frenzy) {
                     System.out.println("siamo in frenzy");
                     gameBoardGUI.setFrenzy(localView.getPlayerBoardViews(), localView.getPersonalPlayerBoardView());
+                    displayBoard();
                     activated = true;
                 }
                 while(actionNumber > 0){

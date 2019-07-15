@@ -311,12 +311,12 @@ public class ClientHandler extends Thread {
     }
 
     void notifyTurn() throws IOException {
+        this.output.reset();
         this.output.writeObject("MYTURN");
         this.output.writeObject(localView);
         this.input.readBoolean();
         System.out.println("b");
         this.output.writeInt(this.actionsNumber);
-        this.output.reset();
     }
 
     void askAction() throws IOException, ClassNotFoundException {
